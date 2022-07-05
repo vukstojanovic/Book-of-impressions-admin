@@ -7,13 +7,17 @@ import {
   UserOutlined,
   VideoCameraOutlined,
 } from '@ant-design/icons'
+import { useTranslation } from 'react-i18next'
 
 const { Header, Sider, Content } = Layout
 
 export const MainLayout = ({ children }) => {
   const [collapsed, setCollapsed] = useState(false)
+
+  const { t } = useTranslation('General')
+
   return (
-    <Layout style={{ minHeight: '100vh' }}>
+    <Layout>
       <Header
         style={{
           padding: 0,
@@ -73,6 +77,7 @@ export const MainLayout = ({ children }) => {
             padding: 24,
           }}
         >
+          <h1>{t('header_title')}</h1>
           {children}
         </Content>
       </Layout>
