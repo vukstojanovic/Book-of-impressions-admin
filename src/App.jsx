@@ -1,5 +1,12 @@
+import AppProvider from './providers/App'
+import { AppRoutes } from './routes'
+
 function App() {
-  return <div className="App">boi-wapp</div>
+  return (
+    <AppProvider>
+      <AppRoutes />
+    </AppProvider>
+  )
 }
 
 export default App
