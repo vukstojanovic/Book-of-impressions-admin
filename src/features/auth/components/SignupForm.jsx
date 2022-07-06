@@ -6,6 +6,11 @@ const { Title, Paragraph } = Typography
 
 export const SignupForm = () => {
   const inputStyle = { padding: '10px 8px' }
+
+  function handleFinish(values) {
+    console.log(values)
+  }
+
   return (
     <Row justify="center">
       <Col xs={{ span: 22 }} md={{ span: 20 }}>
@@ -20,6 +25,7 @@ export const SignupForm = () => {
           }}
           autoComplete="off"
           layout="vertical"
+          onFinish={handleFinish}
         >
           <Form.Item
             label="Username"
@@ -38,6 +44,10 @@ export const SignupForm = () => {
             label="Email"
             name="email"
             rules={[
+              {
+                type: 'email',
+                message: 'The input is not valid E-mail!',
+              },
               {
                 required: true,
                 message: 'Please input your email!',
