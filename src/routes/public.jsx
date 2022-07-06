@@ -1,4 +1,5 @@
 import { Navigate } from 'react-router-dom'
+import { SignupForm } from '@/features/auth'
 
 export const publicRoutes = [
   {
@@ -7,7 +8,7 @@ export const publicRoutes = [
   },
   {
     path: '/sign-up',
-    element: 'Sign up page',
+    element: <SignupForm />,
   },
   { path: '*', element: <Navigate to="/sign-in" /> },
 ]
