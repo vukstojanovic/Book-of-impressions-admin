@@ -1,9 +1,10 @@
 import { Navigate } from 'react-router-dom'
+import { LoginForm } from '@/features/auth'
 
 export const publicRoutes = [
   {
     path: '/sign-in',
-    element: 'Sign in page',
+    element: <LoginForm />,
   },
   {
     path: '/sign-up',
