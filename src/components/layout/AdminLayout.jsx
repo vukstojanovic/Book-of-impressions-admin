@@ -27,7 +27,6 @@ export const AdminLayout = ({ children }) => {
           alignContent: 'center',
         }}
       >
-        {/* Forma koju prosledis */}
         {children}
       </Col>
     </Row>
