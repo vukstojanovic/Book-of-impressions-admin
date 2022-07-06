@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Layout, Menu } from 'antd'
+import { Col, Layout, Menu, Row } from 'antd'
 import {
   MenuFoldOutlined,
   MenuUnfoldOutlined,
@@ -46,20 +46,25 @@ export const PageLayout = ({ children }) => {
           },
           onClick: () => setCollapsed(!collapsed),
         })}
-        <div
+        <Row
+          justify="end"
           style={{
-            display: 'flex',
+            flex: 1,
             color: 'white',
-            width: '100%',
-            justifyContent: 'right',
-            margin: '0 10px 0 0',
             gap: 4,
+            marginRight: '10px',
           }}
         >
-          <p>Flag</p>
-          <p>Notification</p>
-          <p>Avatar</p>
-        </div>
+          <Col>
+            <p>Flag</p>
+          </Col>
+          <Col>
+            <p>Notification</p>
+          </Col>
+          <Col>
+            <p>Avatar</p>
+          </Col>
+        </Row>
       </Header>
       <Layout>
         <Sider trigger={null} collapsible collapsed={collapsed}>
