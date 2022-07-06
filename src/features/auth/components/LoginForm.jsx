@@ -43,7 +43,7 @@ export const LoginForm = () => {
           name="password"
           rules={[{ required: true, message: 'Please enter your Password!' }]}
         >
-          <Input type="password" placeholder="Password" size="large" />
+          <Input.Password type="password" placeholder="Password" size="large" />
         </Form.Item>
         <Form.Item>
           <Row justify="space-between">
