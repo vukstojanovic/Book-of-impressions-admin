@@ -1,16 +1,20 @@
 import { Layout, Menu } from 'antd'
 const { Sider } = Layout
 import {
-  LayoutFilled,
+  LayoutOutlined,
   FileTextOutlined,
   FormOutlined,
-  StarFilled,
+  StarOutlined,
   TeamOutlined,
 } from '@ant-design/icons'
 import { useNavigate } from 'react-router-dom'
+import { useTranslation } from 'react-i18next'
 
 export const SideMenu = ({ collapsed }) => {
   const navigate = useNavigate()
+
+  const { t } = useTranslation('SideMenu')
+
   return (
     <Sider trigger={null} collapsible collapsed={collapsed}>
       <Menu
@@ -20,44 +24,44 @@ export const SideMenu = ({ collapsed }) => {
         items={[
           {
             key: '1',
-            icon: <LayoutFilled />,
-            label: 'Dashboard',
+            icon: <LayoutOutlined />,
+            label: t('dashboard'),
             onClick: () => navigate('/'),
           },
           {
             key: '2',
-            label: collapsed ? '' : 'Main',
+            label: collapsed ? '' : t('main'),
             type: collapsed ? 'divider' : 'group',
             style: { width: collapsed && '50%', margin: collapsed && '1.5rem auto' },
           },
           {
             key: '3',
             icon: <FormOutlined />,
-            label: 'Forms',
+            label: t('forms'),
             onClick: () => navigate('/forms'),
           },
           {
             key: '4',
-            icon: <StarFilled />,
-            label: 'Reviews',
+            icon: <StarOutlined />,
+            label: t('reviews'),
             onClick: () => navigate('/reviews'),
           },
           {
             key: '5',
             icon: <FileTextOutlined />,
-            label: 'Reports',
+            label: t('reports'),
             onClick: () => navigate('/reports'),
           },
           {
             key: '6',
-            label: collapsed ? '' : 'Organization',
+            label: collapsed ? '' : t('organization'),
             type: collapsed ? 'divider' : 'group',
             style: { width: collapsed && '50%', margin: collapsed && '1.5rem auto' },
           },
           {
             key: '7',
             icon: <TeamOutlined />,
-            label: 'Users',
+            label: t('users'),
             onClick: () => navigate('/users'),
           },
         ]}

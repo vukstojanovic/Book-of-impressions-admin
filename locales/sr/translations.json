@@ -21,5 +21,14 @@
     "remember_me": "Zapamti me",
     "forgot_password": "Zaboravili ste lozinku",
     "log_in": "Prijavite se"
+  },
+  "SideMenu": {
+    "dashboard": "Komandna Tabla",
+    "main": "Glavni meni",
+    "forms": "Formulari",
+    "reviews": "Recenzije",
+    "reports": "Izveštaji",
+    "organization": "Organizacija",
+    "users": "Korisnici"
   }
 }

@@ -1,12 +1,12 @@
 import { Navigate, Outlet } from 'react-router-dom'
 
-import { MainLayout } from '@/components/layout'
+import { PageLayout } from '@/components/layout'
 
 const App = () => {
   return (
-    <MainLayout>
+    <PageLayout>
       <Outlet />
-    </MainLayout>
+    </PageLayout>
   )
 }
 
