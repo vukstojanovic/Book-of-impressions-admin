@@ -1,18 +1,20 @@
 import { Row, Card, Form, Input, Checkbox, Button, Typography } from 'antd'
+import { useTranslation } from 'react-i18next'
 import { Link } from 'react-router-dom'
 
 const { Title, Paragraph } = Typography
 
 export const LoginForm = () => {
+  const { t } = useTranslation('Login')
   const onFinish = ({ email, password, remember }) => {
     console.log(email, password, 'Remember: ' + remember)
   }
 
   return (
     <Card style={{ padding: '50px' }}>
-      <Title level={2}>Welcome to Boi!</Title>
+      <Title level={2}>{t('login_welcome')}</Title>
       <Paragraph>
-        New to Boi! <Link to="/sign-up">Create an account</Link>
+        {t('welcome_create')} <Link to="/sign-up">{t('create_account')}</Link>
       </Paragraph>
       <Form
         layout="vertical"
@@ -48,11 +50,11 @@ export const LoginForm = () => {
         <Form.Item>
           <Row justify="space-between">
             <Form.Item name="remember" valuePropName="checked" noStyle>
-              <Checkbox>Remember me</Checkbox>
+              <Checkbox>{t('remember_me')}</Checkbox>
             </Form.Item>
 
             <a className="login-form-forgot" href="">
-              Forgot password
+              {t('forgot_password')}
             </a>
           </Row>
         </Form.Item>
@@ -65,7 +67,7 @@ export const LoginForm = () => {
             block={true}
             size="large"
           >
-            Log in
+            {t('log_in')}
           </Button>
         </Form.Item>
       </Form>
