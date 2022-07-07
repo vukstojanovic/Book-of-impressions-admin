@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { Col, Layout, Row } from 'antd'
 import { MenuFoldOutlined, MenuUnfoldOutlined } from '@ant-design/icons'
 import { useTranslation } from 'react-i18next'
-import { SideMenu } from '../sideMenu'
+import { SideMenu } from '../sidemenu'
 
 const { Header, Content, Footer } = Layout
 
