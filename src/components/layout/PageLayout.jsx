@@ -9,14 +9,14 @@ import {
   StarFilled,
   TeamOutlined,
 } from '@ant-design/icons'
-import { useTranslation } from 'react-i18next'
+// import { useTranslation } from 'react-i18next'
 
 const { Header, Sider, Content, Footer } = Layout
 
 export const PageLayout = ({ children }) => {
   const [collapsed, setCollapsed] = useState(false)
 
-  const { t } = useTranslation('General')
+  // const { t } = useTranslation('General')
 
   return (
     <Layout>
@@ -117,7 +117,7 @@ export const PageLayout = ({ children }) => {
             padding: 24,
           }}
         >
-          <h1>{t('header_title')}</h1>
+          {/* <h1>{t('header_title')}</h1> */}
           {children}
         </Content>
       </Layout>
