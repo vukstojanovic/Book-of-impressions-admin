@@ -33,7 +33,6 @@ export const Users = () => {
     },
     {
       title: 'Actions',
-      dataIndex: 'actions',
       key: 'actions',
       render: () => {
         return (
