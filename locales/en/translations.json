@@ -5,6 +5,15 @@
   "Home": {
     "homepage_title": "abc123"
   },
+  "Signup": {
+    "welcome": "Welcome to Boi",
+    "question": "Already have an account?",
+    "signIn": "Sign in",
+    "signUp": "Sign up",
+    "username": "Username",
+    "email": "Email",
+    "password": "Password"
+  },
   "Login": {
     "login_welcome": "Welcome to Boi!",
     "welcome_create": "New to Boi? ",

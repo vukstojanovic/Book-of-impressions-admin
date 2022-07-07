@@ -5,6 +5,15 @@
   "Home": {
     "homepage_title": "abc123"
   },
+  "Signup": {
+    "welcome": "Dobrodošli u Boi",
+    "question": "Već imate nalog?",
+    "signIn": "Ulogujte se",
+    "signUp": "Registrujte se",
+    "username": "Korisnicko ime",
+    "email": "Email",
+    "password": "Lozinka"
+  },
   "Login": {
     "login_welcome": "Dobrodosli na Boi!",
     "welcome_create": "Nemate BOI nalog? ",
