@@ -1,8 +1,6 @@
-import React, { useState } from 'react'
-import { Col, Layout, Menu, Row } from 'antd'
+import { useState } from 'react'
+import { Layout, Menu } from 'antd'
 import {
-  MenuFoldOutlined,
-  MenuUnfoldOutlined,
   LayoutFilled,
   FileTextOutlined,
   MinusOutlined,
@@ -10,8 +8,8 @@ import {
   TeamOutlined,
 } from '@ant-design/icons'
 import { useTranslation } from 'react-i18next'
-
-const { Header, Sider, Content, Footer } = Layout
+import { HeaderComponent } from '@/components/header'
+const { Sider, Content, Footer } = Layout
 
 export const PageLayout = ({ children }) => {
   const [collapsed, setCollapsed] = useState(false)
@@ -20,52 +18,7 @@ export const PageLayout = ({ children }) => {
 
   return (
     <Layout>
-      <Header
-        style={{
-          padding: 0,
-          display: 'flex',
-        }}
-      >
-        <div
-          style={{
-            width: '100px',
-            height: '32px',
-            margin: '16px',
-            background: 'rgba(255, 255, 255, 0.3)',
-          }}
-        />
-        {React.createElement(collapsed ? MenuUnfoldOutlined : MenuFoldOutlined, {
-          className: 'trigger',
-          style: {
-            padding: '0 24px',
-            fontSize: '18px',
-            lineHeight: '64px',
-            cursor: 'pointer',
-            color: 'white',
-            transition: 'color 0.3s',
-          },
-          onClick: () => setCollapsed(!collapsed),
-        })}
-        <Row
-          justify="end"
-          style={{
-            flex: 1,
-            color: 'white',
-            gap: 4,
-            marginRight: '10px',
-          }}
-        >
-          <Col>
-            <p>Flag</p>
-          </Col>
-          <Col>
-            <p>Notification</p>
-          </Col>
-          <Col>
-            <p>Avatar</p>
-          </Col>
-        </Row>
-      </Header>
+      <HeaderComponent collapsed={collapsed} setCollapsed={setCollapsed} />
       <Layout>
         <Sider trigger={null} collapsible collapsed={collapsed}>
           <Menu
