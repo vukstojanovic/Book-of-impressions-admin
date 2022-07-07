@@ -4,5 +4,14 @@
   },
   "Home": {
     "homepage_title": "abc123"
+  },
+  "Signup": {
+    "welcome": "Welcome to Boi",
+    "question": "Already have an account?",
+    "signIn": "Sign in",
+    "signUp": "Sign up",
+    "username": "Username",
+    "email": "Email",
+    "password": "Password"
   }
 }

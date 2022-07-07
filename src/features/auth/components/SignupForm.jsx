@@ -1,11 +1,13 @@
 import { Button, Form, Input, Typography, Row, Col } from 'antd'
 import { Link } from 'react-router-dom'
 import 'antd/dist/antd.css'
+import { useTranslation } from 'react-i18next'
 
 const { Title, Paragraph } = Typography
 
 export const SignupForm = () => {
   const inputStyle = { padding: '10px 8px' }
+  const { t } = useTranslation('Signup')
 
   function handleFinish(values) {
     console.log(values)
@@ -14,9 +16,9 @@ export const SignupForm = () => {
   return (
     <Row justify="center">
       <Col xs={{ span: 22 }} md={{ span: 20 }}>
-        <Title level={3}>Welcome to Boi</Title>
+        <Title level={3}>{t('welcome')}</Title>
         <Paragraph>
-          Already have an account? <Link to="/sign-in">Sign in</Link>
+          {t('question')} <Link to="/sign-in">{t('signIn')}</Link>
         </Paragraph>
         <Form
           name="basic"
@@ -28,7 +30,7 @@ export const SignupForm = () => {
           onFinish={handleFinish}
         >
           <Form.Item
-            label="Username"
+            label={t('username')}
             name="username"
             rules={[
               {
@@ -41,7 +43,7 @@ export const SignupForm = () => {
           </Form.Item>
 
           <Form.Item
-            label="Email"
+            label={t('email')}
             name="email"
             rules={[
               {
@@ -58,7 +60,7 @@ export const SignupForm = () => {
           </Form.Item>
 
           <Form.Item
-            label="Password"
+            label={t('password')}
             name="password"
             rules={[
               {
@@ -72,7 +74,7 @@ export const SignupForm = () => {
 
           <Form.Item>
             <Button block size="large" type="primary" htmlType="submit">
-              Sign Up
+              {t('signUp')}
             </Button>
           </Form.Item>
         </Form>
