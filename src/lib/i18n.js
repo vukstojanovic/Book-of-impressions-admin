@@ -11,7 +11,7 @@ i18next
   .init({
     interpolation: { escapeValue: false }, // React already does escaping
     lng: 'sr', // language to use,
-    fallbackLng: 'en',
+    fallbackLng: 'sr',
     // debug: true,
     resources: {
       en: contentEnglish,
