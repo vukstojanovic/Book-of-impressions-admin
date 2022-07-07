@@ -1,17 +1,10 @@
 import React, { useState } from 'react'
-import { Col, Layout, Menu, Row } from 'antd'
-import {
-  MenuFoldOutlined,
-  MenuUnfoldOutlined,
-  LayoutFilled,
-  FileTextOutlined,
-  MinusOutlined,
-  StarFilled,
-  TeamOutlined,
-} from '@ant-design/icons'
+import { Col, Layout, Row } from 'antd'
+import { MenuFoldOutlined, MenuUnfoldOutlined } from '@ant-design/icons'
 import { useTranslation } from 'react-i18next'
+import { SideMenu } from '../sideMenu'
 
-const { Header, Sider, Content, Footer } = Layout
+const { Header, Content, Footer } = Layout
 
 export const PageLayout = ({ children }) => {
   const [collapsed, setCollapsed] = useState(false)
@@ -67,50 +60,7 @@ export const PageLayout = ({ children }) => {
         </Row>
       </Header>
       <Layout>
-        <Sider trigger={null} collapsible collapsed={collapsed}>
-          <Menu
-            theme="dark"
-            mode="inline"
-            defaultSelectedKeys={['1']}
-            items={[
-              {
-                key: '1',
-                icon: <LayoutFilled />,
-                label: 'Dashboard',
-              },
-              {
-                key: '2',
-                icon: collapsed ? <MinusOutlined /> : null,
-                label: collapsed ? '' : 'Main',
-              },
-              {
-                key: '3',
-                icon: <FileTextOutlined />,
-                label: 'Forms',
-              },
-              {
-                key: '4',
-                icon: <StarFilled />,
-                label: 'Reviews',
-              },
-              {
-                key: '5',
-                icon: <FileTextOutlined />,
-                label: 'Reports',
-              },
-              {
-                key: '6',
-                icon: collapsed ? <MinusOutlined /> : null,
-                label: collapsed ? '' : 'Organization',
-              },
-              {
-                key: '7',
-                icon: <TeamOutlined />,
-                label: 'Users',
-              },
-            ]}
-          />
-        </Sider>
+        <SideMenu collapsed={collapsed} />
         <Content
           style={{
             margin: '24px 16px',
