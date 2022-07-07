@@ -13,5 +13,13 @@
     "username": "Username",
     "email": "Email",
     "password": "Password"
+  },
+  "Login": {
+    "login_welcome": "Welcome to Boi!",
+    "welcome_create": "New to Boi? ",
+    "create_account": "Create an account",
+    "remember_me": "Remember me",
+    "forgot_password": "Forgot password",
+    "log_in": "Log in"
   }
 }

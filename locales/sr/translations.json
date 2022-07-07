@@ -13,5 +13,13 @@
     "username": "Korisnicko ime",
     "email": "Email",
     "password": "Lozinka"
+  },
+  "Login": {
+    "login_welcome": "Dobrodosli na Boi!",
+    "welcome_create": "Nemate BOI nalog? ",
+    "create_account": "Registrujte se",
+    "remember_me": "Zapamti me",
+    "forgot_password": "Zaboravili ste lozinku",
+    "log_in": "Prijavite se"
   }
 }
