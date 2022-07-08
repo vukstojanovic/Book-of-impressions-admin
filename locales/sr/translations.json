@@ -22,6 +22,17 @@
     "forgot_password": "Zaboravili ste lozinku",
     "log_in": "Prijavite se"
   },
+  "Users": {
+    "name": "Ime",
+    "surname": "Prezime",
+    "email": "Email",
+    "role": "Uloga",
+    "actions": "Akcije",
+    "users": "Korisnici",
+    "home": "Početna strana",
+    "edit": "Uredi",
+    "delete": "Obriši"
+  },
   "SideMenu": {
     "dashboard": "Komandna Tabla",
     "main": "Glavni meni",
