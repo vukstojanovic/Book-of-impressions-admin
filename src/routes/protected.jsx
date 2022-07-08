@@ -18,6 +18,9 @@ export const protectedRoutes = [
     children: [
       { path: '/users', element: <Users /> },
       { path: '/profile', element: '<Profile />' },
+      { path: '/forms', element: '<Forms />' },
+      { path: '/reviews', element: '<Reviews />' },
+      { path: '/reports', element: '<Reports />' },
       { path: '/', element: '<Dashboard />' },
       { path: '*', element: <Navigate to="/" /> },
     ],

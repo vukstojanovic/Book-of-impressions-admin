@@ -32,5 +32,14 @@
     "home": "Home",
     "edit": "Edit",
     "delete": "Delete"
+  },
+  "SideMenu": {
+    "dashboard": "Dashboard",
+    "main": "Main",
+    "forms": "Forms",
+    "reviews": "Reviews",
+    "reports": "Reports",
+    "ogranization": "Organization",
+    "users": "Users"
   }
 }
