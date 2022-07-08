@@ -4,22 +4,31 @@ import { useLocation, Link } from 'react-router-dom'
 export const BreadcrumbComponent = () => {
   const location = useLocation()
   const { pathname } = location
-  console.log(pathname)
-  const pathnames = pathname.split('/').filter((item) => item)
+  const pathnames = pathname?.split('/').filter((item) => item)
+  const breadcrumbItemStyle = { fontSize: '24px', textTransform: 'capitalize' }
 
   return (
     <Breadcrumb>
-      {pathnames &&
-        pathnames.map((pn, index) => {
-          return (
-            <Breadcrumb.Item key={index}>
-              <Link>{pn}</Link>
-            </Breadcrumb.Item>
-          )
-        })}
-      {/* <Breadcrumb.Item>Home</Breadcrumb.Item>
-      <Breadcrumb.Item>Users</Breadcrumb.Item>
-      <Breadcrumb.Item>User Details</Breadcrumb.Item> */}
+      {pathnames.length > 0 ? (
+        <Breadcrumb.Item style={breadcrumbItemStyle}>
+          <Link to="/">Home</Link>
+        </Breadcrumb.Item>
+      ) : (
+        <Breadcrumb.Item style={breadcrumbItemStyle}>Home</Breadcrumb.Item>
+      )}
+      {pathnames.map((pName, index) => {
+        const route = `/${pathnames.slice(0, index + 1).join('/')}`
+        const isLast = index === pathnames.length - 1
+        return isLast ? (
+          <Breadcrumb.Item key={index} style={breadcrumbItemStyle}>
+            {pName.replace('-', ' ')}
+          </Breadcrumb.Item>
+        ) : (
+          <Breadcrumb.Item key={index} style={breadcrumbItemStyle}>
+            <Link to={route}>{pName.replace('-', ' ')}</Link>
+          </Breadcrumb.Item>
+        )
+      })}
     </Breadcrumb>
   )
 }

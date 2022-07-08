@@ -16,7 +16,10 @@ export const protectedRoutes = [
     path: '/',
     element: <App />,
     children: [
-      { path: '/users', element: <Users /> },
+      {
+        path: '/users',
+        element: <Users />,
+      },
       { path: '/profile', element: '<Profile />' },
       { path: '/forms', element: '<Forms />' },
       { path: '/reviews', element: '<Reviews />' },
