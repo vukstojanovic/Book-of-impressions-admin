@@ -32,6 +32,12 @@
     "home": "Početna strana",
     "edit": "Uredi",
     "delete": "Obriši"
+  },  
+  "Reviews": {
+    "name": "Ime",
+    "home": "Početna strana",
+    "reviews":"Recenzije",
+    "readMore":"Pročitaj više"
   },
   "SideMenu": {
     "dashboard": "Komandna Tabla",

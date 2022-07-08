@@ -33,6 +33,12 @@
     "edit": "Edit",
     "delete": "Delete"
   },
+  "Reviews": {
+    "name": "Name",
+    "home": "Home",
+    "reviews": "Reviews",
+    "readMore":"Read more"
+  },
   "SideMenu": {
     "dashboard": "Dashboard",
     "main": "Main",
