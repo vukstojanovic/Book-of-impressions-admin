@@ -1,7 +1,10 @@
 import { Table, Tag, Space, Typography } from 'antd'
+import { useTranslation } from 'react-i18next'
 const { Title } = Typography
 
 export const Users = () => {
+  const { t } = useTranslation('Users')
+
   const columns = [
     {
       title: 'Id',
@@ -9,22 +12,22 @@ export const Users = () => {
       key: 'id',
     },
     {
-      title: 'Name',
+      title: t('name'),
       dataIndex: 'name',
       key: 'name',
     },
     {
-      title: 'Surname',
+      title: t('surname'),
       dataIndex: 'surname',
       key: 'surname',
     },
     {
-      title: 'Email',
+      title: t('email'),
       dataIndex: 'email',
       key: 'email',
     },
     {
-      title: 'Role',
+      title: t('role'),
       dataIndex: 'role',
       key: 'role',
       render: (role) => {
@@ -32,13 +35,13 @@ export const Users = () => {
       },
     },
     {
-      title: 'Actions',
+      title: t('actions'),
       key: 'actions',
       render: () => {
         return (
           <Space size="mg">
-            <a style={{ marginRight: '5px' }}>Edit</a>
-            <a>Delete</a>
+            <a style={{ marginRight: '5px' }}>{t('edit')}</a>
+            <a>{t('delete')}</a>
           </Space>
         )
       },
@@ -82,8 +85,10 @@ export const Users = () => {
 
   return (
     <>
-      <Title level={3}>Home/Users</Title>
-      <Title level={4}>Users</Title>
+      <Title level={3}>
+        {t('home')}/{t('users')}
+      </Title>
+      <Title level={4}>{t('users')}</Title>
       <Table dataSource={data} columns={columns} />
     </>
   )
