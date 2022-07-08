@@ -1,5 +1,6 @@
 import { Table, Tag, Space, Typography } from 'antd'
 import { useTranslation } from 'react-i18next'
+import { BreadcrumbComponent } from '@/components/breadcrumb'
 const { Title } = Typography
 
 export const Users = () => {
@@ -40,7 +41,7 @@ export const Users = () => {
       render: () => {
         return (
           <Space size="mg">
-            <a style={{ marginRight: '5px' }}>{t('edit')}</a>
+            <a>{t('edit')}</a>
             <a>{t('delete')}</a>
           </Space>
         )
@@ -85,9 +86,10 @@ export const Users = () => {
 
   return (
     <>
-      <Title level={3}>
+      <BreadcrumbComponent />
+      {/* <Title level={3}>
         {t('home')}/{t('users')}
-      </Title>
+      </Title> */}
       <Title level={4}>{t('users')}</Title>
       <Table dataSource={data} columns={columns} />
     </>
