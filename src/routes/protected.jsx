@@ -1,12 +1,12 @@
 import { Navigate, Outlet } from 'react-router-dom'
 
-import { MainLayout } from '@/components/layout'
+import { PageLayout } from '@/components/layout'
 
 const App = () => {
   return (
-    <MainLayout>
+    <PageLayout>
       <Outlet />
-    </MainLayout>
+    </PageLayout>
   )
 }
 
@@ -17,6 +17,9 @@ export const protectedRoutes = [
     children: [
       { path: '/users', element: '<Users />' },
       { path: '/profile', element: '<Profile />' },
+      { path: '/forms', element: '<Forms />' },
+      { path: '/reviews', element: '<Reviews />' },
+      { path: '/reports', element: '<Reports />' },
       { path: '/', element: '<Dashboard />' },
       { path: '*', element: <Navigate to="/" /> },
     ],
