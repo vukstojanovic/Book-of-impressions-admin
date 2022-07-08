@@ -6,27 +6,25 @@ export const BreadcrumbComponent = () => {
   const location = useLocation()
   const { pathname } = location
   const pathnames = pathname?.split('/').filter((item) => item)
-  const breadcrumbItemStyle = { fontSize: '24px', textTransform: 'capitalize' }
+  const breadcrumbStyle = { fontSize: '22px', textTransform: 'capitalize', marginBottom: '20px' }
   const { t } = useTranslation('SideMenu')
 
   return (
-    <Breadcrumb>
+    <Breadcrumb style={breadcrumbStyle}>
       {pathnames.length > 0 ? (
-        <Breadcrumb.Item style={breadcrumbItemStyle}>
+        <Breadcrumb.Item>
           <Link to="/">{t('home')}</Link>
         </Breadcrumb.Item>
       ) : (
-        <Breadcrumb.Item style={breadcrumbItemStyle}>{t('home')}</Breadcrumb.Item>
+        <Breadcrumb.Item>{t('home')}</Breadcrumb.Item>
       )}
       {pathnames.map((pName, index) => {
         const route = `/${pathnames.slice(0, index + 1).join('/')}`
         const isLast = index === pathnames.length - 1
         return isLast ? (
-          <Breadcrumb.Item key={index} style={breadcrumbItemStyle}>
-            {t(pName).replace('-', '_')}
-          </Breadcrumb.Item>
+          <Breadcrumb.Item key={index}>{t(pName).replace('-', '_')}</Breadcrumb.Item>
         ) : (
-          <Breadcrumb.Item key={index} style={breadcrumbItemStyle}>
+          <Breadcrumb.Item key={index}>
             <Link to={route}>{t(pName).replace('-', '_')}</Link>
           </Breadcrumb.Item>
         )
