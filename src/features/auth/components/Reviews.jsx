@@ -25,7 +25,7 @@ export const Reviews = () => {
     { user: { name: 'Firstname Surname' }, postedAt: '21-06-2021', description: text, rating: 4.5 },
   ]
   return (
-    <div>
+    <>
       <Text>
         {t('home')} / {t('reviews')}
       </Text>
@@ -62,6 +62,6 @@ export const Reviews = () => {
           </Card>
         ))}
       </Row>
-    </div>
+    </>
   )
 }
