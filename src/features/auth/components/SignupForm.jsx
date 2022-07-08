@@ -18,7 +18,7 @@ export const SignupForm = () => {
       <Col xs={{ span: 22 }} md={{ span: 20 }}>
         <Title level={3}>{t('welcome')}</Title>
         <Paragraph>
-          {t('question')} <Link to="/sign-in">{t('signIn')}</Link>
+          {t('question')} <Link to="/sign-in">{t('sign_in')}</Link>
         </Paragraph>
         <Form
           name="basic"
@@ -74,7 +74,7 @@ export const SignupForm = () => {
 
           <Form.Item>
             <Button block size="large" type="primary" htmlType="submit">
-              {t('signUp')}
+              {t('sign_up')}
             </Button>
           </Form.Item>
         </Form>
