@@ -1,7 +1,9 @@
 import { useState } from 'react'
 import { Layout } from 'antd'
+
 import { SideMenu } from '../sidemenu'
 import { HeaderComponent } from '../header'
+import { BreadcrumbComponent } from '../breadcrumb'
 
 const { Content, Footer } = Layout
 
@@ -20,6 +22,7 @@ export const PageLayout = ({ children }) => {
           }}
         >
           {/* <h1>{t('header_title')}</h1> */}
+          <BreadcrumbComponent />
           {children}
         </Content>
       </Layout>

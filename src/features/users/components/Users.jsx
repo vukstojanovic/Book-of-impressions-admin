@@ -1,5 +1,6 @@
 import { Table, Tag, Space, Typography } from 'antd'
 import { useTranslation } from 'react-i18next'
+
 const { Title } = Typography
 
 export const Users = () => {
@@ -85,9 +86,6 @@ export const Users = () => {
 
   return (
     <>
-      <Title level={3}>
-        {t('home')}/{t('users')}
-      </Title>
       <Title level={4}>{t('users')}</Title>
       <Table dataSource={data} columns={columns} />
     </>

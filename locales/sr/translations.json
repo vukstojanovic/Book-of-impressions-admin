@@ -8,8 +8,8 @@
   "Signup": {
     "welcome": "Dobrodošli u Boi",
     "question": "Već imate nalog?",
-    "signIn": "Ulogujte se",
-    "signUp": "Registrujte se",
+    "sign_in": "Ulogujte se",
+    "sign_up": "Registrujte se",
     "username": "Korisnicko ime",
     "email": "Email",
     "password": "Lozinka"
@@ -33,6 +33,12 @@
     "edit": "Uredi",
     "delete": "Obriši"
   },
+  "Reviews": {
+    "name": "Ime",
+    "home": "Početna strana",
+    "reviews": "Recenzije",
+    "readMore": "Pročitaj više"
+  },
   "SideMenu": {
     "dashboard": "Komandna Tabla",
     "main": "Glavni meni",
@@ -40,6 +46,7 @@
     "reviews": "Recenzije",
     "reports": "Izveštaji",
     "organization": "Organizacija",
-    "users": "Korisnici"
+    "users": "Korisnici",
+    "home": "Početna strana"
   }
 }
