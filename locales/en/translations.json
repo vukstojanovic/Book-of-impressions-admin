@@ -21,5 +21,25 @@
     "remember_me": "Remember me",
     "forgot_password": "Forgot password",
     "log_in": "Log in"
+  },
+  "Users": {
+    "name": "Name",
+    "surname": "Surname",
+    "email": "Email",
+    "role": "Role",
+    "actions": "Actions",
+    "users": "Users",
+    "home": "Home",
+    "edit": "Edit",
+    "delete": "Delete"
+  },
+  "SideMenu": {
+    "dashboard": "Dashboard",
+    "main": "Main",
+    "forms": "Forms",
+    "reviews": "Reviews",
+    "reports": "Reports",
+    "ogranization": "Organization",
+    "users": "Users"
   }
 }

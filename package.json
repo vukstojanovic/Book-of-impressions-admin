@@ -38,10 +38,5 @@
     "prettier": "^2.7.1",
     "vite": "^2.9.9",
     "vite-plugin-eslint": "^1.6.1"
-  },
-  "husky": {
-    "hooks": {
-      "pre-commit": "npm run lint --fix"
-    }
   }
 }
