@@ -3,6 +3,7 @@ import { Col, Layout, Row } from 'antd'
 import { MenuFoldOutlined, MenuUnfoldOutlined } from '@ant-design/icons'
 // import { useTranslation } from 'react-i18next'
 import { SideMenu } from '../sidemenu'
+import { BreadcrumbComponent } from '../breadcrumb'
 
 const { Header, Content, Footer } = Layout
 
@@ -68,6 +69,7 @@ export const PageLayout = ({ children }) => {
           }}
         >
           {/* <h1>{t('header_title')}</h1> */}
+          <BreadcrumbComponent />
           {children}
         </Content>
       </Layout>

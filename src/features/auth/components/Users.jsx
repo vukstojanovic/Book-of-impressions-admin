@@ -85,9 +85,6 @@ export const Users = () => {
 
   return (
     <>
-      <Title level={3}>
-        {t('home')}/{t('users')}
-      </Title>
       <Title level={4}>{t('users')}</Title>
       <Table dataSource={data} columns={columns} />
     </>

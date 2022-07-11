@@ -8,8 +8,8 @@
   "Signup": {
     "welcome": "Dobrodošli u Boi",
     "question": "Već imate nalog?",
-    "signIn": "Ulogujte se",
-    "signUp": "Registrujte se",
+    "sign_in": "Ulogujte se",
+    "sign_up": "Registrujte se",
     "username": "Korisnicko ime",
     "email": "Email",
     "password": "Lozinka"
@@ -40,6 +40,7 @@
     "reviews": "Recenzije",
     "reports": "Izveštaji",
     "organization": "Organizacija",
-    "users": "Korisnici"
+    "users": "Korisnici",
+    "home": "Početna strana"
   }
 }
