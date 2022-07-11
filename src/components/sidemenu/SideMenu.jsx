@@ -12,7 +12,6 @@ import { useTranslation } from 'react-i18next'
 
 export const SideMenu = ({ collapsed }) => {
   const navigate = useNavigate()
-
   const { t } = useTranslation('SideMenu')
 
   return (
@@ -23,43 +22,43 @@ export const SideMenu = ({ collapsed }) => {
         defaultSelectedKeys={['1']}
         items={[
           {
-            key: '1',
+            key: 'dashboard',
             icon: <LayoutOutlined />,
             label: t('dashboard'),
             onClick: () => navigate('/'),
           },
           {
-            key: '2',
+            key: 'main',
             label: collapsed ? '' : t('main'),
             type: collapsed ? 'divider' : 'group',
             style: { width: collapsed && '50%', margin: collapsed && '1.5rem auto' },
           },
           {
-            key: '3',
+            key: 'forms',
             icon: <FormOutlined />,
             label: t('forms'),
             onClick: () => navigate('/forms'),
           },
           {
-            key: '4',
+            key: 'reviews',
             icon: <StarOutlined />,
             label: t('reviews'),
             onClick: () => navigate('/reviews'),
           },
           {
-            key: '5',
+            key: 'reports',
             icon: <FileTextOutlined />,
             label: t('reports'),
             onClick: () => navigate('/reports'),
           },
           {
-            key: '6',
+            key: 'organization',
             label: collapsed ? '' : t('organization'),
             type: collapsed ? 'divider' : 'group',
             style: { width: collapsed && '50%', margin: collapsed && '1.5rem auto' },
           },
           {
-            key: '7',
+            key: 'users',
             icon: <TeamOutlined />,
             label: t('users'),
             onClick: () => navigate('/users'),
