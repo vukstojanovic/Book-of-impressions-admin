@@ -1,8 +1,8 @@
 import { Navigate, Outlet } from 'react-router-dom'
 
 import { PageLayout } from '@/components/layout'
-import { Users } from '@/features/auth'
-import { Reviews } from '@/features/auth'
+import { Users } from '@/features/users'
+import { Reviews } from '@/features/reviews'
 
 const App = () => {
   return (

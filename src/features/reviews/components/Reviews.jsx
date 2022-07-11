@@ -26,9 +26,6 @@ export const Reviews = () => {
   ]
   return (
     <>
-      <Text>
-        {t('home')} / {t('reviews')}
-      </Text>
       <Title>{t('reviews')}</Title>
       <Row style={{ gap: 16 }}>
         {reviews.map((review, i) => (
