@@ -3,7 +3,7 @@ import { Navigate, Outlet } from 'react-router-dom'
 import { PageLayout } from '@/components/layout'
 import { Users } from '@/features/users'
 import { Reviews } from '@/features/reviews'
-import { Forms } from '@/features/forms'
+import { Forms, CreateNewForm } from '@/features/forms'
 
 const App = () => {
   return (
@@ -24,6 +24,7 @@ export const protectedRoutes = [
       },
       { path: '/profile', element: '<Profile />' },
       { path: '/forms', element: <Forms /> },
+      { path: '/forms/createNewForm', element: <CreateNewForm /> },
       { path: '/reviews', element: <Reviews /> },
       { path: '/reports', element: '<Reports />' },
       { path: '/', element: '<Dashboard />' },
