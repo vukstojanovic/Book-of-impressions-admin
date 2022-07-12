@@ -1,7 +1,7 @@
 import { Form, Input, Select } from 'antd'
 import { useTranslation } from 'react-i18next'
 
-export function FormModal({ form }) {
+export const FormModal = ({ form }) => {
   const { t } = useTranslation('Users')
   const roles = ['Frontend developer', 'Backend developer', 'QA']
 
