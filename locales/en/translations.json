@@ -48,5 +48,10 @@
     "ogranization": "Organization",
     "users": "Users",
     "home": "Home"
+  },
+  "QRCode": {
+    "requiredError": "Field can not be empty!",
+    "urlError": "Please input a valid URL",
+    "placeholder": "Type in URL for QR Code"
   }
 }

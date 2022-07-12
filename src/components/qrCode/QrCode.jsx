@@ -1,15 +1,19 @@
-import { Button, Form, Input } from 'antd'
-import { QRCodeCanvas } from 'qrcode.react'
 import { useState } from 'react'
+import { useTranslation } from 'react-i18next'
+import { QRCodeCanvas } from 'qrcode.react'
+import { Button, Form, Input } from 'antd'
 
 export const QrCode = () => {
   const [form] = Form.useForm()
 
   const [show, setShow] = useState(false)
   const [value, setValue] = useState('')
+
+  const { t } = useTranslation('QRCode')
+
   const onFinish = () => {
-    setShow(true)
     setValue(form.getFieldValue('URL'))
+    setShow(true)
   }
 
   const onFinishFailed = () => {
@@ -19,17 +23,22 @@ export const QrCode = () => {
 
   return (
     <div style={{ display: 'grid', justifyItems: 'center', textAlign: 'center' }}>
-      <Form form={form} onFinishFailed={onFinishFailed} onFinish={onFinish} layout="inline">
+      <Form
+        requiredMark={false}
+        form={form}
+        onFinishFailed={onFinishFailed}
+        onFinish={onFinish}
+        layout="inline"
+      >
         <Form.Item
           label="URL:"
           name={'URL'}
           rules={[
-            { required: true, message: 'Field can not be empty' },
-            { type: 'url', message: 'Please input a valid URL' },
-            { type: 'string', min: 4, message: 'URL must be at least 4 characters' },
+            { required: true, message: t('requiredError') },
+            { type: 'url', message: t('urlError') },
           ]}
         >
-          <Input placeholder="Input URL for QR code" allowClear />
+          <Input placeholder={t('placeholder')} allowClear />
         </Form.Item>
         <Form.Item>
           <Button type="primary" htmlType="button">
