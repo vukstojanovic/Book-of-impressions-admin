@@ -1,8 +1,9 @@
-import { Form, Input } from 'antd'
+import { Form, Input, Select } from 'antd'
 import { useTranslation } from 'react-i18next'
 
 export function FormModal({ form }) {
   const { t } = useTranslation('Users')
+  const roles = ['Frontend developer', 'Backend developer', 'QA']
 
   function submitData(values) {
     console.log(values)
@@ -16,7 +17,7 @@ export function FormModal({ form }) {
         rules={[
           {
             required: true,
-            message: 'Cannot be empty!',
+            message: t('empty_warning'),
           },
         ]}
       >
@@ -28,7 +29,7 @@ export function FormModal({ form }) {
         rules={[
           {
             required: true,
-            message: 'Cannot be empty!',
+            message: t('empty_warning'),
           },
         ]}
       >
@@ -40,23 +41,22 @@ export function FormModal({ form }) {
         rules={[
           {
             required: true,
-            message: 'Cannot be empty!',
+            message: t('empty_warning'),
           },
         ]}
       >
         <Input />
       </Form.Item>
-      <Form.Item
-        label={t('role')}
-        name="role"
-        rules={[
-          {
-            required: true,
-            message: 'Cannot be empty!',
-          },
-        ]}
-      >
-        <Input />
+      <Form.Item label={t('role')} name="role">
+        <Select>
+          {roles.map((role) => {
+            return (
+              <Select.Option key={role} value={role}>
+                {role}
+              </Select.Option>
+            )
+          })}
+        </Select>
       </Form.Item>
     </Form>
   )

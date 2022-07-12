@@ -31,7 +31,8 @@
     "users": "Users",
     "home": "Home",
     "edit": "Edit",
-    "delete": "Delete"
+    "delete": "Delete",
+    "empty_warning": "Cannot be empty!"
   },
   "Reviews": {
     "name": "Name",

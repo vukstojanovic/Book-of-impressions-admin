@@ -3,7 +3,7 @@ import { useForm } from 'antd/lib/form/Form'
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 
-import { data } from '../mockupData/data'
+import { data } from '../mockupData/users'
 
 import { FormModal } from './FormModal'
 
@@ -78,7 +78,9 @@ export const Users = () => {
   return (
     <>
       <Title level={4}>{t('users')}</Title>
-      <Table dataSource={data} columns={columns} />
+      <div style={{ overflow: 'auto' }}>
+        <Table dataSource={data} columns={columns} span={24} />
+      </div>
       <Modal title={fullName} visible={isModalVisible} onOk={handleOk} onCancel={closeModal}>
         <FormModal form={form} />
       </Modal>
