@@ -9,8 +9,6 @@ import { data } from '../mockupData/users'
 
 import { FormModal } from './FormModal'
 
-const { Title } = Typography
-
 export const Users = () => {
   const { t } = useTranslation('Users')
   const [isModalVisible, setIsModalVisible] = useState(false)
@@ -80,9 +78,9 @@ export const Users = () => {
   return (
     <>
       <Row justify="space-between" align="middle" style={{ marginBottom: '15px' }}>
-        <Title level={4} style={{ margin: 0 }}>
+        <Typography.Title level={4} style={{ margin: 0 }}>
           {t('users')}
-        </Title>
+        </Typography.Title>
         <Link to="/users/invite-user">
           <PlusCircleOutlined style={{ fontSize: '40px', color: 'black' }} />
         </Link>
