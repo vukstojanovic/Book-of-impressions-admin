@@ -1,10 +1,34 @@
-import { Table, Tag, Space, Typography } from 'antd'
+import { Table, Tag, Space, Typography, Modal } from 'antd'
+import { useForm } from 'antd/lib/form/Form'
+import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
+
+import { data } from '../mockupData/users'
+
+import { FormModal } from './FormModal'
 
 const { Title } = Typography
 
 export const Users = () => {
   const { t } = useTranslation('Users')
+  const [isModalVisible, setIsModalVisible] = useState(false)
+  const [fullName, setFullName] = useState('')
+  const [form] = useForm()
+
+  function openModal(userData) {
+    setFullName(`${userData.name} ${userData.surname}`)
+    form.setFieldsValue(userData)
+    setIsModalVisible(true)
+  }
+
+  function closeModal() {
+    setIsModalVisible(false)
+  }
+
+  function handleOk() {
+    form.submit()
+    setIsModalVisible(false)
+  }
 
   const columns = [
     {
@@ -38,10 +62,12 @@ export const Users = () => {
     {
       title: t('actions'),
       key: 'actions',
-      render: () => {
+      render: (_, record) => {
         return (
           <Space size="mg">
-            <a style={{ marginRight: '5px' }}>{t('edit')}</a>
+            <a style={{ marginRight: '5px' }} onClick={() => openModal(record)}>
+              {t('edit')}
+            </a>
             <a>{t('delete')}</a>
           </Space>
         )
@@ -49,45 +75,13 @@ export const Users = () => {
     },
   ]
 
-  const data = [
-    {
-      key: '1',
-      id: '1',
-      name: 'Vuk',
-      surname: 'Stojanovic',
-      email: 'vuks838@gmail.com',
-      role: 'Frontend developer',
-    },
-    {
-      key: '2',
-      id: '2',
-      name: 'Danilo',
-      surname: 'Markicevic',
-      email: 'danilo94@gmail.com',
-      role: 'QA',
-    },
-    {
-      key: '3',
-      id: '3',
-      name: 'Stefan',
-      surname: 'Meza',
-      email: 'meza94@gmail.com',
-      role: 'Backend developer',
-    },
-    {
-      key: '4',
-      id: '4',
-      name: 'Stefan',
-      surname: 'Bozic',
-      email: 'bozicstefan@gmail.com',
-      role: 'Backend developer',
-    },
-  ]
-
   return (
     <>
       <Title level={4}>{t('users')}</Title>
-      <Table dataSource={data} columns={columns} />
+      <Table dataSource={data} columns={columns} span={24} style={{ overflow: 'auto' }} />
+      <Modal title={fullName} visible={isModalVisible} onOk={handleOk} onCancel={closeModal}>
+        <FormModal form={form} />
+      </Modal>
     </>
   )
 }
