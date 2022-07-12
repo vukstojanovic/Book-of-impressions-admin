@@ -78,9 +78,7 @@ export const Users = () => {
   return (
     <>
       <Title level={4}>{t('users')}</Title>
-      <div style={{ overflow: 'auto' }}>
-        <Table dataSource={data} columns={columns} span={24} />
-      </div>
+      <Table dataSource={data} columns={columns} span={24} style={{ overflow: 'auto' }} />
       <Modal title={fullName} visible={isModalVisible} onOk={handleOk} onCancel={closeModal}>
         <FormModal form={form} />
       </Modal>
