@@ -31,13 +31,17 @@
     "users": "Korisnici",
     "home": "Početna strana",
     "edit": "Uredi",
-    "delete": "Obriši"
+    "delete": "Obriši",
+    "empty_warning": "Ne može biti prazno!"
   },
   "Reviews": {
     "name": "Ime",
     "home": "Početna strana",
     "reviews": "Recenzije",
     "readMore": "Pročitaj više"
+  },
+  "Forms": {
+    "forms": "Formulari"
   },
   "SideMenu": {
     "dashboard": "Komandna Tabla",
