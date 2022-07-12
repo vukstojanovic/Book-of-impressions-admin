@@ -52,6 +52,7 @@
   "QRCode": {
     "requiredError": "Field can not be empty!",
     "urlError": "Please input a valid URL",
-    "placeholder": "Type in URL for QR Code"
+    "placeholder": "Type in URL for QR Code",
+    "button": "Generate QR Code"
   }
 }

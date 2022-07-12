@@ -41,8 +41,8 @@ export const QrCode = () => {
           <Input placeholder={t('placeholder')} allowClear />
         </Form.Item>
         <Form.Item>
-          <Button type="primary" htmlType="button">
-            Generate QR Code
+          <Button type="primary" htmlType="submit">
+            {t('button')}
           </Button>
         </Form.Item>
       </Form>

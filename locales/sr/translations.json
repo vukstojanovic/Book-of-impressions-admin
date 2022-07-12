@@ -52,6 +52,7 @@
   "QRCode": {
     "requiredError": "Polje ne može biti prazno!",
     "urlError": "Molimo unesite validan URL",
-    "placeholder": "Unesite URL za QR kod"
+    "placeholder": "Unesite URL za QR kod",
+    "button": "Napravite QR Kod"
   }
 }

@@ -2,6 +2,8 @@ import { Card, Rate, Row, Typography } from 'antd'
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 
+import { QrCode } from '@/components/qrCode'
+
 export const Reviews = () => {
   const [isLoading, setIsLoading] = useState(false)
 
@@ -28,6 +30,7 @@ export const Reviews = () => {
 
   return (
     <>
+      <QrCode />
       <Title>{t('reviews')}</Title>
       <Row style={{ gap: 16 }}>
         {reviews.map((review, i) => (
