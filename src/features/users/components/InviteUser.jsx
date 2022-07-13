@@ -1,4 +1,4 @@
-import { Form, Input, Row, Col, Radio, Space, Typography, Button } from 'antd'
+import { Form, Input, Row, Col, Radio, Space, Typography, Button, Card } from 'antd'
 import { useTranslation } from 'react-i18next'
 
 import { roleNames } from '@/config/constants'
@@ -70,23 +70,25 @@ export const InviteUser = () => {
             },
           ]}
         >
-          <Radio.Group>
-            <Space direction="vertical">
-              {userRoles.map((role) => (
-                <Radio value={role} key={role}>
-                  <Typography.Paragraph style={{ textTransform: 'capitalize' }}>
-                    {t(role)}
-                  </Typography.Paragraph>
-                  <Typography.Paragraph style={{ color: 'gray', fontSize: '14px' }}>
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Neque, quo iste. Beatae
-                    nemo libero aliquid dolore eveniet asperiores pariatur exercitationem quasi?
-                    Possimus, at? Cum consequuntur dolorum soluta nulla, natus velit. Aliquam amet,
-                    dolorum tenetur.
-                  </Typography.Paragraph>
-                </Radio>
-              ))}
-            </Space>
-          </Radio.Group>
+          <Card>
+            <Radio.Group>
+              <Space direction="vertical">
+                {userRoles.map((role) => (
+                  <Radio value={role} key={role}>
+                    <Typography.Paragraph style={{ textTransform: 'capitalize' }}>
+                      {t(role)}
+                    </Typography.Paragraph>
+                    <Typography.Paragraph style={{ color: 'gray', fontSize: '14px' }}>
+                      Lorem ipsum dolor sit amet consectetur adipisicing elit. Neque, quo iste.
+                      Beatae nemo libero aliquid dolore eveniet asperiores pariatur exercitationem
+                      quasi? Possimus, at? Cum consequuntur dolorum soluta nulla, natus velit.
+                      Aliquam amet, dolorum tenetur.
+                    </Typography.Paragraph>
+                  </Radio>
+                ))}
+              </Space>
+            </Radio.Group>
+          </Card>
         </Form.Item>
         <Row span={24} gutter={[10, 10]}>
           <Col xs={{ span: 24 }} md={{ span: 7 }}>
