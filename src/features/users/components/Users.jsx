@@ -1,13 +1,13 @@
-import { Table, Tag, Space, Typography, Modal } from 'antd'
+import { Table, Tag, Space, Typography, Modal, Row } from 'antd'
 import { useForm } from 'antd/lib/form/Form'
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
+import { PlusCircleOutlined } from '@ant-design/icons'
+import { Link } from 'react-router-dom'
 
 import { data } from '../mockupData/users'
 
 import { FormModal } from './FormModal'
-
-const { Title } = Typography
 
 export const Users = () => {
   const { t } = useTranslation('Users')
@@ -77,7 +77,14 @@ export const Users = () => {
 
   return (
     <>
-      <Title level={4}>{t('users')}</Title>
+      <Row justify="space-between" align="middle" style={{ marginBottom: '15px' }}>
+        <Typography.Title level={4} style={{ margin: 0 }}>
+          {t('users')}
+        </Typography.Title>
+        <Link to="/users/invite-user">
+          <PlusCircleOutlined style={{ fontSize: '40px', color: 'black' }} />
+        </Link>
+      </Row>
       <Table dataSource={data} columns={columns} span={24} style={{ overflow: 'auto' }} />
       <Modal title={fullName} visible={isModalVisible} onOk={handleOk} onCancel={closeModal}>
         <FormModal form={form} />

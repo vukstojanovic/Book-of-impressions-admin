@@ -57,6 +57,21 @@
     "requiredError": "Polje ne može biti prazno!",
     "urlError": "Molimo unesite validan URL",
     "placeholder": "Unesite URL za QR kod",
-    "button": "Napravite QR Kod"
+    "button": "Napravite QR Kod",
+    "home": "Početna strana",
+    "invite_user": "Pozovi korisnika"
+  },
+  "InviteUser": {
+    "title": "Pozovite novog korisnika",
+    "first_name": "Ime",
+    "last_name": "Prezime",
+    "email": "Email",
+    "roles": "Uloge",
+    "cancel": "Otkaži",
+    "invite": "Pozovi",
+    "empty_warning": "Ne može biti prazno!",
+    "admin": "Admin",
+    "editor": "Urednik",
+    "viewer": "Posmatrač"
   }
 }

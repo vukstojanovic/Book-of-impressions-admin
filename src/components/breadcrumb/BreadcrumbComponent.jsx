@@ -22,10 +22,10 @@ export const BreadcrumbComponent = () => {
         const route = `/${pathnames.slice(0, index + 1).join('/')}`
         const isLast = index === pathnames.length - 1
         return isLast ? (
-          <Breadcrumb.Item key={index}>{t(pName).replace('-', '_')}</Breadcrumb.Item>
+          <Breadcrumb.Item key={index}>{t(pName.replace('-', '_'))}</Breadcrumb.Item>
         ) : (
           <Breadcrumb.Item key={index}>
-            <Link to={route}>{t(pName).replace('-', '_')}</Link>
+            <Link to={route}>{t(pName.replace('-', '_'))}</Link>
           </Breadcrumb.Item>
         )
       })}
