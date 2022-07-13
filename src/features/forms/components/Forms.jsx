@@ -96,7 +96,7 @@ export const Forms = () => {
           <PlusCircleOutlined style={{ color: 'black', fontSize: '2.25rem' }} />
         </Link>
       </Row>
-      <Row align="middle" gutter={[16, 50]} style={{ gap: 50 }}>
+      <Row align="middle" style={{ gap: 50 }}>
         {forms.map((form) => {
           const { id, formNum, description, dataOne, dataTwo, dataThree, info } = form
           return (
