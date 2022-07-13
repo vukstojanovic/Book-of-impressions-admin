@@ -10,9 +10,16 @@
     "question": "Već imate nalog?",
     "sign_in": "Ulogujte se",
     "sign_up": "Registrujte se",
-    "username": "Korisnicko ime",
+    "first_name": "Ime",
+    "last_name": "Prezime",
     "email": "Email",
-    "password": "Lozinka"
+    "password": "Lozinka",
+    "agree": "Slažem se",
+    "first_name_warning": "Molimo unesite vaše ime!",
+    "last_name_warning": "Molimo unesite vaše prezime!",
+    "email_warning": "Molimo unesite vaš email!",
+    "valid_email_warning": "Niste uneli validan email",
+    "password_warning": "Molimo unesite lozinku!"
   },
   "Login": {
     "login_welcome": "Dobrodosli na Boi!",
