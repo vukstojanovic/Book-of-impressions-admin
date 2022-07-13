@@ -8,8 +8,8 @@
   "Signup": {
     "welcome": "Welcome to Boi",
     "question": "Already have an account?",
-    "signIn": "Sign in",
-    "signUp": "Sign up",
+    "sign_in": "Sign in",
+    "sign_up": "Sign up",
     "username": "Username",
     "email": "Email",
     "password": "Password"
@@ -66,6 +66,20 @@
     "ogranization": "Organization",
     "users": "Users",
     "home": "Home",
-    "create_new_form": "Create New Form"
+    "create_new_form": "Create New Form",
+    "invite_user": "Invite user"
+  },
+  "InviteUser": {
+    "title": "Invite a new user",
+    "first_name": "First name",
+    "last_name": "Last name",
+    "email": "Email",
+    "roles": "Roles",
+    "cancel": "Cancel",
+    "invite": "Invite",
+    "empty_warning": "Cannot be empty!",
+    "admin": "Admin",
+    "editor": "Editor",
+    "viewer": "Viewer"
   }
 }

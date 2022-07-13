@@ -14,7 +14,7 @@ export const SignupForm = () => {
   }
 
   return (
-    <Row justify="center">
+    <Row justify="center" style={{ padding: '50px 0px' }}>
       <Col xs={{ span: 22 }} md={{ span: 20 }}>
         <Title level={3}>{t('welcome')}</Title>
         <Paragraph>

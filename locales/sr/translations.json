@@ -66,6 +66,20 @@
     "organization": "Organizacija",
     "users": "Korisnici",
     "home": "Početna strana",
-    "create_new_form": "Napravi novu formu"
+    "create_new_form": "Napravi novu formu",
+    "invite_user": "Pozovi korisnika"
+  },
+  "InviteUser": {
+    "title": "Pozovite novog korisnika",
+    "first_name": "Ime",
+    "last_name": "Prezime",
+    "email": "Email",
+    "roles": "Uloge",
+    "cancel": "Otkaži",
+    "invite": "Pozovi",
+    "empty_warning": "Ne može biti prazno!",
+    "admin": "Admin",
+    "editor": "Urednik",
+    "viewer": "Posmatrač"
   }
 }

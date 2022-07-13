@@ -1,7 +1,7 @@
 import { Navigate, Outlet } from 'react-router-dom'
 
 import { PageLayout } from '@/components/layout'
-import { Users } from '@/features/users'
+import { Users, InviteUser } from '@/features/users'
 import { Reviews } from '@/features/reviews'
 import { Forms, CreateNewForm } from '@/features/forms'
 
@@ -21,6 +21,10 @@ export const protectedRoutes = [
       {
         path: '/users',
         element: <Users />,
+      },
+      {
+        path: '/users/invite-user',
+        element: <InviteUser />,
       },
       { path: '/profile', element: '<Profile />' },
       { path: '/forms', element: <Forms /> },
