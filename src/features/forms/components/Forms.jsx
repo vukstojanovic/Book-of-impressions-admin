@@ -92,7 +92,7 @@ export const Forms = () => {
         <Title level={2} style={{ marginBottom: '0' }}>
           {t('forms')}
         </Title>
-        <Link to="/forms/createNewForm">
+        <Link to="/forms/create-new-form">
           <PlusCircleOutlined style={{ color: 'black', fontSize: '2.25rem' }} />
         </Link>
       </Row>

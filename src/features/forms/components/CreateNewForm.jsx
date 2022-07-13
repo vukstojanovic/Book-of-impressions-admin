@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { useTranslation } from 'react-i18next'
 import { Form, Typography, Input, Select, Button, Card } from 'antd'
 
 const { Option } = Select
@@ -10,6 +11,8 @@ export const CreateNewForm = () => {
   const [typeOneQuestion, setTypeOneQuestion] = useState([])
   const [typeTwoQuestion, setTypeTwoQuestion] = useState([])
   const [addNewForm] = Form.useForm()
+
+  const { t } = useTranslation('CreateNewForm')
 
   const handleAddQuestion = () => {
     if (!question) {
@@ -47,7 +50,7 @@ export const CreateNewForm = () => {
 
   return (
     <>
-      <Title level={2}>Create New Form</Title>
+      <Title level={2}>{t('main')}</Title>
       <Form form={addNewForm} onFinish={handleSubmit} size="large">
         <Form.Item
           style={{ width: '300px' }}
@@ -58,7 +61,7 @@ export const CreateNewForm = () => {
             },
           ]}
         >
-          <Input allowClear={true} placeholder="Form Title" />
+          <Input allowClear={true} placeholder={t('formTitle')} />
         </Form.Item>
         <Form.Item
           style={{ width: '300px' }}
@@ -69,7 +72,7 @@ export const CreateNewForm = () => {
             },
           ]}
         >
-          <Input allowClear={true} placeholder="Form Description" />
+          <Input allowClear={true} placeholder={t('formDescription')} />
         </Form.Item>
         <Form.Item
           style={{ width: '300px' }}
@@ -80,19 +83,19 @@ export const CreateNewForm = () => {
             },
           ]}
         >
-          <Select value={type} onChange={handleSelectChange} placeholder="Form Type">
-            <Option value="type-1">Type 1</Option>
-            <Option value="type-2">Type 2</Option>
+          <Select value={type} onChange={handleSelectChange} placeholder={t('formType')}>
+            <Option value="type-1">{t('type1')}</Option>
+            <Option value="type-2">{t('type2')}</Option>
           </Select>
         </Form.Item>
 
         {type === 'type-1' ? (
           <Card style={{ margin: '1.75rem 0' }}>
-            <Title level={4}>Question</Title>
-            <Text>For this type of form you can add only 1 question!</Text>
+            <Title level={4}>{t('question')}</Title>
+            <Text>{t('warning')}</Text>
             <div>
               <Input
-                placeholder="Type a Question"
+                placeholder={t('inputQuestion')}
                 size="large"
                 value={question}
                 onChange={(e) => setQuestion(e.target.value)}
@@ -119,17 +122,17 @@ export const CreateNewForm = () => {
               onClick={handleAddQuestion}
               disabled={typeOneQuestion.length >= 1}
             >
-              Add Question
+              {t('addQuestion')}
             </Button>
           </Card>
         ) : (
           <Card style={{ marginBottom: '1.75rem' }}>
-            <Title level={4}>Questions</Title>
-            <Text>For this type of form you can add maximum 3 questions!</Text>
+            <Title level={4}>{t('question')}</Title>
+            <Text>{t('warning2')}</Text>
 
             <div>
               <Input
-                placeholder="Type a Question"
+                placeholder={t('inputQuestion')}
                 size="large"
                 value={question}
                 onChange={(e) => setQuestion(e.target.value)}
@@ -156,14 +159,14 @@ export const CreateNewForm = () => {
               onClick={handleAddQuestion}
               disabled={typeTwoQuestion.length >= 3}
             >
-              Add Question
+              {t('addQuestion')}
             </Button>
           </Card>
         )}
 
         <Form.Item>
           <Button type="primary" htmlType="submit">
-            Create New Form
+            {t('createNewForm')}
           </Button>
         </Form.Item>
       </Form>

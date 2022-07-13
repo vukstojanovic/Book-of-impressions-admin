@@ -43,6 +43,20 @@
   "Forms": {
     "forms": "Formulari"
   },
+  "CreateNewForm": {
+    "main": "Kreiraj novu formu",
+    "formTitle": "Naslov forme",
+    "formDescription": "Opis forme",
+    "formType": "Tip forme",
+    "type1": "Tip 1",
+    "type2": "Tip 2",
+    "question": "Pitanja",
+    "warning": "Za ovaj tip forme mozete dodati samo jedno pitanje.",
+    "warning2": "Za ovaj tip forme mozete dodati maksimalno 3 pitanja.",
+    "inputQuestion": "Ukucaj pitanje",
+    "addQuestion": "Dodaj pitanje",
+    "createNewForm": "Napravi novu formu"
+  },
   "SideMenu": {
     "dashboard": "Komandna Tabla",
     "main": "Glavni meni",
@@ -51,6 +65,7 @@
     "reports": "Izveštaji",
     "organization": "Organizacija",
     "users": "Korisnici",
-    "home": "Početna strana"
+    "home": "Početna strana",
+    "create_new_form": "Napravi novu formu"
   }
 }

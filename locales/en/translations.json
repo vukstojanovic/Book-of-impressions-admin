@@ -43,6 +43,20 @@
   "Forms": {
     "forms": "Forms"
   },
+  "CreateNewForm": {
+    "main": "Create New Form",
+    "formTitle": "Form Title",
+    "formDescription": "Form Description",
+    "formType": "Form Type",
+    "type1": "Type 1",
+    "type2": "Type 2",
+    "question": "Question",
+    "warning": "For this type of form you can add only 1 question!",
+    "warning2": "For this type of form you can add maximum 3 questions!",
+    "inputQuestion": "Type a Question",
+    "addQuestion": "Add Question",
+    "createNewForm": "Create new Form"
+  },
   "SideMenu": {
     "dashboard": "Dashboard",
     "main": "Main",
@@ -51,6 +65,7 @@
     "reports": "Reports",
     "ogranization": "Organization",
     "users": "Users",
-    "home": "Home"
+    "home": "Home",
+    "create_new_form": "Create New Form"
   }
 }
