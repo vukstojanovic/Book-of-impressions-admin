@@ -1,4 +1,4 @@
-import { Layout, Menu, Typography } from 'antd'
+import { Layout, Menu, Space, Typography } from 'antd'
 import {
   LayoutOutlined,
   FileTextOutlined,
@@ -11,8 +11,9 @@ import {
 import { useNavigate } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import { Footer } from 'antd/lib/layout/layout'
+
 const { Sider } = Layout
-const { Text } = Typography
+const { Link } = Typography
 export const SideMenu = ({ collapsed }) => {
   const navigate = useNavigate()
 
@@ -84,24 +85,37 @@ export const SideMenu = ({ collapsed }) => {
       />
       <Footer
         style={{
-          padding: '7px 0 7px 5px',
+          padding: `${collapsed ? '0' : '7px 0 7px 20px'}`,
           display: 'grid',
-          width: `100%`,
+          width: '100%',
           justifyItems: `${collapsed ? 'center' : 'start'}`,
+          position: 'absolute',
+          bottom: 70,
+          backgroundColor: 'inherit',
         }}
       >
-        <Text
-          style={{
-            display: 'flex',
-            alignItems: 'center',
-            padding: '0 0 6px 0',
-            transitionDuration: '0.3s',
-          }}
-        >
-          <QuestionCircleOutlined style={{ padding: '0 5px 0 0' }} />
-          {<p style={{ margin: '0', opacity: `${collapsed ? '' : ''}` }}>Need help ?</p>}
-        </Text>
-        <CommentOutlined />
+        <Space direction="vertical">
+          <Link
+            style={{
+              display: 'flex',
+              alignItems: 'center',
+              gap: 5,
+            }}
+          >
+            <QuestionCircleOutlined />
+            {!collapsed && 'Get Support'}
+          </Link>
+          <Link
+            style={{
+              display: 'flex',
+              alignItems: 'center',
+              gap: 5,
+            }}
+          >
+            <CommentOutlined />
+            {!collapsed && 'Give Feedback'}
+          </Link>
+        </Space>
       </Footer>
     </Sider>
   )
