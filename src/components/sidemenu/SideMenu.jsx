@@ -1,4 +1,4 @@
-import { Layout, Menu, Space, Typography } from 'antd'
+import { Layout, Menu, Typography } from 'antd'
 import {
   LayoutOutlined,
   FileTextOutlined,
@@ -94,28 +94,28 @@ export const SideMenu = ({ collapsed }) => {
           backgroundColor: 'inherit',
         }}
       >
-        <Space direction="vertical">
-          <Link
-            style={{
-              display: 'flex',
-              alignItems: 'center',
-              gap: 5,
-            }}
-          >
-            <QuestionCircleOutlined />
-            {!collapsed && 'Get Support'}
-          </Link>
-          <Link
-            style={{
-              display: 'flex',
-              alignItems: 'center',
-              gap: 5,
-            }}
-          >
-            <CommentOutlined />
-            {!collapsed && 'Give Feedback'}
-          </Link>
-        </Space>
+        <Link
+          style={{
+            display: 'flex',
+            alignItems: 'center',
+            gap: 5,
+            height: '22px',
+          }}
+        >
+          <QuestionCircleOutlined />
+          {!collapsed ? 'Get Support' : ''}
+        </Link>
+        <Link
+          style={{
+            display: 'flex',
+            alignItems: 'center',
+            gap: 5,
+            height: '22px',
+          }}
+        >
+          <CommentOutlined />
+          {!collapsed ? 'Give Feedback' : ''}
+        </Link>
       </Footer>
     </Sider>
   )
