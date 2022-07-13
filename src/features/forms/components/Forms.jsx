@@ -71,6 +71,39 @@ const forms = [
     curValue: 26,
     info: 26,
   },
+  {
+    id: 6,
+    formNum: 129,
+    description:
+      'Morbi suscipit, risus eu mollis convallis, nisi sem lacinia tortor, non eleifend mi elit vitae sapien.',
+    dataOne: 64,
+    dataTwo: 21,
+    dataThree: 73,
+    curValue: 26,
+    info: 26,
+  },
+  {
+    id: 6,
+    formNum: 129,
+    description:
+      'Morbi suscipit, risus eu mollis convallis, nisi sem lacinia tortor, non eleifend mi elit vitae sapien.',
+    dataOne: 64,
+    dataTwo: 21,
+    dataThree: 73,
+    curValue: 26,
+    info: 26,
+  },
+  {
+    id: 6,
+    formNum: 129,
+    description:
+      'Morbi suscipit, risus eu mollis convallis, nisi sem lacinia tortor, non eleifend mi elit vitae sapien.',
+    dataOne: 64,
+    dataTwo: 21,
+    dataThree: 73,
+    curValue: 26,
+    info: 26,
+  },
 ]
 
 export const Forms = () => {

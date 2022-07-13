@@ -1,21 +1,38 @@
-import { Layout, Menu } from 'antd'
-const { Sider } = Layout
+import { Layout, Menu, Typography } from 'antd'
 import {
   LayoutOutlined,
   FileTextOutlined,
   FormOutlined,
   StarOutlined,
   TeamOutlined,
+  QuestionCircleOutlined,
+  CommentOutlined,
 } from '@ant-design/icons'
 import { useNavigate } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
-
+import { Footer } from 'antd/lib/layout/layout'
+const { Sider } = Layout
+const { Text } = Typography
 export const SideMenu = ({ collapsed }) => {
   const navigate = useNavigate()
+
   const { t } = useTranslation('SideMenu')
 
   return (
-    <Sider trigger={null} collapsible collapsed={collapsed}>
+    <Sider
+      trigger={null}
+      collapsible
+      collapsed={collapsed}
+      style={{
+        overflow: 'auto',
+        height: '100vh',
+        position: 'fixed',
+        left: 0,
+        top: 0,
+        bottom: 0,
+        margin: '64px 0 0 0',
+      }}
+    >
       <Menu
         theme="dark"
         mode="inline"
@@ -65,6 +82,27 @@ export const SideMenu = ({ collapsed }) => {
           },
         ]}
       />
+      <Footer
+        style={{
+          padding: '7px 0 7px 5px',
+          display: 'grid',
+          width: `100%`,
+          justifyItems: `${collapsed ? 'center' : 'start'}`,
+        }}
+      >
+        <Text
+          style={{
+            display: 'flex',
+            alignItems: 'center',
+            padding: '0 0 6px 0',
+            transitionDuration: '0.3s',
+          }}
+        >
+          <QuestionCircleOutlined style={{ padding: '0 5px 0 0' }} />
+          {<p style={{ margin: '0', opacity: `${collapsed ? '' : ''}` }}>Need help ?</p>}
+        </Text>
+        <CommentOutlined />
+      </Footer>
     </Sider>
   )
 }

@@ -15,7 +15,7 @@ export const HeaderComponent = ({ collapsed, setCollapsed }) => {
   }
 
   return (
-    <Header>
+    <Header style={{ position: 'fixed', zIndex: 1, width: '100%' }}>
       <Row align="middle" justify="space-between">
         <Col>
           <Space>

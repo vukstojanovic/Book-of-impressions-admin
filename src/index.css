@@ -18,3 +18,13 @@ code {
 .ant-layout {
   min-height: 100vh;
 }
+
+.ant-menu-dark.ant-menu-dark:not(.ant-menu-horizontal) .ant-menu-item-selected {
+  background: #f66702;
+}
+
+.ant-layout-header,
+.ant-menu.ant-menu-dark,
+.ant-layout-sider {
+  background-color: #003a8c;
+}
