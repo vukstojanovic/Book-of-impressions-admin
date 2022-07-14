@@ -15,11 +15,11 @@
     "email": "Email",
     "password": "Password",
     "agree": "Agree",
-    "first_name_warning": "Please input your first name!",
-    "last_name_warning": "Please input your last name!",
-    "email_warning": "Please input your email!",
+    "first_name_warning": "Please enter your first name!",
+    "last_name_warning": "Please enter your last name!",
+    "email_warning": "Please enter your email!",
     "valid_email_warning": "The input is not valid E-mail!",
-    "password_warning": "Please input your password!"
+    "password_warning": "Please enter your password!"
   },
   "Login": {
     "login_welcome": "Welcome to Boi!",
@@ -27,7 +27,12 @@
     "create_account": "Create an account",
     "remember_me": "Remember me",
     "forgot_password": "Forgot password",
-    "log_in": "Log in"
+    "log_in": "Log in",
+    "email_warning": "Please enter your email!",
+    "valid_email_warning": "The input is not valid E-mail!",
+    "password_warning": "Please enter your password!",
+    "email": "Email",
+    "password": "Password"
   },
   "Users": {
     "name": "Name",

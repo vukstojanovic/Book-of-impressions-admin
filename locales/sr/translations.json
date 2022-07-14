@@ -27,7 +27,12 @@
     "create_account": "Registrujte se",
     "remember_me": "Zapamti me",
     "forgot_password": "Zaboravili ste lozinku",
-    "log_in": "Prijavite se"
+    "log_in": "Prijavite se",
+    "email_warning": "Molimo unesite vaš email!",
+    "valid_email_warning": "Niste uneli validan email!",
+    "password_warning": "Molimo unesite lozinku!",
+    "email": "Email",
+    "password": "Lozinka"
   },
   "Users": {
     "name": "Ime",

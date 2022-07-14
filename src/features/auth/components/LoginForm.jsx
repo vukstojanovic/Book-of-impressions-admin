@@ -28,27 +28,27 @@ export const LoginForm = () => {
           onFinish={onFinish}
         >
           <Form.Item
-            label="E-mail"
+            label={t('email')}
             name="email"
             rules={[
               {
                 type: 'email',
-                message: 'The input is not valid E-mail!',
+                message: t('valid_email_warning'),
               },
               {
                 required: true,
-                message: 'Please enter your E-mail!',
+                message: t('email_warning'),
               },
             ]}
           >
-            <Input placeholder="Email" size="large" />
+            <Input placeholder={t('email')} size="large" />
           </Form.Item>
           <Form.Item
-            label="Password"
+            label={t('password')}
             name="password"
-            rules={[{ required: true, message: 'Please enter your Password!' }]}
+            rules={[{ required: true, message: t('password_warning') }]}
           >
-            <Input.Password type="password" placeholder="Password" size="large" />
+            <Input.Password type="password" placeholder={t('password')} size="large" />
           </Form.Item>
           <Form.Item>
             <Row justify="space-between">
