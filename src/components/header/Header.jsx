@@ -1,7 +1,9 @@
 import React from 'react'
-import { Row, Col, Typography, Layout, Space, Select, Avatar } from 'antd'
+import { Row, Col, Typography, Layout, Space, Select } from 'antd'
 import { MenuUnfoldOutlined, MenuFoldOutlined, BellOutlined } from '@ant-design/icons'
 import { useTranslation } from 'react-i18next'
+
+import { AccountMenu } from '@/components/accountMenu'
 
 const { Title } = Typography
 const { Header } = Layout
@@ -48,8 +50,8 @@ export const HeaderComponent = ({ collapsed, setCollapsed }) => {
             <div style={{ color: 'white' }}>
               <BellOutlined style={{ fontSize: '1.5rem' }} />
             </div>
-            <div style={{ color: 'white' }}>
-              <Avatar size={30}>USER</Avatar>
+            <div style={{ color: 'white', cursor: 'pointer' }}>
+              <AccountMenu />
             </div>
           </Space>
         </Col>
