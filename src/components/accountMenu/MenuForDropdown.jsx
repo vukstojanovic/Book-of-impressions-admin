@@ -1,7 +1,10 @@
 import { Menu, Avatar, Row, Col, Typography } from 'antd'
 import { UserOutlined, LogoutOutlined } from '@ant-design/icons'
+import { useTranslation } from 'react-i18next'
 
 export const MenuForDropdown = () => {
+  const { t } = useTranslation('AccountMenu')
+
   return (
     <Menu style={{ padding: '0.5rem' }}>
       <Menu.Item
@@ -31,10 +34,10 @@ export const MenuForDropdown = () => {
         </Row>
       </Menu.Item>
       <Menu.Item key="your profile" icon={<UserOutlined />} style={{ padding: '0.5rem 0.2rem' }}>
-        Your profile
+        {t('your_profile')}
       </Menu.Item>
       <Menu.Item key="logout" icon={<LogoutOutlined />} style={{ padding: '0.5rem 0.2rem' }}>
-        Log out
+        {t('log_out')}
       </Menu.Item>
     </Menu>
   )
