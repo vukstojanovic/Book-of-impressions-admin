@@ -1,5 +1,6 @@
+import { Link } from 'react-router-dom'
 import { Typography, Row, Card, Progress } from 'antd'
-import { QrcodeOutlined } from '@ant-design/icons'
+import { QrcodeOutlined, PlusCircleOutlined } from '@ant-design/icons'
 import { useTranslation } from 'react-i18next'
 
 const { Title, Paragraph, Text } = Typography
@@ -87,8 +88,15 @@ export const Forms = () => {
 
   return (
     <>
-      <Title level={2}>{t('forms')}</Title>
-      <Row align="middle" gutter={[16, 50]} style={{ gap: 50 }}>
+      <Row align="middle" justify="space-between" style={{ marginBottom: '1.75rem' }}>
+        <Title level={2} style={{ marginBottom: '0' }}>
+          {t('forms')}
+        </Title>
+        <Link to="/forms/create-new-form">
+          <PlusCircleOutlined style={{ color: 'black', fontSize: '2.25rem' }} />
+        </Link>
+      </Row>
+      <Row align="middle" style={{ gap: 50 }}>
         {forms.map((form) => {
           const { id, formNum, description, dataOne, dataTwo, dataThree, info } = form
           return (
