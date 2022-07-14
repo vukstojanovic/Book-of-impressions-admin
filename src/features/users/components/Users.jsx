@@ -68,7 +68,6 @@ export const Users = () => {
       title: t('role'),
       dataIndex: 'role',
       key: 'role',
-
       filters: roles.map((role) => {
         return { text: <span>{role}</span>, value: role }
       }),
