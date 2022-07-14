@@ -16,7 +16,14 @@ export const Users = () => {
   const [isModalVisible, setIsModalVisible] = useState(false)
   const [fullName, setFullName] = useState('')
   const [form] = useForm()
+
   const searchInput = useRef(null)
+  const roles = []
+  data.forEach(({ role }) => {
+    if (!roles.includes(role)) {
+      roles.push(role)
+    }
+  })
 
   function openModal(userData) {
     setFullName(`${userData.name} ${userData.surname}`)
@@ -61,6 +68,13 @@ export const Users = () => {
       title: t('role'),
       dataIndex: 'role',
       key: 'role',
+
+      filters: roles.map((role) => {
+        return { text: <span>{role}</span>, value: role }
+      }),
+      onFilter: (value, record) => record.role.startsWith(value),
+      filterSearch: true,
+      width: '40%',
       render: (role) => {
         return <Tag color="green">{role.toUpperCase()}</Tag>
       },

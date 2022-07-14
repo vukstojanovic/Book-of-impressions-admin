@@ -13,6 +13,7 @@ export const getColumnSearchProps = (dataIndex, searchInput) => {
     clearFilters()
     confirm()
   }
+
   return {
     filterDropdown: ({ setSelectedKeys, selectedKeys, confirm, clearFilters }) => (
       <div
