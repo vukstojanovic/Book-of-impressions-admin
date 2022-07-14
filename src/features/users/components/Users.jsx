@@ -1,6 +1,6 @@
 import { Table, Tag, Space, Typography, Modal, Row } from 'antd'
 import { useForm } from 'antd/lib/form/Form'
-import { useState } from 'react'
+import { useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { PlusCircleOutlined } from '@ant-design/icons'
 import { Link } from 'react-router-dom'
@@ -9,11 +9,14 @@ import { data } from '../mockupData/users'
 
 import { FormModal } from './FormModal'
 
+import { getColumnSearchProps } from '@/utils/columnSearchFilter'
+
 export const Users = () => {
   const { t } = useTranslation('Users')
   const [isModalVisible, setIsModalVisible] = useState(false)
   const [fullName, setFullName] = useState('')
   const [form] = useForm()
+  const searchInput = useRef(null)
 
   function openModal(userData) {
     setFullName(`${userData.name} ${userData.surname}`)
@@ -40,16 +43,19 @@ export const Users = () => {
       title: t('name'),
       dataIndex: 'name',
       key: 'name',
+      ...getColumnSearchProps('name', searchInput),
     },
     {
       title: t('surname'),
       dataIndex: 'surname',
       key: 'surname',
+      ...getColumnSearchProps('surname', searchInput),
     },
     {
       title: t('email'),
       dataIndex: 'email',
       key: 'email',
+      ...getColumnSearchProps('email', searchInput),
     },
     {
       title: t('role'),
