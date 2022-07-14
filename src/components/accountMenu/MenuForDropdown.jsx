@@ -15,7 +15,11 @@ export const MenuForDropdown = () => {
         <Row
           align="middle"
           justify="space-between"
-          style={{ minWidth: '16rem', maxWidth: '26rem', cursor: 'arrow', zIndex: 15 }}
+          style={{
+            minWidth: '16rem',
+            maxWidth: '26rem',
+            cursor: 'arrow',
+          }}
         >
           <Col span={4}>
             <Avatar
