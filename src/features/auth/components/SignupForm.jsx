@@ -1,7 +1,9 @@
-import { Button, Form, Input, Typography, Row, Col } from 'antd'
+import { Button, Form, Input, Typography, Row, Col, Checkbox } from 'antd'
 import { Link } from 'react-router-dom'
 import 'antd/dist/antd.css'
 import { useTranslation } from 'react-i18next'
+
+import { AdminLayout } from '@/components/layout/AdminLayout'
 
 const { Title, Paragraph } = Typography
 
@@ -14,8 +16,8 @@ export const SignupForm = () => {
   }
 
   return (
-    <Row justify="center" style={{ padding: '50px 0px' }}>
-      <Col xs={{ span: 22 }} md={{ span: 20 }}>
+    <AdminLayout>
+      <Col span={24} style={{ padding: '0px 20px' }}>
         <Title level={3}>{t('welcome')}</Title>
         <Paragraph>
           {t('question')} <Link to="/sign-in">{t('sign_in')}</Link>
@@ -29,18 +31,36 @@ export const SignupForm = () => {
           layout="vertical"
           onFinish={handleFinish}
         >
-          <Form.Item
-            label={t('username')}
-            name="username"
-            rules={[
-              {
-                required: true,
-                message: 'Please input your username!',
-              },
-            ]}
-          >
-            <Input size="large" style={inputStyle} />
-          </Form.Item>
+          <Row gutter={[20]}>
+            <Col xs={{ span: 24 }} sm={{ span: 24 }} md={{ span: 12 }}>
+              <Form.Item
+                label={t('first_name')}
+                name="firstName"
+                rules={[
+                  {
+                    required: true,
+                    message: t('first_name_warning'),
+                  },
+                ]}
+              >
+                <Input size="large" style={inputStyle} />
+              </Form.Item>
+            </Col>
+            <Col xs={{ span: 24 }} sm={{ span: 24 }} md={{ span: 12 }}>
+              <Form.Item
+                label={t('last_name')}
+                name="lastName"
+                rules={[
+                  {
+                    required: true,
+                    message: t('last_name_warning'),
+                  },
+                ]}
+              >
+                <Input size="large" style={inputStyle} />
+              </Form.Item>
+            </Col>
+          </Row>
 
           <Form.Item
             label={t('email')}
@@ -48,11 +68,11 @@ export const SignupForm = () => {
             rules={[
               {
                 type: 'email',
-                message: 'The input is not valid E-mail!',
+                message: t('valid_email_warning'),
               },
               {
                 required: true,
-                message: 'Please input your email!',
+                message: t('email_warning'),
               },
             ]}
           >
@@ -65,11 +85,15 @@ export const SignupForm = () => {
             rules={[
               {
                 required: true,
-                message: 'Please input your password!',
+                message: t('password_warning'),
               },
             ]}
           >
             <Input.Password size="large" style={inputStyle} />
+          </Form.Item>
+
+          <Form.Item name="agree" valuePropName="checked" noStyle>
+            <Checkbox style={{ marginBottom: '20px' }}>{t('agree')}</Checkbox>
           </Form.Item>
 
           <Form.Item>
@@ -79,6 +103,6 @@ export const SignupForm = () => {
           </Form.Item>
         </Form>
       </Col>
-    </Row>
+    </AdminLayout>
   )
 }

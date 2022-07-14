@@ -2,7 +2,7 @@ import { Table, Tag, Space, Typography, Modal, Row } from 'antd'
 import { useForm } from 'antd/lib/form/Form'
 import { useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { PlusCircleOutlined } from '@ant-design/icons'
+import { PlusCircleOutlined, EditOutlined, DeleteOutlined } from '@ant-design/icons'
 import { Link } from 'react-router-dom'
 
 import { data } from '../mockupData/users'
@@ -70,11 +70,13 @@ export const Users = () => {
       key: 'actions',
       render: (_, record) => {
         return (
-          <Space size="mg">
-            <a style={{ marginRight: '5px' }} onClick={() => openModal(record)}>
-              {t('edit')}
+          <Space size="md">
+            <a style={{ marginRight: '10px' }} onClick={() => openModal(record)}>
+              <EditOutlined style={{ fontSize: '17px' }} />
             </a>
-            <a>{t('delete')}</a>
+            <a>
+              <DeleteOutlined style={{ fontSize: '17px' }} />
+            </a>
           </Space>
         )
       },
