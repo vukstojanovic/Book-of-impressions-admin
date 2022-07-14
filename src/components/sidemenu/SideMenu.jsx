@@ -111,7 +111,7 @@ export const SideMenu = ({ collapsed }) => {
           }}
         >
           <QuestionCircleOutlined />
-          {!collapsed ? 'Get Support' : ''}
+          {!collapsed ? t('getSupport') : ''}
         </Link>
         <Link
           style={{
@@ -122,7 +122,7 @@ export const SideMenu = ({ collapsed }) => {
           }}
         >
           <CommentOutlined />
-          {!collapsed ? 'Give Feedback' : ''}
+          {!collapsed ? t('leaveComment') : ''}
         </Link>
       </Footer>
     </Sider>
