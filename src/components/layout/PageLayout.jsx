@@ -5,7 +5,7 @@ import { SideMenu } from '../sidemenu'
 import { HeaderComponent } from '../header'
 import { BreadcrumbComponent } from '../breadcrumb'
 
-const { Content, Footer } = Layout
+const { Content } = Layout
 
 export const PageLayout = ({ children }) => {
   const [collapsed, setCollapsed] = useState(false)
@@ -13,7 +13,12 @@ export const PageLayout = ({ children }) => {
   return (
     <Layout>
       <HeaderComponent collapsed={collapsed} setCollapsed={setCollapsed} />
-      <Layout>
+      <Layout
+        style={{
+          margin: `${collapsed ? '64px 0 0 80px' : '64px 0 0 200px'}`,
+          transitionDuration: '0.3s',
+        }}
+      >
         <SideMenu collapsed={collapsed} />
         <Content
           style={{
@@ -21,12 +26,10 @@ export const PageLayout = ({ children }) => {
             padding: 24,
           }}
         >
-          {/* <h1>{t('header_title')}</h1> */}
           <BreadcrumbComponent />
           {children}
         </Content>
       </Layout>
-      <Footer style={{ textAlign: 'center', backgroundColor: '#b6b0b0' }}>Footer</Footer>
     </Layout>
   )
 }

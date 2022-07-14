@@ -1,16 +1,20 @@
-import { Layout, Menu } from 'antd'
-const { Sider } = Layout
+import { Layout, Menu, Typography } from 'antd'
 import {
   LayoutOutlined,
   FileTextOutlined,
   FormOutlined,
   StarOutlined,
   TeamOutlined,
+  QuestionCircleOutlined,
+  CommentOutlined,
 } from '@ant-design/icons'
 import { useLocation, useNavigate } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
+import { Footer } from 'antd/lib/layout/layout'
 import { useEffect, useState } from 'react'
 
+const { Sider } = Layout
+const { Link } = Typography
 export const SideMenu = ({ collapsed }) => {
   const navigate = useNavigate()
 
@@ -24,7 +28,20 @@ export const SideMenu = ({ collapsed }) => {
   }, [location.pathname])
 
   return (
-    <Sider trigger={null} collapsible collapsed={collapsed}>
+    <Sider
+      trigger={null}
+      collapsible
+      collapsed={collapsed}
+      style={{
+        overflow: 'auto',
+        height: '100vh',
+        position: 'fixed',
+        left: 0,
+        top: 0,
+        bottom: 0,
+        margin: '64px 0 0 0',
+      }}
+    >
       <Menu
         theme="dark"
         mode="inline"
@@ -74,6 +91,40 @@ export const SideMenu = ({ collapsed }) => {
           },
         ]}
       />
+      <Footer
+        style={{
+          padding: `${collapsed ? '0' : '7px 0 7px 20px'}`,
+          display: 'grid',
+          width: '100%',
+          justifyItems: `${collapsed ? 'center' : 'start'}`,
+          position: 'absolute',
+          bottom: 70,
+          backgroundColor: 'inherit',
+        }}
+      >
+        <Link
+          style={{
+            display: 'flex',
+            alignItems: 'center',
+            gap: 5,
+            height: '22px',
+          }}
+        >
+          <QuestionCircleOutlined />
+          {!collapsed ? t('getSupport') : ''}
+        </Link>
+        <Link
+          style={{
+            display: 'flex',
+            alignItems: 'center',
+            gap: 5,
+            height: '22px',
+          }}
+        >
+          <CommentOutlined />
+          {!collapsed ? t('leaveComment') : ''}
+        </Link>
+      </Footer>
     </Sider>
   )
 }
