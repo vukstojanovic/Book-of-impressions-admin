@@ -55,7 +55,8 @@
     "warning2": "Za ovaj tip forme mozete dodati maksimalno 3 pitanja.",
     "inputQuestion": "Ukucaj pitanje",
     "addQuestion": "Dodaj pitanje",
-    "createNewForm": "Napravi novu formu"
+    "createNewForm": "Napravi novu formu",
+    "fillQuestion": "Molim vas popunite polje za pitanje!"
   },
   "SideMenu": {
     "dashboard": "Komandna Tabla",

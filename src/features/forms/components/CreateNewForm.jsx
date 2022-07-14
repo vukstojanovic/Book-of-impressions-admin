@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { Form, Typography, Input, Select, Button, Card } from 'antd'
+import { Form, Typography, Input, Select, Button, Card, message } from 'antd'
 
 const { Option } = Select
 const { Title, Text } = Typography
@@ -16,7 +16,7 @@ export const CreateNewForm = () => {
 
   const handleAddQuestion = () => {
     if (!question) {
-      alert('Please fill the question filed')
+      message.error(t('fillQuestion'))
       return
     }
     if (type === 'type-1') {
@@ -30,14 +30,8 @@ export const CreateNewForm = () => {
     }
   }
 
-  const handleSubmit = ({ title, description, type }) => {
-    if (type === 'type-1') {
-      console.log(typeOneQuestion)
-    } else {
-      console.log(typeTwoQuestion)
-    }
-
-    console.log(title, description, type)
+  const handleSubmit = () => {
+    message.success('You succesfully create a new form!')
     addNewForm.resetFields()
     setTypeOneQuestion([])
     setTypeTwoQuestion([])

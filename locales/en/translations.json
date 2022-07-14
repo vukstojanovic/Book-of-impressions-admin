@@ -55,7 +55,8 @@
     "warning2": "For this type of form you can add maximum 3 questions!",
     "inputQuestion": "Type a Question",
     "addQuestion": "Add Question",
-    "createNewForm": "Create new Form"
+    "createNewForm": "Create new Form",
+    "fillQuestion": "Please fill the question filed!"
   },
   "SideMenu": {
     "dashboard": "Dashboard",
