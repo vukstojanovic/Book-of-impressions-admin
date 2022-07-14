@@ -8,16 +8,24 @@ import {
   QuestionCircleOutlined,
   CommentOutlined,
 } from '@ant-design/icons'
-import { useNavigate } from 'react-router-dom'
+import { useLocation, useNavigate } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import { Footer } from 'antd/lib/layout/layout'
+import { useEffect, useState } from 'react'
 
 const { Sider } = Layout
 const { Link } = Typography
 export const SideMenu = ({ collapsed }) => {
   const navigate = useNavigate()
 
+  const [selectedKey, setSelectedKey] = useState('')
+
+  const location = useLocation()
   const { t } = useTranslation('SideMenu')
+
+  useEffect(() => {
+    setSelectedKey(location.pathname.split('/')[1] || '/')
+  }, [location.pathname])
 
   return (
     <Sider
@@ -37,10 +45,10 @@ export const SideMenu = ({ collapsed }) => {
       <Menu
         theme="dark"
         mode="inline"
-        defaultSelectedKeys={['1']}
+        selectedKeys={[selectedKey]}
         items={[
           {
-            key: 'dashboard',
+            key: '/',
             icon: <LayoutOutlined />,
             label: t('dashboard'),
             onClick: () => navigate('/'),

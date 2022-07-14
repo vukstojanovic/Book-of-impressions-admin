@@ -7,6 +7,7 @@ export const Reviews = () => {
 
   const { t } = useTranslation('Reviews')
   const { Text, Paragraph, Title } = Typography
+
   const text = `Lorem ipsum dolor sit amet, consectetur adipisicing elit. Incidunt temporibus eligendi
           esse, voluptate architecto reprehenderit eos. Ipsa voluptatum, unde dolores iusto odit
           debitis, nulla non dignissimos expedita, rem tempora optio? Lorem ipsum dolor sit amet
@@ -24,6 +25,7 @@ export const Reviews = () => {
     { user: { name: 'Firstname Surname' }, postedAt: '21-06-2021', description: text, rating: 2.5 },
     { user: { name: 'Firstname Surname' }, postedAt: '21-06-2021', description: text, rating: 4.5 },
   ]
+
   return (
     <>
       <Title>{t('reviews')}</Title>
