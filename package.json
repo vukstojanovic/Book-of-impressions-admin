@@ -10,12 +10,14 @@
     "prepare": "husky install"
   },
   "dependencies": {
+    "@ant-design/icons": "^4.7.0",
     "antd": "^4.21.5",
     "axios": "^0.27.2",
     "cookies-next": "^2.1.1",
     "i18next": "^21.8.12",
     "i18next-http-backend": "^1.4.1",
     "next-intl": "^2.7.4",
+    "qrcode.react": "^3.1.0",
     "react": "^18.0.0",
     "react-dom": "^18.0.0",
     "react-error-boundary": "^3.1.4",
@@ -38,10 +40,5 @@
     "prettier": "^2.7.1",
     "vite": "^2.9.9",
     "vite-plugin-eslint": "^1.6.1"
-  },
-  "husky": {
-    "hooks": {
-      "pre-commit": "npm run lint --fix"
-    }
   }
 }

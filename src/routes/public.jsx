@@ -1,13 +1,16 @@
 import { Navigate } from 'react-router-dom'
 
+import { SignupForm } from '@/features/auth'
+import { LoginForm } from '@/features/auth'
+
 export const publicRoutes = [
   {
     path: '/sign-in',
-    element: 'Sign in page',
+    element: <LoginForm />,
   },
   {
     path: '/sign-up',
-    element: 'Sign up page',
+    element: <SignupForm />,
   },
   { path: '*', element: <Navigate to="/sign-in" /> },
 ]
