@@ -80,7 +80,8 @@
     "users": "Users",
     "home": "Home",
     "getSupport": "Get Support",
-    "leaveComment":"Leave Comment"
+    "leaveComment": "Leave Comment",
+    "create_new_form": "Create New Form"
   },
   "QRCode": {
     "requiredError": "Field can not be empty!",
@@ -103,5 +104,9 @@
     "admin": "Admin",
     "editor": "Editor",
     "viewer": "Viewer"
+  },
+  "AccountMenu": {
+    "your_profile": "Your profile",
+    "log_out": "Log out"
   }
 }
