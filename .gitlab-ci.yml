@@ -1,0 +1,40 @@
+default:
+  image: node:latest
+
+stages:
+  - build
+  - deploy
+
+.base_rules: &base_rules
+  only:
+    - master
+    - dev
+    - merge_requests
+
+build:
+  <<: *base_rules
+  stage: build
+  script:
+    - npm install
+    - npm run build
+  artifacts:
+    paths:
+      - dist/
+
+deploy:
+  <<: *base_rules
+  stage: deploy
+
+  variables:
+    VERCEL_ORG_ID: $VERCEL_ORG_ID
+    VERCEL_PROJECT_ID: $VERCEL_PROJECT_ID
+
+  script:
+    - DEPLOYMENT_URL=$(VERCEL_ORG_ID=$VERCEL_ORG_ID VERCEL_PROJECT_ID=$VERCEL_PROJECT_ID vercel --confirm -t $VERCEL_TOKEN --scope $VERCEL_SCOPE)
+    - if [ ${CI_MERGE_REQUEST_IID} ]; then SLUG=${CI_MERGE_REQUEST_IID}; else SLUG=${CI_COMMIT_BRANCH}; fi;
+    - PREVIEW_URL=${SLUG}-${CI_PROJECT_NAME}.${VERCEL_SCOPE}.vercel.app
+    - vercel alias set $DEPLOYMENT_URL $PREVIEW_URL -t $VERCEL_TOKEN --scope $VERCEL_SCOPE
+
+  environment:
+    name: vercel/$CI_COMMIT_REF_NAME
+    url: https://$PREVIEW_URL
