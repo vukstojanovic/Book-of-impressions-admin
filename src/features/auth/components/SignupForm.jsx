@@ -3,16 +3,29 @@ import { Link } from 'react-router-dom'
 import 'antd/dist/antd.css'
 import { useTranslation } from 'react-i18next'
 
+import { registerUser } from '@/api/auth'
 import { AdminLayout } from '@/components/layout/AdminLayout'
 
 const { Title, Paragraph } = Typography
 
 export const SignupForm = () => {
+  const [form] = Form.useForm()
   const inputStyle = { padding: '10px 8px' }
+
   const { t } = useTranslation('Signup')
 
-  function handleFinish(values) {
-    console.log(values)
+  const handleFinish = async ({ firstName, lastName, email, password }) => {
+    const userData = {
+      name: `${firstName.trim()} ${lastName.trim()}`,
+      email,
+      password,
+      role: 'ADMIN',
+    }
+
+    console.log(import.meta.env.REACT_APP_API_URL, userData)
+
+    await registerUser(userData)
+    form.resetFields()
   }
 
   return (
@@ -23,6 +36,7 @@ export const SignupForm = () => {
           {t('question')} <Link to="/sign-in">{t('sign_in')}</Link>
         </Paragraph>
         <Form
+          form={form}
           name="basic"
           initialValues={{
             remember: true,
