@@ -15,7 +15,7 @@ export const SignupForm = () => {
 
   const { t } = useTranslation('Signup')
 
-  const handleFinish = async ({ firstName, lastName, email, password }) => {
+  const handleSubmit = async ({ firstName, lastName, email, password }) => {
     try {
       const userData = {
         name: `${firstName.trim()} ${lastName.trim()}`,
@@ -47,7 +47,7 @@ export const SignupForm = () => {
           }}
           autoComplete="off"
           layout="vertical"
-          onFinish={handleFinish}
+          onFinish={handleSubmit}
         >
           <Row gutter={[20]}>
             <Col xs={{ span: 24 }} sm={{ span: 24 }} md={{ span: 12 }}>
