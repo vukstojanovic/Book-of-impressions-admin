@@ -1,5 +1,5 @@
 import { Button, Form, Input, Typography, Row, Col, Checkbox, message } from 'antd'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import 'antd/dist/antd.css'
 import { useTranslation } from 'react-i18next'
 
@@ -10,6 +10,7 @@ const { Title, Paragraph } = Typography
 
 export const SignupForm = () => {
   const [form] = Form.useForm()
+  const navigate = useNavigate()
   const inputStyle = { padding: '10px 8px' }
 
   const { t } = useTranslation('Signup')
@@ -23,6 +24,7 @@ export const SignupForm = () => {
         role: 'SuperUser',
       }
       await registerUser(userData)
+      navigate('/')
     } catch (error) {
       message.error(error.response.data.message, 3)
     } finally {
