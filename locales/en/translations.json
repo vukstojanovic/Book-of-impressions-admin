@@ -19,7 +19,7 @@
     "last_name_warning": "Please enter your last name!",
     "email_warning": "Please enter your email!",
     "valid_email_warning": "The input is not valid E-mail!",
-    "password_warning": "Please enter your password!"
+    "password_warning": "Please enter your password! Required minimum 8 characters."
   },
   "Login": {
     "login_welcome": "Welcome to Boi!",

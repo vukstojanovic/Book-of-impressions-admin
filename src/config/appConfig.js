@@ -1,3 +1,5 @@
 export const appConfig = {
-  appBaseUrl: import.meta.env.REACT_APP_API_URL,
+  appBaseUrl: import.meta.env.VITE_APP_API_URL,
 }
+
+console.log(import.meta.env.VITE_APP_API_URL)

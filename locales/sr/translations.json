@@ -19,7 +19,7 @@
     "last_name_warning": "Molimo unesite vaše prezime!",
     "email_warning": "Molimo unesite vaš email!",
     "valid_email_warning": "Niste uneli validan email",
-    "password_warning": "Molimo unesite lozinku!"
+    "password_warning": "Molimo unesite lozinku! Potrebno je minimum 8 karaktera."
   },
   "Login": {
     "login_welcome": "Dobrodosli na Boi!",

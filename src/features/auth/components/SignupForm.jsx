@@ -1,4 +1,4 @@
-import { Button, Form, Input, Typography, Row, Col, Checkbox } from 'antd'
+import { Button, Form, Input, Typography, Row, Col, Checkbox, message } from 'antd'
 import { Link } from 'react-router-dom'
 import 'antd/dist/antd.css'
 import { useTranslation } from 'react-i18next'
@@ -14,18 +14,20 @@ export const SignupForm = () => {
 
   const { t } = useTranslation('Signup')
 
-  const handleFinish = async ({ firstName, lastName, email, password }) => {
-    const userData = {
-      name: `${firstName.trim()} ${lastName.trim()}`,
-      email,
-      password,
-      role: 'ADMIN',
+  const handleSubmit = async ({ firstName, lastName, email, password }) => {
+    try {
+      const userData = {
+        name: `${firstName.trim()} ${lastName.trim()}`,
+        email,
+        password,
+        role: 'SuperUser',
+      }
+      await registerUser(userData)
+    } catch (error) {
+      message.error(error.response.data.message, 3)
+    } finally {
+      form.resetFields()
     }
-
-    console.log(import.meta.env.REACT_APP_API_URL, userData)
-
-    await registerUser(userData)
-    form.resetFields()
   }
 
   return (
@@ -43,7 +45,7 @@ export const SignupForm = () => {
           }}
           autoComplete="off"
           layout="vertical"
-          onFinish={handleFinish}
+          onFinish={handleSubmit}
         >
           <Row gutter={[20]}>
             <Col xs={{ span: 24 }} sm={{ span: 24 }} md={{ span: 12 }}>
@@ -100,6 +102,7 @@ export const SignupForm = () => {
               {
                 required: true,
                 message: t('password_warning'),
+                min: 8,
               },
             ]}
           >

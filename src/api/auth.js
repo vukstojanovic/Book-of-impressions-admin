@@ -9,5 +9,5 @@ export const loginUser = () => {
 }
 
 export const registerUser = (data) => {
-  return axios({ method: 'post', url: '/api/public/user' }, data)
+  return axios({ method: 'post', url: '/api/public/user', data })
 }
