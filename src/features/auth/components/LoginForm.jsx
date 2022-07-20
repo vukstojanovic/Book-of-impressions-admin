@@ -1,25 +1,44 @@
-import { Row, Card, Form, Input, Checkbox, Button, Typography } from 'antd'
+import { Row, Col, Form, Input, Checkbox, Button, Typography, message } from 'antd'
 import { useTranslation } from 'react-i18next'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 
+import { loginUser } from '@/api/auth'
 import { AdminLayout } from '@/components/layout/AdminLayout'
 
 const { Title, Paragraph } = Typography
 
 export const LoginForm = () => {
+  const [form] = Form.useForm()
+  const navigate = useNavigate()
   const { t } = useTranslation('Login')
-  const onFinish = ({ email, password, remember }) => {
-    console.log(email, password, 'Remember: ' + remember)
+
+  const onFinish = async ({ email, password }) => {
+    try {
+      const userData = {
+        email,
+        password,
+      }
+      const response = await loginUser(userData)
+      navigate('/')
+      console.log(response)
+    } catch (error) {
+      if (error.response.status === 401) {
+        message.error('Password is incorrect! Please login with correct password.', 3)
+      }
+    } finally {
+      form.resetFields()
+    }
   }
 
   return (
     <AdminLayout>
-      <Card style={{ padding: '50px' }}>
+      <Col style={{ width: '380px' }}>
         <Title level={2}>{t('login_welcome')}</Title>
         <Paragraph>
           {t('welcome_create')} <Link to="/sign-up">{t('create_account')}</Link>
         </Paragraph>
         <Form
+          form={form}
           layout="vertical"
           name="normal_login"
           className="login-form"
@@ -46,7 +65,7 @@ export const LoginForm = () => {
           <Form.Item
             label={t('password')}
             name="password"
-            rules={[{ required: true, message: t('password_warning') }]}
+            rules={[{ required: true, message: t('password_warning'), min: 8 }]}
           >
             <Input.Password type="password" placeholder={t('password')} size="large" />
           </Form.Item>
@@ -74,7 +93,7 @@ export const LoginForm = () => {
             </Button>
           </Form.Item>
         </Form>
-      </Card>
+      </Col>
     </AdminLayout>
   )
 }
