@@ -89,6 +89,12 @@ export const SideMenu = ({ collapsed }) => {
             label: t('users'),
             onClick: () => navigate('/users'),
           },
+          {
+            key: 'settings',
+            icon: <TeamOutlined />,
+            label: t('settings'),
+            onClick: () => navigate('/settings'),
+          },
         ]}
       />
       <Footer

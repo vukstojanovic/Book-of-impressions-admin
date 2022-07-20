@@ -81,7 +81,8 @@
     "home": "Početna strana",
     "getSupport": "Podrška",
     "leaveComment": "Ostavite komentar",
-    "create_new_form": "Napravi novu formu"
+    "create_new_form": "Napravi novu formu",
+    "settings": "Podešavanja"
   },
   "QRCode": {
     "requiredError": "Polje ne može biti prazno!",
