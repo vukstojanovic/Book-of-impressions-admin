@@ -1,11 +1,7 @@
 import { axios } from '@/lib/axios'
 
-export const loginUser = () => {
-  console.log('login user')
-
-  const data = {}
-
-  return axios({ method: 'post', url: '/auth/login', data })
+export const loginUser = (data) => {
+  return axios({ method: 'post', url: '/api/public/auth/login', data })
 }
 
 export const registerUser = (data) => {
