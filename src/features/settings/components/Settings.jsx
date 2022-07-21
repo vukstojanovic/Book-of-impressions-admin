@@ -1,6 +1,7 @@
 import { LoadingOutlined, PlusOutlined } from '@ant-design/icons'
 import { Form, Input, Upload, message, Tabs, Button } from 'antd'
 import { useState } from 'react'
+
 const getBase64 = (img, callback) => {
   const reader = new FileReader()
   reader.addEventListener('load', () => callback(reader.result))
@@ -31,6 +32,7 @@ export function Settings() {
   // const [imageUrl, setImageUrl] = useState()
 
   const onFinish = (values) => {
+    message.success('Success')
     console.log(values)
   }
 
@@ -40,13 +42,10 @@ export function Settings() {
     //   setLoading(true)
     //   return
     // }
-
     // if (info.file.status === 'done') {
     // Get this url from response in real world.
     getBase64(info.file.originFileObj, () => {
       setLoading(false)
-      // setImageUrl(url)
-      return
     })
     // }
   }
@@ -64,7 +63,13 @@ export function Settings() {
     </div>
   )
   return (
-    <Form size="large" layout="vertical" form={form} onFinish={onFinish}>
+    <Form
+      size="large"
+      layout="vertical"
+      form={form}
+      onFinish={onFinish}
+      style={{ backgroundColor: 'white', padding: '10px 30px' }}
+    >
       <div style={{ display: 'flex', gap: 50 }}>
         <Form.Item label="Company name:" name="company-name">
           <Input placeholder="Company name" />
@@ -73,9 +78,16 @@ export function Settings() {
           <Input placeholder="Company name" />
         </Form.Item>
       </div>
-      <Tabs defaultActiveKey="en" type="card">
+      <p style={{ marginBottom: '-10px' }}>Company description:</p>
+      <Tabs
+        defaultActiveKey="en"
+        type="line"
+        hideAdd
+        tabBarGutter={40}
+        tabBarStyle={{ margin: '0 0 10px 30px', width: 78 }}
+      >
         <TabPane tab="EN" key="en">
-          <Form.Item name="en-company-description" label="Company description:EN">
+          <Form.Item name="en-desc">
             <TextArea
               placeholder="Company description"
               name="english-desc"
@@ -85,7 +97,7 @@ export function Settings() {
           </Form.Item>
         </TabPane>
         <TabPane tab="SR" key="sr">
-          <Form.Item name="sr-company-description" label="Company description:SR">
+          <Form.Item name="sr-desc">
             <TextArea
               placeholder="Company description"
               name="serbian-dec"
@@ -104,8 +116,8 @@ export function Settings() {
           beforeUpload={beforeUpload}
           onChange={handleChange}
           maxCount={1}
+          action="UploadUrl"
         >
-          {/* {imageUrl ? <img src={imageUrl} alt="avatar" style={{ width: '100%' }} /> : uploadButton} */}
           {uploadButton}
         </Upload>
       </Form.Item>
