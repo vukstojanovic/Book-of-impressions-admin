@@ -81,7 +81,8 @@
     "home": "Home",
     "getSupport": "Get Support",
     "leaveComment": "Leave Comment",
-    "create_new_form": "Create New Form"
+    "create_new_form": "Create New Form",
+    "settings": "Settings"
   },
   "QRCode": {
     "requiredError": "Field can not be empty!",

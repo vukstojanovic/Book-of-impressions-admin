@@ -7,6 +7,7 @@ import {
   TeamOutlined,
   QuestionCircleOutlined,
   CommentOutlined,
+  SettingOutlined,
 } from '@ant-design/icons'
 import { useLocation, useNavigate } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
@@ -88,6 +89,12 @@ export const SideMenu = ({ collapsed }) => {
             icon: <TeamOutlined />,
             label: t('users'),
             onClick: () => navigate('/users'),
+          },
+          {
+            key: 'settings',
+            icon: <SettingOutlined />,
+            label: t('settings'),
+            onClick: () => navigate('/settings'),
           },
         ]}
       />
