@@ -6,7 +6,10 @@ export const loginUser = (data) => {
     url: '/api/public/auth/login',
     data,
     withCredentials: true,
-    headers: { 'Access-Control-Allow-Origin': '*', 'Content-Type': 'application/json' },
+    headers: {
+      'Access-Control-Allow-Origin': 'https://bookquantox.herokuapp.com/',
+      'Content-Type': 'application/json',
+    },
   })
 }
 
