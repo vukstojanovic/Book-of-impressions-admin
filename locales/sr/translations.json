@@ -68,7 +68,10 @@
     "inputQuestion": "Ukucaj pitanje",
     "addQuestion": "Dodaj pitanje",
     "createNewForm": "Napravi novu formu",
-    "fillQuestion": "Molim vas popunite polje za pitanje!"
+    "fillQuestion": "Molim vas popunite polje za pitanje!",
+    "emptyTitle": "Naslov je obavezan",
+    "emptyDescription": "Opis je obavezan",
+    "emptyType": "Tip je obavezen"
   },
   "SideMenu": {
     "dashboard": "Komandna Tabla",

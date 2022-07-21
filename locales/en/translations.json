@@ -68,7 +68,10 @@
     "inputQuestion": "Type a Question",
     "addQuestion": "Add Question",
     "createNewForm": "Create new Form",
-    "fillQuestion": "Please fill the question filed!"
+    "fillQuestion": "Please fill the question filed!",
+    "emptyTitle": "Title is required",
+    "emptyDescription": "Description is required",
+    "emptyType": "Type is required"
   },
   "SideMenu": {
     "dashboard": "Dashboard",
