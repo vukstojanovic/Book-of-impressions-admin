@@ -30,7 +30,7 @@
     "log_in": "Log in",
     "email_warning": "Please enter your email!",
     "valid_email_warning": "The input is not valid E-mail!",
-    "password_warning": "Please enter your password!",
+    "password_warning": "Please enter your password! Required minimum 8 characters.",
     "email": "Email",
     "password": "Password"
   },
