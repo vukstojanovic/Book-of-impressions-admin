@@ -1,18 +1,35 @@
-import { Button, Form, Input, Typography, Row, Col, Checkbox } from 'antd'
-import { Link } from 'react-router-dom'
+import { Button, Form, Input, Typography, Row, Col, Checkbox, message } from 'antd'
+import { Link, useNavigate } from 'react-router-dom'
 import 'antd/dist/antd.css'
 import { useTranslation } from 'react-i18next'
 
+import { registerUser } from '@/api/auth'
 import { AdminLayout } from '@/components/layout/AdminLayout'
 
 const { Title, Paragraph } = Typography
 
 export const SignupForm = () => {
+  const [form] = Form.useForm()
+  const navigate = useNavigate()
   const inputStyle = { padding: '10px 8px' }
+
   const { t } = useTranslation('Signup')
 
-  function handleFinish(values) {
-    console.log(values)
+  const handleSubmit = async ({ firstName, lastName, email, password }) => {
+    try {
+      const userData = {
+        name: `${firstName.trim()} ${lastName.trim()}`,
+        email,
+        password,
+        role: 'SuperUser',
+      }
+      await registerUser(userData)
+      navigate('/')
+    } catch (error) {
+      message.error(error.response.data.message, 3)
+    } finally {
+      form.resetFields()
+    }
   }
 
   return (
@@ -23,13 +40,14 @@ export const SignupForm = () => {
           {t('question')} <Link to="/sign-in">{t('sign_in')}</Link>
         </Paragraph>
         <Form
+          form={form}
           name="basic"
           initialValues={{
             remember: true,
           }}
           autoComplete="off"
           layout="vertical"
-          onFinish={handleFinish}
+          onFinish={handleSubmit}
         >
           <Row gutter={[20]}>
             <Col xs={{ span: 24 }} sm={{ span: 24 }} md={{ span: 12 }}>
@@ -86,6 +104,7 @@ export const SignupForm = () => {
               {
                 required: true,
                 message: t('password_warning'),
+                min: 8,
               },
             ]}
           >

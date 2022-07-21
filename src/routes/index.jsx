@@ -5,7 +5,7 @@ import { publicRoutes } from './public'
 
 export const AppRoutes = () => {
   // const auth = useAuth()
-  const auth = true
+  const auth = false
 
   const routes = auth ? protectedRoutes : publicRoutes
 
