@@ -1,52 +1,36 @@
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { Row, Col, Form, Typography, Input, Select, Button, Card, message } from 'antd'
+import { Row, Col, Form, Typography, Input, Button, Select, Space } from 'antd'
 
+const { Title } = Typography
+const { TextArea } = Input
 const { Option } = Select
-const { Title, Text } = Typography
 
 export const CreateNewForm = () => {
-  const [type, setType] = useState('type-1')
-  const [question, setQuestion] = useState('')
-  const [typeOneQuestion, setTypeOneQuestion] = useState([])
-  const [typeTwoQuestion, setTypeTwoQuestion] = useState([])
-  const [addNewForm] = Form.useForm()
+  const [descriptionLanguage, setDescriptionLanguage] = useState('EN')
+  const [questionLanguage, setQuestionLanguage] = useState('EN')
+  // const [questions, setQuestions] = useState([])
+  const [form] = Form.useForm()
 
   const { t } = useTranslation('CreateNewForm')
 
-  const handleAddQuestion = () => {
-    if (!question) {
-      message.error(t('fillQuestion'))
-      return
-    }
-    if (type === 'type-1') {
-      setTypeOneQuestion([...typeOneQuestion, { name: question }])
-      setQuestion('')
-    }
-
-    if (type === 'type-2') {
-      setTypeTwoQuestion([...typeTwoQuestion, { name: question }])
-      setQuestion('')
-    }
+  const handleSubmit = (values) => {
+    console.log(values)
   }
 
-  const handleSubmit = () => {
-    message.success('You succesfully create a new form!')
-    addNewForm.resetFields()
-    setTypeOneQuestion([])
-    setTypeTwoQuestion([])
-    setType('type-1')
+  const onTypeChange = () => {
+    console.log('type was changed')
   }
 
-  const handleSelectChange = (e) => {
-    setType(e)
+  const onReset = () => {
+    form.resetFields()
   }
 
   return (
     <>
       <Title level={2}>{t('main')}</Title>
-      <Form form={addNewForm} onFinish={handleSubmit} layout="vertical" size="large">
-        <Row gutter={26}>
+      <Form form={form} onFinish={handleSubmit} layout="vertical" size="large">
+        <Row>
           <Col sm={24} md={12} lg={8}>
             <Form.Item
               label={t('formTitle')}
@@ -61,137 +45,86 @@ export const CreateNewForm = () => {
               <Input allowClear={true} />
             </Form.Item>
           </Col>
-          <Col sm={24} md={12} lg={8}>
+        </Row>
+        <Row>
+          <Col lg={24} md={24} sm={24}>
+            <Button onClick={() => setDescriptionLanguage('EN')}>EN</Button>
+            <Button onClick={() => setDescriptionLanguage('SR')}>SR</Button>
             <Form.Item
               label={t('formDescription')}
-              name="description"
-              rules={[
-                {
-                  required: true,
-                  message: t('emptyDescription'),
-                },
-              ]}
+              name="Form description"
+              rules={[{ required: true, message: t('emptyDescription') }]}
             >
-              <Input allowClear={true} />
+              {descriptionLanguage === 'EN' ? (
+                <TextArea
+                  rows={2}
+                  placeholder={`${t('descriptionFor')} ${descriptionLanguage}`}
+                ></TextArea>
+              ) : null}
+              {descriptionLanguage === 'SR' ? (
+                <TextArea
+                  rows={2}
+                  placeholder={`${t('descriptionFor')} ${descriptionLanguage}`}
+                ></TextArea>
+              ) : null}
             </Form.Item>
           </Col>
         </Row>
         <Row>
-          <Col sm={24} md={24} lg={16}>
+          <Col lg={24} md={24} sm={24}>
             <Form.Item
+              name="form type"
               label={t('formType')}
-              name="type"
-              rules={[
-                {
-                  required: true,
-                  message: t('emptyType'),
-                },
-              ]}
+              rules={[{ required: true, message: t('emptyType') }]}
             >
-              <Select value={type} onChange={handleSelectChange}>
+              <Select placeholder={t('formType')} onChange={onTypeChange}>
                 <Option value="type-1">{t('type1')}</Option>
                 <Option value="type-2">{t('type2')}</Option>
               </Select>
             </Form.Item>
           </Col>
         </Row>
-
-        {type === 'type-1' ? (
-          <Row>
-            <Col sm={24} md={24} lg={16}>
-              <Form.Item
-                label={t('question')}
-                rules={[
-                  {
-                    required: true,
-                  },
-                ]}
-              >
-                <Card style={{ margin: '1.75rem 0' }}>
-                  <Text>{t('warning')}</Text>
-                  <div>
-                    <Input
-                      placeholder={t('inputQuestion')}
-                      size="large"
-                      value={question}
-                      onChange={(e) => setQuestion(e.target.value)}
-                    />
-                  </div>
-
-                  {typeOneQuestion.map((question, i) => (
-                    <div
-                      key={i}
-                      style={{
-                        marginTop: '10px',
-                        padding: '15px 10px',
-                        borderBottom: '0.5px solid black',
-                      }}
-                    >
-                      <Text key={i} style={{ fontSize: '1.25rem' }}>
-                        {question.name}
-                      </Text>
-                    </div>
-                  ))}
-
-                  <Button
-                    style={{ display: 'block', marginTop: '15px' }}
-                    onClick={handleAddQuestion}
-                    disabled={typeOneQuestion.length >= 1}
-                  >
-                    {t('addQuestion')}
-                  </Button>
-                </Card>
-              </Form.Item>
-            </Col>
-          </Row>
-        ) : (
-          <Row>
-            <Col sm={24} md={24} lg={16}>
-              <Card style={{ marginBottom: '1.75rem' }}>
-                <Title level={4}>{t('question')}</Title>
-                <Text>{t('warning2')}</Text>
-
-                <div>
-                  <Input
-                    placeholder={t('inputQuestion')}
-                    size="large"
-                    value={question}
-                    onChange={(e) => setQuestion(e.target.value)}
-                  />
-                </div>
-
-                {typeTwoQuestion.map((question, i) => (
-                  <div
-                    key={i}
-                    style={{
-                      marginTop: '10px',
-                      padding: '15px 10px',
-                      borderBottom: '0.5px solid black',
-                    }}
-                  >
-                    <Text key={i} style={{ fontSize: '1.25rem' }}>
-                      {question.name}
-                    </Text>
-                  </div>
-                ))}
-
-                <Button
-                  style={{ display: 'block', marginTop: '15px' }}
-                  onClick={handleAddQuestion}
-                  disabled={typeTwoQuestion.length >= 3}
-                >
-                  {t('addQuestion')}
-                </Button>
-              </Card>
-            </Col>
-          </Row>
-        )}
-
-        <Form.Item>
-          <Button type="primary" htmlType="submit">
-            {t('createNewForm')}
-          </Button>
-        </Form.Item>
+        <Row>
+          <Col lg={24} md={24} sm={24} style={{ marginTop: '10px' }}>
+            <Button onClick={() => setQuestionLanguage('EN')}>EN</Button>
+            <Button onClick={() => setQuestionLanguage('SR')}>SR</Button>
+            <Form.Item
+              label={t('question')}
+              name="questions"
+              rules={[{ required: true, message: t('fillQuestion') }]}
+            >
+              {questionLanguage === 'EN' ? (
+                <TextArea
+                  rows={2}
+                  placeholder={`${t('inputQuestion')} ${questionLanguage}`}
+                ></TextArea>
+              ) : null}
+              {questionLanguage === 'SR' ? (
+                <TextArea
+                  rows={2}
+                  placeholder={`${t('inputQuestion')} ${questionLanguage}`}
+                ></TextArea>
+              ) : null}
+            </Form.Item>
+          </Col>
+        </Row>
+        <Row>
+          <Col span={24}>
+            <Button>{t('addAnoterQuestion')}</Button>
+          </Col>
+        </Row>
+        <Row justify="end">
+          <Col style={{ marginTop: '25px' }}>
+            <Space size={'large'}>
+              <Button type="primary" size={'large'} onClick={onReset}>
+                {t('cancel')}
+              </Button>
+              <Button type="primary" size={'large'} htmlType="submit">
+                {t('create')}
+              </Button>
+            </Space>
+          </Col>
+        </Row>
       </Form>
     </>
   )
