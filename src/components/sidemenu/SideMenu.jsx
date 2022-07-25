@@ -41,16 +41,21 @@ export const SideMenu = ({ collapsed }) => {
         top: 0,
         bottom: 0,
         margin: '64px 0 0 0',
+        paddingTop: '2rem',
       }}
     >
       <Menu
         theme="dark"
         mode="inline"
         selectedKeys={[selectedKey]}
+        style={{
+          color: 'white',
+          fontWeight: 600,
+        }}
         items={[
           {
             key: '/',
-            icon: <LayoutOutlined />,
+            icon: <LayoutOutlined style={{ fontSize: '18px' }} />,
             label: t('dashboard'),
             onClick: () => navigate('/'),
           },
@@ -62,19 +67,19 @@ export const SideMenu = ({ collapsed }) => {
           },
           {
             key: 'forms',
-            icon: <FormOutlined />,
+            icon: <FormOutlined style={{ fontSize: '18px' }} />,
             label: t('forms'),
             onClick: () => navigate('/forms'),
           },
           {
             key: 'reviews',
-            icon: <StarOutlined />,
+            icon: <StarOutlined style={{ fontSize: '18px' }} />,
             label: t('reviews'),
             onClick: () => navigate('/reviews'),
           },
           {
             key: 'reports',
-            icon: <FileTextOutlined />,
+            icon: <FileTextOutlined style={{ fontSize: '18px' }} />,
             label: t('reports'),
             onClick: () => navigate('/reports'),
           },
@@ -86,7 +91,7 @@ export const SideMenu = ({ collapsed }) => {
           },
           {
             key: 'users',
-            icon: <TeamOutlined />,
+            icon: <TeamOutlined style={{ fontSize: '18px' }} />,
             label: t('users'),
             onClick: () => navigate('/users'),
           },
@@ -102,6 +107,7 @@ export const SideMenu = ({ collapsed }) => {
         style={{
           padding: `${collapsed ? '0' : '7px 0 7px 20px'}`,
           display: 'grid',
+          gap: 8,
           width: '100%',
           justifyItems: `${collapsed ? 'center' : 'start'}`,
           position: 'absolute',
@@ -113,22 +119,22 @@ export const SideMenu = ({ collapsed }) => {
           style={{
             display: 'flex',
             alignItems: 'center',
-            gap: 5,
-            height: '22px',
+            gap: 8,
+            color: 'white',
           }}
         >
-          <QuestionCircleOutlined />
+          <QuestionCircleOutlined style={{ fontSize: '18px' }} />
           {!collapsed ? t('getSupport') : ''}
         </Link>
         <Link
           style={{
             display: 'flex',
             alignItems: 'center',
-            gap: 5,
-            height: '22px',
+            gap: 8,
+            color: 'white',
           }}
         >
-          <CommentOutlined />
+          <CommentOutlined style={{ fontSize: '18px' }} />
           {!collapsed ? t('leaveComment') : ''}
         </Link>
       </Footer>

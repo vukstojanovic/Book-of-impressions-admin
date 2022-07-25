@@ -92,7 +92,7 @@ export const InviteUser = () => {
         </Form.Item>
         <Row span={24} gutter={[10, 10]}>
           <Col xs={{ span: 24 }} md={{ span: 7 }}>
-            <Button style={{ width: '100%' }} type="primary" onClick={() => form.resetFields()}>
+            <Button style={{ width: '100%' }} onClick={() => form.resetFields()}>
               {t('cancel')}
             </Button>
           </Col>
