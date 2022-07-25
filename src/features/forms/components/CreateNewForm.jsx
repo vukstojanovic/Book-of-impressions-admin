@@ -1,15 +1,12 @@
-import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { Row, Col, Form, Typography, Input, Button, Select, Space } from 'antd'
+import { Row, Col, Form, Typography, Input, Button, Select, Space, Tabs, Card } from 'antd'
 
 const { Title } = Typography
 const { TextArea } = Input
 const { Option } = Select
+const { TabPane } = Tabs
 
 export const CreateNewForm = () => {
-  const [descriptionLanguage, setDescriptionLanguage] = useState('EN')
-  const [questionLanguage, setQuestionLanguage] = useState('EN')
-  // const [questions, setQuestions] = useState([])
   const [form] = Form.useForm()
 
   const { t } = useTranslation('CreateNewForm')
@@ -29,103 +26,153 @@ export const CreateNewForm = () => {
   return (
     <>
       <Title level={2}>{t('main')}</Title>
-      <Form form={form} onFinish={handleSubmit} layout="vertical" size="large">
-        <Row>
-          <Col sm={24} md={12} lg={8}>
-            <Form.Item
-              label={t('formTitle')}
-              name="title"
-              rules={[
-                {
-                  required: true,
-                  message: t('emptyTitle'),
-                },
-              ]}
-            >
-              <Input allowClear={true} />
-            </Form.Item>
-          </Col>
-        </Row>
-        <Row>
-          <Col lg={24} md={24} sm={24}>
-            <Button onClick={() => setDescriptionLanguage('EN')}>EN</Button>
-            <Button onClick={() => setDescriptionLanguage('SR')}>SR</Button>
-            <Form.Item
-              label={t('formDescription')}
-              name="Form description"
-              rules={[{ required: true, message: t('emptyDescription') }]}
-            >
-              {descriptionLanguage === 'EN' ? (
+      <Card>
+        <Form
+          requiredMark={false}
+          form={form}
+          onFinish={handleSubmit}
+          layout="vertical"
+          size="large"
+        >
+          <Row>
+            <Col sm={24} md={12} lg={6}>
+              <Form.Item
+                label={t('formTitle')}
+                name="title"
+                rules={[
+                  {
+                    required: true,
+                    message: t('emptyTitle'),
+                  },
+                ]}
+              >
+                <Input allowClear={true} />
+              </Form.Item>
+            </Col>
+          </Row>
+          <p style={{ marginBottom: '-10px' }}>{t('formDescription')}</p>
+          <Tabs
+            defaultActiveKey="en"
+            type="line"
+            hideAdd
+            tabBarGutter={40}
+            tabBarStyle={{ margin: '0 0 10px 30px', width: 78 }}
+          >
+            <TabPane tab="EN" key="en">
+              <Form.Item
+                name="en-desc"
+                rules={[
+                  {
+                    required: true,
+                    message: t('emptyDescription'),
+                  },
+                ]}
+              >
                 <TextArea
-                  rows={2}
-                  placeholder={`${t('descriptionFor')} ${descriptionLanguage}`}
-                ></TextArea>
-              ) : null}
-              {descriptionLanguage === 'SR' ? (
+                  placeholder="Form description"
+                  name="english-desc"
+                  autoSize={{ minRows: 6, maxRows: 10 }}
+                  style={{ width: '60%', marginTop: '6px' }}
+                />
+              </Form.Item>
+            </TabPane>
+            <TabPane tab="SR" key="sr">
+              <Form.Item
+                name="sr-desc"
+                rules={[
+                  {
+                    required: true,
+                    message: t('emptyDescription'),
+                  },
+                ]}
+              >
                 <TextArea
-                  rows={2}
-                  placeholder={`${t('descriptionFor')} ${descriptionLanguage}`}
-                ></TextArea>
-              ) : null}
-            </Form.Item>
-          </Col>
-        </Row>
-        <Row>
-          <Col lg={24} md={24} sm={24}>
-            <Form.Item
-              name="form type"
-              label={t('formType')}
-              rules={[{ required: true, message: t('emptyType') }]}
-            >
-              <Select placeholder={t('formType')} onChange={onTypeChange}>
-                <Option value="type-1">{t('type1')}</Option>
-                <Option value="type-2">{t('type2')}</Option>
-              </Select>
-            </Form.Item>
-          </Col>
-        </Row>
-        <Row>
-          <Col lg={24} md={24} sm={24} style={{ marginTop: '10px' }}>
-            <Button onClick={() => setQuestionLanguage('EN')}>EN</Button>
-            <Button onClick={() => setQuestionLanguage('SR')}>SR</Button>
-            <Form.Item
-              label={t('question')}
-              name="questions"
-              rules={[{ required: true, message: t('fillQuestion') }]}
-            >
-              {questionLanguage === 'EN' ? (
+                  placeholder="Opis forme"
+                  name="serbian-dec"
+                  autoSize={{ minRows: 6, maxRows: 10 }}
+                  style={{ width: '60%', marginTop: '6px' }}
+                />
+              </Form.Item>
+            </TabPane>
+          </Tabs>
+          <Row>
+            <Col style={{ width: '60%' }}>
+              <Form.Item
+                name="form type"
+                label={t('formType')}
+                rules={[{ required: true, message: t('emptyType') }]}
+              >
+                <Select placeholder={t('formType')} onChange={onTypeChange}>
+                  <Option value="type-1">{t('type1')}</Option>
+                  <Option value="type-2">{t('type2')}</Option>
+                </Select>
+              </Form.Item>
+            </Col>
+          </Row>
+          <p style={{ marginBottom: '-10px' }}>{t('question')}</p>
+          <Tabs
+            defaultActiveKey="en"
+            type="line"
+            hideAdd
+            tabBarGutter={40}
+            tabBarStyle={{ margin: '0 0 10px 30px', width: 78 }}
+          >
+            <TabPane tab="EN" key="en">
+              <Form.Item
+                name="en-question"
+                rules={[
+                  {
+                    required: true,
+                    message: t('fillQuestion'),
+                  },
+                ]}
+              >
                 <TextArea
-                  rows={2}
-                  placeholder={`${t('inputQuestion')} ${questionLanguage}`}
-                ></TextArea>
-              ) : null}
-              {questionLanguage === 'SR' ? (
+                  placeholder="Question"
+                  name="english-desc"
+                  autoSize={{ minRows: 6, maxRows: 10 }}
+                  style={{ width: '60%', marginTop: '6px' }}
+                />
+              </Form.Item>
+            </TabPane>
+            <TabPane tab="SR" key="sr">
+              <Form.Item
+                name="sr-question"
+                rules={[
+                  {
+                    required: true,
+                    message: t('fillQuestion'),
+                  },
+                ]}
+              >
                 <TextArea
-                  rows={2}
-                  placeholder={`${t('inputQuestion')} ${questionLanguage}`}
-                ></TextArea>
-              ) : null}
-            </Form.Item>
-          </Col>
-        </Row>
-        <Row>
-          <Col span={24}>
-            <Button>{t('addAnoterQuestion')}</Button>
-          </Col>
-        </Row>
-        <Row justify="end">
-          <Col style={{ marginTop: '25px' }}>
-            <Space size={'large'}>
-              <Button type="primary" size={'large'} onClick={onReset}>
-                {t('cancel')}
-              </Button>
-              <Button type="primary" size={'large'} htmlType="submit">
-                {t('create')}
-              </Button>
-            </Space>
-          </Col>
-        </Row>
-      </Form>
+                  placeholder="Pitanje"
+                  name="serbian-dec"
+                  autoSize={{ minRows: 6, maxRows: 10 }}
+                  style={{ width: '60%', marginTop: '6px' }}
+                />
+              </Form.Item>
+            </TabPane>
+          </Tabs>
+          <Row>
+            <Col span={24}>
+              <Button>{t('addAnoterQuestion')}</Button>
+            </Col>
+          </Row>
+          <Row justify="end">
+            <Col style={{ marginTop: '25px' }}>
+              <Space size={'large'}>
+                <Button type="primary" size={'large'} onClick={onReset}>
+                  {t('cancel')}
+                </Button>
+                <Button type="primary" size={'large'} htmlType="submit">
+                  {t('create')}
+                </Button>
+              </Space>
+            </Col>
+          </Row>
+        </Form>
+      </Card>
     </>
   )
 }
