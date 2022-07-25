@@ -4,6 +4,7 @@ import { PageLayout } from '@/components/layout'
 import { Users, InviteUser } from '@/features/users'
 import { Reviews } from '@/features/reviews'
 import { Forms, CreateNewForm } from '@/features/forms'
+import { Settings } from '@/features/settings'
 
 const App = () => {
   return (
@@ -31,6 +32,7 @@ export const protectedRoutes = [
       { path: '/forms/create-new-form', element: <CreateNewForm /> },
       { path: '/reviews', element: <Reviews /> },
       { path: '/reports', element: '<Reports />' },
+      { path: '/settings', element: <Settings /> },
       { path: '/', element: '<Dashboard />' },
       { path: '*', element: <Navigate to="/" /> },
     ],
