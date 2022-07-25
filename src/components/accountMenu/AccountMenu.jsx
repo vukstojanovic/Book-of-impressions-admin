@@ -10,8 +10,8 @@ export const AccountMenu = () => {
       trigger={['click']}
       arrow={{ pointAtCenter: true }}
     >
-      <Avatar size={40} style={{ cursor: 'pointer' }}>
-        USER
+      <Avatar size={40} style={{ color: '#f56a00', backgroundColor: '#fde3cf', cursor: 'pointer' }}>
+        BB
       </Avatar>
     </Dropdown>
   )

@@ -1,4 +1,4 @@
-import { Table, Tag, Space, Typography, Modal, Row } from 'antd'
+import { Table, Tag, Space, Typography, Modal, Row, Button } from 'antd'
 import { useForm } from 'antd/lib/form/Form'
 import { useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
@@ -103,7 +103,7 @@ export const Users = () => {
           {t('users')}
         </Typography.Title>
         <Link to="/users/invite-user">
-          <PlusCircleOutlined style={{ fontSize: '40px', color: 'black' }} />
+          <Button icon={<PlusCircleOutlined />} type="primary" shape="circle" size="large" />
         </Link>
       </Row>
       <Table dataSource={data} columns={columns} span={24} style={{ overflow: 'auto' }} />

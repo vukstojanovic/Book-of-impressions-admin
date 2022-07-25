@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom'
-import { Typography, Row, Card, Progress } from 'antd'
+import { Typography, Row, Card, Progress, Button } from 'antd'
 import { QrcodeOutlined, PlusCircleOutlined } from '@ant-design/icons'
 import { useTranslation } from 'react-i18next'
 
@@ -93,7 +93,7 @@ export const Forms = () => {
           {t('forms')}
         </Title>
         <Link to="/forms/create-new-form">
-          <PlusCircleOutlined style={{ color: 'black', fontSize: '2.25rem' }} />
+          <Button icon={<PlusCircleOutlined />} type="primary" shape="circle" size="large" />
         </Link>
       </Row>
       <Row align="middle" style={{ gap: 50 }}>
