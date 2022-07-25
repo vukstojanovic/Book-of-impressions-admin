@@ -33,7 +33,7 @@ export const CreateNewForm = () => {
           form={form}
           onFinish={handleSubmit}
           layout="vertical"
-          size="middle"
+          size="large"
         >
           <Row>
             <Col sm={24} md={12} lg={6}>
