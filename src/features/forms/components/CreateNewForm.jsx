@@ -1,5 +1,6 @@
 import { useTranslation } from 'react-i18next'
 import { Row, Col, Form, Typography, Input, Button, Select, Space, Tabs, Card } from 'antd'
+import { MinusCircleOutlined, PlusOutlined } from '@ant-design/icons'
 
 const { Title } = Typography
 const { TextArea } = Input
@@ -109,56 +110,71 @@ export const CreateNewForm = () => {
               </Form.Item>
             </Col>
           </Row>
-          <p style={{ marginBottom: '-10px' }}>{t('question')}</p>
-          <Tabs
-            defaultActiveKey="en"
-            type="line"
-            hideAdd
-            tabBarGutter={40}
-            tabBarStyle={{ margin: '0 0 10px 30px', width: 78 }}
-          >
-            <TabPane tab="EN" key="en">
-              <Form.Item
-                name="en-question"
-                rules={[
-                  {
-                    required: true,
-                    message: t('fillQuestion'),
-                  },
-                ]}
-              >
-                <TextArea
-                  placeholder="Question"
-                  name="english-desc"
-                  autoSize={{ minRows: 6, maxRows: 10 }}
-                  style={{ width: '60%', marginTop: '6px' }}
-                />
-              </Form.Item>
-            </TabPane>
-            <TabPane tab="SR" key="sr">
-              <Form.Item
-                name="sr-question"
-                rules={[
-                  {
-                    required: true,
-                    message: t('fillQuestion'),
-                  },
-                ]}
-              >
-                <TextArea
-                  placeholder="Pitanje"
-                  name="serbian-dec"
-                  autoSize={{ minRows: 6, maxRows: 10 }}
-                  style={{ width: '60%', marginTop: '6px' }}
-                />
-              </Form.Item>
-            </TabPane>
-          </Tabs>
-          <Row>
-            <Col span={24}>
-              <Button>{t('addAnoterQuestion')}</Button>
-            </Col>
-          </Row>
+          <p style={{ marginBottom: '15px' }}>{t('question')}</p>
+          <Form.List name="questions">
+            {(fields, { add, remove }) => (
+              <>
+                {fields.map(({ key, name, ...restField }) => (
+                  <>
+                    <Tabs
+                      key={key}
+                      defaultActiveKey="en"
+                      type="line"
+                      hideAdd
+                      tabBarGutter={40}
+                      tabBarStyle={{ margin: '0 0 10px 30px', width: 78 }}
+                    >
+                      <TabPane tab="EN" key="en">
+                        <Form.Item
+                          {...restField}
+                          name={[name, 'question-en']}
+                          rules={[
+                            {
+                              required: true,
+                              message: t('fillQuestion'),
+                            },
+                          ]}
+                        >
+                          <TextArea
+                            placeholder="Question"
+                            name="question-en"
+                            autoSize={{ minRows: 6, maxRows: 10 }}
+                            style={{ width: '60%', marginTop: '6px' }}
+                          />
+                        </Form.Item>
+                      </TabPane>
+                      <TabPane tab="SR" key="sr">
+                        <Form.Item
+                          name={[name, 'question-sr']}
+                          rules={[
+                            {
+                              required: true,
+                              message: t('fillQuestion'),
+                            },
+                          ]}
+                        >
+                          <TextArea
+                            placeholder="Pitanje"
+                            name="question-sr"
+                            autoSize={{ minRows: 6, maxRows: 10 }}
+                            style={{ width: '60%', marginTop: '6px' }}
+                          />
+                        </Form.Item>
+                      </TabPane>
+                    </Tabs>
+                    <p onClick={() => remove(name)}>
+                      {t('removeQuestion')} <MinusCircleOutlined style={{ cursor: 'pointer' }} />
+                    </p>
+                  </>
+                ))}
+                <Form.Item style={{ width: '60%' }}>
+                  <Button size="middle" onClick={() => add()} block icon={<PlusOutlined />}>
+                    {t('addAnoterQuestion')}
+                  </Button>
+                </Form.Item>
+              </>
+            )}
+          </Form.List>
           <Row justify="end">
             <Col style={{ marginTop: '25px' }}>
               <Space size={'large'}>

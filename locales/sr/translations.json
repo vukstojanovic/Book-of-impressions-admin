@@ -67,6 +67,8 @@
     "addAnoterQuestion": "Dodaj jos jedno pitanje",
     "cancel": "Obrisi",
     "create": "Kreiraj",
+    "removeQuestion": "Obrisi pitanje",
+
     "fillQuestion": "Molim vas popunite polje za pitanje!",
     "emptyTitle": "Naslov je obavezan",
     "descriptionFor": "Opis za",
