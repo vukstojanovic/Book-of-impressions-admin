@@ -178,7 +178,7 @@ export const CreateNewForm = () => {
           <Row justify="end">
             <Col style={{ marginTop: '25px' }}>
               <Space size={'large'}>
-                <Button type="primary" size={'large'} onClick={onReset}>
+                <Button size={'large'} onClick={onReset}>
                   {t('cancel')}
                 </Button>
                 <Button type="primary" size={'large'} htmlType="submit">
