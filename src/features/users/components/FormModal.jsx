@@ -12,9 +12,11 @@ export const FormModal = ({ form }) => {
   return (
     <Form
       onFinish={submitData}
+      size="large"
       layout="vertical"
       labelCol={{ span: 4 }}
       wrapperCol={{ span: 24 }}
+      requiredMark={false}
       form={form}
     >
       <Form.Item
