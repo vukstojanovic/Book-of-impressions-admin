@@ -63,12 +63,10 @@
     "type1": "Tip 1",
     "type2": "Tip 2",
     "question": "Pitanja",
-    "inputQuestion": "Ukucaj pitanje",
     "addAnoterQuestion": "Dodaj jos jedno pitanje",
     "cancel": "Obrisi",
     "create": "Kreiraj",
     "removeQuestion": "Obrisi pitanje",
-
     "fillQuestion": "Molim vas popunite polje za pitanje!",
     "emptyTitle": "Naslov je obavezan",
     "descriptionFor": "Opis za",
