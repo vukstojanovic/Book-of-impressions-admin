@@ -63,12 +63,15 @@
     "type1": "Type 1",
     "type2": "Type 2",
     "question": "Question",
-    "warning": "For this type of form you can add only 1 question!",
-    "warning2": "For this type of form you can add maximum 3 questions!",
-    "inputQuestion": "Type a Question",
-    "addQuestion": "Add Question",
-    "createNewForm": "Create new Form",
-    "fillQuestion": "Please fill the question filed!"
+    "inputQuestion": "Type a question",
+    "addAnoterQuestion": "Add another question",
+    "cancel": "Cancel",
+    "create": "Create",
+    "fillQuestion": "Please fill the question filed!",
+    "emptyTitle": "Title is required",
+    "descriptionFor": "Description for",
+    "emptyDescription": "Description is required",
+    "emptyType": "Type is required"
   },
   "SideMenu": {
     "dashboard": "Dashboard",

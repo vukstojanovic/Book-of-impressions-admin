@@ -63,12 +63,15 @@
     "type1": "Tip 1",
     "type2": "Tip 2",
     "question": "Pitanja",
-    "warning": "Za ovaj tip forme mozete dodati samo jedno pitanje.",
-    "warning2": "Za ovaj tip forme mozete dodati maksimalno 3 pitanja.",
     "inputQuestion": "Ukucaj pitanje",
-    "addQuestion": "Dodaj pitanje",
-    "createNewForm": "Napravi novu formu",
-    "fillQuestion": "Molim vas popunite polje za pitanje!"
+    "addAnoterQuestion": "Dodaj jos jedno pitanje",
+    "cancel": "Obrisi",
+    "create": "Kreiraj",
+    "fillQuestion": "Molim vas popunite polje za pitanje!",
+    "emptyTitle": "Naslov je obavezan",
+    "descriptionFor": "Opis za",
+    "emptyDescription": "Opis je obavezan",
+    "emptyType": "Tip je obavezen"
   },
   "SideMenu": {
     "dashboard": "Komandna Tabla",

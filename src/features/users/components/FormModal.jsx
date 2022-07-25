@@ -10,7 +10,13 @@ export const FormModal = ({ form }) => {
   }
 
   return (
-    <Form onFinish={submitData} labelCol={{ span: 4 }} wrapperCol={{ span: 20 }} form={form}>
+    <Form
+      onFinish={submitData}
+      layout="vertical"
+      labelCol={{ span: 4 }}
+      wrapperCol={{ span: 24 }}
+      form={form}
+    >
       <Form.Item
         label={t('name')}
         name="name"
