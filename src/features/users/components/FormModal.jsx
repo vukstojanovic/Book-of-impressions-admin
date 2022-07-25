@@ -15,6 +15,7 @@ export const FormModal = ({ form }) => {
       layout="vertical"
       labelCol={{ span: 4 }}
       wrapperCol={{ span: 24 }}
+      requiredMark={false}
       form={form}
     >
       <Form.Item
