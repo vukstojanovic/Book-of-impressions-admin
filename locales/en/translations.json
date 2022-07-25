@@ -67,6 +67,7 @@
     "addAnoterQuestion": "Add another question",
     "cancel": "Cancel",
     "create": "Create",
+    "removeQuestion": "Remove question",
     "fillQuestion": "Please fill the question filed!",
     "emptyTitle": "Title is required",
     "descriptionFor": "Description for",

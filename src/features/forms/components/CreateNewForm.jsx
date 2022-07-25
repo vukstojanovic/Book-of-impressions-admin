@@ -114,8 +114,8 @@ export const CreateNewForm = () => {
           <Form.List name="questions">
             {(fields, { add, remove }) => (
               <>
-                {fields.map(({ key, name, ...restField }) => (
-                  <>
+                {fields.map(({ key, name, ...restField }, i) => (
+                  <div key={i}>
                     <Tabs
                       key={key}
                       defaultActiveKey="en"
@@ -163,9 +163,10 @@ export const CreateNewForm = () => {
                       </TabPane>
                     </Tabs>
                     <p onClick={() => remove(name)}>
-                      {t('removeQuestion')} <MinusCircleOutlined style={{ cursor: 'pointer' }} />
+                      {t('removeQuestion')}{' '}
+                      <MinusCircleOutlined style={{ cursor: 'pointer', color: 'red' }} />
                     </p>
-                  </>
+                  </div>
                 ))}
                 <Form.Item style={{ width: '60%' }}>
                   <Button size="middle" onClick={() => add()} block icon={<PlusOutlined />}>
