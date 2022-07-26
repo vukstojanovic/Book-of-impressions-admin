@@ -112,5 +112,12 @@
   "AccountMenu": {
     "your_profile": "Your profile",
     "log_out": "Log out"
+  },
+  "profileSettings": {
+    "my_profile": "My Profile",
+    "name": "Name",
+    "profilePhoto": "Profile Photo",
+    "password": "Password",
+    "submit": "Submit"
   }
 }

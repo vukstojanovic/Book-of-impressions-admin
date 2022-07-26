@@ -112,5 +112,12 @@
   "AccountMenu": {
     "your_profile": "Tvoj profil",
     "log_out": "Odjavi se"
+  },
+  "profileSettings": {
+    "my_profile": "Moj Nalog",
+    "name": "Ime",
+    "profilePhoto": "Profilna Slika",
+    "password": "Lozinka",
+    "submit": "Pošalji"
   }
 }
