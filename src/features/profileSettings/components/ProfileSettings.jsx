@@ -3,8 +3,8 @@ import { Typography, Row, Col, Button, Form, Input, Upload } from 'antd'
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 
-import { getBase64 } from '../../../utils/getBase64.js'
-import { beforeUpload } from '../../../utils/beforeImageUpload.js'
+import { beforeUpload } from '@/utils/beforeImageUpload.js'
+import { getBase64 } from '@/utils/getBase64.js'
 
 export function ProfileSettings() {
   const [loading, setLoading] = useState(false)
