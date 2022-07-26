@@ -1,12 +1,18 @@
 import Axios from 'axios'
 
+import storage from '@/utils/storage'
 import { appConfig } from '@/config/'
+// import { newAccessToken } from '@/api/auth'
 
 function authRequestInterceptor(config) {
-  // const token = storage.getToken();
-  // if (token) {
-  //   config.headers.authorization = `${token}`;
-  // }
+  const token = storage.get('access_token')
+
+  if (token) {
+    config.headers = {
+      Authorization: `Bearer ${token}`,
+    }
+  }
+
   config.headers.Accept = 'application/json'
   config.headers['Content-Type'] = 'application/json'
   return config
@@ -21,7 +27,13 @@ axios.interceptors.response.use(
   (response) => {
     return response.data
   },
-  (error) => {
+  async (error) => {
+    console.log(error)
+    // const originalRequest = error.config
+    if (error.response.status === 401) {
+      // const response = await newAccessToken()
+      console.log('Neovlascen zahtev')
+    }
     return Promise.reject(error)
   }
 )

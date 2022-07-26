@@ -4,6 +4,7 @@ import { Link, useNavigate } from 'react-router-dom'
 
 import { loginUser } from '@/api/auth'
 import { AdminLayout } from '@/components/layout/AdminLayout'
+import storage from '@/utils/storage'
 
 const { Title, Paragraph } = Typography
 
@@ -18,9 +19,14 @@ export const LoginForm = () => {
         email,
         password,
       }
-      const response = await loginUser(userData)
-      navigate('/')
-      console.log(response)
+      const { access_token, refrresh_token } = await loginUser(userData)
+
+      if (access_token && refrresh_token) {
+        storage.set('access_token', access_token)
+        storage.set('refresh_token', refrresh_token)
+
+        navigate('/')
+      }
     } catch (error) {
       if (error.response.status === 401) {
         message.error('Password is incorrect! Please login with correct password.', 3)
