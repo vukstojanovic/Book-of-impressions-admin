@@ -13,7 +13,7 @@ export const CreateNewForm = () => {
   const { t } = useTranslation('CreateNewForm')
 
   const handleSubmit = (values) => {
-    console.log(values)
+    console.log('form submitted', values)
   }
 
   const onTypeChange = () => {
