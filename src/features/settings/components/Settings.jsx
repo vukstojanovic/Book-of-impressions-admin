@@ -84,7 +84,7 @@ export function Settings() {
         type="line"
         hideAdd
         tabBarGutter={40}
-        tabBarStyle={{ margin: '0 0 10px 30px', width: 78 }}
+        tabBarStyle={{ margin: '0 0 10px 30px', width: 85 }}
       >
         <TabPane tab="EN" key="en">
           <Form.Item name="en-desc">
