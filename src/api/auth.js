@@ -20,3 +20,7 @@ export const registerUser = (data) => {
 export const getNewAccessToken = () => {
   return axios({ method: 'post', url: '/api/public/auth/refresh' })
 }
+
+export const handleLogout = () => {
+  return axios({ method: 'post', url: '/api/public/auth/logoutt' })
+}

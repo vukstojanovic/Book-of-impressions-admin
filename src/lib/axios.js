@@ -2,7 +2,7 @@ import Axios from 'axios'
 
 import storage from '@/utils/storage'
 import { appConfig } from '@/config/'
-// import { newAccessToken } from '@/api/auth'
+import { getNewAccessToken } from '@/api/auth'
 
 function authRequestInterceptor(config) {
   const token = storage.get('access_token')
@@ -29,10 +29,12 @@ axios.interceptors.response.use(
   },
   async (error) => {
     console.log(error)
-    // const originalRequest = error.config
-    if (error.response.status === 401) {
-      // const response = await newAccessToken()
-      console.log('Neovlascen zahtev')
+    const originalRequest = error.config
+    if (error.response.status === 404 && !originalRequest._retry) {
+      originalRequest._retry = true
+      const access_token = await getNewAccessToken()
+      axios.defaults.headers.common['Authorization'] = 'Bearer ' + access_token
+      return axios(originalRequest)
     }
     return Promise.reject(error)
   }
