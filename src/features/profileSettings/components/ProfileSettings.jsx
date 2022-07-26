@@ -46,7 +46,12 @@ export function ProfileSettings() {
   return (
     <>
       <Title>{t('my_profile')}</Title>
-      <Form form={form} style={{ backgroundColor: 'white', padding: '24px' }} layout="vertical">
+      <Form
+        form={form}
+        size="large"
+        style={{ backgroundColor: 'white', padding: '24px' }}
+        layout="vertical"
+      >
         <Row>
           <Col sm={24} md={18} lg={8}>
             <Form.Item label={`${t('name')}:`} name="name">
