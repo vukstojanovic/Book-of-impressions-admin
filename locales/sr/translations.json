@@ -85,7 +85,8 @@
     "getSupport": "Podrška",
     "leaveComment": "Ostavite komentar",
     "create_new_form": "Napravi novu formu",
-    "settings": "Podešavanja"
+    "settings": "Podešavanja",
+    "my_profile": "Moj Nalog"
   },
   "QRCode": {
     "requiredError": "Polje ne može biti prazno!",
@@ -112,5 +113,12 @@
   "AccountMenu": {
     "your_profile": "Tvoj profil",
     "log_out": "Odjavi se"
+  },
+  "profileSettings": {
+    "my_profile": "Moj Nalog",
+    "name": "Ime",
+    "profilePhoto": "Profilna Slika",
+    "password": "Lozinka",
+    "submit": "Pošalji"
   }
 }
