@@ -1,7 +1,8 @@
+// import { useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import { Typography, Row, Card, Progress, Button } from 'antd'
-import { QrcodeOutlined, PlusCircleOutlined } from '@ant-design/icons'
 import { useTranslation } from 'react-i18next'
+import { QrcodeOutlined, PlusCircleOutlined } from '@ant-design/icons'
 
 const { Title, Paragraph, Text } = Typography
 
@@ -85,6 +86,21 @@ export const Forms = () => {
     justifyContent: 'center',
     alignItems: 'center',
   }
+
+  // useEffect(() => {
+  //   let isMounted = true
+  //   const testing = async () => {
+  //     if (isMounted) {
+  //       const response = await axios.get('/api/wapp/review')
+  //       console.log(response)
+  //     }
+  //   }
+
+  //   testing()
+  //   return () => {
+  //     isMounted = false
+  //   }
+  // }, [])
 
   return (
     <>
