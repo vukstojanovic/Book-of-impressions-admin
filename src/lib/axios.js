@@ -32,7 +32,8 @@ axios.interceptors.response.use(
     const originalRequest = error.config
     if (error.response.status === 404 && !originalRequest._retry) {
       originalRequest._retry = true
-      const access_token = await getNewAccessToken()
+      const refreshToken = storage.get('refresh_token')
+      const access_token = await getNewAccessToken(refreshToken)
       axios.defaults.headers.common['Authorization'] = 'Bearer ' + access_token
       return axios(originalRequest)
     }

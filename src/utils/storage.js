@@ -2,10 +2,11 @@ const storagePrefix = 'boi_site-'
 
 const storage = {
   get: (key) => {
-    return JSON.parse(localStorage.getItem(`${storagePrefix}${key}`))
+    return localStorage.getItem(`${storagePrefix}${key}`)
   },
   set: (key, value) => {
-    localStorage.setItem(`${storagePrefix}${key}`, JSON.stringify(value))
+    console.log(value)
+    localStorage.setItem(`${storagePrefix}${key}`, value)
   },
   clear: (key) => {
     localStorage.removeItem(`${storagePrefix}${key}`)
