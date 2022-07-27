@@ -13,7 +13,7 @@ export const CreateNewForm = () => {
   const { t } = useTranslation('CreateNewForm')
 
   const handleSubmit = (values) => {
-    console.log(values)
+    console.log('form submitted', values)
   }
 
   const onTypeChange = () => {
@@ -59,7 +59,7 @@ export const CreateNewForm = () => {
                 type="line"
                 hideAdd
                 tabBarGutter={40}
-                tabBarStyle={{ margin: '0 0 10px 30px', width: 78 }}
+                tabBarStyle={{ margin: '0 0 10px 30px', width: 85 }}
               >
                 <TabPane tab="EN" key="en">
                   <Form.Item
@@ -128,7 +128,7 @@ export const CreateNewForm = () => {
                           type="line"
                           hideAdd
                           tabBarGutter={40}
-                          tabBarStyle={{ margin: '0 0 10px 30px', width: 78 }}
+                          tabBarStyle={{ margin: '0 0 10px 30px', width: 85 }}
                         >
                           <TabPane tab="EN" key="en">
                             <Form.Item

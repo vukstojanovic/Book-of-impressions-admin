@@ -2,27 +2,8 @@ import { LoadingOutlined, PlusOutlined } from '@ant-design/icons'
 import { Form, Input, Upload, message, Tabs, Button } from 'antd'
 import { useState } from 'react'
 
-const getBase64 = (img, callback) => {
-  const reader = new FileReader()
-  reader.addEventListener('load', () => callback(reader.result))
-  reader.readAsDataURL(img)
-}
-
-const beforeUpload = (file) => {
-  const isJpgOrPng = file.type === 'image/jpeg' || file.type === 'image/png'
-
-  if (!isJpgOrPng) {
-    message.error('You can only upload JPG/PNG file!')
-  }
-
-  const isLt2M = file.size / 1024 / 1024 < 2
-
-  if (!isLt2M) {
-    message.error('Image must smaller than 2MB!')
-  }
-
-  return isJpgOrPng && isLt2M
-}
+import { getBase64 } from '@/utils/getBase64'
+import { beforeUpload } from '@/utils/beforeImageUpload'
 export function Settings() {
   const { TextArea } = Input
   const { TabPane } = Tabs
@@ -84,7 +65,7 @@ export function Settings() {
         type="line"
         hideAdd
         tabBarGutter={40}
-        tabBarStyle={{ margin: '0 0 10px 30px', width: 78 }}
+        tabBarStyle={{ margin: '0 0 10px 30px', width: 85 }}
       >
         <TabPane tab="EN" key="en">
           <Form.Item name="en-desc">

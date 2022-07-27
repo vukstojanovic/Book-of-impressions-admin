@@ -1,6 +1,7 @@
 import { Menu, Avatar, Row, Col, Typography } from 'antd'
 import { UserOutlined, LogoutOutlined } from '@ant-design/icons'
 import { useTranslation } from 'react-i18next'
+import { useNavigate } from 'react-router-dom'
 
 import { handleLogout } from '@/api/auth'
 
@@ -10,6 +11,7 @@ export const MenuForDropdown = () => {
   const logoutHandler = async () => {
     await handleLogout()
   }
+  const navigate = useNavigate()
   return (
     <Menu style={{ padding: '0.5rem 1rem' }}>
       <Menu.Item
@@ -49,6 +51,7 @@ export const MenuForDropdown = () => {
         key="your profile"
         icon={<UserOutlined style={{ fontSize: '16px' }} />}
         style={{ padding: '0.5rem 0.2rem' }}
+        onClick={() => navigate('/my-profile')}
       >
         {t('your_profile')}
       </Menu.Item>
