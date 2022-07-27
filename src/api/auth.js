@@ -5,14 +5,25 @@ export const loginUser = (data) => {
     method: 'post',
     url: '/api/public/auth/login',
     data,
-    withCredentials: true,
-    headers: {
-      'Access-Control-Allow-Origin': 'https://bookquantox.herokuapp.com/',
-      'Content-Type': 'application/json',
-    },
+    // withCredentials: true,
+    // headers: {
+    //   'Access-Control-Allow-Origin': 'https://bookquantox.herokuapp.com/',
+    //   'Content-Type': 'application/json',
+    // },
   })
 }
 
 export const registerUser = (data) => {
   return axios({ method: 'post', url: '/api/public/user', data })
+}
+
+export const getNewAccessToken = () => {
+  return axios({
+    method: 'post',
+    url: '/api/public/auth/refresh',
+  })
+}
+
+export const handleLogout = () => {
+  return axios({ method: 'post', url: '/api/public/auth/logout' })
 }

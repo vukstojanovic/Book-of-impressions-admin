@@ -1,12 +1,28 @@
 import Axios from 'axios'
 
+import storage from '@/utils/storage'
 import { appConfig } from '@/config/'
+import { getNewAccessToken } from '@/api/auth'
 
 function authRequestInterceptor(config) {
-  // const token = storage.getToken();
-  // if (token) {
-  //   config.headers.authorization = `${token}`;
-  // }
+  let token
+  if (config.url === '/api/public/auth/refresh') {
+    token = storage.get('refresh_token')
+    config.headers = {
+      Authorization: `Bearer ${token}`,
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
+    }
+    return config
+  }
+
+  token = storage.get('access_token')
+  if (token) {
+    config.headers = {
+      Authorization: `Bearer ${token}`,
+    }
+  }
+
   config.headers.Accept = 'application/json'
   config.headers['Content-Type'] = 'application/json'
   return config
@@ -21,7 +37,22 @@ axios.interceptors.response.use(
   (response) => {
     return response.data
   },
-  (error) => {
+  async (error) => {
+    const originalRequest = error.config
+    if (
+      error.response.status === 401 &&
+      !originalRequest._retry &&
+      error.response.data.message !== 'Wrong password'
+    ) {
+      originalRequest._retry = true
+
+      const { access_token, refrresh_token } = await getNewAccessToken()
+
+      storage.set('access_token', access_token)
+      storage.set('refresh_token', refrresh_token)
+
+      return axios(originalRequest)
+    }
     return Promise.reject(error)
   }
 )
