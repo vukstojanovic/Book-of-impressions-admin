@@ -28,8 +28,11 @@ export const LoginForm = () => {
         navigate('/')
       }
     } catch (error) {
+      if (error.response.status === 400) {
+        message.error(`${error.response.data.message}. Please login with correct email.`, 3)
+      }
       if (error.response.status === 401) {
-        message.error('Password is incorrect! Please login with correct password.', 3)
+        message.error(`${error.response.data.message}. Please login with correct password.`, 3)
       }
     } finally {
       form.resetFields()

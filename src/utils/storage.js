@@ -5,7 +5,6 @@ const storage = {
     return localStorage.getItem(`${storagePrefix}${key}`)
   },
   set: (key, value) => {
-    console.log(value)
     localStorage.setItem(`${storagePrefix}${key}`, value)
   },
   clear: (key) => {

@@ -5,8 +5,18 @@ import { appConfig } from '@/config/'
 import { getNewAccessToken } from '@/api/auth'
 
 function authRequestInterceptor(config) {
-  const token = storage.get('access_token')
+  let token
+  if (config.url === '/api/public/auth/refresh') {
+    token = storage.get('refresh_token')
+    config.headers = {
+      Authorization: `Bearer ${token}`,
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
+    }
+    return config
+  }
 
+  token = storage.get('access_token')
   if (token) {
     config.headers = {
       Authorization: `Bearer ${token}`,
@@ -28,13 +38,19 @@ axios.interceptors.response.use(
     return response.data
   },
   async (error) => {
-    console.log(error)
     const originalRequest = error.config
-    if (error.response.status === 404 && !originalRequest._retry) {
+    if (
+      error.response.status === 401 &&
+      !originalRequest._retry &&
+      error.response.data.message !== 'Wrong password'
+    ) {
       originalRequest._retry = true
-      const refreshToken = storage.get('refresh_token')
-      const access_token = await getNewAccessToken(refreshToken)
-      axios.defaults.headers.common['Authorization'] = 'Bearer ' + access_token
+
+      const { access_token, refrresh_token } = await getNewAccessToken()
+
+      storage.set('access_token', access_token)
+      storage.set('refresh_token', refrresh_token)
+
       return axios(originalRequest)
     }
     return Promise.reject(error)

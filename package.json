@@ -3,7 +3,7 @@
   "private": true,
   "version": "0.0.0",
   "scripts": {
-    "dev": "vite --port 4200",
+    "dev": "vite --port 5000",
     "build": "vite build",
     "preview": "vite preview",
     "lint": "eslint \"**/*.{js,jsx}\"",

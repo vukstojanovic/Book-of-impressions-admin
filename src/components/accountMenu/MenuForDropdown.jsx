@@ -4,14 +4,21 @@ import { useTranslation } from 'react-i18next'
 import { useNavigate } from 'react-router-dom'
 
 import { handleLogout } from '@/api/auth'
+import storage from '@/utils/storage'
 
 export const MenuForDropdown = () => {
   const { t } = useTranslation('AccountMenu')
+  const navigate = useNavigate()
 
   const logoutHandler = async () => {
     await handleLogout()
+
+    storage.clear('access_token')
+    storage.clear('refresh_token')
+
+    navigate('/sign-in')
   }
-  const navigate = useNavigate()
+
   return (
     <Menu style={{ padding: '0.5rem 1rem' }}>
       <Menu.Item

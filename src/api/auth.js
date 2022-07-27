@@ -17,14 +17,13 @@ export const registerUser = (data) => {
   return axios({ method: 'post', url: '/api/public/user', data })
 }
 
-export const getNewAccessToken = (token) => {
+export const getNewAccessToken = () => {
   return axios({
     method: 'post',
     url: '/api/public/auth/refresh',
-    data: { userId: 'cc80dea9-0570-4c25-b13e-a8642503d970', refreshToken: token },
   })
 }
 
 export const handleLogout = () => {
-  return axios({ method: 'get', url: '/api/public/auth/logoutt' })
+  return axios({ method: 'post', url: '/api/public/auth/logout' })
 }
