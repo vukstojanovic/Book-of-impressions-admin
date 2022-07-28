@@ -2,7 +2,7 @@ import Axios from 'axios'
 
 import storage from '@/utils/storage'
 import { appConfig } from '@/config/'
-import { getNewAccessToken } from '@/api/auth'
+import { getNewAccessToken } from '@/features/auth/api/getNewAccess'
 
 function authRequestInterceptor(config) {
   let token

@@ -3,7 +3,7 @@ import { UserOutlined, LogoutOutlined } from '@ant-design/icons'
 import { useTranslation } from 'react-i18next'
 import { useNavigate } from 'react-router-dom'
 
-import { handleLogout } from '@/api/auth'
+import { handleLogout } from '@/features/auth/api/logout'
 import storage from '@/utils/storage'
 
 export const MenuForDropdown = () => {
