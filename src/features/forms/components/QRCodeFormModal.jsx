@@ -2,7 +2,7 @@ import { Modal, Row, Typography } from 'antd'
 import { QRCodeCanvas } from 'qrcode.react'
 import { useTranslation } from 'react-i18next'
 
-const QRCodeFormModal = ({ formId, setModalVisible, modalVisible, qrValue }) => {
+const QRCodeFormModal = ({ formId, formTitle, setModalVisible, modalVisible, qrValue }) => {
   const { Text } = Typography
 
   const { t } = useTranslation('QRCode')
@@ -22,7 +22,7 @@ const QRCodeFormModal = ({ formId, setModalVisible, modalVisible, qrValue }) => 
 
   return (
     <Modal
-      title={`Form: ${formId}`}
+      title={`${formTitle}`}
       okText={t('downloadQRCode')}
       cancelText={t('done')}
       centered

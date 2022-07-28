@@ -16,6 +16,7 @@ export const Forms = () => {
   console.log(isLoading)
   const { t } = useTranslation('Forms')
 
+  const [formTitle, setFormTitle] = useState('')
   const [formId, setFormId] = useState('')
   const [modalVisible, setModalVisible] = useState(false)
   const [qrValue, setQrValue] = useState('asd')
@@ -40,6 +41,7 @@ export const Forms = () => {
       </Row>
 
       <QRCodeFormModal
+        formTitle={formTitle}
         formId={formId}
         qrValue={qrValue}
         setModalVisible={setModalVisible}
@@ -57,6 +59,7 @@ export const Forms = () => {
                     <QrcodeOutlined
                       onClick={() => {
                         setFormId(id)
+                        setFormTitle(title)
                         setQrValue(id)
                         setModalVisible(true)
                       }}
