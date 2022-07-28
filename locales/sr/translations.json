@@ -85,7 +85,8 @@
     "getSupport": "Podrška",
     "leaveComment": "Ostavite komentar",
     "create_new_form": "Napravi novu formu",
-    "settings": "Podešavanja"
+    "settings": "Podešavanja",
+    "my_profile": "Moj Nalog"
   },
   "QRCode": {
     "requiredError": "Polje ne može biti prazno!",
@@ -94,7 +95,10 @@
     "button": "Napravite QR Kod",
     "home": "Početna strana",
     "create_new_form": "Napravi novu formu",
-    "invite_user": "Pozovi korisnika"
+    "invite_user": "Pozovi korisnika",
+    "leaveAnImpression": "Ostavite utisak",
+    "done": "Zatvori",
+    "downloadQRCode": "Preuzmite QR kod"
   },
   "InviteUser": {
     "title": "Pozovite novog korisnika",
@@ -112,5 +116,12 @@
   "AccountMenu": {
     "your_profile": "Tvoj profil",
     "log_out": "Odjavi se"
+  },
+  "profileSettings": {
+    "my_profile": "Moj Nalog",
+    "name": "Ime",
+    "profilePhoto": "Profilna Slika",
+    "password": "Lozinka",
+    "submit": "Pošalji"
   }
 }

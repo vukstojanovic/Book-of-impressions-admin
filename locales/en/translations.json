@@ -85,7 +85,8 @@
     "getSupport": "Get Support",
     "leaveComment": "Leave Comment",
     "create_new_form": "Create New Form",
-    "settings": "Settings"
+    "settings": "Settings",
+    "my_profile": "My Profile"
   },
   "QRCode": {
     "requiredError": "Field can not be empty!",
@@ -94,7 +95,10 @@
     "button": "Generate QR Code",
     "home": "Home",
     "create_new_form": "Create New Form",
-    "invite_user": "Invite user"
+    "invite_user": "Invite user",
+    "leaveAnImpression": "Leave an impression",
+    "done": "Done",
+    "downloadQRCode": "Download QR code"
   },
   "InviteUser": {
     "title": "Invite a new user",
@@ -112,5 +116,12 @@
   "AccountMenu": {
     "your_profile": "Your profile",
     "log_out": "Log out"
+  },
+  "profileSettings": {
+    "my_profile": "My Profile",
+    "name": "Name",
+    "profilePhoto": "Profile Photo",
+    "password": "Password",
+    "submit": "Submit"
   }
 }

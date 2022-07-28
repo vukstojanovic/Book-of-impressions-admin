@@ -3,7 +3,7 @@ import { Link, useNavigate } from 'react-router-dom'
 import 'antd/dist/antd.css'
 import { useTranslation } from 'react-i18next'
 
-import { registerUser } from '@/api/auth'
+import { registerUser } from '@/features/auth/api/register'
 import { AdminLayout } from '@/components/layout/AdminLayout'
 
 const { Title, Paragraph } = Typography
@@ -21,10 +21,14 @@ export const SignupForm = () => {
         name: `${firstName.trim()} ${lastName.trim()}`,
         email,
         password,
-        role: 'SuperUser',
+        role: ['SuperUser'],
       }
-      await registerUser(userData)
-      navigate('/')
+      const { response } = await registerUser(userData)
+
+      if (response === 'OK') {
+        message.success('You are successfully registered. Please login in!')
+        navigate('/sign-in')
+      }
     } catch (error) {
       message.error(error.response.data.message, 3)
     } finally {

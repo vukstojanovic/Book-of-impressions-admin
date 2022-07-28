@@ -1,9 +1,23 @@
 import { Menu, Avatar, Row, Col, Typography } from 'antd'
 import { UserOutlined, LogoutOutlined } from '@ant-design/icons'
 import { useTranslation } from 'react-i18next'
+import { useNavigate } from 'react-router-dom'
+
+import { handleLogout } from '@/features/auth/api/logout'
+import storage from '@/utils/storage'
 
 export const MenuForDropdown = () => {
   const { t } = useTranslation('AccountMenu')
+  const navigate = useNavigate()
+
+  const logoutHandler = async () => {
+    await handleLogout()
+
+    storage.clear('access_token')
+    storage.clear('refresh_token')
+
+    navigate('/sign-in')
+  }
 
   return (
     <Menu style={{ padding: '0.5rem 1rem' }}>
@@ -44,6 +58,7 @@ export const MenuForDropdown = () => {
         key="your profile"
         icon={<UserOutlined style={{ fontSize: '16px' }} />}
         style={{ padding: '0.5rem 0.2rem' }}
+        onClick={() => navigate('/my-profile')}
       >
         {t('your_profile')}
       </Menu.Item>
@@ -52,6 +67,7 @@ export const MenuForDropdown = () => {
         key="logout"
         icon={<LogoutOutlined style={{ fontSize: '16px' }} />}
         style={{ padding: '0.5rem 0.2rem' }}
+        onClick={logoutHandler}
       >
         {t('log_out')}
       </Menu.Item>
