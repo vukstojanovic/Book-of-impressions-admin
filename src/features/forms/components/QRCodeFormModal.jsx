@@ -1,9 +1,12 @@
-import { Modal, Row, Typography } from 'antd'
+import { Button, Modal, Row, Typography } from 'antd'
 import { QRCodeCanvas } from 'qrcode.react'
+import { useTranslation } from 'react-i18next'
+import jsPDF from 'jspdf'
 
-const QRCodeFormModal = ({ formId, setModalVisible, modalVisible, qrValue }) => {
+const QRCodeFormModal = ({ formId, formTitle, setModalVisible, modalVisible, qrValue }) => {
   const { Text } = Typography
 
+  const { t } = useTranslation('QRCode')
   const handleOk = () => {
     const canvas = document.getElementById('qr-gen')
 
@@ -15,26 +18,48 @@ const QRCodeFormModal = ({ formId, setModalVisible, modalVisible, qrValue }) => 
     downloadLink.click()
     document.body.removeChild(downloadLink)
   }
-
-  const handleCancel = () => {}
-
+  const handlePDFOk = () => {
+    generatePDF()
+    handleOk()
+    setModalVisible(false)
+  }
+  const generatePDF = () => {
+    const doc = new jsPDF({
+      orientation: 'p',
+      unit: 'px',
+      format: 'a4',
+      putOnlyUsedFonts: true,
+      floatPrecision: 16, // or "smart", default is 16
+    })
+    doc.html(document.querySelector('.ant-modal-body'), {
+      callback: function (pdf) {
+        pdf.save('qr-code.pdf')
+      },
+    })
+  }
   return (
     <Modal
-      title={`Form: ${formId}`}
-      okText="Download QR code"
-      cancelText="Done"
+      title={`${formTitle}`}
       centered
       width={400}
       visible={modalVisible}
       bodyStyle={{ padding: '24px 0', display: 'grid', justifyItems: 'center' }}
-      onOk={() => {
-        handleOk()
-        setModalVisible(false)
-      }}
-      onCancel={() => {
-        handleCancel()
-        setModalVisible(false)
-      }}
+      footer={[
+        <Button
+          key="back"
+          onClick={() => {
+            setModalVisible(false)
+          }}
+        >
+          {t('done')}
+        </Button>,
+        <Button key="submit" type="primary" onClick={handleOk}>
+          {t('downloadQRCode')}
+        </Button>,
+        <Button key="pdf-submit" onClick={handlePDFOk}>
+          {t('downloadQRCode')} PDF
+        </Button>,
+      ]}
     >
       <Row
         justify="center"
@@ -45,7 +70,6 @@ const QRCodeFormModal = ({ formId, setModalVisible, modalVisible, qrValue }) => 
         }}
       >
         <QRCodeCanvas
-          id="qr-gen"
           value={formId}
           includeMargin
           size={256}
@@ -53,7 +77,7 @@ const QRCodeFormModal = ({ formId, setModalVisible, modalVisible, qrValue }) => 
           imageSettings={{ src: '/img/b.png', width: 39, height: 60, excavate: true }}
         />
         <Text style={{ fontSize: '20px', fontWeight: 600, margin: '0 0 24px 0' }}>
-          Leave an impression
+          {t('leaveAnImpression')}
         </Text>
       </Row>
     </Modal>

@@ -95,7 +95,10 @@
     "button": "Generate QR Code",
     "home": "Home",
     "create_new_form": "Create New Form",
-    "invite_user": "Invite user"
+    "invite_user": "Invite user",
+    "leaveAnImpression": "Leave an impression",
+    "done": "Done",
+    "downloadQRCode": "Download QR code"
   },
   "InviteUser": {
     "title": "Invite a new user",

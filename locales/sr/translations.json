@@ -95,7 +95,10 @@
     "button": "Napravite QR Kod",
     "home": "Početna strana",
     "create_new_form": "Napravi novu formu",
-    "invite_user": "Pozovi korisnika"
+    "invite_user": "Pozovi korisnika",
+    "leaveAnImpression": "Ostavite utisak",
+    "done": "Zatvori",
+    "downloadQRCode": "Preuzmite QR kod"
   },
   "InviteUser": {
     "title": "Pozovite novog korisnika",
