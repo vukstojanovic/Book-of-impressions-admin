@@ -2,7 +2,10 @@
 import { Link } from 'react-router-dom'
 import { Typography, Row, Card, Progress, Button } from 'antd'
 import { useTranslation } from 'react-i18next'
+import { useState } from 'react'
 import { QrcodeOutlined, PlusCircleOutlined } from '@ant-design/icons'
+
+import QRCodeFormModal from './QRCodeFormModal'
 
 const { Title, Paragraph, Text } = Typography
 
@@ -78,7 +81,11 @@ const forms = [
 export const Forms = () => {
   const { t } = useTranslation('Forms')
 
+  const [formId, setFormId] = useState('')
+  const [modalVisible, setModalVisible] = useState(false)
+  const [qrValue, setQrValue] = useState('asd')
   const divFlex = { display: 'flex', justifyContent: 'space-between', alignItems: 'center' }
+
   const columnDivFlex = {
     textAlign: 'center',
     display: 'flex',
@@ -112,6 +119,13 @@ export const Forms = () => {
           <Button icon={<PlusCircleOutlined />} type="primary" shape="circle" size="large" />
         </Link>
       </Row>
+
+      <QRCodeFormModal
+        formId={formId}
+        qrValue={qrValue}
+        setModalVisible={setModalVisible}
+        modalVisible={modalVisible}
+      />
       <Row align="middle" style={{ gap: 50 }}>
         {forms.map((form) => {
           const { id, formNum, description, dataOne, dataTwo, dataThree, info } = form
@@ -119,7 +133,13 @@ export const Forms = () => {
             <Card key={id} style={{ width: 335, borderRadius: '20px' }}>
               <div style={divFlex}>
                 <Title level={5}>ID: #{formNum}</Title>
-                <QrcodeOutlined style={{ fontSize: '1.25rem' }} />
+                <QrcodeOutlined
+                  onClick={() => {
+                    setFormId(id)
+                    setQrValue(id)
+                    setModalVisible(true)
+                  }}
+                />
               </div>
               <Paragraph>{description}</Paragraph>
               <div style={divFlex}>
