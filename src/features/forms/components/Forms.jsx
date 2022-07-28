@@ -8,12 +8,10 @@ import { useForms } from '../api/getForms'
 
 import QRCodeFormModal from './QRCodeFormModal'
 
-const { Title, Paragraph } = Typography
+const { Title, Paragraph, Text } = Typography
 
 export const Forms = () => {
   const { data, isLoading } = useForms()
-  console.log(data)
-  console.log(isLoading)
   const { t } = useTranslation('Forms')
 
   const [formTitle, setFormTitle] = useState('')
@@ -72,28 +70,28 @@ export const Forms = () => {
                       <Progress
                         type="circle"
                         width={75}
-                        // percent={dataOne}
+                        percent={50}
                         style={{ marginBottom: '0.75rem' }}
                       />
-                      {/* <Text strong>{info}/300</Text> */}
+                      <Text strong>150/300</Text>
                     </div>
                     <div style={columnDivFlex}>
                       <Progress
                         type="circle"
                         width={75}
-                        // percent={dataTwo}
+                        percent={70}
                         style={{ marginBottom: '0.75rem' }}
                       />
-                      {/* <Text strong>{info}/300</Text> */}
+                      <Text strong>250/300</Text>
                     </div>
                     <div style={columnDivFlex}>
                       <Progress
                         type="circle"
                         width={75}
-                        // percent={dataThree}
+                        percent={30}
                         style={{ marginBottom: '0.75rem' }}
                       />
-                      {/* <Text strong>{info}/300</Text> */}
+                      <Text strong>30/300</Text>
                     </div>
                   </div>
                 </Card>
@@ -103,7 +101,7 @@ export const Forms = () => {
         ) : (
           <>
             <Card style={{ width: 335, borderRadius: '20px' }}>
-              <Skeleton loading={isLoading} />
+              <Skeleton />
             </Card>
             <Card style={{ width: 335, borderRadius: '20px' }}>
               <Skeleton />

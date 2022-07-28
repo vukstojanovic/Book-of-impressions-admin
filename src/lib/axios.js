@@ -17,7 +17,7 @@ function authRequestInterceptor(config) {
   }
 
   token = storage.get('access_token')
-  if (token) {
+  if (token && config.url !== '/api/public/auth/refresh') {
     config.headers = {
       Authorization: `Bearer ${token}`,
     }
