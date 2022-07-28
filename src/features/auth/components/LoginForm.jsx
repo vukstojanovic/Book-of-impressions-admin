@@ -2,7 +2,7 @@ import { Row, Col, Form, Input, Checkbox, Button, Typography, message } from 'an
 import { useTranslation } from 'react-i18next'
 import { Link, useNavigate } from 'react-router-dom'
 
-import { loginUser } from '@/api/auth'
+import { loginUser } from '@/features/auth/api/login'
 import { AdminLayout } from '@/components/layout/AdminLayout'
 import storage from '@/utils/storage'
 

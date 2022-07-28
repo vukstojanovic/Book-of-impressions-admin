@@ -3,7 +3,7 @@ import { Link, useNavigate } from 'react-router-dom'
 import 'antd/dist/antd.css'
 import { useTranslation } from 'react-i18next'
 
-import { registerUser } from '@/api/auth'
+import { registerUser } from '@/features/auth/api/register'
 import { AdminLayout } from '@/components/layout/AdminLayout'
 
 const { Title, Paragraph } = Typography
