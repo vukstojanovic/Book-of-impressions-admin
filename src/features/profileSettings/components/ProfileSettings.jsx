@@ -3,6 +3,8 @@ import { Typography, Row, Col, Button, Form, Input, Upload } from 'antd'
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 
+import { submitUserSettingForm } from '../api/submitUserSettingForm'
+
 import { beforeUpload } from '@/utils/beforeImageUpload.js'
 import { getBase64 } from '@/utils/getBase64.js'
 
@@ -45,6 +47,7 @@ export function ProfileSettings() {
 
   const handleFinish = (values) => {
     console.log(values)
+    submitUserSettingForm(values)
   }
 
   return (
