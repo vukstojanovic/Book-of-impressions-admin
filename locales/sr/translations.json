@@ -86,7 +86,8 @@
     "leaveComment": "Ostavite komentar",
     "create_new_form": "Napravi novu formu",
     "settings": "Podešavanja",
-    "my_profile": "Moj Nalog"
+    "my_profile": "Moj Nalog",
+    "invite_user": "Pozovi Korisnika"
   },
   "QRCode": {
     "requiredError": "Polje ne može biti prazno!",
@@ -102,8 +103,7 @@
   },
   "InviteUser": {
     "title": "Pozovite novog korisnika",
-    "first_name": "Ime",
-    "last_name": "Prezime",
+    "name": "Ime i Prezime",
     "email": "Email",
     "roles": "Uloge",
     "cancel": "Otkaži",

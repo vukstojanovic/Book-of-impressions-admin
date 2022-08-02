@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next'
 import { roleNames } from '@/config/constants'
 
 export const InviteUser = () => {
-  const userRoles = [roleNames.ADMIN, roleNames.EDITOR, roleNames.VIEWER]
+  const userRoles = [roleNames.EDITOR, roleNames.VIEWER]
   const [form] = Form.useForm()
   const { t } = useTranslation('InviteUser')
 
@@ -13,30 +13,20 @@ export const InviteUser = () => {
   }
 
   return (
-    <Col sm={{ span: 24 }} md={{ span: 17 }} lg={{ span: 12 }}>
-      <Typography.Title level={3} style={{ margin: '30px 0px' }}>
-        {t('title')}
-      </Typography.Title>
-      <Form layout="vertical" autoComplete="off" onFinish={handleFinish} form={form}>
+    <Col sm={{ span: 24 }}>
+      <Form
+        style={{ backgroundColor: 'white', padding: '24px' }}
+        layout="vertical"
+        size="large"
+        autoComplete="off"
+        onFinish={handleFinish}
+        form={form}
+      >
         <Row span={24} gutter={[45]}>
-          <Col xs={{ span: 24 }} md={{ span: 12 }}>
+          <Col xs={{ span: 24 }}>
             <Form.Item
-              label={t('first_name')}
-              name="firstName"
-              rules={[
-                {
-                  required: true,
-                  message: t('empty_warning'),
-                },
-              ]}
-            >
-              <Input />
-            </Form.Item>
-          </Col>
-          <Col xs={{ span: 24 }} md={{ span: 12 }}>
-            <Form.Item
-              label={t('last_name')}
-              name="lastName"
+              label={t('name')}
+              name="name"
               rules={[
                 {
                   required: true,
@@ -90,13 +80,13 @@ export const InviteUser = () => {
             </Radio.Group>
           </Card>
         </Form.Item>
-        <Row span={24} gutter={[10, 10]}>
-          <Col xs={{ span: 24 }} md={{ span: 7 }}>
+        <Row justify="end" span={24} gutter={[10, 10]}>
+          <Col>
             <Button style={{ width: '100%' }} onClick={() => form.resetFields()}>
               {t('cancel')}
             </Button>
           </Col>
-          <Col xs={{ span: 24 }} md={{ span: 7 }}>
+          <Col>
             <Button style={{ width: '100%' }} type="primary" htmlType="submit">
               {t('invite')}
             </Button>

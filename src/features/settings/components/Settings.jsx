@@ -1,5 +1,5 @@
 import { LoadingOutlined, PlusOutlined } from '@ant-design/icons'
-import { Form, Input, Upload, message, Tabs, Button } from 'antd'
+import { Form, Input, Upload, message, Tabs, Button, Row } from 'antd'
 import { useState } from 'react'
 
 import { getBase64 } from '@/utils/getBase64'
@@ -49,16 +49,16 @@ export function Settings() {
       layout="vertical"
       form={form}
       onFinish={onFinish}
-      style={{ backgroundColor: 'white', padding: '10px 30px' }}
+      style={{ backgroundColor: 'white', padding: '24px' }}
     >
-      <div style={{ display: 'flex', gap: 50 }}>
+      <Row style={{ gap: 75 }}>
         <Form.Item label="Company name:" name="company-name">
           <Input placeholder="Company name" />
         </Form.Item>
         <Form.Item label="Company email:" name="company-email">
           <Input placeholder="Company name" />
         </Form.Item>
-      </div>
+      </Row>
       <p style={{ marginBottom: '-10px' }}>Company description:</p>
       <Tabs
         defaultActiveKey="en"
