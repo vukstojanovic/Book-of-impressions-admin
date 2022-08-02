@@ -43,6 +43,10 @@ export function ProfileSettings() {
     </div>
   )
 
+  const handleFinish = (values) => {
+    console.log(values)
+  }
+
   return (
     <>
       <Title>{t('my_profile')}</Title>
@@ -51,6 +55,7 @@ export function ProfileSettings() {
         size="large"
         style={{ backgroundColor: 'white', padding: '24px' }}
         layout="vertical"
+        onFinish={handleFinish}
       >
         <Row>
           <Col sm={24} md={18} lg={8}>
@@ -96,12 +101,34 @@ export function ProfileSettings() {
         </Row>
         <Row>
           <Col sm={24} md={18} lg={8}>
+            <Form.Item
+              label={`${t('confirm_password')}:`}
+              name="confirm_password"
+              rules={[
+                ({ getFieldValue }) => ({
+                  validator(_, value) {
+                    if (!value || getFieldValue('password') === value) {
+                      return Promise.resolve()
+                    }
+                    return Promise.reject(t('passwords_do_not_match'))
+                  },
+                }),
+              ]}
+            >
+              <Input.Password placeholder={t('confirm_password')} />
+            </Form.Item>
+          </Col>
+        </Row>
+        <Row>
+          <Col sm={24} md={18} lg={8}>
             <Form.Item label="Email:" name="emails" initialValue={'dummy-email@gmail.com'}>
               <Input readOnly />
             </Form.Item>
           </Col>
         </Row>
-        <Button type="primary">{t('submit')}</Button>
+        <Button type="primary" htmlType="submit">
+          {t('submit')}
+        </Button>
       </Form>
     </>
   )

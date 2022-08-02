@@ -122,6 +122,8 @@
     "name": "Name",
     "profilePhoto": "Profile Photo",
     "password": "Password",
+    "confirm_password": "Confirm Password",
+    "passwords_do_not_match": "The two passwords that you entered do not match",
     "submit": "Submit"
   }
 }

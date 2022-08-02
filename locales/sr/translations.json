@@ -122,6 +122,8 @@
     "name": "Ime",
     "profilePhoto": "Profilna Slika",
     "password": "Lozinka",
+    "confirm_password": "Potvrdi Lozinku",
+    "passwords_do_not_match": "Dve lozinke koje ste uneli se ne poklapaju",
     "submit": "Pošalji"
   }
 }
