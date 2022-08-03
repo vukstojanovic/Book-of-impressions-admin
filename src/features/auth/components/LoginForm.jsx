@@ -41,7 +41,7 @@ export const LoginForm = () => {
         return message.error(`${error.response.data.message}. Server Error`, 3)
       }
       if (error) {
-        return message.error('Error', 3)
+        return message.error('Something Went Wrong', 3)
       }
     } finally {
       form.resetFields()
