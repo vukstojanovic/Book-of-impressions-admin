@@ -110,7 +110,7 @@
     "invite": "Pozovi",
     "empty_warning": "Ne može biti prazno!",
     "admin": "Admin",
-    "editor": "Urednik",
+    "manager": "Menadžer",
     "viewer": "Posmatrač"
   },
   "AccountMenu": {

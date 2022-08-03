@@ -1,5 +1,5 @@
 export const roleNames = {
   ADMIN: 'admin',
-  EDITOR: 'editor',
+  MANAGER: 'manager',
   VIEWER: 'viewer',
 }

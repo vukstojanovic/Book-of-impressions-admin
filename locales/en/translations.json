@@ -110,7 +110,7 @@
     "invite": "Invite",
     "empty_warning": "Cannot be empty!",
     "admin": "Admin",
-    "editor": "Editor",
+    "manager": "Manager",
     "viewer": "Viewer"
   },
   "AccountMenu": {

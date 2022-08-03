@@ -1,15 +1,21 @@
 import { Form, Input, Row, Col, Radio, Space, Typography, Button, Card } from 'antd'
 import { useTranslation } from 'react-i18next'
 
+import { useInviteUser } from '../api/inviteUser'
+
 import { roleNames } from '@/config/constants'
 
 export const InviteUser = () => {
-  const userRoles = [roleNames.EDITOR, roleNames.VIEWER]
+  const userRoles = [roleNames.MANAGER, roleNames.VIEWER]
   const [form] = Form.useForm()
   const { t } = useTranslation('InviteUser')
 
+  const inviteUserMutation = useInviteUser()
+
   function handleFinish(values) {
     console.log(values)
+    // Endpoint does not work yet
+    inviteUserMutation.mutateAsync({ data: values })
   }
 
   return (
