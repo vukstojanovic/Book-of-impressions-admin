@@ -133,7 +133,7 @@ export function Settings() {
                   placeholder={t('company_description')}
                   name="serbian-dec"
                   autoSize={{ minRows: 6, maxRows: 10 }}
-                  style={{ width: '60%', marginTop: '6px' }}
+                  style={{ marginTop: '6px' }}
                 />
               </Form.Item>
             </Col>
