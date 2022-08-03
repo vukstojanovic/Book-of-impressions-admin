@@ -16,7 +16,7 @@ export const LoginForm = () => {
   const onFinish = async ({ email, password }) => {
     try {
       const userData = {
-        email,
+        email: email,
         password,
       }
       const { access_token, refrresh_token } = await loginUser(userData)
@@ -29,10 +29,19 @@ export const LoginForm = () => {
       }
     } catch (error) {
       if (error.response.status === 400) {
-        message.error(`${error.response.data.message}. Please login with correct email.`, 3)
+        return message.error(`${error.response.data.message}. Please login with correct email.`, 3)
       }
       if (error.response.status === 401) {
-        message.error(`${error.response.data.message}. Please login with correct password.`, 3)
+        return message.error(
+          `${error.response.data.message}. Please login with correct password.`,
+          3
+        )
+      }
+      if (error.response.status === 500) {
+        return message.error(`${error.response.data.message}. Server Error`, 3)
+      }
+      if (error) {
+        return message.error('Error', 3)
       }
     } finally {
       form.resetFields()
