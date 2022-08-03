@@ -124,6 +124,9 @@
     "password": "Lozinka",
     "confirm_password": "Potvrdi Lozinku",
     "passwords_do_not_match": "Dve lozinke koje ste uneli se ne poklapaju",
+    "please_add_name": "Unesite ime",
+    "please_add_password": "Unesite lozinku",
+    "please_confirm_password": "Potvrdite lozinku",
     "submit": "Pošalji"
   }
 }

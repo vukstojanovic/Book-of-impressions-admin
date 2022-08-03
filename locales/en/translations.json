@@ -124,6 +124,9 @@
     "password": "Password",
     "confirm_password": "Confirm Password",
     "passwords_do_not_match": "The two passwords that you entered do not match",
+    "please_add_name": "Add name",
+    "please_add_password": "Add password",
+    "please_confirm_password": "Confirm password",
     "submit": "Submit"
   }
 }

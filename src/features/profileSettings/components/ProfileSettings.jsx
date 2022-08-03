@@ -3,21 +3,23 @@ import { Typography, Row, Col, Button, Form, Input, Upload } from 'antd'
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 
-import { submitUserSettingForm } from '../api/submitUserSettingForm'
-
+import { usePatchUserDataMutation } from '@/features/profileSettings/api/submitUserSettingForm'
 import { beforeUpload } from '@/utils/beforeImageUpload.js'
 import { getBase64 } from '@/utils/getBase64.js'
 
 export function ProfileSettings() {
   const [loading, setLoading] = useState(false)
-  const [imageUrl, setImageUrl] = useState()
+  const [imageObject, setImageObject] = useState(null)
 
   const { t } = useTranslation('profileSettings')
 
   const { Title } = Typography
   const [form] = Form.useForm()
 
+  const patchUserData = usePatchUserDataMutation()
+
   const handleChange = (info) => {
+    console.log(info.file)
     // if (info.file.status === 'uploading') {
     //   setLoading(true)
     //   return
@@ -25,9 +27,10 @@ export function ProfileSettings() {
 
     // if (info.file.status === 'done') {
     // Get this url from response in real world.
-    getBase64(info.file.originFileObj, (url) => {
+    getBase64(info.file.originFileObj, () => {
       setLoading(false)
-      setImageUrl(url)
+      setImageObject(info.file)
+      // setImageUrl(url)
     })
     // }
   }
@@ -46,8 +49,14 @@ export function ProfileSettings() {
   )
 
   const handleFinish = (values) => {
-    console.log(values)
-    submitUserSettingForm(values)
+    const modifiedValues = {
+      name: values.name,
+      password: values.password,
+      email: values.email,
+      profileImage: imageObject,
+    }
+    console.log(modifiedValues)
+    patchUserData.mutate(modifiedValues)
   }
 
   return (
@@ -62,7 +71,11 @@ export function ProfileSettings() {
       >
         <Row>
           <Col sm={24} md={18} lg={8}>
-            <Form.Item label={`${t('name')}:`} name="name">
+            <Form.Item
+              label={`${t('name')}:`}
+              name="name"
+              rules={[{ required: true, message: `${t('please_add_name')}` }]}
+            >
               <Input placeholder={t('name')} />
             </Form.Item>
           </Col>
@@ -70,34 +83,28 @@ export function ProfileSettings() {
 
         <Row>
           <Col sm={24} md={18} lg={14}>
-            <Form.Item label={`${t('profilePhoto')}:`} name="profileImage">
+            <Form.Item label={`${t('profilePhoto')}:`} valuePropName="fileList">
               <Upload
                 name="avatar"
                 listType="picture-card"
-                showUploadList={false}
-                action="/"
+                showUploadList={(true, { showPreviewIcon: false })}
                 beforeUpload={beforeUpload}
                 onChange={handleChange}
                 maxCount={1}
+                action="UploadUrl"
               >
-                {imageUrl ? (
-                  <img
-                    src={imageUrl}
-                    alt="avatar"
-                    style={{
-                      width: '100%',
-                    }}
-                  />
-                ) : (
-                  uploadButton
-                )}
+                {uploadButton}
               </Upload>
             </Form.Item>
           </Col>
         </Row>
         <Row>
           <Col sm={24} md={18} lg={8}>
-            <Form.Item label={`${t('password')}:`} name="password">
+            <Form.Item
+              label={`${t('password')}:`}
+              name="password"
+              rules={[{ required: true, message: `${t('please_add_password')}` }]}
+            >
               <Input.Password placeholder={t('password')} />
             </Form.Item>
           </Col>
@@ -107,7 +114,9 @@ export function ProfileSettings() {
             <Form.Item
               label={`${t('confirm_password')}:`}
               name="confirm_password"
+              dependencies={['password']}
               rules={[
+                { required: true, message: `${t('please_confirm_password')}` },
                 ({ getFieldValue }) => ({
                   validator(_, value) {
                     if (!value || getFieldValue('password') === value) {
@@ -124,7 +133,7 @@ export function ProfileSettings() {
         </Row>
         <Row>
           <Col sm={24} md={18} lg={8}>
-            <Form.Item label="Email:" name="emails" initialValue={'dummy-email@gmail.com'}>
+            <Form.Item label="Email:" name="email" initialValue={'dummy-email@gmail.com'}>
               <Input readOnly />
             </Form.Item>
           </Col>
