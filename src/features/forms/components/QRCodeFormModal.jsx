@@ -45,20 +45,21 @@ const QRCodeFormModal = ({ formId, formTitle, setModalVisible, modalVisible, qrV
       visible={modalVisible}
       bodyStyle={{ padding: '24px 0', display: 'grid', justifyItems: 'center' }}
       footer={[
-        <Button
-          key="back"
-          onClick={() => {
-            setModalVisible(false)
-          }}
-        >
-          {t('done')}
-        </Button>,
-        <Button key="submit" type="primary" onClick={handleOk}>
-          {t('downloadQRCode')}
-        </Button>,
-        <Button key="pdf-submit" onClick={handlePDFOk}>
-          {t('downloadQRCode')} PDF
-        </Button>,
+        <div style={{ display: 'grid' }} key="back">
+          <Button style={{ marginLeft: '0' }} key="pdf-submit" onClick={handlePDFOk}>
+            {t('downloadQRCode')} PDF
+          </Button>
+          <Button style={{ marginLeft: '0' }} key="submit" type="primary" onClick={handleOk}>
+            {t('downloadQRCode')}
+          </Button>
+          <Button
+            onClick={() => {
+              setModalVisible(false)
+            }}
+          >
+            {t('done')}
+          </Button>
+        </div>,
       ]}
     >
       <Row

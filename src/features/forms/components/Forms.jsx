@@ -1,7 +1,7 @@
+import { useState } from 'react'
+import { useTranslation } from 'react-i18next'
 import { Link } from 'react-router-dom'
 import { Typography, Row, Card, Progress, Button, Skeleton } from 'antd'
-import { useTranslation } from 'react-i18next'
-import { useState } from 'react'
 import { QrcodeOutlined, PlusCircleOutlined } from '@ant-design/icons'
 
 import { useForms } from '../api/getForms'
@@ -16,7 +16,7 @@ export const Forms = () => {
 
   const [formTitle, setFormTitle] = useState('')
   const [formId, setFormId] = useState('')
-  const [modalVisible, setModalVisible] = useState(false)
+  const [modalVisible, setModalVisible] = useState(true)
   const [qrValue, setQrValue] = useState('asd')
   const divFlex = { display: 'flex', justifyContent: 'space-between', alignItems: 'center' }
 
