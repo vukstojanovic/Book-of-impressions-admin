@@ -109,9 +109,11 @@
     "cancel": "Otkaži",
     "invite": "Pozovi",
     "empty_warning": "Ne može biti prazno!",
+    "error_email": "Unesite važeću email adresu",
     "admin": "Admin",
     "manager": "Menadžer",
-    "viewer": "Posmatrač"
+    "viewer": "Posmatrač",
+    "description": "Lorem ipsum dolor sit amet, qui minim labore adipisicing minim sint cillum sint consectetur cupidatat."
   },
   "AccountMenu": {
     "your_profile": "Tvoj profil",

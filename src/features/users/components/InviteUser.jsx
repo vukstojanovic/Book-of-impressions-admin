@@ -15,7 +15,10 @@ export const InviteUser = () => {
   function handleFinish(values) {
     console.log(values)
     // Endpoint does not work yet
-    inviteUserMutation.mutateAsync({ data: values })
+    inviteUserMutation.mutate({
+      data: values,
+    })
+    inviteUserMutation.isSuccess && console.log('asd')
   }
 
   return (
@@ -49,12 +52,7 @@ export const InviteUser = () => {
             <Form.Item
               label={t('email')}
               name="email"
-              rules={[
-                {
-                  required: true,
-                  message: t('empty_warning'),
-                },
-              ]}
+              rules={[{ type: 'email', required: true, message: t('error_email') }]}
             >
               <Input />
             </Form.Item>
@@ -81,10 +79,7 @@ export const InviteUser = () => {
                           {t(role)}
                         </Typography.Paragraph>
                         <Typography.Paragraph style={{ color: 'gray', fontSize: '14px' }}>
-                          Lorem ipsum dolor sit amet consectetur adipisicing elit. Neque, quo iste.
-                          Beatae nemo libero aliquid dolore eveniet asperiores pariatur
-                          exercitationem quasi? Possimus, at? Cum consequuntur dolorum soluta nulla,
-                          natus velit. Aliquam amet, dolorum tenetur.
+                          {t('description')}
                         </Typography.Paragraph>
                       </Radio>
                     ))}
@@ -95,11 +90,6 @@ export const InviteUser = () => {
           </Col>
         </Row>
         <Row justify="end" span={24} gutter={[10, 10]}>
-          <Col>
-            <Button style={{ width: '100%' }} onClick={() => form.resetFields()}>
-              {t('cancel')}
-            </Button>
-          </Col>
           <Col>
             <Button style={{ width: '100%' }} type="primary" htmlType="submit">
               {t('invite')}
