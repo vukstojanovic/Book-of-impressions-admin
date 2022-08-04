@@ -3,23 +3,26 @@ import { Typography, Row, Col, Button, Form, Input, Upload } from 'antd'
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 
-import { usePatchUserDataMutation } from '@/features/profileSettings/api/submitUserSettingForm'
+// import {
+//   usePatchUserDataMutation,
+// } from '@/features/profileSettings/api/submitUserSettingForm'
 import { beforeUpload } from '@/utils/beforeImageUpload.js'
 import { getBase64 } from '@/utils/getBase64.js'
 
 export function ProfileSettings() {
   const [loading, setLoading] = useState(false)
   const [imageObject, setImageObject] = useState(null)
+  const [hasErrors, setHasErrors] = useState(null)
 
   const { t } = useTranslation('profileSettings')
 
   const { Title } = Typography
   const [form] = Form.useForm()
 
-  const patchUserData = usePatchUserDataMutation()
+  // const patchUserData = usePatchUserDataMutation()
 
   const handleChange = (info) => {
-    console.log(info.file)
+    console.log(info)
     // if (info.file.status === 'uploading') {
     //   setLoading(true)
     //   return
@@ -29,7 +32,11 @@ export function ProfileSettings() {
     // Get this url from response in real world.
     getBase64(info.file.originFileObj, () => {
       setLoading(false)
-      setImageObject(info.file)
+      if (info.fileList.length > 0) {
+        setImageObject(info.fileList[0])
+      } else {
+        setImageObject(null)
+      }
       // setImageUrl(url)
     })
     // }
@@ -52,11 +59,22 @@ export function ProfileSettings() {
     const modifiedValues = {
       name: values.name,
       password: values.password,
-      email: values.email,
+      // email: values.email,
       profileImage: imageObject,
     }
     console.log(modifiedValues)
-    patchUserData.mutate(modifiedValues)
+    // patchUserData.mutate(modifiedValues)
+  }
+
+  const handleFieldsChange = () => {
+    const someErrors = form.getFieldsError().some(({ errors }) => errors.length)
+    console.log(form.getFieldsError())
+    setHasErrors(someErrors)
+  }
+
+  function handleValuesChange(values) {
+    console.log(values)
+    form.validateFields()
   }
 
   return (
@@ -68,13 +86,22 @@ export function ProfileSettings() {
         style={{ backgroundColor: 'white', padding: '24px' }}
         layout="vertical"
         onFinish={handleFinish}
+        onFieldsChange={handleFieldsChange}
+        onValuesChange={handleValuesChange}
       >
+        <Row>
+          <Col sm={24} md={18} lg={8}>
+            <Form.Item label="Email:" name="email" initialValue={'dummy-email@gmail.com'}>
+              <Input disabled />
+            </Form.Item>
+          </Col>
+        </Row>
         <Row>
           <Col sm={24} md={18} lg={8}>
             <Form.Item
               label={`${t('name')}:`}
               name="name"
-              rules={[{ required: true, message: `${t('please_add_name')}` }]}
+              rules={[{ message: `${t('please_add_name')}` }]}
             >
               <Input placeholder={t('name')} />
             </Form.Item>
@@ -101,9 +128,10 @@ export function ProfileSettings() {
         <Row>
           <Col sm={24} md={18} lg={8}>
             <Form.Item
+              shouldUpdate
               label={`${t('password')}:`}
               name="password"
-              rules={[{ required: true, message: `${t('please_add_password')}` }]}
+              rules={[{ message: `${t('please_add_password')}` }]}
             >
               <Input.Password placeholder={t('password')} />
             </Form.Item>
@@ -116,10 +144,9 @@ export function ProfileSettings() {
               name="confirm_password"
               dependencies={['password']}
               rules={[
-                { required: true, message: `${t('please_confirm_password')}` },
                 ({ getFieldValue }) => ({
                   validator(_, value) {
-                    if (!value || getFieldValue('password') === value) {
+                    if (getFieldValue('password') === value || !getFieldValue('password')) {
                       return Promise.resolve()
                     }
                     return Promise.reject(t('passwords_do_not_match'))
@@ -132,15 +159,12 @@ export function ProfileSettings() {
           </Col>
         </Row>
         <Row>
-          <Col sm={24} md={18} lg={8}>
-            <Form.Item label="Email:" name="email" initialValue={'dummy-email@gmail.com'}>
-              <Input readOnly />
-            </Form.Item>
+          <Col sm={24} md={18} lg={8} style={{ display: 'flex', justifyContent: 'flex-end' }}>
+            <Button type="primary" htmlType="submit" disabled={hasErrors}>
+              {t('submit')}
+            </Button>
           </Col>
         </Row>
-        <Button type="primary" htmlType="submit">
-          {t('submit')}
-        </Button>
       </Form>
     </>
   )
