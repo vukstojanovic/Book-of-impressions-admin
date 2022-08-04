@@ -16,7 +16,7 @@ export const LoginForm = () => {
   const onFinish = async ({ email, password }) => {
     try {
       const userData = {
-        email: email,
+        email,
         password,
       }
       const { access_token, refrresh_token } = await loginUser(userData)
