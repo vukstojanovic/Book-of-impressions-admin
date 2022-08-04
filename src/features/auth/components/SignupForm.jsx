@@ -30,7 +30,12 @@ export const SignupForm = () => {
         navigate('/sign-in')
       }
     } catch (error) {
-      message.error(error.response.data.message, 3)
+      if (error.response.status !== 400) {
+        return message.error(t('errorServer'), 3)
+      }
+      if (error) {
+        message.error(t('error'), 3)
+      }
     } finally {
       form.resetFields()
     }
