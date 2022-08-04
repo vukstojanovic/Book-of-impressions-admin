@@ -67,12 +67,10 @@ export function ProfileSettings() {
 
   const handleFieldsChange = () => {
     const someErrors = form.getFieldsError().some(({ errors }) => errors.length)
-    console.log(form.getFieldsError())
     setHasErrors(someErrors)
   }
 
-  function handleValuesChange(values) {
-    console.log(values)
+  function handleValuesChange() {
     form.validateFields()
   }
 
