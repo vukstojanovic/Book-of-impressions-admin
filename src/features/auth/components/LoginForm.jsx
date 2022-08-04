@@ -29,19 +29,13 @@ export const LoginForm = () => {
       }
     } catch (error) {
       if (error.response.status === 400) {
-        return message.error(`${error.response.data.message}. Please login with correct email.`, 3)
+        return message.error(t('error'), 3)
       }
       if (error.response.status === 401) {
-        return message.error(
-          `${error.response.data.message}. Please login with correct password.`,
-          3
-        )
-      }
-      if (error.response.status === 500) {
-        return message.error(`${error.response.data.message}. Server Error`, 3)
+        return message.error(t('error'), 3)
       }
       if (error) {
-        return message.error('Something Went Wrong!', 3)
+        return message.error(t('errorServer'), 3)
       }
     } finally {
       form.resetFields()
