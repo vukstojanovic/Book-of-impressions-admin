@@ -59,7 +59,6 @@ export function ProfileSettings() {
     const modifiedValues = {
       name: values.name,
       password: values.password,
-      // email: values.email,
       profileImage: imageObject,
     }
     console.log(modifiedValues)
