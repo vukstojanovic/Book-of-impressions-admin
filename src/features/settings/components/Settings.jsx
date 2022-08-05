@@ -1,19 +1,18 @@
-import { LoadingOutlined, PlusOutlined } from '@ant-design/icons'
-import { Row, Col, Form, Input, Upload, message, Tabs, Button } from 'antd'
 import { useState } from 'react'
+import { PlusOutlined } from '@ant-design/icons'
+import { Row, Col, Form, Input, Upload, Tabs, Button, message } from 'antd'
 import { useTranslation } from 'react-i18next'
 
 import { beforeUpload } from '@/utils/beforeImageUpload'
 
 export function Settings() {
+  const [image, setImage] = useState(null)
+
   const { t } = useTranslation('settings')
 
   const { TextArea } = Input
   const { TabPane } = Tabs
   const [form] = Form.useForm()
-
-  const [loading, setLoading] = useState(false)
-  const [image, setImage] = useState()
 
   const onFinish = ({
     'company-name': name,
@@ -21,13 +20,11 @@ export function Settings() {
     'en-desc': enDescription,
     'sr-desc': srDescription,
   }) => {
-    // Added this check for logo 'cause for some reason rules and required doesn't work with upload componenet
-    if (!image) {
-      message.error(t('error_logo'))
+    if (!enDescription || !srDescription) {
+      message.error(t('error_description', 3))
       return
     }
 
-    // Data for sending on /api/wapp/company/{id}
     const companyInfo = {
       name,
       email,
@@ -41,24 +38,26 @@ export function Settings() {
           text: srDescription,
         },
       ],
-      logo: image,
+      logo: image ? image : null,
     }
 
     console.log(companyInfo)
+    form.resetFields()
+  }
+
+  const onFinishFailed = ({ errorFields }) => {
+    if (errorFields) {
+      message.error(t('error_description', 3))
+    }
   }
 
   const handleChange = (info) => {
     setImage(info.file)
   }
 
-  const onReset = () => {
-    form.resetFields()
-    setLoading(false)
-  }
-
   const uploadButton = (
     <div>
-      {loading ? <LoadingOutlined /> : <PlusOutlined />}
+      <PlusOutlined />
       <div
         style={{
           marginTop: 8,
@@ -73,9 +72,11 @@ export function Settings() {
     <Form
       size="large"
       layout="vertical"
+      requiredMark={false}
       form={form}
       onFinish={onFinish}
       style={{ backgroundColor: 'white', padding: '10px 30px' }}
+      onFinishFailed={onFinishFailed}
     >
       <Row gutter={24}>
         <Col lg={8} md={12} xs={24}>
@@ -91,13 +92,16 @@ export function Settings() {
           <Form.Item
             label={t('company_email')}
             name="company-email"
-            rules={[{ required: true, message: t('error_email') }]}
+            rules={[
+              { required: true, message: t('error_email') },
+              { type: 'email', message: t('error_valid_email') },
+            ]}
           >
             <Input placeholder={t('company_email')} />
           </Form.Item>
         </Col>
       </Row>
-      <p style={{ marginBottom: '-10px', marginTop: '10px' }}>{t('company_description')}</p>
+      <p style={{ marginBottom: '-10px', marginTop: '15px' }}>{t('company_description')}</p>
       <Tabs
         defaultActiveKey="en"
         type="line"
@@ -140,11 +144,7 @@ export function Settings() {
           </Row>
         </TabPane>
       </Tabs>
-      <Form.Item
-        label={t('company_logo')}
-        valuePropName="fileList"
-        rules={[{ required: true, message: 'Please add logo for the company!' }]}
-      >
+      <Form.Item label={t('company_logo')} valuePropName="fileList">
         <Upload
           name="avatar"
           listType="picture-card"
@@ -158,9 +158,6 @@ export function Settings() {
         </Upload>
       </Form.Item>
       <Form.Item style={{ textAlign: 'right' }}>
-        <Button style={{ marginRight: '10px' }} onClick={onReset}>
-          {t('cancel')}
-        </Button>
         <Button type="primary" htmlType="submit">
           {t('submit')}
         </Button>
