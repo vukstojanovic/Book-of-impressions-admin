@@ -6,6 +6,7 @@ import { QueryClientProvider } from 'react-query'
 
 import { queryClient } from '@/lib/react-query'
 import i18next from '@/lib/i18n'
+import { AuthProvider } from '@/providers/authProvider'
 
 const ErrorFallback = () => {
   return 'Ooops, something went wrong :('
@@ -17,7 +18,9 @@ export const AppProvider = ({ children }) => {
       <HelmetProvider>
         <Router>
           <QueryClientProvider client={queryClient}>
-            <I18nextProvider i18n={i18next}>{children}</I18nextProvider>
+            <AuthProvider>
+              <I18nextProvider i18n={i18next}>{children}</I18nextProvider>
+            </AuthProvider>
           </QueryClientProvider>
         </Router>
       </HelmetProvider>
