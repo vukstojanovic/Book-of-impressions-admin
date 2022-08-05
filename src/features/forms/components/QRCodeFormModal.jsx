@@ -53,6 +53,7 @@ const QRCodeFormModal = ({ formId, formTitle, setModalVisible, modalVisible, qrV
             {t('downloadQRCode')}
           </Button>
           <Button
+            style={{ marginLeft: '0' }}
             onClick={() => {
               setModalVisible(false)
             }}
@@ -71,6 +72,7 @@ const QRCodeFormModal = ({ formId, formTitle, setModalVisible, modalVisible, qrV
         }}
       >
         <QRCodeCanvas
+          id="qr-gen"
           value={formId}
           includeMargin
           size={256}

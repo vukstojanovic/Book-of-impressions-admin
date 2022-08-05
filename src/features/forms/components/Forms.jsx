@@ -16,7 +16,7 @@ export const Forms = () => {
 
   const [formTitle, setFormTitle] = useState('')
   const [formId, setFormId] = useState('')
-  const [modalVisible, setModalVisible] = useState(true)
+  const [modalVisible, setModalVisible] = useState(false)
   const [qrValue, setQrValue] = useState('asd')
   const divFlex = { display: 'flex', justifyContent: 'space-between', alignItems: 'center' }
 
