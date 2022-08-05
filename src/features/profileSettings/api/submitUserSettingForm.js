@@ -25,7 +25,6 @@ export const usePatchUserDataMutation = () => {
   const queryClient = useQueryClient()
   return useMutation(patchUserProfileData, {
     onSuccess: () => {
-      console.log('success!')
       queryClient.invalidateQueries(['userSettingForm'])
     },
     onError: () => console.log('error!'),

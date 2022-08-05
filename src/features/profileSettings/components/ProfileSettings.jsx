@@ -1,5 +1,5 @@
 import { LoadingOutlined, PlusOutlined } from '@ant-design/icons'
-import { Typography, Row, Col, Button, Form, Input, Upload } from 'antd'
+import { Typography, Row, Col, Button, Form, Input, Upload, message } from 'antd'
 import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 
@@ -12,9 +12,8 @@ import { getBase64 } from '@/utils/getBase64.js'
 
 export function ProfileSettings() {
   const [loading, setLoading] = useState(false)
-  const [imageObject, setImageObject] = useState(null)
   const [hasErrors, setHasErrors] = useState(null)
-  const [areFieldsEmpty, setAreFieldsEmpty] = useState(false)
+  const [areFieldsEmpty, setAreFieldsEmpty] = useState(true)
 
   const { t } = useTranslation('profileSettings')
 
@@ -28,20 +27,9 @@ export function ProfileSettings() {
     console.log(data)
   }, [isFetching])
 
-  useEffect(() => {
-    setAreFieldsEmpty(
-      !form.getFieldValue('password') && !form.getFieldValue('name') && !imageObject
-    )
-  }, [])
-
   const handleChange = (info) => {
     getBase64(info.file.originFileObj, () => {
       setLoading(false)
-      if (info.fileList.length > 0) {
-        setImageObject(info.fileList[0])
-      } else {
-        setImageObject(null)
-      }
     })
   }
 
@@ -62,18 +50,34 @@ export function ProfileSettings() {
     // separate keys with values from those without them
     const modifiedValues = {}
     const keysWithValues = Object.keys(values).filter(
-      (key) => values[key] && key !== 'email' && key !== 'confirm_password'
+      (key) => values[key].length && key !== 'email' && key !== 'confirm_password'
     )
-    keysWithValues.forEach((key) => (modifiedValues[key] = values[key]))
-    if (imageObject) modifiedValues.photo = imageObject
-    console.log(modifiedValues)
-    patchUserData.mutate(modifiedValues)
+    keysWithValues.forEach((key) => {
+      if (key === 'photo') {
+        modifiedValues[key] = values[key][0]
+      } else {
+        modifiedValues[key] = values[key]
+      }
+    })
+
+    patchUserData.mutate(modifiedValues, {
+      onSuccess: () => {
+        message.success('Changes successfully sent.')
+        form.resetFields()
+        setAreFieldsEmpty(true)
+      },
+      onError: () => message.error('Error while sending data.'),
+    })
   }
 
   const handleFieldsChange = () => {
     const someErrors = form.getFieldsError().some(({ errors }) => errors.length)
     setHasErrors(someErrors)
-    setAreFieldsEmpty(!form.getFieldValue('password') && !form.getFieldValue('name'))
+    setAreFieldsEmpty(
+      !form.getFieldValue('password') &&
+        !form.getFieldValue('name') &&
+        !form.getFieldValue('photo').length
+    )
   }
 
   const handleValuesChange = () => {
@@ -91,6 +95,7 @@ export function ProfileSettings() {
         onFinish={handleFinish}
         onFieldsChange={handleFieldsChange}
         onValuesChange={handleValuesChange}
+        initialValues={{ name: '', password: '', confirm_password: '', photo: [] }}
       >
         <Row>
           <Col sm={24} md={18} lg={8}>
@@ -113,7 +118,17 @@ export function ProfileSettings() {
 
         <Row>
           <Col sm={24} md={18} lg={14}>
-            <Form.Item label={`${t('profilePhoto')}:`} valuePropName="fileList">
+            <Form.Item
+              label={`${t('profilePhoto')}:`}
+              valuePropName="fileList"
+              name="photo"
+              getValueFromEvent={(e) => {
+                if (Array.isArray(e)) {
+                  return e
+                }
+                return e && e.fileList
+              }}
+            >
               <Upload
                 name="avatar"
                 listType="picture-card"
@@ -164,11 +179,7 @@ export function ProfileSettings() {
         <Row>
           <Col sm={24} md={18} lg={8} style={{ display: 'flex', justifyContent: 'flex-end' }}>
             <Form.Item>
-              <Button
-                type="primary"
-                htmlType="submit"
-                disabled={hasErrors || (areFieldsEmpty && !imageObject)}
-              >
+              <Button type="primary" htmlType="submit" disabled={hasErrors || areFieldsEmpty}>
                 {t('submit')}
               </Button>
             </Form.Item>
