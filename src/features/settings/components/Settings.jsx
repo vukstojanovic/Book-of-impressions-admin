@@ -7,6 +7,9 @@ import { beforeUpload } from '@/utils/beforeImageUpload'
 
 export function Settings() {
   const [image, setImage] = useState(null)
+  const [buttonDisabled, setButtonDisabled] = useState(true)
+
+  // console.log(setButtonDisabled)
 
   const { t } = useTranslation('settings')
 
@@ -45,10 +48,39 @@ export function Settings() {
     form.resetFields()
   }
 
-  const onFinishFailed = ({ errorFields }) => {
-    if (errorFields) {
-      message.error(t('error_description', 3))
+  // const onFinishFailed = ({ errorFields }) => {
+  //   const descriptionErrors = errorFields.filter((error) => {
+  //     return error.name[0] === 'en-desc' || error.name[0] === 'sr-desc'
+  //   })
+
+  //   const nameError = errorFields.filter((error) => {
+  //     return error.name[0] === 'company-name'
+  //   })
+
+  //   const emailError = errorFields.filter((error) => {
+  //     return error.name[0] === 'company-email'
+  //   })
+
+  //   console.log(descriptionErrors, nameError, emailError)
+
+  //   if (descriptionErrors.length > 0 && nameError.length === 0 && emailError.length === 0) {
+  //     message.error(t('error_description'))
+  //   }
+  // }
+
+  const onValuesChange = (
+    changeValues,
+    { 'company-email': email, 'company-name': name, 'en-desc': enDesc, 'sr-desc': srDesc }
+  ) => {
+    if (email && name && enDesc && srDesc) {
+      setButtonDisabled(false)
+      return
     }
+    setButtonDisabled(true)
+  }
+
+  const onFieldsChange = (changedFields, allFields) => {
+    console.log(changedFields, allFields)
   }
 
   const handleChange = (info) => {
@@ -76,7 +108,8 @@ export function Settings() {
       form={form}
       onFinish={onFinish}
       style={{ backgroundColor: 'white', padding: '10px 30px' }}
-      onFinishFailed={onFinishFailed}
+      onFieldsChange={onFieldsChange}
+      onValuesChange={onValuesChange}
     >
       <Row gutter={24}>
         <Col lg={8} md={12} xs={24}>
@@ -158,7 +191,7 @@ export function Settings() {
         </Upload>
       </Form.Item>
       <Form.Item style={{ textAlign: 'right' }}>
-        <Button type="primary" htmlType="submit">
+        <Button type="primary" htmlType="submit" disabled={buttonDisabled ? true : false}>
           {t('submit')}
         </Button>
       </Form.Item>
