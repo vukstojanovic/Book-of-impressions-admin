@@ -19,7 +19,9 @@
     "last_name_warning": "Molimo unesite vaše prezime!",
     "email_warning": "Molimo unesite vaš email!",
     "valid_email_warning": "Niste uneli validan email",
-    "password_warning": "Molimo unesite lozinku! Potrebno je minimum 8 karaktera."
+    "password_warning": "Molimo unesite lozinku! Potrebno je minimum 8 karaktera.",
+    "error": "Email adresa već postoji",
+    "errorServer": "Nešto je krenulo naopako!"
   },
   "Login": {
     "login_welcome": "Dobrodosli na Boi!",
@@ -32,7 +34,9 @@
     "valid_email_warning": "Niste uneli validan email!",
     "password_warning": "Molimo unesite lozinku! Potrebno je minimum 8 karaktera.",
     "email": "Email",
-    "password": "Lozinka"
+    "password": "Lozinka",
+    "error": "Uneli ste loše podatke, proverite ponovo",
+    "errorServer": "Nešto je krenulo naopako!"
   },
   "Users": {
     "name": "Ime",
@@ -117,7 +121,7 @@
     "your_profile": "Tvoj profil",
     "log_out": "Odjavi se"
   },
-  "profileSettings": {
+  "ProfileSettings": {
     "my_profile": "Moj Nalog",
     "name": "Ime",
     "profilePhoto": "Profilna Slika",
