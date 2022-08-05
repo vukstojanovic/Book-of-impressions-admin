@@ -7,22 +7,21 @@ const QRCodeFormModal = ({ formId, formTitle, setModalVisible, modalVisible, qrV
   const { Text } = Typography
 
   const { t } = useTranslation('QRCode')
+
   const handleOk = () => {
     const canvas = document.getElementById('qr-gen')
-
     const pngUrl = canvas.toDataURL('image/png').replace('image/png', 'image/octet-stream')
+
     let downloadLink = document.createElement('a')
+
     downloadLink.href = pngUrl
     downloadLink.download = `${qrValue}.png`
     document.body.appendChild(downloadLink)
     downloadLink.click()
     document.body.removeChild(downloadLink)
   }
+
   const handlePDFOk = () => {
-    generatePDF()
-    handleOk()
-  }
-  const generatePDF = () => {
     const doc = new jsPDF({
       orientation: 'p',
       unit: 'px',
@@ -36,6 +35,7 @@ const QRCodeFormModal = ({ formId, formTitle, setModalVisible, modalVisible, qrV
       },
     })
   }
+
   return (
     <Modal
       title={`${formTitle}`}

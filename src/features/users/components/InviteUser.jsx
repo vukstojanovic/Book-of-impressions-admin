@@ -13,7 +13,7 @@ export const InviteUser = () => {
   const userRoles = [roleNames.MANAGER, roleNames.VIEWER]
 
   const [disabled, setDisabled] = useState(true)
-  const inviteUserMutation = useInviteUser({ form })
+  const inviteUserMutation = useInviteUser({ form, t, setDisabled })
 
   const handleFormChange = () => {
     const hasValues = form.getFieldsValue()
@@ -28,7 +28,6 @@ export const InviteUser = () => {
     inviteUserMutation.mutate({
       data,
     })
-    setDisabled(true)
   }
 
   return (

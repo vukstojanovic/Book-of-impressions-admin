@@ -117,7 +117,9 @@
     "admin": "Admin",
     "manager": "Manager",
     "viewer": "Viewer",
-    "description": "Lorem ipsum dolor sit amet, qui minim labore adipisicing minim sint cillum sint consectetur cupidatat."
+    "description": "Lorem ipsum dolor sit amet, qui minim labore adipisicing minim sint cillum sint consectetur cupidatat.",
+    "invite_success": "Invitation sent successfully",
+    "invite_error": "Failed to send invitation"
   },
   "AccountMenu": {
     "your_profile": "Your profile",
