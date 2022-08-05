@@ -36,8 +36,6 @@ export const SignupForm = () => {
       if (error) {
         message.error(t('error'), 3)
       }
-    } finally {
-      form.resetFields()
     }
   }
 

@@ -37,8 +37,6 @@ export const LoginForm = () => {
       if (error) {
         return message.error(t('errorServer'), 3)
       }
-    } finally {
-      form.resetFields()
     }
   }
 
