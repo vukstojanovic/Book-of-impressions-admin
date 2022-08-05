@@ -3,12 +3,12 @@ import { useRoutes } from 'react-router-dom'
 import { protectedRoutes } from './protected'
 import { publicRoutes } from './public'
 
-import storage from '@/utils/storage'
+import { useAuth } from '@/providers/authProvider'
 
 export const AppRoutes = () => {
-  const auth = storage.get('access_token') && storage.get('refresh_token')
+  const auth = useAuth()
 
-  const routes = auth ? protectedRoutes : publicRoutes
+  const routes = auth.user ? protectedRoutes : publicRoutes
 
   const element = useRoutes([...routes])
 

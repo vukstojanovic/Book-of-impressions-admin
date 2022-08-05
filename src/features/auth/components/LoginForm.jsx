@@ -1,17 +1,22 @@
 import { Row, Col, Form, Input, Checkbox, Button, Typography, message } from 'antd'
 import { useTranslation } from 'react-i18next'
-import { Link, useNavigate } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 
-import { loginUser } from '@/features/auth/api/login'
+// import { loginUser } from '@/features/auth/api/login'
 import { AdminLayout } from '@/components/layout/AdminLayout'
-import storage from '@/utils/storage'
+// import storage from '@/utils/storage'
+import { useAuth } from '@/providers/authProvider'
 
 const { Title, Paragraph } = Typography
 
 export const LoginForm = () => {
   const [form] = Form.useForm()
-  const navigate = useNavigate()
+
+  // const navigate = useNavigate()
+
   const { t } = useTranslation('Login')
+
+  const { login } = useAuth()
 
   const onFinish = async ({ email, password }) => {
     try {
@@ -19,14 +24,15 @@ export const LoginForm = () => {
         email,
         password,
       }
-      const { access_token, refrresh_token } = await loginUser(userData)
 
-      if (access_token && refrresh_token) {
-        storage.set('access_token', access_token)
-        storage.set('refresh_token', refrresh_token)
+      await login(userData)
 
-        navigate('/')
-      }
+      // if (access_token && refrresh_token) {
+      //   storage.set('access_token', access_token)
+      //   storage.set('refresh_token', refrresh_token)
+
+      //   navigate('/')
+      // }
     } catch (error) {
       if (error.response.status === 400) {
         return message.error(t('error'), 3)
