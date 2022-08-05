@@ -21,7 +21,6 @@ const QRCodeFormModal = ({ formId, formTitle, setModalVisible, modalVisible, qrV
   const handlePDFOk = () => {
     generatePDF()
     handleOk()
-    setModalVisible(false)
   }
   const generatePDF = () => {
     const doc = new jsPDF({
