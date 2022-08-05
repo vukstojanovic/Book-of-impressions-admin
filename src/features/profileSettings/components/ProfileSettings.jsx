@@ -1,11 +1,12 @@
 import { LoadingOutlined, PlusOutlined } from '@ant-design/icons'
 import { Typography, Row, Col, Button, Form, Input, Upload } from 'antd'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 
-// import {
-//   usePatchUserDataMutation,
-// } from '@/features/profileSettings/api/submitUserSettingForm'
+import {
+  usePatchUserDataMutation,
+  useGetUserDataQuery,
+} from '@/features/profileSettings/api/submitUserSettingForm'
 import { beforeUpload } from '@/utils/beforeImageUpload.js'
 import { getBase64 } from '@/utils/getBase64.js'
 
@@ -13,23 +14,27 @@ export function ProfileSettings() {
   const [loading, setLoading] = useState(false)
   const [imageObject, setImageObject] = useState(null)
   const [hasErrors, setHasErrors] = useState(null)
+  const [areFieldsEmpty, setAreFieldsEmpty] = useState(false)
 
   const { t } = useTranslation('profileSettings')
 
   const { Title } = Typography
   const [form] = Form.useForm()
 
-  // const patchUserData = usePatchUserDataMutation()
+  const patchUserData = usePatchUserDataMutation()
+  const { data, isFetching } = useGetUserDataQuery()
+
+  useEffect(() => {
+    console.log(data)
+  }, [isFetching])
+
+  useEffect(() => {
+    setAreFieldsEmpty(
+      !form.getFieldValue('password') && !form.getFieldValue('name') && !imageObject
+    )
+  }, [])
 
   const handleChange = (info) => {
-    console.log(info)
-    // if (info.file.status === 'uploading') {
-    //   setLoading(true)
-    //   return
-    // }
-
-    // if (info.file.status === 'done') {
-    // Get this url from response in real world.
     getBase64(info.file.originFileObj, () => {
       setLoading(false)
       if (info.fileList.length > 0) {
@@ -37,9 +42,7 @@ export function ProfileSettings() {
       } else {
         setImageObject(null)
       }
-      // setImageUrl(url)
     })
-    // }
   }
 
   const uploadButton = (
@@ -56,21 +59,24 @@ export function ProfileSettings() {
   )
 
   const handleFinish = (values) => {
-    const modifiedValues = {
-      name: values.name,
-      password: values.password,
-      profileImage: imageObject,
-    }
+    // separate keys with values from those without them
+    const modifiedValues = {}
+    const keysWithValues = Object.keys(values).filter(
+      (key) => values[key] && key !== 'email' && key !== 'confirm_password'
+    )
+    keysWithValues.forEach((key) => (modifiedValues[key] = values[key]))
+    if (imageObject) modifiedValues.photo = imageObject
     console.log(modifiedValues)
-    // patchUserData.mutate(modifiedValues)
+    patchUserData.mutate(modifiedValues)
   }
 
   const handleFieldsChange = () => {
     const someErrors = form.getFieldsError().some(({ errors }) => errors.length)
     setHasErrors(someErrors)
+    setAreFieldsEmpty(!form.getFieldValue('password') && !form.getFieldValue('name'))
   }
 
-  function handleValuesChange() {
+  const handleValuesChange = () => {
     form.validateFields()
   }
 
@@ -157,9 +163,15 @@ export function ProfileSettings() {
         </Row>
         <Row>
           <Col sm={24} md={18} lg={8} style={{ display: 'flex', justifyContent: 'flex-end' }}>
-            <Button type="primary" htmlType="submit" disabled={hasErrors}>
-              {t('submit')}
-            </Button>
+            <Form.Item>
+              <Button
+                type="primary"
+                htmlType="submit"
+                disabled={hasErrors || (areFieldsEmpty && !imageObject)}
+              >
+                {t('submit')}
+              </Button>
+            </Form.Item>
           </Col>
         </Row>
       </Form>
