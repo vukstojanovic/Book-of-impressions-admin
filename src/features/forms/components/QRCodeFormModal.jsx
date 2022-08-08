@@ -7,23 +7,21 @@ const QRCodeFormModal = ({ formId, formTitle, setModalVisible, modalVisible, qrV
   const { Text } = Typography
 
   const { t } = useTranslation('QRCode')
+
   const handleOk = () => {
     const canvas = document.getElementById('qr-gen')
-
     const pngUrl = canvas.toDataURL('image/png').replace('image/png', 'image/octet-stream')
+
     let downloadLink = document.createElement('a')
+
     downloadLink.href = pngUrl
     downloadLink.download = `${qrValue}.png`
     document.body.appendChild(downloadLink)
     downloadLink.click()
     document.body.removeChild(downloadLink)
   }
+
   const handlePDFOk = () => {
-    generatePDF()
-    handleOk()
-    setModalVisible(false)
-  }
-  const generatePDF = () => {
     const doc = new jsPDF({
       orientation: 'p',
       unit: 'px',
@@ -37,6 +35,7 @@ const QRCodeFormModal = ({ formId, formTitle, setModalVisible, modalVisible, qrV
       },
     })
   }
+
   return (
     <Modal
       title={`${formTitle}`}
@@ -45,20 +44,22 @@ const QRCodeFormModal = ({ formId, formTitle, setModalVisible, modalVisible, qrV
       visible={modalVisible}
       bodyStyle={{ padding: '24px 0', display: 'grid', justifyItems: 'center' }}
       footer={[
-        <Button
-          key="back"
-          onClick={() => {
-            setModalVisible(false)
-          }}
-        >
-          {t('done')}
-        </Button>,
-        <Button key="submit" type="primary" onClick={handleOk}>
-          {t('downloadQRCode')}
-        </Button>,
-        <Button key="pdf-submit" onClick={handlePDFOk}>
-          {t('downloadQRCode')} PDF
-        </Button>,
+        <div style={{ display: 'grid' }} key="back">
+          <Button style={{ marginLeft: '0' }} key="pdf-submit" onClick={handlePDFOk}>
+            {t('downloadQRCode')} PDF
+          </Button>
+          <Button style={{ marginLeft: '0' }} key="submit" type="primary" onClick={handleOk}>
+            {t('downloadQRCode')}
+          </Button>
+          <Button
+            style={{ marginLeft: '0' }}
+            onClick={() => {
+              setModalVisible(false)
+            }}
+          >
+            {t('done')}
+          </Button>
+        </div>,
       ]}
     >
       <Row
@@ -70,6 +71,7 @@ const QRCodeFormModal = ({ formId, formTitle, setModalVisible, modalVisible, qrV
         }}
       >
         <QRCodeCanvas
+          id="qr-gen"
           value={formId}
           includeMargin
           size={256}

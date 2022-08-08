@@ -1,5 +1,5 @@
 import { LoadingOutlined, PlusOutlined } from '@ant-design/icons'
-import { Form, Input, Upload, message, Tabs, Button } from 'antd'
+import { Form, Input, Upload, message, Tabs, Button, Row, Col } from 'antd'
 import { useState } from 'react'
 
 import { getBase64 } from '@/utils/getBase64'
@@ -49,16 +49,20 @@ export function Settings() {
       layout="vertical"
       form={form}
       onFinish={onFinish}
-      style={{ backgroundColor: 'white', padding: '10px 30px' }}
+      style={{ backgroundColor: 'white', padding: '24px' }}
     >
-      <div style={{ display: 'flex', gap: 50 }}>
-        <Form.Item label="Company name:" name="company-name">
-          <Input placeholder="Company name" />
-        </Form.Item>
-        <Form.Item label="Company email:" name="company-email">
-          <Input placeholder="Company name" />
-        </Form.Item>
-      </div>
+      <Row span={24} gutter={[50]}>
+        <Col xs={{ span: 6 }}>
+          <Form.Item label="Company name:" name="company-name">
+            <Input placeholder="Company name" />
+          </Form.Item>
+        </Col>
+        <Col xs={{ span: 6 }}>
+          <Form.Item label="Company email:" name="company-email">
+            <Input placeholder="Company name" />
+          </Form.Item>
+        </Col>
+      </Row>
       <p style={{ marginBottom: '-10px' }}>Company description:</p>
       <Tabs
         defaultActiveKey="en"
@@ -68,24 +72,32 @@ export function Settings() {
         tabBarStyle={{ margin: '0 0 10px 30px', width: 85 }}
       >
         <TabPane tab="EN" key="en">
-          <Form.Item name="en-desc">
-            <TextArea
-              placeholder="Company description"
-              name="english-desc"
-              autoSize={{ minRows: 6, maxRows: 10 }}
-              style={{ width: '60%', marginTop: '6px' }}
-            />
-          </Form.Item>
+          <Row span={24}>
+            <Col xs={{ span: 20 }}>
+              <Form.Item name="en-desc">
+                <TextArea
+                  placeholder="Company description"
+                  name="english-desc"
+                  autoSize={{ minRows: 6, maxRows: 10 }}
+                  style={{ width: '60%', marginTop: '6px' }}
+                />
+              </Form.Item>
+            </Col>
+          </Row>
         </TabPane>
         <TabPane tab="SR" key="sr">
-          <Form.Item name="sr-desc">
-            <TextArea
-              placeholder="Company description"
-              name="serbian-dec"
-              autoSize={{ minRows: 6, maxRows: 10 }}
-              style={{ width: '60%', marginTop: '6px' }}
-            />
-          </Form.Item>
+          <Row span={24}>
+            <Col xs={{ span: 20 }}>
+              <Form.Item name="sr-desc">
+                <TextArea
+                  placeholder="Company description"
+                  name="serbian-desc"
+                  autoSize={{ minRows: 6, maxRows: 10 }}
+                  style={{ width: '60%', marginTop: '6px' }}
+                />
+              </Form.Item>
+            </Col>
+          </Row>
         </TabPane>
       </Tabs>
       <Form.Item label="Company logo:" valuePropName="fileList">
