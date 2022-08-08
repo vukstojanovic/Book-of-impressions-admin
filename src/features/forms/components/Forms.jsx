@@ -1,7 +1,7 @@
+import { useState } from 'react'
+import { useTranslation } from 'react-i18next'
 import { Link } from 'react-router-dom'
 import { Typography, Row, Card, Progress, Button, Skeleton } from 'antd'
-import { useTranslation } from 'react-i18next'
-import { useState } from 'react'
 import { QrcodeOutlined, PlusCircleOutlined } from '@ant-design/icons'
 
 import { useForms } from '../api/getForms'
