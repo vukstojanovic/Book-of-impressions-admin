@@ -1,5 +1,5 @@
 import { axios } from '@/lib/axios'
 
-export const postCompanyInfo = (id, data) => {
-  return axios({ method: 'patch', url: `/api/wapp/copmany/${id}`, data })
+export const updateCompanyInfo = (id, data) => {
+  return axios({ method: 'patch', url: `/api/wapp/company/${id}`, data })
 }

@@ -135,7 +135,7 @@
     "error_email": "Email is required",
     "error_valid_email": "The input is not valid E-mail!",
     "company_description": "Company description:",
-    "error_description": "Both description is required",
+    "error_description": "Both descriptions are required",
     "company_logo": "Company logo",
     "error_logo": "Logo is required",
     "upload": "Upload",
