@@ -3,6 +3,8 @@ import { PlusOutlined } from '@ant-design/icons'
 import { Row, Col, Form, Input, Upload, Tabs, Button } from 'antd'
 import { useTranslation } from 'react-i18next'
 
+import { useUpdateCompanyInfo } from '../api/postCompanyInfo'
+
 import style from './Settings.module.css'
 
 import { beforeUpload } from '@/utils/beforeImageUpload'
@@ -20,6 +22,8 @@ export function Settings() {
   const { TextArea } = Input
   const { TabPane } = Tabs
   const [form] = Form.useForm()
+
+  const companyInfoMutation = useUpdateCompanyInfo({ form, setSelectedLogos, setButtonDisabled, t })
 
   const onFinish = ({
     'company-name': name,
@@ -43,10 +47,7 @@ export function Settings() {
       logo: image ? image : null,
     }
 
-    console.log(companyInfo)
-    form.resetFields()
-    setSelectedLogos(null)
-    setButtonDisabled(true)
+    companyInfoMutation.mutate('d1e350dd-8406-4c64-8a55-69901b040ad5', companyInfo)
   }
 
   const onValuesChange = (

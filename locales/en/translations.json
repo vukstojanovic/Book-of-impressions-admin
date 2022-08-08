@@ -140,6 +140,8 @@
     "error_logo": "Logo is required",
     "upload": "Upload",
     "cancel": "Cancel",
-    "submit": "Submit"
+    "submit": "Submit",
+    "submit_success": "You successfully submitted form",
+    "submit_error": "Something went wrong"
   }
 }

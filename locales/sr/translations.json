@@ -140,6 +140,8 @@
     "error_logo": "Logo je obavezan",
     "upload": "Ubaci logo",
     "cancel": "Ponisti",
-    "submit": "Posalji"
+    "submit": "Posalji",
+    "submit_success": "Uspesno ste poslali formu",
+    "submit_error": "Nesto je poslo naopako"
   }
 }
