@@ -130,6 +130,11 @@
     "name": "Ime",
     "profilePhoto": "Profilna Slika",
     "password": "Lozinka",
+    "confirm_password": "Potvrdi Lozinku",
+    "passwords_do_not_match": "Lozinke se ne poklapaju",
+    "please_add_name": "Unesite ime",
+    "please_add_password": "Unesite lozinku",
+    "please_confirm_password": "Potvrdite lozinku",
     "submit": "Pošalji"
   }
 }

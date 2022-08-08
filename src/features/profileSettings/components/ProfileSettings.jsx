@@ -1,33 +1,36 @@
 import { LoadingOutlined, PlusOutlined } from '@ant-design/icons'
-import { Typography, Row, Col, Button, Form, Input, Upload } from 'antd'
-import { useState } from 'react'
+import { Typography, Row, Col, Button, Form, Input, Upload, message } from 'antd'
+import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 
+import {
+  usePatchUserDataMutation,
+  useGetUserDataQuery,
+} from '@/features/profileSettings/api/submitUserSettingForm'
 import { beforeUpload } from '@/utils/beforeImageUpload.js'
 import { getBase64 } from '@/utils/getBase64.js'
 
 export function ProfileSettings() {
   const [loading, setLoading] = useState(false)
-  const [imageUrl, setImageUrl] = useState()
+  const [hasErrors, setHasErrors] = useState(null)
+  const [areFieldsEmpty, setAreFieldsEmpty] = useState(true)
 
   const { t } = useTranslation('profileSettings')
 
   const { Title } = Typography
   const [form] = Form.useForm()
 
-  const handleChange = (info) => {
-    // if (info.file.status === 'uploading') {
-    //   setLoading(true)
-    //   return
-    // }
+  const patchUserData = usePatchUserDataMutation()
+  const { data, isFetching } = useGetUserDataQuery()
 
-    // if (info.file.status === 'done') {
-    // Get this url from response in real world.
-    getBase64(info.file.originFileObj, (url) => {
+  useEffect(() => {
+    console.log(data)
+  }, [isFetching])
+
+  const handleChange = (info) => {
+    getBase64(info.file.originFileObj, () => {
       setLoading(false)
-      setImageUrl(url)
     })
-    // }
   }
 
   const uploadButton = (
@@ -43,6 +46,44 @@ export function ProfileSettings() {
     </div>
   )
 
+  const handleFinish = (values) => {
+    // separate keys with values from those without them
+    const modifiedValues = {}
+    const keysWithValues = Object.keys(values).filter(
+      (key) => values[key].length && key !== 'email' && key !== 'confirm_password'
+    )
+    keysWithValues.forEach((key) => {
+      if (key === 'photo') {
+        modifiedValues[key] = values[key][0]
+      } else {
+        modifiedValues[key] = values[key]
+      }
+    })
+
+    patchUserData.mutate(modifiedValues, {
+      onSuccess: () => {
+        message.success('Changes successfully sent.')
+        form.resetFields()
+        setAreFieldsEmpty(true)
+      },
+      onError: () => message.error('Error while sending data.'),
+    })
+  }
+
+  const handleFieldsChange = () => {
+    const someErrors = form.getFieldsError().some(({ errors }) => errors.length)
+    setHasErrors(someErrors)
+    setAreFieldsEmpty(
+      !form.getFieldValue('password') &&
+        !form.getFieldValue('name') &&
+        !form.getFieldValue('photo').length
+    )
+  }
+
+  const handleValuesChange = () => {
+    form.validateFields()
+  }
+
   return (
     <>
       <Title>{t('my_profile')}</Title>
@@ -51,10 +92,25 @@ export function ProfileSettings() {
         size="large"
         style={{ backgroundColor: 'white', padding: '24px' }}
         layout="vertical"
+        onFinish={handleFinish}
+        onFieldsChange={handleFieldsChange}
+        onValuesChange={handleValuesChange}
+        initialValues={{ name: '', password: '', confirm_password: '', photo: [] }}
       >
         <Row>
           <Col sm={24} md={18} lg={8}>
-            <Form.Item label={`${t('name')}:`} name="name">
+            <Form.Item label="Email:" name="email" initialValue={'dummy-email@gmail.com'}>
+              <Input disabled />
+            </Form.Item>
+          </Col>
+        </Row>
+        <Row>
+          <Col sm={24} md={18} lg={8}>
+            <Form.Item
+              label={`${t('name')}:`}
+              name="name"
+              rules={[{ message: `${t('please_add_name')}` }]}
+            >
               <Input placeholder={t('name')} />
             </Form.Item>
           </Col>
@@ -62,46 +118,73 @@ export function ProfileSettings() {
 
         <Row>
           <Col sm={24} md={18} lg={14}>
-            <Form.Item label={`${t('profilePhoto')}:`} name="profileImage">
+            <Form.Item
+              label={`${t('profilePhoto')}:`}
+              valuePropName="fileList"
+              name="photo"
+              getValueFromEvent={(e) => {
+                if (Array.isArray(e)) {
+                  return e
+                }
+                return e && e.fileList
+              }}
+            >
               <Upload
                 name="avatar"
                 listType="picture-card"
-                showUploadList={false}
-                action="/"
+                showUploadList={(true, { showPreviewIcon: false })}
                 beforeUpload={beforeUpload}
                 onChange={handleChange}
                 maxCount={1}
+                action="UploadUrl"
               >
-                {imageUrl ? (
-                  <img
-                    src={imageUrl}
-                    alt="avatar"
-                    style={{
-                      width: '100%',
-                    }}
-                  />
-                ) : (
-                  uploadButton
-                )}
+                {uploadButton}
               </Upload>
             </Form.Item>
           </Col>
         </Row>
         <Row>
           <Col sm={24} md={18} lg={8}>
-            <Form.Item label={`${t('password')}:`} name="password">
+            <Form.Item
+              shouldUpdate
+              label={`${t('password')}:`}
+              name="password"
+              rules={[{ message: `${t('please_add_password')}` }]}
+            >
               <Input.Password placeholder={t('password')} />
             </Form.Item>
           </Col>
         </Row>
         <Row>
           <Col sm={24} md={18} lg={8}>
-            <Form.Item label="Email:" name="emails" initialValue={'dummy-email@gmail.com'}>
-              <Input readOnly />
+            <Form.Item
+              label={`${t('confirm_password')}:`}
+              name="confirm_password"
+              dependencies={['password']}
+              rules={[
+                ({ getFieldValue }) => ({
+                  validator(_, value) {
+                    if (getFieldValue('password') === value || !getFieldValue('password')) {
+                      return Promise.resolve()
+                    }
+                    return Promise.reject(t('passwords_do_not_match'))
+                  },
+                }),
+              ]}
+            >
+              <Input.Password placeholder={t('confirm_password')} />
             </Form.Item>
           </Col>
         </Row>
-        <Button type="primary">{t('submit')}</Button>
+        <Row>
+          <Col sm={24} md={18} lg={8} style={{ display: 'flex', justifyContent: 'flex-end' }}>
+            <Form.Item>
+              <Button type="primary" htmlType="submit" disabled={hasErrors || areFieldsEmpty}>
+                {t('submit')}
+              </Button>
+            </Form.Item>
+          </Col>
+        </Row>
       </Form>
     </>
   )
