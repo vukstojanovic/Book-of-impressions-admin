@@ -11,6 +11,7 @@ export function Settings() {
   const [descriptionErrorEn, setDescriptionErrorEn] = useState(false)
   const [descriptionErrorSr, setDescriptionErrorSr] = useState(false)
   const [image, setImage] = useState('')
+  const [selectedLogos, setSelectedLogos] = useState(null)
   const [removeButton, setRemovedButton] = useState(false)
   const [buttonDisabled, setButtonDisabled] = useState(true)
 
@@ -44,8 +45,8 @@ export function Settings() {
 
     console.log(companyInfo)
     form.resetFields()
+    setSelectedLogos(null)
     setButtonDisabled(true)
-    onRemoveImage()
   }
 
   const onValuesChange = (
@@ -71,13 +72,14 @@ export function Settings() {
     setButtonDisabled(true)
   }
 
-  const handleChange = (info) => {
+  const handleChange = ({ file, fileList }) => {
+    setSelectedLogos(fileList)
     if (removeButton) {
       setImage(null)
       return
     }
 
-    setImage(info.file)
+    setImage(file)
   }
 
   const onRemoveImage = () => {
@@ -186,6 +188,7 @@ export function Settings() {
           listType="picture-card"
           className="avatar-uploader"
           showUploadList={(true, { showPreviewIcon: false })}
+          fileList={selectedLogos}
           beforeUpload={beforeUpload}
           onChange={handleChange}
           onRemove={onRemoveImage}
