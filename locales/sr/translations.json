@@ -90,7 +90,8 @@
     "leaveComment": "Ostavite komentar",
     "create_new_form": "Napravi novu formu",
     "settings": "Podešavanja",
-    "my_profile": "Moj Nalog"
+    "my_profile": "Moj Nalog",
+    "invite_user": "Pozovi Korisnika"
   },
   "QRCode": {
     "requiredError": "Polje ne može biti prazno!",
@@ -106,16 +107,19 @@
   },
   "InviteUser": {
     "title": "Pozovite novog korisnika",
-    "first_name": "Ime",
-    "last_name": "Prezime",
+    "name": "Ime i Prezime",
     "email": "Email",
     "roles": "Uloge",
     "cancel": "Otkaži",
     "invite": "Pozovi",
     "empty_warning": "Ne može biti prazno!",
+    "error_email": "Unesite važeću email adresu",
     "admin": "Admin",
-    "editor": "Urednik",
-    "viewer": "Posmatrač"
+    "manager": "Menadžer",
+    "viewer": "Posmatrač",
+    "description": "Lorem ipsum dolor sit amet, qui minim labore adipisicing minim sint cillum sint consectetur cupidatat.",
+    "invite_success": "Uspešno poslata pozivnica",
+    "invite_error": "Pozivnica nije poslata"
   },
   "AccountMenu": {
     "your_profile": "Tvoj profil",
@@ -126,6 +130,11 @@
     "name": "Ime",
     "profilePhoto": "Profilna Slika",
     "password": "Lozinka",
+    "confirm_password": "Potvrdi Lozinku",
+    "passwords_do_not_match": "Lozinke se ne poklapaju",
+    "please_add_name": "Unesite ime",
+    "please_add_password": "Unesite lozinku",
+    "please_confirm_password": "Potvrdite lozinku",
     "submit": "Pošalji"
   },
   "settings": {

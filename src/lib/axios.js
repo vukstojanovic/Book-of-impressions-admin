@@ -2,10 +2,11 @@ import Axios from 'axios'
 
 import storage from '@/utils/storage'
 import { appConfig } from '@/config/'
-import { getNewAccessToken } from '@/features/auth/api/getNewAccess'
+import { refreshToken } from '@/features/auth/api/getNewAccess'
 
 function authRequestInterceptor(config) {
   let token
+
   if (config.url === '/api/public/auth/refresh') {
     token = storage.get('refresh_token')
     config.headers = {
@@ -46,10 +47,11 @@ axios.interceptors.response.use(
     ) {
       originalRequest._retry = true
 
-      const { access_token, refrresh_token } = await getNewAccessToken()
+      const data = await refreshToken()
 
-      storage.set('access_token', access_token)
-      storage.set('refresh_token', refrresh_token)
+      Object.entries(data).forEach(([key, value]) => {
+        storage.set(key, value)
+      })
 
       return axios(originalRequest)
     }

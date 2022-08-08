@@ -83,14 +83,15 @@
     "forms": "Forms",
     "reviews": "Reviews",
     "reports": "Reports",
-    "ogranization": "Organization",
+    "organization": "Organization",
     "users": "Users",
     "home": "Home",
     "getSupport": "Get Support",
     "leaveComment": "Leave Comment",
     "create_new_form": "Create New Form",
     "settings": "Settings",
-    "my_profile": "My Profile"
+    "my_profile": "My Profile",
+    "invite_user": "Invite user"
   },
   "QRCode": {
     "requiredError": "Field can not be empty!",
@@ -106,16 +107,19 @@
   },
   "InviteUser": {
     "title": "Invite a new user",
-    "first_name": "First name",
-    "last_name": "Last name",
+    "name": "Full Name",
     "email": "Email",
     "roles": "Roles",
     "cancel": "Cancel",
     "invite": "Invite",
     "empty_warning": "Cannot be empty!",
+    "error_email": "Please input a valid email",
     "admin": "Admin",
-    "editor": "Editor",
-    "viewer": "Viewer"
+    "manager": "Manager",
+    "viewer": "Viewer",
+    "description": "Lorem ipsum dolor sit amet, qui minim labore adipisicing minim sint cillum sint consectetur cupidatat.",
+    "invite_success": "Invitation sent successfully",
+    "invite_error": "Failed to send invitation"
   },
   "AccountMenu": {
     "your_profile": "Your profile",
@@ -126,6 +130,11 @@
     "name": "Name",
     "profilePhoto": "Profile Photo",
     "password": "Password",
+    "confirm_password": "Confirm Password",
+    "passwords_do_not_match": "Enter matching passwords",
+    "please_add_name": "Add name",
+    "please_add_password": "Add password",
+    "please_confirm_password": "Confirm password",
     "submit": "Submit"
   },
   "settings": {

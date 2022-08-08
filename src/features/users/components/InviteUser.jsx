@@ -1,108 +1,110 @@
 import { Form, Input, Row, Col, Radio, Space, Typography, Button, Card } from 'antd'
 import { useTranslation } from 'react-i18next'
+import { useState } from 'react'
+
+import { useInviteUser } from '../api/inviteUser'
 
 import { roleNames } from '@/config/constants'
 
 export const InviteUser = () => {
-  const userRoles = [roleNames.ADMIN, roleNames.EDITOR, roleNames.VIEWER]
-  const [form] = Form.useForm()
   const { t } = useTranslation('InviteUser')
+  const [form] = Form.useForm()
 
-  function handleFinish(values) {
-    console.log(values)
+  const userRoles = [roleNames.MANAGER, roleNames.VIEWER]
+
+  const [disabled, setDisabled] = useState(true)
+  const inviteUserMutation = useInviteUser({ form, t, setDisabled })
+
+  const handleFormChange = () => {
+    const hasValues = form.getFieldsValue()
+    const hasErrors = form.getFieldsError()
+    if (!hasValues.name || !hasValues.email || !hasValues.role || hasErrors[1].errors.length) {
+      return setDisabled(true)
+    }
+    return setDisabled(false)
+  }
+
+  const handleFinish = (data) => {
+    inviteUserMutation.mutate({
+      data,
+    })
   }
 
   return (
-    <Col sm={{ span: 24 }} md={{ span: 17 }} lg={{ span: 12 }}>
-      <Typography.Title level={3} style={{ margin: '30px 0px' }}>
-        {t('title')}
-      </Typography.Title>
-      <Form layout="vertical" autoComplete="off" onFinish={handleFinish} form={form}>
-        <Row span={24} gutter={[45]}>
-          <Col xs={{ span: 24 }} md={{ span: 12 }}>
-            <Form.Item
-              label={t('first_name')}
-              name="firstName"
-              rules={[
-                {
-                  required: true,
-                  message: t('empty_warning'),
-                },
-              ]}
-            >
-              <Input />
-            </Form.Item>
-          </Col>
-          <Col xs={{ span: 24 }} md={{ span: 12 }}>
-            <Form.Item
-              label={t('last_name')}
-              name="lastName"
-              rules={[
-                {
-                  required: true,
-                  message: t('empty_warning'),
-                },
-              ]}
-            >
-              <Input />
-            </Form.Item>
-          </Col>
-        </Row>
-        <Form.Item
-          label={t('email')}
-          name="email"
-          rules={[
-            {
-              required: true,
-              message: t('empty_warning'),
-            },
-          ]}
-        >
-          <Input />
-        </Form.Item>
-        <Form.Item
-          label={t('roles')}
-          name="role"
-          rules={[
-            {
-              required: true,
-              message: t('empty_warning'),
-            },
-          ]}
-        >
-          <Card>
-            <Radio.Group>
-              <Space direction="vertical">
-                {userRoles.map((role) => (
-                  <Radio value={role} key={role}>
-                    <Typography.Paragraph style={{ textTransform: 'capitalize' }}>
-                      {t(role)}
-                    </Typography.Paragraph>
-                    <Typography.Paragraph style={{ color: 'gray', fontSize: '14px' }}>
-                      Lorem ipsum dolor sit amet consectetur adipisicing elit. Neque, quo iste.
-                      Beatae nemo libero aliquid dolore eveniet asperiores pariatur exercitationem
-                      quasi? Possimus, at? Cum consequuntur dolorum soluta nulla, natus velit.
-                      Aliquam amet, dolorum tenetur.
-                    </Typography.Paragraph>
-                  </Radio>
-                ))}
-              </Space>
-            </Radio.Group>
-          </Card>
-        </Form.Item>
-        <Row span={24} gutter={[10, 10]}>
-          <Col xs={{ span: 24 }} md={{ span: 7 }}>
-            <Button style={{ width: '100%' }} onClick={() => form.resetFields()}>
-              {t('cancel')}
-            </Button>
-          </Col>
-          <Col xs={{ span: 24 }} md={{ span: 7 }}>
-            <Button style={{ width: '100%' }} type="primary" htmlType="submit">
-              {t('invite')}
-            </Button>
-          </Col>
-        </Row>
-      </Form>
-    </Col>
+    <Form
+      style={{ backgroundColor: 'white', padding: '24px' }}
+      layout="vertical"
+      size="large"
+      autoComplete="off"
+      onFinish={handleFinish}
+      onFieldsChange={handleFormChange}
+      form={form}
+    >
+      <Row span={24} gutter={[45]}>
+        <Col xs={{ span: 24 }} lg={{ span: 14 }}>
+          <Form.Item
+            label={t('name')}
+            name="name"
+            rules={[
+              {
+                required: true,
+                message: t('empty_warning'),
+              },
+            ]}
+          >
+            <Input />
+          </Form.Item>
+        </Col>
+      </Row>
+      <Row span={24} gutter={[45]}>
+        <Col xs={{ span: 24 }} lg={{ span: 14 }}>
+          <Form.Item
+            label={t('email')}
+            name="email"
+            rules={[{ type: 'email', required: true, message: t('error_email') }]}
+          >
+            <Input />
+          </Form.Item>
+        </Col>
+      </Row>
+      <Row span={24} gutter={[45]}>
+        <Col xs={{ span: 24 }} lg={{ span: 14 }}>
+          <Form.Item
+            label={t('roles')}
+            name="role"
+            rules={[
+              {
+                required: true,
+                message: t('empty_warning'),
+              },
+            ]}
+          >
+            <Card>
+              <Radio.Group>
+                <Space direction="vertical">
+                  {userRoles.map((role) => (
+                    <Radio value={role} key={role}>
+                      <Typography.Paragraph style={{ textTransform: 'capitalize' }}>
+                        {t(role.toLowerCase())}
+                      </Typography.Paragraph>
+                      <Typography.Paragraph style={{ color: 'gray', fontSize: '14px' }}>
+                        {t('description')}
+                      </Typography.Paragraph>
+                    </Radio>
+                  ))}
+                </Space>
+              </Radio.Group>
+            </Card>
+          </Form.Item>
+        </Col>
+      </Row>
+      <Row justify="end" span={24} gutter={[10, 10]}>
+        <Col>
+          <Button disabled={disabled} style={{ width: '100%' }} type="primary" htmlType="submit">
+            {t('invite')}
+          </Button>
+        </Col>
+      </Row>
+    </Form>
   )
 }

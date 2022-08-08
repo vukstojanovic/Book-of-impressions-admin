@@ -1,6 +1,6 @@
-import { useState } from 'react'
 import { PlusOutlined } from '@ant-design/icons'
-import { Row, Col, Form, Input, Upload, Tabs, Button } from 'antd'
+import { Form, Input, Upload, Tabs, Button, Row, Col } from 'antd'
+import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 
 import { useUpdateCompanyInfo } from '../api/postCompanyInfo'
@@ -47,6 +47,7 @@ export function Settings() {
       logo: image ? image : null,
     }
 
+    // to do: replace hardcoded id with dynamic
     companyInfoMutation.mutate('d1e350dd-8406-4c64-8a55-69901b040ad5', companyInfo)
   }
 
