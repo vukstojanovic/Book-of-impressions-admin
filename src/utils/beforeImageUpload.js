@@ -13,6 +13,5 @@ export const beforeUpload = (file) => {
     message.error('Image must be smaller than 2MB!')
   }
 
-  // we must return false here if we want to overwrite default behavior of upload componenet to send post request immedtiately after you upload picture!
   return false
 }

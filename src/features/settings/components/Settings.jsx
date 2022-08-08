@@ -10,7 +10,8 @@ import { beforeUpload } from '@/utils/beforeImageUpload'
 export function Settings() {
   const [descriptionErrorEn, setDescriptionErrorEn] = useState(false)
   const [descriptionErrorSr, setDescriptionErrorSr] = useState(false)
-  const [image, setImage] = useState(null)
+  const [image, setImage] = useState('')
+  const [removeButton, setRemovedButton] = useState(false)
   const [buttonDisabled, setButtonDisabled] = useState(true)
 
   const { t } = useTranslation('settings')
@@ -43,6 +44,8 @@ export function Settings() {
 
     console.log(companyInfo)
     form.resetFields()
+    setButtonDisabled(true)
+    onRemoveImage()
   }
 
   const onValuesChange = (
@@ -69,7 +72,16 @@ export function Settings() {
   }
 
   const handleChange = (info) => {
+    if (removeButton) {
+      setImage(null)
+      return
+    }
+
     setImage(info.file)
+  }
+
+  const onRemoveImage = () => {
+    setRemovedButton(true)
   }
 
   const uploadButton = (
@@ -145,7 +157,7 @@ export function Settings() {
                 />
               </Form.Item>
               <p className={descriptionErrorEn ? style.errorParagrah : style.hidden}>
-                Both descriptions are requred
+                {t('error_description')}
               </p>
             </Col>
           </Row>
@@ -162,7 +174,7 @@ export function Settings() {
                 />
               </Form.Item>
               <p className={descriptionErrorSr ? style.errorParagrah : style.hidden}>
-                Both descriptions are requred
+                {t('error_description')}
               </p>
             </Col>
           </Row>
@@ -176,6 +188,7 @@ export function Settings() {
           showUploadList={(true, { showPreviewIcon: false })}
           beforeUpload={beforeUpload}
           onChange={handleChange}
+          onRemove={onRemoveImage}
           maxCount={1}
         >
           {uploadButton}
