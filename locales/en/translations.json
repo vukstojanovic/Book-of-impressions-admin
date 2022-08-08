@@ -69,7 +69,7 @@
     "question": "Question",
     "addAnoterQuestion": "Add another question",
     "cancel": "Cancel",
-    "create": "Create",
+    "create": "Submit",
     "removeQuestion": "Remove question",
     "fillQuestion": "Please fill the question filed!",
     "emptyTitle": "Title is required",
@@ -136,5 +136,21 @@
     "please_add_password": "Add password",
     "please_confirm_password": "Confirm password",
     "submit": "Submit"
+  },
+  "settings": {
+    "company_name": "Company name:",
+    "error_name": "Name is required",
+    "company_email": "Company email:",
+    "error_email": "Email is required",
+    "error_valid_email": "The input is not valid E-mail!",
+    "company_description": "Company description:",
+    "error_description": "Both descriptions are required",
+    "company_logo": "Company logo",
+    "error_logo": "Logo is required",
+    "upload": "Upload",
+    "cancel": "Cancel",
+    "submit": "Submit",
+    "submit_success": "You successfully submitted form",
+    "submit_error": "Something went wrong"
   }
 }
