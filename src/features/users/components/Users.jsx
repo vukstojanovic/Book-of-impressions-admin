@@ -1,15 +1,15 @@
-import { Table, Tag, Space, Typography, Modal, Row, Button } from 'antd'
+import { Table, Tag, Space, Modal } from 'antd'
 import { useForm } from 'antd/lib/form/Form'
 import { useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { PlusCircleOutlined, EditOutlined, DeleteOutlined } from '@ant-design/icons'
-import { Link } from 'react-router-dom'
+import { EditOutlined, DeleteOutlined } from '@ant-design/icons'
 
 import { data } from '../mockupData/users'
 
 import { FormModal } from './FormModal'
 
 import { getColumnSearchProps } from '@/utils/columnSearchFilter'
+import { AddButton } from '@/components/buttons/AddButton'
 
 export const Users = () => {
   const { t } = useTranslation('Users')
@@ -98,14 +98,7 @@ export const Users = () => {
 
   return (
     <>
-      <Row justify="space-between" align="middle" style={{ marginBottom: '15px' }}>
-        <Typography.Title level={4} style={{ margin: 0 }}>
-          {t('users')}
-        </Typography.Title>
-        <Link to="/users/invite-user">
-          <Button icon={<PlusCircleOutlined />} type="primary" shape="circle" size="large" />
-        </Link>
-      </Row>
+      <AddButton linkTo={'/users/invite-user'} />
       <Table dataSource={data} columns={columns} span={24} style={{ overflow: 'auto' }} />
       <Modal title={fullName} visible={isModalVisible} onOk={handleOk} onCancel={closeModal}>
         <FormModal form={form} />

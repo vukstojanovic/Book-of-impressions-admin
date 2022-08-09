@@ -1,12 +1,13 @@
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { Link } from 'react-router-dom'
-import { Typography, Row, Card, Progress, Button, Skeleton, Empty } from 'antd'
-import { QrcodeOutlined, PlusCircleOutlined } from '@ant-design/icons'
+import { Typography, Row, Card, Progress, Skeleton, Empty } from 'antd'
+import { QrcodeOutlined } from '@ant-design/icons'
 
 import { useForms } from '../api/getForms'
 
 import QRCodeFormModal from './QRCodeFormModal'
+
+import { AddButton } from '@/components/buttons/AddButton'
 
 const { Title, Paragraph, Text } = Typography
 
@@ -31,11 +32,7 @@ export const Forms = () => {
   if (!isLoading && data[0].length === 0) {
     return (
       <>
-        <Row align="middle" justify="end" style={{ marginBottom: '1.75rem' }}>
-          <Link to="/forms/create-new-form">
-            <Button icon={<PlusCircleOutlined />} type="primary" shape="circle" size="large" />
-          </Link>
-        </Row>
+        <AddButton linkTo="/forms/create-new-form" />
         <Empty
           description={
             <span>
@@ -49,11 +46,7 @@ export const Forms = () => {
 
   return (
     <>
-      <Row align="middle" justify="end" style={{ marginBottom: '1.75rem' }}>
-        <Link to="/forms/create-new-form">
-          <Button icon={<PlusCircleOutlined />} type="primary" shape="circle" size="large" />
-        </Link>
-      </Row>
+      <AddButton linkTo="/forms/create-new-form" />
 
       <QRCodeFormModal
         formTitle={formTitle}
