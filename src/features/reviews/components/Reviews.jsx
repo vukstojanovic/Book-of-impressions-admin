@@ -5,7 +5,7 @@ import dayjs from 'dayjs'
 import { useGetReviewsQuery } from '../api/getReviews'
 
 export const Reviews = () => {
-  const { data, isSuccess, isLoading } = useGetReviewsQuery()
+  const { data, isLoading, isError, error } = useGetReviewsQuery()
 
   const { t } = useTranslation('Reviews')
   const { Text, Paragraph, Title } = Typography
@@ -18,8 +18,12 @@ export const Reviews = () => {
     )
   }
 
-  if (isSuccess) {
-    return (
+  if (isError) {
+    return <div style={{ marginTop: '20px' }}>{error.message}</div>
+  }
+
+  return (
+    data && (
       <>
         <Title>{t('reviews')}</Title>
         <Row style={{ gap: 16 }}>
@@ -67,5 +71,5 @@ export const Reviews = () => {
         </Row>
       </>
     )
-  }
+  )
 }
