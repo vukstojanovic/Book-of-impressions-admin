@@ -1,66 +1,75 @@
-import { Card, Rate, Row, Typography } from 'antd'
-import { useState } from 'react'
+import { Card, Rate, Row, Col, Typography, Spin } from 'antd'
 import { useTranslation } from 'react-i18next'
+import dayjs from 'dayjs'
+
+import { useGetReviewsQuery } from '../api/getReviews'
 
 export const Reviews = () => {
-  const [isLoading, setIsLoading] = useState(false)
+  const { data, isLoading, isError, error } = useGetReviewsQuery()
 
   const { t } = useTranslation('Reviews')
   const { Text, Paragraph, Title } = Typography
 
-  const text = `Lorem ipsum dolor sit amet, consectetur adipisicing elit. Incidunt temporibus eligendi
-          esse, voluptate architecto reprehenderit eos. Ipsa voluptatum, unde dolores iusto odit
-          debitis, nulla non dignissimos expedita, rem tempora optio? Lorem ipsum dolor sit amet
-          consectetur adipisicing elit. Corrupti error, officiis necessitatibus dolor esse, eveniet
-          odio debitis laboriosam distinctio facere mollitia aliquid, accusamus ipsa illo quo ab
-          obcaecati quis repellat. Lorem ipsum dolor sit amet consectetur, adipisicing elit.
-          Delectus dicta deserunt officia hic sit dignissimos iste ipsam consequuntur commodi odit,
-          distinctio expedita similique minima, mollitia asperiores architecto aperiam quidem est.`
+  if (isLoading) {
+    return (
+      <div style={{ marginTop: '20px' }}>
+        <Spin size="large" />
+      </div>
+    )
+  }
 
-  const reviews = [
-    { user: { name: 'Firstname Surname' }, postedAt: '21-06-2021', description: text, rating: 1 },
-    { user: { name: 'Firstname Surname' }, postedAt: '21-06-2021', description: text, rating: 4 },
-    { user: { name: 'Firstname Surname' }, postedAt: '21-06-2021', description: text, rating: 2 },
-    { user: { name: 'Firstname Surname' }, postedAt: '21-06-2021', description: text, rating: 5 },
-    { user: { name: 'Firstname Surname' }, postedAt: '21-06-2021', description: text, rating: 2.5 },
-    { user: { name: 'Firstname Surname' }, postedAt: '21-06-2021', description: text, rating: 4.5 },
-  ]
+  if (isError) {
+    return <div style={{ marginTop: '20px' }}>{error.message}</div>
+  }
 
   return (
-    <>
-      <Title>{t('reviews')}</Title>
-      <Row style={{ gap: 16 }}>
-        {reviews.map((review, i) => (
-          <Card
-            key={i}
-            hoverable
-            bordered
-            loading={isLoading}
-            type="inner"
-            style={{ borderRadius: '8px' }}
-            onClick={() => setIsLoading(false)}
-          >
-            <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-              <Text>
-                {t('name')}: {review.user.name}
-              </Text>
-              <Text>{review.postedAt}</Text>
-              <Rate disabled allowHalf defaultValue={review.rating} />
-            </div>
+    data && (
+      <>
+        <Title>{t('reviews')}</Title>
+        <Row style={{ gap: 16 }}>
+          {data[0]?.map((review) => {
+            const { comment, createdDate, id, rating, reviewName } = review
+            return (
+              <Col key={id} xs={{ span: 24 }} lg={{ span: 20 }} xl={{ span: 17 }}>
+                <Card
+                  hoverable
+                  bordered
+                  type="inner"
+                  style={{ borderRadius: '8px', width: '100%' }}
+                >
+                  <Row
+                    justify="space-between"
+                    wrap={true}
+                    align="middle"
+                    style={{ marginBottom: '20px' }}
+                  >
+                    <Col xs={{ span: 24 }} md={{ span: 8 }}>
+                      <Text style={{ fontWeight: 'bold' }}>{reviewName}</Text>
+                    </Col>
+                    <Col xs={{ span: 24 }} md={{ span: 8 }}>
+                      <Text>{dayjs(createdDate).format('DD/MM/YYYY')}</Text>
+                    </Col>
+                    <Col xs={{ span: 24 }} md={{ span: 8 }}>
+                      <Rate disabled allowHalf defaultValue={rating} />
+                    </Col>
+                  </Row>
 
-            <Paragraph
-              ellipsis={{
-                expandable: true,
-                rows: 3,
-                symbol: t('readMore') + '...',
-              }}
-              title="review description"
-            >
-              {review.description}
-            </Paragraph>
-          </Card>
-        ))}
-      </Row>
-    </>
+                  <Paragraph
+                    ellipsis={{
+                      expandable: true,
+                      rows: 3,
+                      symbol: t('readMore') + '...',
+                    }}
+                    title="review description"
+                  >
+                    {comment}
+                  </Paragraph>
+                </Card>
+              </Col>
+            )
+          })}
+        </Row>
+      </>
+    )
   )
 }
