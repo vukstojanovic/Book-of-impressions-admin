@@ -1,0 +1,31 @@
+.relativeContainer {
+  position: relative;
+}
+
+.mark {
+  position: absolute;
+  top: 8px;
+  left: 5px;
+  color: red;
+}
+
+.markParagraph {
+  position: absolute;
+  top: -1px;
+  left: -7px;
+  color: red;
+}
+
+.paragraph {
+  margin-top: 15px;
+  margin-bottom: 10px;
+}
+
+.errorParagrah {
+  margin-top: -10px;
+  color: red;
+}
+
+.hidden {
+  display: none;
+}
