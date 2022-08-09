@@ -28,12 +28,28 @@ export const Forms = () => {
     alignItems: 'center',
   }
 
+  if (!isLoading && data[0].length === 0) {
+    return (
+      <>
+        <Row align="middle" justify="end" style={{ marginBottom: '1.75rem' }}>
+          <Link to="/forms/create-new-form">
+            <Button icon={<PlusCircleOutlined />} type="primary" shape="circle" size="large" />
+          </Link>
+        </Row>
+        <Empty
+          description={
+            <span>
+              <b>{t('no_forms')}</b>
+            </span>
+          }
+        />
+      </>
+    )
+  }
+
   return (
     <>
-      <Row align="middle" justify="space-between" style={{ marginBottom: '1.75rem' }}>
-        <Title level={2} style={{ marginBottom: '0' }}>
-          {t('forms')}
-        </Title>
+      <Row align="middle" justify="end" style={{ marginBottom: '1.75rem' }}>
         <Link to="/forms/create-new-form">
           <Button icon={<PlusCircleOutlined />} type="primary" shape="circle" size="large" />
         </Link>
@@ -46,90 +62,82 @@ export const Forms = () => {
         setModalVisible={setModalVisible}
         modalVisible={modalVisible}
       />
-      {!isLoading && data[0].length === 0 && (
-        <Empty
-          description={
-            <span>
-              <b>{t('no_forms')}</b>
-            </span>
-          }
-        />
-      )}
+
       <Row align="middle" style={{ gap: 50 }}>
-        {!isLoading
-          ? data[0].map((form) => {
-              const { id, name, title } = form
-              return (
-                <Skeleton key={id} loading={isLoading}>
-                  <Card key={id} style={{ width: 335, borderRadius: '20px' }}>
-                    <div style={divFlex}>
-                      <Title level={5}>{title}</Title>
-                      <QrcodeOutlined
-                        onClick={() => {
-                          setFormId(id)
-                          setFormTitle(title)
-                          setQrValue(id)
-                          setModalVisible(true)
-                        }}
+        {!isLoading ? (
+          data[0].map((form) => {
+            const { id, name, title } = form
+            return (
+              <Skeleton key={id} loading={isLoading}>
+                <Card key={id} style={{ width: 335, borderRadius: '20px' }}>
+                  <div style={divFlex}>
+                    <Title level={5}>{title}</Title>
+                    <QrcodeOutlined
+                      onClick={() => {
+                        setFormId(id)
+                        setFormTitle(title)
+                        setQrValue(id)
+                        setModalVisible(true)
+                      }}
+                    />
+                  </div>
+                  {/* Form Description */}
+                  <Paragraph>{name}</Paragraph>
+                  <div style={divFlex}>
+                    <div style={columnDivFlex}>
+                      <Progress
+                        type="circle"
+                        width={75}
+                        percent={50}
+                        style={{ marginBottom: '0.75rem' }}
                       />
+                      <Text strong>150/300</Text>
                     </div>
-                    {/* Form Description */}
-                    <Paragraph>{name}</Paragraph>
-                    <div style={divFlex}>
-                      <div style={columnDivFlex}>
-                        <Progress
-                          type="circle"
-                          width={75}
-                          percent={50}
-                          style={{ marginBottom: '0.75rem' }}
-                        />
-                        <Text strong>150/300</Text>
-                      </div>
-                      <div style={columnDivFlex}>
-                        <Progress
-                          type="circle"
-                          width={75}
-                          percent={70}
-                          style={{ marginBottom: '0.75rem' }}
-                        />
-                        <Text strong>250/300</Text>
-                      </div>
-                      <div style={columnDivFlex}>
-                        <Progress
-                          type="circle"
-                          width={75}
-                          percent={30}
-                          style={{ marginBottom: '0.75rem' }}
-                        />
-                        <Text strong>30/300</Text>
-                      </div>
+                    <div style={columnDivFlex}>
+                      <Progress
+                        type="circle"
+                        width={75}
+                        percent={70}
+                        style={{ marginBottom: '0.75rem' }}
+                      />
+                      <Text strong>250/300</Text>
                     </div>
-                  </Card>
-                </Skeleton>
-              )
-            })
-          : isLoading && (
-              <>
-                <Card style={{ width: 335, borderRadius: '20px' }}>
-                  <Skeleton />
+                    <div style={columnDivFlex}>
+                      <Progress
+                        type="circle"
+                        width={75}
+                        percent={30}
+                        style={{ marginBottom: '0.75rem' }}
+                      />
+                      <Text strong>30/300</Text>
+                    </div>
+                  </div>
                 </Card>
-                <Card style={{ width: 335, borderRadius: '20px' }}>
-                  <Skeleton />
-                </Card>
-                <Card style={{ width: 335, borderRadius: '20px' }}>
-                  <Skeleton />
-                </Card>
-                <Card style={{ width: 335, borderRadius: '20px' }}>
-                  <Skeleton />
-                </Card>
-                <Card style={{ width: 335, borderRadius: '20px' }}>
-                  <Skeleton />
-                </Card>
-                <Card style={{ width: 335, borderRadius: '20px' }}>
-                  <Skeleton />
-                </Card>
-              </>
-            )}
+              </Skeleton>
+            )
+          })
+        ) : (
+          <>
+            <Card style={{ width: 335, borderRadius: '20px' }}>
+              <Skeleton />
+            </Card>
+            <Card style={{ width: 335, borderRadius: '20px' }}>
+              <Skeleton />
+            </Card>
+            <Card style={{ width: 335, borderRadius: '20px' }}>
+              <Skeleton />
+            </Card>
+            <Card style={{ width: 335, borderRadius: '20px' }}>
+              <Skeleton />
+            </Card>
+            <Card style={{ width: 335, borderRadius: '20px' }}>
+              <Skeleton />
+            </Card>
+            <Card style={{ width: 335, borderRadius: '20px' }}>
+              <Skeleton />
+            </Card>
+          </>
+        )}
       </Row>
     </>
   )
