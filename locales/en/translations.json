@@ -57,7 +57,8 @@
     "readMore": "Read more"
   },
   "Forms": {
-    "forms": "Forms"
+    "forms": "Forms",
+    "no_forms": "There are no forms"
   },
   "CreateNewForm": {
     "main": "Create New Form",

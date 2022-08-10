@@ -1,12 +1,13 @@
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { Link } from 'react-router-dom'
-import { Typography, Row, Card, Progress, Button, Skeleton } from 'antd'
-import { QrcodeOutlined, PlusCircleOutlined } from '@ant-design/icons'
+import { Typography, Row, Card, Progress, Skeleton, Empty } from 'antd'
+import { QrcodeOutlined } from '@ant-design/icons'
 
 import { useForms } from '../api/getForms'
 
 import QRCodeFormModal from './QRCodeFormModal'
+
+import { AddButton } from '@/components/buttons/AddButton'
 
 const { Title, Paragraph, Text } = Typography
 
@@ -27,16 +28,25 @@ export const Forms = () => {
     justifyContent: 'center',
     alignItems: 'center',
   }
+
+  if (!isLoading && data[0].length === 0) {
+    return (
+      <>
+        <AddButton linkTo="/forms/create-new-form" />
+        <Empty
+          description={
+            <span>
+              <b>{t('no_forms')}</b>
+            </span>
+          }
+        />
+      </>
+    )
+  }
+
   return (
     <>
-      <Row align="middle" justify="space-between" style={{ marginBottom: '1.75rem' }}>
-        <Title level={2} style={{ marginBottom: '0' }}>
-          {t('forms')}
-        </Title>
-        <Link to="/forms/create-new-form">
-          <Button icon={<PlusCircleOutlined />} type="primary" shape="circle" size="large" />
-        </Link>
-      </Row>
+      <AddButton linkTo="/forms/create-new-form" />
 
       <QRCodeFormModal
         formTitle={formTitle}
@@ -45,6 +55,7 @@ export const Forms = () => {
         setModalVisible={setModalVisible}
         modalVisible={modalVisible}
       />
+
       <Row align="middle" style={{ gap: 50 }}>
         {!isLoading ? (
           data[0].map((form) => {
