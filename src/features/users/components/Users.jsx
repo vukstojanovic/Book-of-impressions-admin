@@ -87,9 +87,7 @@ export const Users = () => {
       title: t('actions'),
       key: 'actions',
       render: (_, record) => {
-        if (role !== 'Manager') {
-          return
-        }
+        if (role !== 'Manager') return
         return (
           <Space size="md">
             <a style={{ marginRight: '10px' }} onClick={() => openModal(record)}>
