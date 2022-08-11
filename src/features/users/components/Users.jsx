@@ -20,7 +20,6 @@ export const Users = () => {
   const { data: users, refetch, isLoading } = useGetUsers()
   const { mutate: deleteUser } = useDeleteUser({ refetchUsers: refetch, closeDeleteModal })
 
-  console.log(users)
   const [isEditModalVisible, setIsEditModalVisible] = useState(false)
   const [isDeleteModalVisible, setIsDeleteModalVisible] = useState(false)
   const [name, setName] = useState('')
