@@ -1,5 +1,6 @@
 import { Spin, Row, Col, Typography, message } from 'antd'
 import { useEffect, useState } from 'react'
+import { useTranslation } from 'react-i18next'
 import { useSearchParams, useNavigate } from 'react-router-dom'
 
 import { confirmUser } from '../api/confirmUser'
@@ -9,20 +10,21 @@ export const VerifyUser = () => {
   const [searchParams] = useSearchParams()
   const [isLoading, setIsLoading] = useState(true)
   const [error, setError] = useState('')
+  const t = useTranslation('Verify_user')
 
   async function handleVerify() {
     const token = searchParams.get('token')
     try {
       await confirmUser({ token })
-      message.success('User verified')
+      message.success(t('user_verified'))
       navigate('/')
     } catch (err) {
       setIsLoading(false)
       setError(err.message)
       if (err.response.status === 400) {
-        message.error('Bad request')
+        message.error(t('bad_confirmation_token'))
       } else {
-        message.error('Error')
+        message.error(t('error'))
       }
     }
   }
@@ -41,12 +43,12 @@ export const VerifyUser = () => {
           </Col>
           <Col span={24}>
             <Typography.Paragraph style={{ fontSize: '17px' }}>
-              Please wait while your account is being verified.
+              {t('please_wait_while_your_account_is_being_verified')}
             </Typography.Paragraph>
           </Col>{' '}
         </>
       )}
-      {error && <Typography.Title level={3}>Error, {error}</Typography.Title>}
+      {error && <Typography.Title level={3}>{t('error')}</Typography.Title>}
     </Row>
   )
 }
