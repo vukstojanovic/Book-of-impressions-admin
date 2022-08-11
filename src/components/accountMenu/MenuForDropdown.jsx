@@ -3,25 +3,14 @@ import { UserOutlined, LogoutOutlined } from '@ant-design/icons'
 import { useTranslation } from 'react-i18next'
 import { useNavigate } from 'react-router-dom'
 
-// import { handleLogout } from '@/features/auth/api/logout'
-// import storage from '@/utils/storage'
 import { useAuth } from '@/providers/authProvider'
 
-export const MenuForDropdown = () => {
+export const MenuForDropdown = ({ name, email, profilePhoto }) => {
   const { t } = useTranslation('AccountMenu')
 
   const { logout } = useAuth()
 
   const navigate = useNavigate()
-
-  // const logoutHandler = async () => {
-  //   await handleLogout()
-
-  //   storage.clear('access_token')
-  //   storage.clear('refresh_token')
-
-  //   navigate('/sign-in')
-  // }
 
   const items = [
     {
@@ -41,18 +30,18 @@ export const MenuForDropdown = () => {
           <Col>
             <Avatar
               style={{ color: '#f56a00', backgroundColor: '#fde3cf' }}
-              src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQGx-KKukqAdVSXQkxFvQXMyBkPI9IHzadAoA&usqp=CAU"
+              src={profilePhoto}
               size={40}
             >
-              BB
+              {`${name[0]}${name.split(' ')[1][0]}`}
             </Avatar>
           </Col>
           <Col style={{ paddingLeft: '1rem' }}>
             <Typography.Paragraph style={{ margin: 0, wordBreak: 'break-word' }}>
-              <b>Bezimenko Bezprezimenkovic</b>
+              <b>{name}</b>
             </Typography.Paragraph>
             <Typography.Paragraph style={{ margin: 0, wordBreak: 'break-word' }}>
-              bezimenko992@gmail.com
+              {email}
             </Typography.Paragraph>
           </Col>
         </Row>
