@@ -10,21 +10,21 @@ export const VerifyUser = () => {
   const [searchParams] = useSearchParams()
   const [isLoading, setIsLoading] = useState(true)
   const [error, setError] = useState('')
-  const t = useTranslation('Verify_user')
+  const { t } = useTranslation('Verify_user')
 
   async function handleVerify() {
     const token = searchParams.get('token')
     try {
       await confirmUser({ token })
-      message.success(t('user_verified'))
+      message.success(t('user_verified'), 3)
       navigate('/')
     } catch (err) {
       setIsLoading(false)
       setError(err.message)
       if (err.response.status === 400) {
-        message.error(t('bad_confirmation_token'))
+        message.error(t('bad_confirmation_token'), 3)
       } else {
-        message.error(t('error'))
+        message.error(t('error'), 3)
       }
     }
   }
