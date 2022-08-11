@@ -10,12 +10,17 @@ import { FormModal } from './FormModal'
 
 import { getColumnSearchProps } from '@/utils/columnSearchFilter'
 import { AddButton } from '@/components/buttons/AddButton'
+import { useAuth } from '@/providers/authProvider'
 
 export const Users = () => {
   const { t } = useTranslation('Users')
   const [isModalVisible, setIsModalVisible] = useState(false)
   const [fullName, setFullName] = useState('')
   const [form] = useForm()
+
+  const {
+    user: { role },
+  } = useAuth()
 
   const searchInput = useRef(null)
   const roles = []
@@ -82,6 +87,9 @@ export const Users = () => {
       title: t('actions'),
       key: 'actions',
       render: (_, record) => {
+        if (role !== 'Manager') {
+          return
+        }
         return (
           <Space size="md">
             <a style={{ marginRight: '10px' }} onClick={() => openModal(record)}>
