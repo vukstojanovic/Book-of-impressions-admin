@@ -48,7 +48,10 @@
     "home": "Home",
     "edit": "Edit",
     "delete": "Delete",
-    "empty_warning": "Cannot be empty!"
+    "cancel": "Cancel",
+    "empty_warning": "Cannot be empty!",
+    "confirm_delete": "Are you sure you want to delete",
+    "no_users": "No Users"
   },
   "Reviews": {
     "name": "Name",
