@@ -40,21 +40,19 @@ export function ProfileSettings() {
 
   const handleFinish = (values) => {
     // separate keys with values from those without them
-    const modifiedValues = {}
+    const formData = new FormData()
     const keysWithValues = Object.keys(values).filter(
       (key) => values[key].length && key !== 'email' && key !== 'confirm_password'
     )
     keysWithValues.forEach((key) => {
       if (key === 'profilePhoto') {
-        modifiedValues[key] = values[key][0]?.originFileObj
+        formData.append(key, values[key][0]?.originFileObj)
       } else {
-        modifiedValues[key] = values[key]
+        formData.append(key, values[key])
       }
     })
 
-    console.log(modifiedValues)
-
-    patchUserData.mutate(modifiedValues, {
+    patchUserData.mutate(formData, {
       onSuccess: () => {
         message.success('Changes successfully sent.')
         form.resetFields()

@@ -18,11 +18,7 @@ export const AccountMenu = () => {
   return (
     <Dropdown
       overlay={
-        <MenuForDropdown
-          name={data.name}
-          email={data.email}
-          profilePhoto={JSON.parse(data?.profilePhoto)}
-        />
+        <MenuForDropdown name={data.name} email={data.email} profilePhoto={data.profilePhoto} />
       }
       placement="bottomRight"
       trigger={['click']}
