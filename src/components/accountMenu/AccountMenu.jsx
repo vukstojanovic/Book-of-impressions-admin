@@ -29,7 +29,9 @@ export const AccountMenu = () => {
         src={data.profilePhoto}
         style={{ color: '#f56a00', backgroundColor: '#fde3cf', cursor: 'pointer' }}
       >
-        {`${data.name[0]}${data.name.split(' ')[1][0]}`}
+        {data.name.split(' ').length > 1
+          ? `${data.name[0]}${data.name.split(' ')[1][0]}`
+          : `${data.name[0]}`}
       </Avatar>
     </Dropdown>
   )

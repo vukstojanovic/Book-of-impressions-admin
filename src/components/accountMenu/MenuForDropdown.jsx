@@ -33,7 +33,7 @@ export const MenuForDropdown = ({ name, email, profilePhoto }) => {
               src={profilePhoto}
               size={40}
             >
-              {`${name[0]}${name.split(' ')[1][0]}`}
+              {name.split(' ').length > 1 ? `${name[0]}${name.split(' ')[1][0]}` : `${name[0]}`}
             </Avatar>
           </Col>
           <Col style={{ paddingLeft: '1rem' }}>

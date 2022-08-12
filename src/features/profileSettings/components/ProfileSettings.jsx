@@ -42,7 +42,7 @@ export function ProfileSettings() {
     // separate keys with values from those without them
     const formData = new FormData()
     const keysWithValues = Object.keys(values).filter(
-      (key) => values[key].length && key !== 'email' && key !== 'confirm_password'
+      (key) => values[key]?.length && key !== 'email' && key !== 'confirm_password'
     )
     keysWithValues.forEach((key) => {
       if (key === 'profilePhoto') {
@@ -63,12 +63,12 @@ export function ProfileSettings() {
   }
 
   const handleFieldsChange = () => {
-    const someErrors = form.getFieldsError().some(({ errors }) => errors.length)
+    const someErrors = form.getFieldsError().some(({ errors }) => errors?.length)
     setHasErrors(someErrors)
     setAreFieldsEmpty(
-      !form.getFieldValue('password') &&
-        !form.getFieldValue('name') &&
-        !form.getFieldValue('profilePhoto').length
+      !form.getFieldValue('password').trim() &&
+        !form.getFieldValue('name').trim() &&
+        !form.getFieldValue('profilePhoto')?.length
     )
   }
 
