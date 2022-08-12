@@ -3,10 +3,10 @@ import { message } from 'antd'
 
 import { axios } from '@/lib/axios'
 
-export const updateCompanyInfo = (id, data) => {
+export const updateCompanyInfo = (data) => {
   return axios({
     method: 'patch',
-    url: `/api/wapp/company/${id}`,
+    url: `/api/wapp/company`,
     data,
   })
 }

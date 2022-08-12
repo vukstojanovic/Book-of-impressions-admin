@@ -1,9 +1,10 @@
 import { PlusOutlined } from '@ant-design/icons'
-import { Form, Input, Upload, Tabs, Button, Row, Col } from 'antd'
+import { Form, Input, Upload, Tabs, Button, Row, Col, Spin } from 'antd'
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 
 import { useUpdateCompanyInfo } from '../api/postCompanyInfo'
+import { useGetCompanyInfo } from '../api/getCompanyInfo'
 
 import style from './Settings.module.css'
 
@@ -11,10 +12,19 @@ import { useAuth } from '@/providers/authProvider'
 import { beforeUpload } from '@/utils/beforeImageUpload'
 
 export function Settings() {
+  const { data: company, isLoading } = useGetCompanyInfo()
+
   const [descriptionErrorEn, setDescriptionErrorEn] = useState(false)
   const [descriptionErrorSr, setDescriptionErrorSr] = useState(false)
   const [image, setImage] = useState('')
-  const [selectedLogos, setSelectedLogos] = useState(null)
+  const [selectedLogos, setSelectedLogos] = useState([
+    {
+      uid: '-1',
+      name: 'company-logo.png',
+      status: 'done',
+      url: `${company?.logo}`,
+    },
+  ])
   const [removeButton, setRemovedButton] = useState(false)
   const [buttonDisabled, setButtonDisabled] = useState(true)
 
@@ -53,7 +63,7 @@ export function Settings() {
     }
 
     // to do: replace hardcoded id with dynamic
-    companyInfoMutation.mutate('d1e350dd-8406-4c64-8a55-69901b040ad5', companyInfo)
+    companyInfoMutation.mutate(companyInfo)
   }
 
   const onValuesChange = (
@@ -106,6 +116,12 @@ export function Settings() {
     </div>
   )
 
+  if (isLoading)
+    return (
+      <Row align="middle" justify="center" style={{ minHeight: '30vh' }}>
+        <Spin size="large" />
+      </Row>
+    )
   return (
     <Form
       size="large"
@@ -124,6 +140,7 @@ export function Settings() {
             label={t('company_name')}
             name="company-name"
             rules={[{ required: true, message: t('error_name') }]}
+            initialValue={company.name}
           >
             <Input placeholder={t('company_name')} />
           </Form.Item>
@@ -138,6 +155,7 @@ export function Settings() {
               { required: true, message: t('error_email') },
               { type: 'email', message: t('error_valid_email') },
             ]}
+            initialValue={company.email}
           >
             <Input placeholder={t('company_email')} />
           </Form.Item>
@@ -157,7 +175,10 @@ export function Settings() {
         <TabPane tab="EN" key="en" forceRender={true}>
           <Row>
             <Col lg={16} md={24} xs={24}>
-              <Form.Item name="en-desc">
+              <Form.Item
+                name="en-desc"
+                initialValue={company.description.filter((lang) => lang.key === 'en')[0].text}
+              >
                 <TextArea
                   placeholder={t('company_description')}
                   name="english-desc"
@@ -174,7 +195,10 @@ export function Settings() {
         <TabPane tab="SR" key="sr" forceRender={true}>
           <Row>
             <Col lg={16} md={24} xs={24}>
-              <Form.Item name="sr-desc">
+              <Form.Item
+                name="sr-desc"
+                initialValue={company.description.filter((lang) => lang.key === 'sr')[0].text}
+              >
                 <TextArea
                   placeholder={t('company_description')}
                   name="serbian-dec"
@@ -195,6 +219,7 @@ export function Settings() {
           listType="picture-card"
           className="avatar-uploader"
           showUploadList={(true, { showPreviewIcon: false })}
+          defaultFileList={company?.logo}
           fileList={selectedLogos}
           beforeUpload={beforeUpload}
           onChange={handleChange}
