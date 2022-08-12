@@ -1,12 +1,9 @@
 import { LoadingOutlined, PlusOutlined } from '@ant-design/icons'
 import { Typography, Row, Col, Button, Form, Input, Upload, message } from 'antd'
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 
-import {
-  usePatchUserDataMutation,
-  useGetUserDataQuery,
-} from '@/features/profileSettings/api/submitUserSettingForm'
+import { usePatchUserDataMutation } from '@/features/profileSettings/api/submitUserSettingForm'
 import { beforeUpload } from '@/utils/beforeImageUpload.js'
 import { getBase64 } from '@/utils/getBase64.js'
 
@@ -21,11 +18,6 @@ export function ProfileSettings() {
   const [form] = Form.useForm()
 
   const patchUserData = usePatchUserDataMutation()
-  const { data, isFetching } = useGetUserDataQuery()
-
-  useEffect(() => {
-    console.log(data)
-  }, [isFetching])
 
   const handleChange = (info) => {
     getBase64(info.file.originFileObj, () => {
@@ -48,19 +40,19 @@ export function ProfileSettings() {
 
   const handleFinish = (values) => {
     // separate keys with values from those without them
-    const modifiedValues = {}
+    const formData = new FormData()
     const keysWithValues = Object.keys(values).filter(
-      (key) => values[key].length && key !== 'email' && key !== 'confirm_password'
+      (key) => values[key]?.length && key !== 'email' && key !== 'confirm_password'
     )
     keysWithValues.forEach((key) => {
-      if (key === 'photo') {
-        modifiedValues[key] = values[key][0]
+      if (key === 'profilePhoto') {
+        formData.append(key, values[key][0]?.originFileObj)
       } else {
-        modifiedValues[key] = values[key]
+        formData.append(key, values[key])
       }
     })
 
-    patchUserData.mutate(modifiedValues, {
+    patchUserData.mutate(formData, {
       onSuccess: () => {
         message.success('Changes successfully sent.')
         form.resetFields()
@@ -71,12 +63,12 @@ export function ProfileSettings() {
   }
 
   const handleFieldsChange = () => {
-    const someErrors = form.getFieldsError().some(({ errors }) => errors.length)
+    const someErrors = form.getFieldsError().some(({ errors }) => errors?.length)
     setHasErrors(someErrors)
     setAreFieldsEmpty(
-      !form.getFieldValue('password') &&
-        !form.getFieldValue('name') &&
-        !form.getFieldValue('photo').length
+      !form.getFieldValue('password').trim() &&
+        !form.getFieldValue('name').trim() &&
+        !form.getFieldValue('profilePhoto')?.length
     )
   }
 
@@ -121,7 +113,7 @@ export function ProfileSettings() {
             <Form.Item
               label={`${t('profilePhoto')}:`}
               valuePropName="fileList"
-              name="photo"
+              name="profilePhoto"
               getValueFromEvent={(e) => {
                 if (Array.isArray(e)) {
                   return e
