@@ -13,6 +13,8 @@ const { TabPane } = Tabs
 export const CreateNewForm = () => {
   const [selectedFormType, setSelectedFormType] = useState(null)
   const [showInfoQuestion, setShowInfoQuestion] = useState(false)
+  const [disabledButton, setDisabledButton] = useState(false)
+
   const [form] = Form.useForm()
 
   const {
@@ -22,19 +24,19 @@ export const CreateNewForm = () => {
   const { t } = useTranslation('CreateNewForm')
 
   const handleSubmit = (values) => {
+    console.log(values)
+    console.log('form was submitted')
     setShowInfoQuestion(false)
-    console.log('form submitted', values)
+    form.resetFields()
   }
 
   const onTypeChange = (value) => {
     setShowInfoQuestion(true)
     if (value === 'rating' || value === 'answer') {
       setSelectedFormType('oneQuestion')
-      console.log('rating or answer was selected')
     }
     if (value === 'ratings') {
       setSelectedFormType('threeQuestions')
-      console.log('ratings was selected')
     }
   }
 
@@ -144,19 +146,19 @@ export const CreateNewForm = () => {
                   {
                     validator: async (_, fields) => {
                       if (selectedFormType === 'oneQuestion' && fields.length >= 1) {
-                        return Promise.reject(new Error(t(selectedFormType)))
+                        setDisabledButton(true)
+                        // return Promise.reject(new Error(t(selectedFormType)))
                       }
                       if (selectedFormType === 'threeQuestions' && fields.length >= 3) {
-                        return Promise.reject(new Error(t(selectedFormType)))
+                        setDisabledButton(true)
                       }
                     },
                   },
                 ]}
               >
-                {(fields, { add, remove }, { errors }) => (
+                {(fields, { add, remove }) => (
                   <>
                     {fields.map(({ key, name, ...restField }, i) => {
-                      console.log(errors)
                       return (
                         <div key={i}>
                           <Tabs
@@ -218,7 +220,7 @@ export const CreateNewForm = () => {
                         onClick={() => add()}
                         block
                         icon={<PlusOutlined />}
-                        disabled={role !== 'Manager' || errors.length || !selectedFormType}
+                        disabled={role !== 'Manager' || disabledButton || !selectedFormType}
                       >
                         {t('addAnoterQuestion')}
                       </Button>
