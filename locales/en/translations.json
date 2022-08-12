@@ -57,7 +57,8 @@
     "readMore": "Read more"
   },
   "Forms": {
-    "forms": "Forms"
+    "forms": "Forms",
+    "no_forms": "There are no forms"
   },
   "CreateNewForm": {
     "main": "Create New Form",
@@ -69,7 +70,7 @@
     "question": "Question",
     "addAnoterQuestion": "Add another question",
     "cancel": "Cancel",
-    "create": "Create",
+    "create": "Submit",
     "removeQuestion": "Remove question",
     "fillQuestion": "Please fill the question filed!",
     "emptyTitle": "Title is required",
@@ -130,6 +131,33 @@
     "name": "Name",
     "profilePhoto": "Profile Photo",
     "password": "Password",
+    "confirm_password": "Confirm Password",
+    "passwords_do_not_match": "Enter matching passwords",
+    "please_add_name": "Add name",
+    "please_add_password": "Add password",
+    "please_confirm_password": "Confirm password",
     "submit": "Submit"
+  },
+  "settings": {
+    "company_name": "Company name:",
+    "error_name": "Name is required",
+    "company_email": "Company email:",
+    "error_email": "Email is required",
+    "error_valid_email": "The input is not valid E-mail!",
+    "company_description": "Company description:",
+    "error_description": "Both descriptions are required",
+    "company_logo": "Company logo",
+    "error_logo": "Logo is required",
+    "upload": "Upload",
+    "cancel": "Cancel",
+    "submit": "Submit",
+    "submit_success": "You successfully submitted form",
+    "submit_error": "Something went wrong"
+  },
+  "Verify_user": {
+    "please_wait_while_your_account_is_being_verified": "Please wait while your account is being verified.",
+    "user_verified": "User verified",
+    "bad_confirmation_token": "Bad confirmation token",
+    "error": "There's been an error"
   }
 }

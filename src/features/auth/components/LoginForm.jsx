@@ -16,8 +16,7 @@ export const LoginForm = () => {
 
   const { t } = useTranslation('Login')
 
-  const { login } = useAuth()
-
+  const { login, refetchUser } = useAuth()
   const onFinish = async ({ email, password }) => {
     try {
       const userData = {
@@ -26,6 +25,7 @@ export const LoginForm = () => {
       }
 
       await login(userData)
+      await refetchUser()
 
       // if (access_token && refrresh_token) {
       //   storage.set('access_token', access_token)

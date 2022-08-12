@@ -57,7 +57,8 @@
     "readMore": "Pročitaj više"
   },
   "Forms": {
-    "forms": "Formulari"
+    "forms": "Formulari",
+    "no_forms": "Nema formulara"
   },
   "CreateNewForm": {
     "main": "Kreiraj novu formu",
@@ -69,7 +70,7 @@
     "question": "Pitanja",
     "addAnoterQuestion": "Dodaj jos jedno pitanje",
     "cancel": "Obrisi",
-    "create": "Kreiraj",
+    "create": "Posalji",
     "removeQuestion": "Obrisi pitanje",
     "fillQuestion": "Molim vas popunite polje za pitanje!",
     "emptyTitle": "Naslov je obavezan",
@@ -130,6 +131,33 @@
     "name": "Ime",
     "profilePhoto": "Profilna Slika",
     "password": "Lozinka",
+    "confirm_password": "Potvrdi Lozinku",
+    "passwords_do_not_match": "Lozinke se ne poklapaju",
+    "please_add_name": "Unesite ime",
+    "please_add_password": "Unesite lozinku",
+    "please_confirm_password": "Potvrdite lozinku",
     "submit": "Pošalji"
+  },
+  "settings": {
+    "company_name": "Ime kompanije:",
+    "error_name": "Ime je obavezno",
+    "company_email": "E-mejl kompanije:",
+    "error_email": "E-mejl je obavezan",
+    "error_valid_email": "Niste uneli validan mejl!",
+    "company_description": "Opis kompanije:",
+    "error_description": "Oba opisa su obavezana",
+    "company_logo": "Logo kompanije",
+    "error_logo": "Logo je obavezan",
+    "upload": "Ubaci logo",
+    "cancel": "Ponisti",
+    "submit": "Posalji",
+    "submit_success": "Uspesno ste poslali formu",
+    "submit_error": "Nesto je poslo naopako"
+  },
+  "Verify_user": {
+    "please_wait_while_your_account_is_being_verified": "Molimo sačekajte dok nalog bude odobren.",
+    "user_verified": "Korisnik verifikovan",
+    "bad_confirmation_token": "Pogrešan token",
+    "error": "Došlo je do greške"
   }
 }
