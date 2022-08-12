@@ -156,5 +156,11 @@
     "submit": "Posalji",
     "submit_success": "Uspesno ste poslali formu",
     "submit_error": "Nesto je poslo naopako"
+  },
+  "Verify_user": {
+    "please_wait_while_your_account_is_being_verified": "Molimo sačekajte dok nalog bude odobren.",
+    "user_verified": "Korisnik verifikovan",
+    "bad_confirmation_token": "Pogrešan token",
+    "error": "Došlo je do greške"
   }
 }

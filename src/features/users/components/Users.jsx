@@ -11,6 +11,7 @@ import { FormModal } from './FormModal'
 
 import { getColumnSearchProps } from '@/utils/columnSearchFilter'
 import { AddButton } from '@/components/buttons/AddButton'
+import { useAuth } from '@/providers/authProvider'
 
 export const Users = () => {
   const { t } = useTranslation('Users')
@@ -27,6 +28,10 @@ export const Users = () => {
   const [form] = useForm()
 
   const roles = ['Manager', 'Viewer']
+  const {
+    user: { role },
+  } = useAuth()
+
   const searchInput = useRef(null)
 
   function openEditModal(userData) {
@@ -102,6 +107,7 @@ export const Users = () => {
       title: t('actions'),
       key: 'actions',
       render: (_, record) => {
+        if (role !== 'Manager') return
         return (
           <Space size={[20]}>
             <a onClick={() => openEditModal(record)}>

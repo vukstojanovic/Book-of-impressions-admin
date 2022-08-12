@@ -2,6 +2,8 @@ import { useTranslation } from 'react-i18next'
 import { Row, Col, Form, Typography, Input, Button, Select, Space, Tabs, Card } from 'antd'
 import { MinusCircleOutlined, PlusOutlined } from '@ant-design/icons'
 
+import { useAuth } from '@/providers/authProvider'
+
 const { Title } = Typography
 const { TextArea } = Input
 const { Option } = Select
@@ -9,6 +11,10 @@ const { TabPane } = Tabs
 
 export const CreateNewForm = () => {
   const [form] = Form.useForm()
+
+  const {
+    user: { role },
+  } = useAuth()
 
   const { t } = useTranslation('CreateNewForm')
 
@@ -175,7 +181,13 @@ export const CreateNewForm = () => {
                       </div>
                     ))}
                     <Form.Item>
-                      <Button size="middle" onClick={() => add()} block icon={<PlusOutlined />}>
+                      <Button
+                        size="middle"
+                        onClick={() => add()}
+                        block
+                        icon={<PlusOutlined />}
+                        disabled={role !== 'Manager'}
+                      >
                         {t('addAnoterQuestion')}
                       </Button>
                     </Form.Item>
@@ -184,18 +196,20 @@ export const CreateNewForm = () => {
               </Form.List>
             </Col>
           </Row>
-          <Row justify="end">
-            <Col style={{ marginTop: '25px' }}>
-              <Space size={'large'}>
-                <Button size={'large'} onClick={onReset}>
-                  {t('cancel')}
-                </Button>
-                <Button type="primary" size={'large'} htmlType="submit">
-                  {t('create')}
-                </Button>
-              </Space>
-            </Col>
-          </Row>
+          {role !== 'Manager' ? null : (
+            <Row justify="end">
+              <Col style={{ marginTop: '25px' }}>
+                <Space size={'large'}>
+                  <Button size={'large'} onClick={onReset}>
+                    {t('cancel')}
+                  </Button>
+                  <Button type="primary" size={'large'} htmlType="submit">
+                    {t('create')}
+                  </Button>
+                </Space>
+              </Col>
+            </Row>
+          )}
         </Form>
       </Card>
     </>

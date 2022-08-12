@@ -7,6 +7,7 @@ import { useUpdateCompanyInfo } from '../api/postCompanyInfo'
 
 import style from './Settings.module.css'
 
+import { useAuth } from '@/providers/authProvider'
 import { beforeUpload } from '@/utils/beforeImageUpload'
 
 export function Settings() {
@@ -16,6 +17,10 @@ export function Settings() {
   const [selectedLogos, setSelectedLogos] = useState(null)
   const [removeButton, setRemovedButton] = useState(false)
   const [buttonDisabled, setButtonDisabled] = useState(true)
+
+  const {
+    user: { role },
+  } = useAuth()
 
   const { t } = useTranslation('settings')
 
@@ -195,15 +200,18 @@ export function Settings() {
           onChange={handleChange}
           onRemove={onRemoveImage}
           maxCount={1}
+          disabled={role !== 'Manager'}
         >
           {uploadButton}
         </Upload>
       </Form.Item>
-      <Form.Item style={{ textAlign: 'right' }}>
-        <Button type="primary" htmlType="submit" disabled={buttonDisabled ? true : false}>
-          {t('submit')}
-        </Button>
-      </Form.Item>
+      {role !== 'Manager' ? null : (
+        <Form.Item style={{ textAlign: 'right' }}>
+          <Button type="primary" htmlType="submit" disabled={buttonDisabled ? true : false}>
+            {t('submit')}
+          </Button>
+        </Form.Item>
+      )}
     </Form>
   )
 }

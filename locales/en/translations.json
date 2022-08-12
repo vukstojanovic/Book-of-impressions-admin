@@ -156,5 +156,11 @@
     "submit": "Submit",
     "submit_success": "You successfully submitted form",
     "submit_error": "Something went wrong"
+  },
+  "Verify_user": {
+    "please_wait_while_your_account_is_being_verified": "Please wait while your account is being verified.",
+    "user_verified": "User verified",
+    "bad_confirmation_token": "Bad confirmation token",
+    "error": "There's been an error"
   }
 }
