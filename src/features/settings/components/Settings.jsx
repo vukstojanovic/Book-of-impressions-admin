@@ -97,7 +97,6 @@ export function Settings() {
     }
 
     setImage(file)
-    setButtonDisabled(false)
   }
 
   const onRemoveImage = () => {
