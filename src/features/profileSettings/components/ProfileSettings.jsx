@@ -2,6 +2,7 @@ import { LoadingOutlined, PlusOutlined } from '@ant-design/icons'
 import { Typography, Row, Col, Button, Form, Input, Upload, message } from 'antd'
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
+import { useQueryClient } from 'react-query'
 
 import { usePatchUserDataMutation } from '@/features/profileSettings/api/submitUserSettingForm'
 import { beforeUpload } from '@/utils/beforeImageUpload.js'
@@ -12,12 +13,15 @@ export function ProfileSettings() {
   const [hasErrors, setHasErrors] = useState(null)
   const [areFieldsEmpty, setAreFieldsEmpty] = useState(true)
 
-  const { t } = useTranslation('profileSettings')
+  const { t } = useTranslation('ProfileSettings')
 
   const { Title } = Typography
   const [form] = Form.useForm()
 
   const patchUserData = usePatchUserDataMutation()
+  const queryClient = useQueryClient()
+  const res = queryClient.getQueryData('userSettingForm')
+  console.log(res)
 
   const handleChange = (info) => {
     getBase64(info.file.originFileObj, () => {
@@ -40,17 +44,28 @@ export function ProfileSettings() {
 
   const handleFinish = (values) => {
     // separate keys with values from those without them
+    console.log(values)
     const formData = new FormData()
+    const modifiedValues = {}
     const keysWithValues = Object.keys(values).filter(
-      (key) => values[key]?.length && key !== 'email' && key !== 'confirm_password'
+      // (key) => values[key]?.length && key !== 'email' && key !== 'confirm_password'
+      (key) =>
+        values[key] && values[key] !== res[key] && key !== 'email' && key !== 'confirm_password'
     )
-    keysWithValues.forEach((key) => {
-      if (key === 'profilePhoto') {
-        formData.append(key, values[key][0]?.originFileObj)
-      } else {
-        formData.append(key, values[key])
-      }
-    })
+
+    if (keysWithValues.length) {
+      keysWithValues.forEach((key) => {
+        if (key === 'profilePhoto') {
+          formData.append(key, values[key][0]?.originFileObj)
+          modifiedValues[key] = values[key][0]?.originFileObj
+        } else {
+          formData.append(key, values[key])
+          modifiedValues[key] = values[key]
+        }
+      })
+    }
+
+    console.log(modifiedValues)
 
     patchUserData.mutate(formData, {
       onSuccess: () => {
@@ -87,11 +102,24 @@ export function ProfileSettings() {
         onFinish={handleFinish}
         onFieldsChange={handleFieldsChange}
         onValuesChange={handleValuesChange}
-        initialValues={{ name: '', password: '', confirm_password: '', photo: [] }}
+        initialValues={{
+          name: res?.name,
+          password: '',
+          confirm_password: '',
+          photo: [
+            {
+              uid: '-3',
+              name: 'image.jpg',
+              status: 'done',
+              url: res?.profilePhoto,
+            },
+          ],
+          email: res?.email,
+        }}
       >
         <Row>
           <Col sm={24} md={18} lg={8}>
-            <Form.Item label="Email:" name="email" initialValue={'dummy-email@gmail.com'}>
+            <Form.Item label="Email:" name="email">
               <Input disabled />
             </Form.Item>
           </Col>
@@ -129,6 +157,14 @@ export function ProfileSettings() {
                 onChange={handleChange}
                 maxCount={1}
                 action="UploadUrl"
+                defaultFileList={[
+                  {
+                    uid: '-1',
+                    name: 'image.jpg',
+                    status: 'done',
+                    url: res?.profilePhoto,
+                  },
+                ]}
               >
                 {uploadButton}
               </Upload>
