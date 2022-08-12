@@ -17,7 +17,6 @@ export const MenuForDropdown = ({ name, email, profilePhoto }) => {
       label: (
         <Row
           align="middle"
-          justify="space-between"
           style={{
             minWidth: '16rem',
             padding: '0.5rem 0.2rem',
