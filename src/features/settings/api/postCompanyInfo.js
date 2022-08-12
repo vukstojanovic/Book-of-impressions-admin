@@ -11,13 +11,14 @@ export const updateCompanyInfo = (data) => {
   })
 }
 
-export const useUpdateCompanyInfo = ({ form, setSelectedLogos, setButtonDisabled, t }) => {
+export const useUpdateCompanyInfo = ({ form, setSelectedLogos, setButtonDisabled, t, refetch }) => {
   return useMutation({
     onSuccess: () => {
       message.success(t('submit_success'), 3)
       form.resetFields()
       setSelectedLogos(null)
       setButtonDisabled(true)
+      refetch()
     },
     onError: () => {
       message.error(t('submit_error'), 3)

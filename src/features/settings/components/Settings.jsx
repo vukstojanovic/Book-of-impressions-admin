@@ -12,11 +12,12 @@ import { useAuth } from '@/providers/authProvider'
 import { beforeUpload } from '@/utils/beforeImageUpload'
 
 export function Settings() {
-  const { data: company, isLoading } = useGetCompanyInfo()
+  const { data: company, isLoading, refetch } = useGetCompanyInfo()
 
   const [descriptionErrorEn, setDescriptionErrorEn] = useState(false)
   const [descriptionErrorSr, setDescriptionErrorSr] = useState(false)
   const [image, setImage] = useState('')
+
   const [selectedLogos, setSelectedLogos] = useState([
     {
       uid: '-1',
@@ -38,7 +39,13 @@ export function Settings() {
   const { TabPane } = Tabs
   const [form] = Form.useForm()
 
-  const companyInfoMutation = useUpdateCompanyInfo({ form, setSelectedLogos, setButtonDisabled, t })
+  const companyInfoMutation = useUpdateCompanyInfo({
+    form,
+    setSelectedLogos,
+    setButtonDisabled,
+    t,
+    refetch,
+  })
 
   const onFinish = ({
     'company-name': name,
@@ -59,9 +66,10 @@ export function Settings() {
           text: srDescription,
         },
       ],
-      logo: image ? image : null,
+      logo: image ? image : '',
     }
 
+    console.log(image)
     // to do: replace hardcoded id with dynamic
     companyInfoMutation.mutate(companyInfo)
   }
