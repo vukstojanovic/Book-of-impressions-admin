@@ -1,12 +1,16 @@
 import { Form, Input, Select } from 'antd'
 import { useTranslation } from 'react-i18next'
 
-export const FormModal = ({ form }) => {
+import { useEditUser } from '../api/editUser.js'
+
+export const FormModal = ({ closeEditModal, form, refetch, userId }) => {
   const { t } = useTranslation('Users')
-  const roles = ['Frontend developer', 'Backend developer', 'QA']
+  const roles = ['Manager', 'Viewer']
+
+  const { mutate: editUser } = useEditUser({ refetch, closeEditModal })
 
   function submitData(values) {
-    console.log(values)
+    editUser({ data: values, id: userId })
   }
 
   return (
@@ -22,30 +26,6 @@ export const FormModal = ({ form }) => {
       <Form.Item
         label={t('name')}
         name="name"
-        rules={[
-          {
-            required: true,
-            message: t('empty_warning'),
-          },
-        ]}
-      >
-        <Input />
-      </Form.Item>
-      <Form.Item
-        label={t('surname')}
-        name="surname"
-        rules={[
-          {
-            required: true,
-            message: t('empty_warning'),
-          },
-        ]}
-      >
-        <Input />
-      </Form.Item>
-      <Form.Item
-        label={t('email')}
-        name="email"
         rules={[
           {
             required: true,
