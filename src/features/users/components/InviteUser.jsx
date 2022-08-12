@@ -4,11 +4,16 @@ import { useState } from 'react'
 
 import { useInviteUser } from '../api/inviteUser'
 
+import { useAuth } from '@/providers/authProvider'
 import { roleNames } from '@/config/constants'
 
 export const InviteUser = () => {
   const { t } = useTranslation('InviteUser')
   const [form] = Form.useForm()
+
+  const {
+    user: { role },
+  } = useAuth()
 
   const userRoles = [roleNames.MANAGER, roleNames.VIEWER]
 
@@ -98,13 +103,15 @@ export const InviteUser = () => {
           </Form.Item>
         </Col>
       </Row>
-      <Row justify="end" span={24} gutter={[10, 10]}>
-        <Col>
-          <Button disabled={disabled} style={{ width: '100%' }} type="primary" htmlType="submit">
-            {t('invite')}
-          </Button>
-        </Col>
-      </Row>
+      {role !== 'Manager' ? null : (
+        <Row justify="end" span={24} gutter={[10, 10]}>
+          <Col>
+            <Button disabled={disabled} style={{ width: '100%' }} type="primary" htmlType="submit">
+              {t('invite')}
+            </Button>
+          </Col>
+        </Row>
+      )}
     </Form>
   )
 }
