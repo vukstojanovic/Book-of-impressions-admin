@@ -68,9 +68,6 @@ export function Settings() {
       ],
       logo: image ? image : '',
     }
-
-    console.log(image)
-    // to do: replace hardcoded id with dynamic
     companyInfoMutation.mutate(companyInfo)
   }
 
@@ -104,6 +101,7 @@ export function Settings() {
       return
     }
 
+    setButtonDisabled(false)
     setImage(file)
   }
 
