@@ -218,7 +218,7 @@ export const CreateNewForm = () => {
                         onClick={() => add()}
                         block
                         icon={<PlusOutlined />}
-                        disabled={role !== 'Manager' || errors.length}
+                        disabled={role !== 'Manager' || errors.length || !selectedFormType}
                       >
                         {t('addAnoterQuestion')}
                       </Button>
