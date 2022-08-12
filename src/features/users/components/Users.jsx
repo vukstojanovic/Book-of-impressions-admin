@@ -110,12 +110,12 @@ export const Users = () => {
         if (role !== 'Manager') return
         return (
           <Space size={[20]}>
-            <a onClick={() => openEditModal(record)}>
+            <button onClick={() => openEditModal(record)}>
               <EditOutlined style={{ fontSize: '17px' }} />
-            </a>
-            <a onClick={() => openDeleteModal(record)}>
+            </button>
+            <button onClick={() => openDeleteModal(record)}>
               <DeleteOutlined style={{ fontSize: '17px' }} />
-            </a>
+            </button>
           </Space>
         )
       },
