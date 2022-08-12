@@ -4,9 +4,9 @@ import { MenuForDropdown } from '@/components/accountMenu'
 import { useGetUserDataQuery } from '@/features/profileSettings/api/submitUserSettingForm'
 
 export const AccountMenu = () => {
-  const { data, isLoading } = useGetUserDataQuery()
+  const { data, isLoading, isError } = useGetUserDataQuery()
 
-  if (isLoading) {
+  if (isLoading || isError) {
     return (
       <Avatar
         size={40}
