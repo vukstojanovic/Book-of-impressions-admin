@@ -49,7 +49,6 @@ export function ProfileSettings() {
 
     if (changedFieldsKeys.length) {
       changedFieldsKeys.forEach((key) => formData.append(key, changedFields[key]))
-      console.log(changedFields)
 
       patchUserData.mutate(formData, {
         onSuccess: () => {
