@@ -139,7 +139,8 @@
     "please_add_name": "Add name",
     "please_add_password": "Add password",
     "please_confirm_password": "Confirm password",
-    "submit": "Submit"
+    "submit": "Submit",
+    "valid_email_warning": "Not a valid email"
   },
   "settings": {
     "company_name": "Company name:",

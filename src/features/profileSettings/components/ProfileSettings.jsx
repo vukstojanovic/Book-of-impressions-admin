@@ -104,7 +104,7 @@ export function ProfileSettings() {
             password: '',
             confirm_password: '',
             profilePhoto:
-              data?.profilePhoto !== 'undefined'
+              data?.profilePhoto !== 'undefined' || data?.profilePhoto
                 ? [
                     {
                       uid: '-1',
@@ -119,7 +119,16 @@ export function ProfileSettings() {
         >
           <Row>
             <Col sm={24} md={18} lg={8}>
-              <Form.Item label="Email:" name="email">
+              <Form.Item
+                label="Email:"
+                name="email"
+                rules={[
+                  {
+                    type: 'email',
+                    message: t('valid_email_warning'),
+                  },
+                ]}
+              >
                 <Input disabled />
               </Form.Item>
             </Col>

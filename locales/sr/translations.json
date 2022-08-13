@@ -139,7 +139,8 @@
     "please_add_name": "Unesite ime",
     "please_add_password": "Unesite lozinku",
     "please_confirm_password": "Potvrdite lozinku",
-    "submit": "Pošalji"
+    "submit": "Pošalji",
+    "valid_email_warning": "Nije validan email"
   },
   "settings": {
     "company_name": "Ime kompanije:",
