@@ -14,6 +14,7 @@ export function ProfileSettings() {
   const [loading, setLoading] = useState(false)
   const [hasErrors, setHasErrors] = useState(null)
   const [areFieldsEmpty, setAreFieldsEmpty] = useState(true)
+  const [changedFields, setChangedFields] = useState({})
 
   const { t } = useTranslation('ProfileSettings')
 
@@ -42,38 +43,23 @@ export function ProfileSettings() {
     </div>
   )
 
-  const handleFinish = (values) => {
-    // separate keys with values from those without them
+  const handleFinish = () => {
     const formData = new FormData()
-    const keysWithValues = Object.keys(values).filter((key) => {
-      if (key === 'profilePhoto') {
-        if (
-          values[key][0]?.originFileObj ||
-          (!values[key].length && data?.profilePhoto !== 'undefined')
-        )
-          return key
-        return false
-      }
-      return values[key] && values[key] !== data[key] && key !== 'confirm_password'
-    })
+    const changedFieldsKeys = Object.keys(changedFields)
 
-    if (keysWithValues.length) {
-      keysWithValues.forEach((key) => {
-        if (key === 'profilePhoto') {
-          formData.append(key, values[key][0]?.originFileObj)
-        } else {
-          formData.append(key, values[key])
-        }
+    if (changedFieldsKeys.length) {
+      changedFieldsKeys.forEach((key) => formData.append(key, changedFields[key]))
+      console.log(changedFields)
+
+      patchUserData.mutate(formData, {
+        onSuccess: () => {
+          message.success('Changes successfully sent.')
+          setAreFieldsEmpty(true)
+          setChangedFields({})
+        },
+        onError: () => message.error('Error while sending data.'),
       })
     }
-
-    patchUserData.mutate(formData, {
-      onSuccess: () => {
-        message.success('Changes successfully sent.')
-        setAreFieldsEmpty(true)
-      },
-      onError: () => message.error('Error while sending data.'),
-    })
   }
 
   const handleFieldsChange = () => {
@@ -87,8 +73,17 @@ export function ProfileSettings() {
     )
   }
 
-  const handleValuesChange = () => {
+  const handleValuesChange = (changedProp) => {
     form.validateFields()
+    if (Object.hasOwn(changedProp, 'confirm_password')) return
+    if (Object.hasOwn(changedProp, 'profilePhoto')) {
+      setChangedFields((prev) => ({
+        ...prev,
+        profilePhoto: changedProp.profilePhoto[0]?.originFileObj,
+      }))
+    } else {
+      setChangedFields((prev) => ({ ...prev, ...changedProp }))
+    }
   }
 
   return (
@@ -135,7 +130,7 @@ export function ProfileSettings() {
               <Form.Item
                 label={`${t('name')}:`}
                 name="name"
-                rules={[{ message: `${t('please_add_name')}` }]}
+                rules={[{ required: true, message: `${t('please_add_name')}` }]}
               >
                 <Input placeholder={t('name')} />
               </Form.Item>
