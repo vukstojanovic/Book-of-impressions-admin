@@ -45,29 +45,27 @@ export function ProfileSettings() {
   const handleFinish = (values) => {
     // separate keys with values from those without them
     const formData = new FormData()
-    const modifiedValues = {}
-    const keysWithValues = Object.keys(values).filter(
-      (key) => values[key] && values[key] !== data[key] && key !== 'confirm_password'
-    )
+    const keysWithValues = Object.keys(values).filter((key) => {
+      if (key === 'profilePhoto') {
+        if (
+          values[key][0]?.originFileObj ||
+          (!values[key].length && data?.profilePhoto !== 'undefined')
+        )
+          return key
+        return false
+      }
+      return values[key] && values[key] !== data[key] && key !== 'confirm_password'
+    })
 
     if (keysWithValues.length) {
       keysWithValues.forEach((key) => {
         if (key === 'profilePhoto') {
-          if (
-            values[key][0]?.originFileObj ||
-            (!values[key].length && data?.profilePhoto !== 'undefined')
-          ) {
-            formData.append(key, values[key][0]?.originFileObj)
-            modifiedValues[key] = values[key][0]?.originFileObj
-          }
+          formData.append(key, values[key][0]?.originFileObj)
         } else {
           formData.append(key, values[key])
-          modifiedValues[key] = values[key]
         }
       })
     }
-    console.log(values)
-    console.log('modified', modifiedValues)
 
     patchUserData.mutate(formData, {
       onSuccess: () => {
@@ -84,6 +82,7 @@ export function ProfileSettings() {
     setAreFieldsEmpty(
       !form.getFieldValue('password').trim() &&
         !form.getFieldValue('name').trim() &&
+        !form.getFieldValue('email').trim() &&
         !form.getFieldValue('profilePhoto')?.length
     )
   }
