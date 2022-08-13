@@ -140,7 +140,9 @@
     "please_add_password": "Unesite lozinku",
     "please_confirm_password": "Potvrdite lozinku",
     "submit": "Pošalji",
-    "valid_email_warning": "Nije validan email"
+    "valid_email_warning": "Nije validan email",
+    "changes_successfully_sent": "Promene uspešno poslate.",
+    "error_while_sending_data": "Greška prilikom slanja promena."
   },
   "settings": {
     "company_name": "Ime kompanije:",

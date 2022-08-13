@@ -52,11 +52,11 @@ export function ProfileSettings() {
 
       patchUserData.mutate(formData, {
         onSuccess: () => {
-          message.success('Changes successfully sent.')
+          message.success(t('changes_successfully_sent'))
           setAreFieldsEmpty(true)
           setChangedFields({})
         },
-        onError: () => message.error('Error while sending data.'),
+        onError: () => message.error(t('error_while_sending_data')),
       })
     }
   }
