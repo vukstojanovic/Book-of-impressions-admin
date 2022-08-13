@@ -185,7 +185,7 @@ export function ProfileSettings() {
                 rules={[
                   ({ getFieldValue }) => ({
                     validator(_, value) {
-                      if (getFieldValue('password') === value || !getFieldValue('password')) {
+                      if (getFieldValue('password') === value) {
                         return Promise.resolve()
                       }
                       return Promise.reject(t('passwords_do_not_match'))
