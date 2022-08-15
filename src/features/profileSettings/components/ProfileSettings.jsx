@@ -22,7 +22,7 @@ export function ProfileSettings() {
   const [form] = Form.useForm()
 
   const patchUserData = usePatchUserDataMutation()
-  const { data, isLoading } = useGetUserDataQuery()
+  const { data, isLoading, isError, error } = useGetUserDataQuery()
 
   const handleChange = (info) => {
     getBase64(info.file.originFileObj, () => {
@@ -46,36 +46,36 @@ export function ProfileSettings() {
   const handleFinish = () => {
     const formData = new FormData()
     const changedFieldsKeys = Object.keys(changedFields)
+    changedFieldsKeys.forEach((key) => formData.append(key, changedFields[key]))
 
-    if (changedFieldsKeys.length) {
-      changedFieldsKeys.forEach((key) => formData.append(key, changedFields[key]))
-
-      patchUserData.mutate(formData, {
-        onSuccess: () => {
-          message.success(t('changes_successfully_sent'))
-          setAreFieldsEmpty(true)
-          setChangedFields({})
-        },
-        onError: () => message.error(t('error_while_sending_data')),
-      })
-    }
+    patchUserData.mutate(formData, {
+      onSuccess: () => {
+        message.success(t('changes_successfully_sent'))
+        setAreFieldsEmpty(true)
+        form.resetFields(['password', 'confirm_password'])
+        setChangedFields({})
+      },
+      onError: () => message.error(t('error_while_sending_data')),
+    })
   }
 
   const handleFieldsChange = () => {
     const someErrors = form.getFieldsError().some(({ errors }) => errors?.length)
     setHasErrors(someErrors)
-    setAreFieldsEmpty(
-      !form.getFieldValue('password').trim() &&
-        !form.getFieldValue('name').trim() &&
-        !form.getFieldValue('email').trim() &&
-        !form.getFieldValue('profilePhoto')?.length
-    )
+    setAreFieldsEmpty(!Object.keys(changedFields).length)
   }
 
   const handleValuesChange = (changedProp) => {
     form.validateFields()
     if (Object.hasOwn(changedProp, 'confirm_password')) return
-    if (Object.hasOwn(changedProp, 'profilePhoto')) {
+    if (Object.values(changedProp)[0] === '') {
+      setChangedFields((prev) => {
+        const changedPropKey = Object.keys(changedProp)[0]
+        const objCopy = prev
+        delete objCopy[changedPropKey]
+        return objCopy
+      })
+    } else if (Object.hasOwn(changedProp, 'profilePhoto')) {
       setChangedFields((prev) => ({
         ...prev,
         profilePhoto: changedProp.profilePhoto[0]?.originFileObj,
@@ -88,6 +88,7 @@ export function ProfileSettings() {
   return (
     <>
       <Title>{t('my_profile')}</Title>
+      {isError && <div style={{ marginTop: '15px' }}>{error.message}</div>}
       {isLoading ? (
         <Spin size="large" />
       ) : (
@@ -104,16 +105,16 @@ export function ProfileSettings() {
             password: '',
             confirm_password: '',
             profilePhoto:
-              data?.profilePhoto !== 'undefined' || data?.profilePhoto
-                ? [
+              data?.profilePhoto === 'undefined' || !data?.profilePhoto
+                ? []
+                : [
                     {
                       uid: '-1',
                       name: 'image',
                       status: 'done',
                       url: data?.profilePhoto,
                     },
-                  ]
-                : [],
+                  ],
             email: data?.email,
           }}
         >
@@ -138,7 +139,15 @@ export function ProfileSettings() {
               <Form.Item
                 label={`${t('name')}:`}
                 name="name"
-                rules={[{ required: true, message: `${t('please_add_name')}` }]}
+                rules={[
+                  { required: true, message: `${t('please_add_name')}` },
+                  {
+                    validator: (_, value) =>
+                      value.trim() === value
+                        ? Promise.resolve()
+                        : Promise.reject(new Error(t('no_spaces_at_beggining_or_end'))),
+                  },
+                ]}
               >
                 <Input placeholder={t('name')} />
               </Form.Item>
@@ -178,7 +187,15 @@ export function ProfileSettings() {
                 shouldUpdate
                 label={`${t('password')}:`}
                 name="password"
-                rules={[{ message: `${t('please_add_password')}` }]}
+                rules={[
+                  { min: 8, message: `${t('password_min_8')}` },
+                  {
+                    validator: (_, value) =>
+                      !value.includes(' ')
+                        ? Promise.resolve()
+                        : Promise.reject(new Error(t('no_spaces'))),
+                  },
+                ]}
               >
                 <Input.Password placeholder={t('password')} />
               </Form.Item>

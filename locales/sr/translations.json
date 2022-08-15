@@ -141,8 +141,11 @@
     "please_confirm_password": "Potvrdite lozinku",
     "submit": "Pošalji",
     "valid_email_warning": "Nije validan email",
-    "changes_successfully_sent": "Promene uspešno poslate.",
-    "error_while_sending_data": "Greška prilikom slanja promena."
+    "changes_successfully_sent": "Promene uspešno poslate",
+    "error_while_sending_data": "Greška prilikom slanja promena",
+    "password_min_8": "Lozinka ima najmanje 8 karaktera",
+    "no_spaces": "Prazna mesta nisu dozvoljena",
+    "no_spaces_at_beggining_or_end": "Bez praznih mesta na početku i na kraju"
   },
   "settings": {
     "company_name": "Ime kompanije:",
