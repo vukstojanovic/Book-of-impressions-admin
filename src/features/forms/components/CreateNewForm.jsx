@@ -3,6 +3,10 @@ import { useTranslation } from 'react-i18next'
 import { Row, Col, Form, Typography, Input, Button, Select, Space, Tabs, Card } from 'antd'
 import { MinusCircleOutlined, PlusOutlined } from '@ant-design/icons'
 
+import { usePostFormQuery } from '../api/postForm'
+
+import style from './CreateNewForm.module.css'
+
 import { useAuth } from '@/providers/authProvider'
 
 const { Title } = Typography
@@ -14,6 +18,7 @@ export const CreateNewForm = () => {
   const [selectedFormType, setSelectedFormType] = useState(null)
   const [showInfoQuestion, setShowInfoQuestion] = useState(false)
   const [disabledButton, setDisabledButton] = useState(false)
+  const [submitButton, setSubmitButton] = useState(true)
 
   const [form] = Form.useForm()
 
@@ -23,24 +28,74 @@ export const CreateNewForm = () => {
 
   const { t } = useTranslation('CreateNewForm')
 
-  const handleSubmit = (values) => {
-    console.log(values)
-    console.log('form was submitted')
-    setShowInfoQuestion(false)
-    form.resetFields()
+  const postFormData = usePostFormQuery({ form, setShowInfoQuestion, t })
+
+  const handleSubmit = ({
+    title,
+    ['en-desc']: enDescription,
+    ['sr-desc']: srDescription,
+    ['form-type']: formType,
+    questions,
+  }) => {
+    const formattedQuestions = questions.map((question) => {
+      return {
+        texts: [
+          {
+            key: 'en',
+            text: question['question-en'],
+          },
+          {
+            key: 'sr',
+            text: question['question-sr'],
+          },
+        ],
+      }
+    })
+
+    const formData = {
+      title,
+      name: title,
+      type: formType,
+      description: [
+        {
+          key: 'en',
+          text: enDescription,
+        },
+        {
+          key: 'sr',
+          text: srDescription,
+        },
+      ],
+      questions: formattedQuestions,
+    }
+    postFormData.mutate(formData)
   }
 
   const onTypeChange = (value) => {
     setShowInfoQuestion(true)
-    if (value === 'rating' || value === 'answer') {
+    if (value === 'Rating' || value === 'Answer') {
       setSelectedFormType('oneQuestion')
+      return
     }
-    if (value === 'ratings') {
+    if (value === 'Ratings') {
       setSelectedFormType('threeQuestions')
+      return
+    }
+  }
+
+  const onValuesChange = (
+    _,
+    { ['en-desc']: enDesc, ['sr-desc']: srDesc, ['form-type']: formType, title }
+  ) => {
+    if (enDesc && srDesc && formType && title) {
+      setSubmitButton(false)
+    } else {
+      setSubmitButton(true)
     }
   }
 
   const onReset = () => {
+    setShowInfoQuestion(false)
     form.resetFields()
   }
 
@@ -49,11 +104,11 @@ export const CreateNewForm = () => {
       <Title level={2}>{t('main')}</Title>
       <Card>
         <Form
-          requiredMark={false}
           form={form}
           onFinish={handleSubmit}
           layout="vertical"
           size="large"
+          onValuesChange={onValuesChange}
         >
           <Row>
             <Col sm={24} md={12} lg={6}>
@@ -73,7 +128,7 @@ export const CreateNewForm = () => {
           </Row>
           <Row>
             <Col sm={24} md={18} lg={14}>
-              <p style={{ marginBottom: '-10px' }}>{t('formDescription')}</p>
+              <p className={style.formDescription}>{t('formDescription')}</p>
               <Tabs
                 defaultActiveKey="en"
                 type="line"
@@ -123,14 +178,14 @@ export const CreateNewForm = () => {
           <Row>
             <Col sm={24} md={18} lg={14}>
               <Form.Item
-                name="form type"
+                name="form-type"
                 label={t('formType')}
                 rules={[{ required: true, message: t('emptyType') }]}
               >
                 <Select placeholder={t('formType')} onChange={onTypeChange}>
-                  <Option value="rating">{t('rating')}</Option>
-                  <Option value="ratings">{t('ratings')}</Option>
-                  <Option value="answer">{t('answer')}</Option>
+                  <Option value="Rating">{t('rating')}</Option>
+                  <Option value="Ratings">{t('ratings')}</Option>
+                  <Option value="Answer">{t('answer')}</Option>
                 </Select>
               </Form.Item>
             </Col>
@@ -147,7 +202,6 @@ export const CreateNewForm = () => {
                     validator: async (_, fields) => {
                       if (selectedFormType === 'oneQuestion' && fields.length >= 1) {
                         setDisabledButton(true)
-                        // return Promise.reject(new Error(t(selectedFormType)))
                       }
                       if (selectedFormType === 'threeQuestions' && fields.length >= 3) {
                         setDisabledButton(true)
@@ -207,7 +261,12 @@ export const CreateNewForm = () => {
                               </Form.Item>
                             </TabPane>
                           </Tabs>
-                          <p onClick={() => remove(name)}>
+                          <p
+                            onClick={() => {
+                              remove(name)
+                              setDisabledButton(false)
+                            }}
+                          >
                             {t('removeQuestion')}{' '}
                             <MinusCircleOutlined style={{ cursor: 'pointer', color: 'red' }} />
                           </p>
@@ -237,7 +296,7 @@ export const CreateNewForm = () => {
                   <Button size={'large'} onClick={onReset}>
                     {t('cancel')}
                   </Button>
-                  <Button type="primary" size={'large'} htmlType="submit">
+                  <Button type="primary" size={'large'} htmlType="submit" disabled={submitButton}>
                     {t('create')}
                   </Button>
                 </Space>

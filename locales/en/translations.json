@@ -79,7 +79,9 @@
     "emptyTitle": "Title is required",
     "descriptionFor": "Description for",
     "emptyDescription": "Description is required",
-    "emptyType": "Type is required"
+    "emptyType": "Type is required",
+    "submitSuccess": "You successfully submitted the form!",
+    "submitError": "Something went wrong!"
   },
   "SideMenu": {
     "dashboard": "Dashboard",

@@ -79,7 +79,9 @@
     "emptyTitle": "Naslov je obavezan",
     "descriptionFor": "Opis za",
     "emptyDescription": "Opis je obavezan",
-    "emptyType": "Tip je obavezen"
+    "emptyType": "Tip je obavezen",
+    "submitSuccess": "Uspesno ste poslali formu",
+    "submitError": "Nesto je poslo naopako!"
   },
   "SideMenu": {
     "dashboard": "Komandna Tabla",
