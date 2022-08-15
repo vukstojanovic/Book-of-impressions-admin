@@ -48,7 +48,10 @@
     "home": "Početna strana",
     "edit": "Uredi",
     "delete": "Obriši",
-    "empty_warning": "Ne može biti prazno!"
+    "cancel": "Poništi",
+    "empty_warning": "Ne može biti prazno!",
+    "confirm_delete": "Da li ste sigurni da hoćete da obrišete",
+    "no_users": "Nema korisnika"
   },
   "Reviews": {
     "name": "Ime",

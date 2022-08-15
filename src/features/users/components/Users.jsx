@@ -1,10 +1,11 @@
-import { Table, Tag, Space, Modal } from 'antd'
+import { Row, Col, Table, Tag, Space, Modal, Typography, Skeleton, Empty } from 'antd'
 import { useForm } from 'antd/lib/form/Form'
 import { useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { EditOutlined, DeleteOutlined } from '@ant-design/icons'
 
-import { data } from '../mockupData/users'
+import { useGetUsers } from '../api/getUsers.js'
+import { useDeleteUser } from '../api/deleteUser.js'
 
 import { FormModal } from './FormModal'
 
@@ -14,53 +15,74 @@ import { useAuth } from '@/providers/authProvider'
 
 export const Users = () => {
   const { t } = useTranslation('Users')
-  const [isModalVisible, setIsModalVisible] = useState(false)
-  const [fullName, setFullName] = useState('')
+
+  const { Paragraph, Text } = Typography
+
+  const { data: users, refetch, isLoading } = useGetUsers()
+  const { mutate: deleteUser } = useDeleteUser({ refetchUsers: refetch, closeDeleteModal })
+
+  const [isEditModalVisible, setIsEditModalVisible] = useState(false)
+  const [isDeleteModalVisible, setIsDeleteModalVisible] = useState(false)
+  const [name, setName] = useState('')
+  const [userId, setUserId] = useState('')
   const [form] = useForm()
 
+  const roles = ['Manager', 'Viewer']
   const {
     user: { role },
   } = useAuth()
 
   const searchInput = useRef(null)
-  const roles = []
-  data.forEach(({ role }) => {
-    if (!roles.includes(role)) {
-      roles.push(role)
-    }
-  })
 
-  function openModal(userData) {
-    setFullName(`${userData.name} ${userData.surname}`)
+  function openEditModal(userData) {
+    setUserId(userData.id)
+    setName(`${userData.name}`)
     form.setFieldsValue(userData)
-    setIsModalVisible(true)
+    setIsEditModalVisible(true)
   }
 
-  function closeModal() {
-    setIsModalVisible(false)
+  function closeEditModal() {
+    setIsEditModalVisible(false)
   }
 
-  function handleOk() {
+  function openDeleteModal(userData) {
+    setUserId(userData.id)
+    setName(userData.name)
+    setIsDeleteModalVisible(true)
+  }
+
+  function closeDeleteModal() {
+    setIsDeleteModalVisible(false)
+  }
+
+  function handleEditUser() {
     form.submit()
-    setIsModalVisible(false)
+  }
+
+  function handleDeleteUser() {
+    deleteUser({ id: userId })
   }
 
   const columns = [
     {
-      title: 'Id',
-      dataIndex: 'id',
-      key: 'id',
-    },
-    {
       title: t('name'),
       dataIndex: 'name',
       key: 'name',
+      render: (_, record) => {
+        const surname = record.name.split(' ')[0]
+        return <Text>{surname}</Text>
+      },
       ...getColumnSearchProps('name', searchInput),
     },
+
     {
       title: t('surname'),
-      dataIndex: 'surname',
-      key: 'surname',
+      dataIndex: 'name',
+      key: 'id',
+      render: (_, record) => {
+        const surname = record.name.split(' ')[1]
+        return <Text>{surname}</Text>
+      },
       ...getColumnSearchProps('surname', searchInput),
     },
     {
@@ -77,8 +99,6 @@ export const Users = () => {
         return { text: <span>{role}</span>, value: role }
       }),
       onFilter: (value, record) => record.role.startsWith(value),
-      filterSearch: true,
-      width: '40%',
       render: (role) => {
         return <Tag color="green">{role.toUpperCase()}</Tag>
       },
@@ -89,25 +109,80 @@ export const Users = () => {
       render: (_, record) => {
         if (role !== 'Manager') return
         return (
-          <Space size="md">
-            <a style={{ marginRight: '10px' }} onClick={() => openModal(record)}>
+          <Space size={[20]}>
+            <button onClick={() => openEditModal(record)}>
               <EditOutlined style={{ fontSize: '17px' }} />
-            </a>
-            <a>
+            </button>
+            <button onClick={() => openDeleteModal(record)}>
               <DeleteOutlined style={{ fontSize: '17px' }} />
-            </a>
+            </button>
           </Space>
         )
       },
     },
   ]
 
+  if (isLoading) {
+    return (
+      <>
+        <Row justify="end" style={{ marginBottom: '20px' }}>
+          <Col>
+            <Skeleton.Button shape="circle" />
+          </Col>
+        </Row>
+        <Row>
+          <Skeleton />
+        </Row>
+      </>
+    )
+  }
+  if (users[1] === 0) {
+    return (
+      <>
+        <AddButton linkTo={'/users/invite-user'} />
+        <Empty
+          description={
+            <span>
+              <b>{t('no_users')}</b>
+            </span>
+          }
+        />
+      </>
+    )
+  }
   return (
     <>
       <AddButton linkTo={'/users/invite-user'} />
-      <Table dataSource={data} columns={columns} span={24} style={{ overflow: 'auto' }} />
-      <Modal title={fullName} visible={isModalVisible} onOk={handleOk} onCancel={closeModal}>
-        <FormModal form={form} />
+      <Table
+        dataSource={users[0]}
+        columns={columns}
+        span={24}
+        style={{ overflow: 'auto' }}
+        rowKey={'id'}
+      />
+      <Modal
+        centered
+        title={`${name}`}
+        visible={isEditModalVisible}
+        onOk={handleEditUser}
+        onCancel={closeEditModal}
+        okText={t('edit')}
+        cancelText={t('cancel')}
+      >
+        <FormModal form={form} refetch={refetch} userId={userId} closeEditModal={closeEditModal} />
+      </Modal>
+      <Modal
+        centered
+        visible={isDeleteModalVisible}
+        onOk={handleDeleteUser}
+        onCancel={closeDeleteModal}
+        closable={false}
+        bodyStyle={{ textAlign: 'center' }}
+        cancelText={t('cancel')}
+        okText={t('delete')}
+      >
+        <Paragraph>{`${t('confirm_delete')}:`} </Paragraph>
+        <Paragraph strong>{`${name} ?`}</Paragraph>
       </Modal>
     </>
   )
