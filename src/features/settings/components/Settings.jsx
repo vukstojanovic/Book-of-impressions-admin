@@ -16,17 +16,8 @@ export function Settings() {
 
   const [descriptionErrorEn, setDescriptionErrorEn] = useState(false)
   const [descriptionErrorSr, setDescriptionErrorSr] = useState(false)
-  const [image, setImage] = useState('')
 
-  const [selectedLogos, setSelectedLogos] = useState([
-    {
-      uid: '-1',
-      name: 'company-logo.png',
-      status: 'done',
-      url: `${company?.logo}`,
-    },
-  ])
-  const [removeButton, setRemovedButton] = useState(false)
+  const [selectedLogos, setSelectedLogos] = useState()
   const [buttonDisabled, setButtonDisabled] = useState(true)
 
   const {
@@ -52,23 +43,29 @@ export function Settings() {
     'company-email': email,
     'en-desc': enDescription,
     'sr-desc': srDescription,
+    logo,
   }) => {
-    const companyInfo = {
-      name,
-      email,
-      description: [
-        {
-          key: 'en',
-          text: enDescription,
-        },
-        {
-          key: 'sr',
-          text: srDescription,
-        },
-      ],
-      logo: image ? image : '',
+    const formData = new FormData()
+
+    if (logo) {
+      formData.append('logo', logo[0].originFileObj)
     }
-    companyInfoMutation.mutate(companyInfo)
+    const desc = [
+      {
+        key: 'en',
+        text: enDescription,
+      },
+      {
+        key: 'sr',
+        text: srDescription,
+      },
+    ]
+
+    formData.append('name', name)
+    formData.append('email', email)
+    formData.append('description', JSON.stringify(desc))
+
+    companyInfoMutation.mutate({ formData })
   }
 
   const onValuesChange = (
@@ -94,19 +91,9 @@ export function Settings() {
     setButtonDisabled(true)
   }
 
-  const handleChange = ({ file, fileList }) => {
+  const handleChange = ({ fileList }) => {
     setSelectedLogos(fileList)
-    if (removeButton) {
-      setImage(null)
-      return
-    }
-
     setButtonDisabled(false)
-    setImage(file)
-  }
-
-  const onRemoveImage = () => {
-    setRemovedButton(true)
   }
 
   const uploadButton = (
@@ -219,17 +206,33 @@ export function Settings() {
           </Row>
         </TabPane>
       </Tabs>
-      <Form.Item label={t('company_logo')} valuePropName="fileList">
+      <Form.Item
+        label={t('company_logo')}
+        name={'logo'}
+        valuePropName="fileList"
+        getValueFromEvent={(e) => {
+          if (Array.isArray(e)) {
+            return e
+          }
+          return e && e.fileList
+        }}
+      >
         <Upload
           name="avatar"
           listType="picture-card"
           className="avatar-uploader"
           showUploadList={(true, { showPreviewIcon: false })}
-          defaultFileList={company?.logo}
+          defaultFileList={[
+            {
+              uid: '-1',
+              name: 'company-logo.png',
+              status: 'done',
+              url: `${company.logo}`,
+            },
+          ]}
           fileList={selectedLogos}
           beforeUpload={beforeUpload}
           onChange={handleChange}
-          onRemove={onRemoveImage}
           maxCount={1}
           disabled={role !== 'Manager'}
         >

@@ -45,7 +45,9 @@ export function ProfileSettings() {
       (key) => values[key]?.length && key !== 'email' && key !== 'confirm_password'
     )
     keysWithValues.forEach((key) => {
+      console.log(values)
       if (key === 'profilePhoto') {
+        console.log(values[key][0])
         formData.append(key, values[key][0]?.originFileObj)
       } else {
         formData.append(key, values[key])
