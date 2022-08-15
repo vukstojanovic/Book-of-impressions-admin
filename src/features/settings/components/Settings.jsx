@@ -46,10 +46,6 @@ export function Settings() {
     logo,
   }) => {
     const formData = new FormData()
-
-    if (logo) {
-      formData.append('logo', logo[0].originFileObj)
-    }
     const desc = [
       {
         key: 'en',
@@ -61,6 +57,9 @@ export function Settings() {
       },
     ]
 
+    if (logo) {
+      formData.append('logo', logo[0].originFileObj)
+    }
     formData.append('name', name)
     formData.append('email', email)
     formData.append('description', JSON.stringify(desc))
