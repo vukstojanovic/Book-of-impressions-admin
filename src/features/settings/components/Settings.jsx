@@ -179,7 +179,7 @@ export function Settings() {
               <Col lg={16} md={24} xs={24}>
                 <Form.Item name="en-desc">
                   <TextArea
-                    placeholder={t('company_description')}
+                    placeholder={`${t('company_description')}`}
                     name="english-desc"
                     autoSize={{ minRows: 6, maxRows: 10 }}
                     style={{ marginTop: '6px' }}
