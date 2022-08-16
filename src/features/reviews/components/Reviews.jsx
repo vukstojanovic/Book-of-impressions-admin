@@ -1,4 +1,5 @@
 import { Card, Rate, Row, Col, Typography, Spin } from 'antd'
+import { LikeOutlined } from '@ant-design/icons'
 import { useTranslation } from 'react-i18next'
 import dayjs from 'dayjs'
 
@@ -28,7 +29,7 @@ export const Reviews = () => {
         <Title>{t('reviews')}</Title>
         <Row style={{ gap: 16 }}>
           {data[0]?.map((review) => {
-            const { comment, createdDate, id, rating, reviewName } = review
+            const { answer, comment, createdDate, id, rating, ratings, reviewName } = review
             return (
               <Col key={id} xs={{ span: 24 }} lg={{ span: 20 }} xl={{ span: 17 }}>
                 <Card
@@ -40,18 +41,32 @@ export const Reviews = () => {
                   <Row
                     justify="space-between"
                     wrap={true}
-                    align="middle"
+                    align="top"
                     style={{ marginBottom: '20px' }}
                   >
-                    <Col xs={{ span: 24 }} md={{ span: 8 }}>
+                    <Col xs={{ span: 24 }} md={{ span: 8 }} flex={2}>
                       <Text style={{ fontWeight: 'bold' }}>{reviewName}</Text>
                     </Col>
                     <Col xs={{ span: 24 }} md={{ span: 8 }}>
                       <Text>{dayjs(createdDate).format('DD/MM/YYYY')}</Text>
                     </Col>
-                    <Col xs={{ span: 24 }} md={{ span: 8 }}>
-                      <Rate disabled allowHalf defaultValue={rating} />
-                    </Col>
+                    {rating && (
+                      <Col xs={{ span: 24 }} md={{ span: 8 }}>
+                        <Rate disabled allowHalf defaultValue={rating} />
+                      </Col>
+                    )}
+                    {ratings && (
+                      <Col xs={{ span: 24 }} md={{ span: 8 }}>
+                        {ratings.map((rating, i) => {
+                          return <Rate key={i} disabled allowHalf defaultValue={rating || 0} />
+                        })}
+                      </Col>
+                    )}
+                    {answer && (
+                      <Col xs={{ span: 24 }} md={{ span: 8 }}>
+                        <LikeOutlined style={{ fontSize: '24px', color: 'green' }} />
+                      </Col>
+                    )}
                   </Row>
 
                   <Paragraph
