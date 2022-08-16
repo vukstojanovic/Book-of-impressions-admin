@@ -1,4 +1,4 @@
-import { useMutation } from 'react-query'
+import { useMutation, useQueryClient } from 'react-query'
 import { message } from 'antd'
 
 import { axios } from '@/lib/axios'
@@ -11,14 +11,13 @@ export const updateCompanyInfo = ({ formData }) => {
   })
 }
 
-export const useUpdateCompanyInfo = ({ form, setSelectedLogos, setButtonDisabled, t, refetch }) => {
+export const useUpdateCompanyInfo = ({ setButtonDisabled, t }) => {
+  const queryClient = useQueryClient()
   return useMutation({
     onSuccess: () => {
       message.success(t('submit_success'), 3)
-      form.resetFields()
-      setSelectedLogos(null)
       setButtonDisabled(true)
-      refetch()
+      queryClient.invalidateQueries(['company'])
     },
     onError: () => {
       message.error(t('submit_error'), 3)
