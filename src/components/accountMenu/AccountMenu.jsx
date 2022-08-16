@@ -26,7 +26,7 @@ export const AccountMenu = () => {
     >
       <Avatar
         size={40}
-        src={data.profilePhoto}
+        src={data.profilePhoto || 'undefined'}
         style={{ color: '#f56a00', backgroundColor: '#fde3cf', cursor: 'pointer' }}
       >
         {data.name.split(' ').length > 1

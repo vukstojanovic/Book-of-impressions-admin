@@ -1,6 +1,11 @@
+import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Row, Col, Form, Typography, Input, Button, Select, Space, Tabs, Card } from 'antd'
 import { MinusCircleOutlined, PlusOutlined } from '@ant-design/icons'
+
+import { usePostFormQuery } from '../api/postForm'
+
+import style from './CreateNewForm.module.css'
 
 import { useAuth } from '@/providers/authProvider'
 
@@ -10,6 +15,11 @@ const { Option } = Select
 const { TabPane } = Tabs
 
 export const CreateNewForm = () => {
+  const [selectedFormType, setSelectedFormType] = useState(null)
+  const [showInfoQuestion, setShowInfoQuestion] = useState(false)
+  const [disabledButton, setDisabledButton] = useState(false)
+  const [submitButton, setSubmitButton] = useState(true)
+
   const [form] = Form.useForm()
 
   const {
@@ -18,15 +28,74 @@ export const CreateNewForm = () => {
 
   const { t } = useTranslation('CreateNewForm')
 
-  const handleSubmit = (values) => {
-    console.log('form submitted', values)
+  const postFormData = usePostFormQuery({ form, setShowInfoQuestion, t })
+
+  const handleSubmit = ({
+    title,
+    ['en-desc']: enDescription,
+    ['sr-desc']: srDescription,
+    ['form-type']: formType,
+    questions,
+  }) => {
+    const formattedQuestions = questions.map((question) => {
+      return {
+        texts: [
+          {
+            key: 'en',
+            text: question['question-en'],
+          },
+          {
+            key: 'sr',
+            text: question['question-sr'],
+          },
+        ],
+      }
+    })
+
+    const formData = {
+      title,
+      name: title,
+      type: formType,
+      description: [
+        {
+          key: 'en',
+          text: enDescription,
+        },
+        {
+          key: 'sr',
+          text: srDescription,
+        },
+      ],
+      questions: formattedQuestions,
+    }
+    postFormData.mutate(formData)
   }
 
-  const onTypeChange = () => {
-    console.log('type was changed')
+  const onTypeChange = (value) => {
+    setShowInfoQuestion(true)
+    if (value === 'Rating' || value === 'Answer') {
+      setSelectedFormType('oneQuestion')
+      return
+    }
+    if (value === 'Ratings') {
+      setSelectedFormType('threeQuestions')
+      return
+    }
+  }
+
+  const onValuesChange = (
+    _,
+    { ['en-desc']: enDesc, ['sr-desc']: srDesc, ['form-type']: formType, title }
+  ) => {
+    if (enDesc && srDesc && formType && title) {
+      setSubmitButton(false)
+    } else {
+      setSubmitButton(true)
+    }
   }
 
   const onReset = () => {
+    setShowInfoQuestion(false)
     form.resetFields()
   }
 
@@ -35,11 +104,11 @@ export const CreateNewForm = () => {
       <Title level={2}>{t('main')}</Title>
       <Card>
         <Form
-          requiredMark={false}
           form={form}
           onFinish={handleSubmit}
           layout="vertical"
           size="large"
+          onValuesChange={onValuesChange}
         >
           <Row>
             <Col sm={24} md={12} lg={6}>
@@ -59,7 +128,7 @@ export const CreateNewForm = () => {
           </Row>
           <Row>
             <Col sm={24} md={18} lg={14}>
-              <p style={{ marginBottom: '-10px' }}>{t('formDescription')}</p>
+              <p className={style.formDescription}>{t('formDescription')}</p>
               <Tabs
                 defaultActiveKey="en"
                 type="line"
@@ -109,84 +178,108 @@ export const CreateNewForm = () => {
           <Row>
             <Col sm={24} md={18} lg={14}>
               <Form.Item
-                name="form type"
+                name="form-type"
                 label={t('formType')}
                 rules={[{ required: true, message: t('emptyType') }]}
               >
                 <Select placeholder={t('formType')} onChange={onTypeChange}>
-                  <Option value="type-1">{t('type1')}</Option>
-                  <Option value="type-2">{t('type2')}</Option>
+                  <Option value="Rating">{t('rating')}</Option>
+                  <Option value="Ratings">{t('ratings')}</Option>
+                  <Option value="Answer">{t('answer')}</Option>
                 </Select>
               </Form.Item>
             </Col>
           </Row>
           <Row>
             <Col sm={24} md={18} lg={14}>
-              <p style={{ marginBottom: '15px' }}>{t('question')}</p>
-              <Form.List name="questions">
+              <p style={{ marginBottom: '15px' }}>
+                {t('question')} {showInfoQuestion && <span>({t(selectedFormType)})</span>}
+              </p>
+              <Form.List
+                name="questions"
+                rules={[
+                  {
+                    validator: async (_, fields) => {
+                      if (selectedFormType === 'oneQuestion' && fields.length >= 1) {
+                        setDisabledButton(true)
+                      }
+                      if (selectedFormType === 'threeQuestions' && fields.length >= 3) {
+                        setDisabledButton(true)
+                      }
+                    },
+                  },
+                ]}
+              >
                 {(fields, { add, remove }) => (
                   <>
-                    {fields.map(({ key, name, ...restField }, i) => (
-                      <div key={i}>
-                        <Tabs
-                          key={key}
-                          defaultActiveKey="en"
-                          type="line"
-                          hideAdd
-                          tabBarGutter={40}
-                          tabBarStyle={{ margin: '0 0 10px 30px', width: 85 }}
-                        >
-                          <TabPane tab="EN" key="en">
-                            <Form.Item
-                              {...restField}
-                              name={[name, 'question-en']}
-                              rules={[
-                                {
-                                  required: true,
-                                  message: t('fillQuestion'),
-                                },
-                              ]}
-                            >
-                              <TextArea
-                                placeholder="Question"
-                                name="question-en"
-                                autoSize={{ minRows: 6, maxRows: 10 }}
-                                style={{ marginTop: '6px' }}
-                              />
-                            </Form.Item>
-                          </TabPane>
-                          <TabPane tab="SR" key="sr">
-                            <Form.Item
-                              name={[name, 'question-sr']}
-                              rules={[
-                                {
-                                  required: true,
-                                  message: t('fillQuestion'),
-                                },
-                              ]}
-                            >
-                              <TextArea
-                                placeholder="Pitanje"
-                                name="question-sr"
-                                autoSize={{ minRows: 6, maxRows: 10 }}
-                                style={{ marginTop: '6px' }}
-                              />
-                            </Form.Item>
-                          </TabPane>
-                        </Tabs>
-                        <p onClick={() => remove(name)}>
-                          {t('removeQuestion')}{' '}
-                          <MinusCircleOutlined style={{ cursor: 'pointer', color: 'red' }} />
-                        </p>
-                      </div>
-                    ))}
+                    {fields.map(({ key, name, ...restField }, i) => {
+                      return (
+                        <div key={i}>
+                          <Tabs
+                            key={key}
+                            defaultActiveKey="en"
+                            type="line"
+                            hideAdd
+                            tabBarGutter={40}
+                            tabBarStyle={{ margin: '0 0 10px 30px', width: 85 }}
+                          >
+                            <TabPane tab="EN" key="en">
+                              <Form.Item
+                                {...restField}
+                                name={[name, 'question-en']}
+                                rules={[
+                                  {
+                                    required: true,
+                                    message: t('fillQuestion'),
+                                  },
+                                ]}
+                              >
+                                <TextArea
+                                  placeholder="Question"
+                                  name="question-en"
+                                  autoSize={{ minRows: 6, maxRows: 10 }}
+                                  style={{ marginTop: '6px' }}
+                                />
+                              </Form.Item>
+                            </TabPane>
+                            <TabPane tab="SR" key="sr">
+                              <Form.Item
+                                name={[name, 'question-sr']}
+                                rules={[
+                                  {
+                                    required: true,
+                                    message: t('fillQuestion'),
+                                  },
+                                ]}
+                              >
+                                <TextArea
+                                  placeholder="Pitanje"
+                                  name="question-sr"
+                                  autoSize={{ minRows: 6, maxRows: 10 }}
+                                  style={{ marginTop: '6px' }}
+                                />
+                              </Form.Item>
+                            </TabPane>
+                          </Tabs>
+                          <p
+                            onClick={() => {
+                              remove(name)
+                              setDisabledButton(false)
+                            }}
+                          >
+                            {t('removeQuestion')}{' '}
+                            <MinusCircleOutlined style={{ cursor: 'pointer', color: 'red' }} />
+                          </p>
+                        </div>
+                      )
+                    })}
                     <Form.Item>
                       <Button
                         size="middle"
                         onClick={() => add()}
                         block
                         icon={<PlusOutlined />}
-                        disabled={role !== 'Manager'}
+                        disabled={role !== 'Manager' || disabledButton || !selectedFormType}
                       >
                         {t('addAnoterQuestion')}
                       </Button>
@@ -203,7 +296,7 @@ export const CreateNewForm = () => {
                   <Button size={'large'} onClick={onReset}>
                     {t('cancel')}
                   </Button>
-                  <Button type="primary" size={'large'} htmlType="submit">
+                  <Button type="primary" size={'large'} htmlType="submit" disabled={submitButton}>
                     {t('create')}
                   </Button>
                 </Space>
