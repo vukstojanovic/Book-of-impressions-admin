@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import { Typography, Row, Card, Progress, Skeleton, Empty } from 'antd'
 import { QrcodeOutlined } from '@ant-design/icons'
@@ -15,6 +16,7 @@ export const Forms = () => {
   const { data, isLoading } = useForms()
   const { t } = useTranslation('Forms')
 
+  const navigate = useNavigate()
   const [formTitle, setFormTitle] = useState('')
   const [formId, setFormId] = useState('')
   const [modalVisible, setModalVisible] = useState(false)
@@ -61,52 +63,55 @@ export const Forms = () => {
           data[0].map((form) => {
             const { id, name, title } = form
             return (
-              <Skeleton key={id} loading={isLoading}>
-                <Card key={id} style={{ width: 335, borderRadius: '20px' }}>
-                  <div style={divFlex}>
-                    <Title level={5}>{title}</Title>
-                    <QrcodeOutlined
-                      onClick={() => {
-                        setFormId(id)
-                        setFormTitle(title)
-                        setQrValue(id)
-                        setModalVisible(true)
-                      }}
+              <Card
+                hoverable
+                key={id}
+                onClick={() => navigate(`/forms/${id}`)}
+                style={{ width: 335, borderRadius: '20px' }}
+              >
+                <div style={divFlex}>
+                  <Title level={5}>{title}</Title>
+                  <QrcodeOutlined
+                    onClick={() => {
+                      setFormId(id)
+                      setFormTitle(title)
+                      setQrValue(id)
+                      setModalVisible(true)
+                    }}
+                  />
+                </div>
+                {/* Form Description */}
+                <Paragraph>{name}</Paragraph>
+                <div style={divFlex}>
+                  <div style={columnDivFlex}>
+                    <Progress
+                      type="circle"
+                      width={75}
+                      percent={50}
+                      style={{ marginBottom: '0.75rem' }}
                     />
+                    <Text strong>150/300</Text>
                   </div>
-                  {/* Form Description */}
-                  <Paragraph>{name}</Paragraph>
-                  <div style={divFlex}>
-                    <div style={columnDivFlex}>
-                      <Progress
-                        type="circle"
-                        width={75}
-                        percent={50}
-                        style={{ marginBottom: '0.75rem' }}
-                      />
-                      <Text strong>150/300</Text>
-                    </div>
-                    <div style={columnDivFlex}>
-                      <Progress
-                        type="circle"
-                        width={75}
-                        percent={70}
-                        style={{ marginBottom: '0.75rem' }}
-                      />
-                      <Text strong>250/300</Text>
-                    </div>
-                    <div style={columnDivFlex}>
-                      <Progress
-                        type="circle"
-                        width={75}
-                        percent={30}
-                        style={{ marginBottom: '0.75rem' }}
-                      />
-                      <Text strong>30/300</Text>
-                    </div>
+                  <div style={columnDivFlex}>
+                    <Progress
+                      type="circle"
+                      width={75}
+                      percent={70}
+                      style={{ marginBottom: '0.75rem' }}
+                    />
+                    <Text strong>250/300</Text>
                   </div>
-                </Card>
-              </Skeleton>
+                  <div style={columnDivFlex}>
+                    <Progress
+                      type="circle"
+                      width={75}
+                      percent={30}
+                      style={{ marginBottom: '0.75rem' }}
+                    />
+                    <Text strong>30/300</Text>
+                  </div>
+                </div>
+              </Card>
             )
           })
         ) : (
