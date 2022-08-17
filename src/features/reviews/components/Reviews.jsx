@@ -7,7 +7,6 @@ import { ReviewCard } from '@/components/reviewCard'
 
 export const Reviews = () => {
   const { data, isLoading, isError, error } = useGetReviewsQuery()
-
   const { t } = useTranslation('Reviews')
   const { Title } = Typography
 
@@ -29,7 +28,7 @@ export const Reviews = () => {
         <Title>{t('reviews')}</Title>
         <Row style={{ gap: 16 }}>
           {data[0]?.map((review) => {
-            return <ReviewCard key={review.id} review={review} t={t} />
+            return <ReviewCard key={review.id} review={review} />
           })}
         </Row>
       </>

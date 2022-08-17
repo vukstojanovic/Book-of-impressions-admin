@@ -33,11 +33,11 @@ export const FormPreview = () => {
           renderItem={(item) => <Text>{item.texts[0]?.text}</Text>}
         ></List>
       </Card>
-      <Card>
+      <Row style={{ gap: 16, paddingTop: '16px' }}>
         {formReviewData.map((review) => {
           return <ReviewCard key={review.id} review={review} />
         })}
-      </Card>
+      </Row>
     </>
   )
 }

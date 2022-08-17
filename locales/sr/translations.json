@@ -153,12 +153,12 @@
     "no_spaces_at_beggining_or_end": "Bez praznih mesta na početku i na kraju"
   },
   "settings": {
-    "company_name": "Ime kompanije:",
+    "company_name": "Ime kompanije",
     "error_name": "Ime je obavezno",
-    "company_email": "E-mejl kompanije:",
+    "company_email": "E-mejl kompanije",
     "error_email": "E-mejl je obavezan",
     "error_valid_email": "Niste uneli validan mejl!",
-    "company_description": "Opis kompanije:",
+    "company_description": "Opis kompanije",
     "error_description": "Oba opisa su obavezana",
     "company_logo": "Logo kompanije",
     "error_logo": "Logo je obavezan",
