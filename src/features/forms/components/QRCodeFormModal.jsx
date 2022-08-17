@@ -42,6 +42,7 @@ const QRCodeFormModal = ({ formId, formTitle, setModalVisible, modalVisible, qrV
       centered
       width={400}
       visible={modalVisible}
+      onCancel={() => setModalVisible(false)}
       bodyStyle={{ padding: '24px 0', display: 'grid', justifyItems: 'center' }}
       footer={[
         <div style={{ display: 'grid' }} key="back">
