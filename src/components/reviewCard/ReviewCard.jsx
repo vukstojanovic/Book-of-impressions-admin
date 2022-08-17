@@ -12,7 +12,7 @@ export const ReviewCard = ({ review }) => {
   const { t } = useTranslation('Reviews')
 
   return (
-    <Col key={id} xs={{ span: 24 }} lg={{ span: 20 }} xl={{ span: 17 }}>
+    <Col key={id} xs={{ span: 24 }}>
       <Card hoverable bordered type="inner" style={{ borderRadius: '8px', width: '100%' }}>
         <div className={style.cardWrapper}>
           <div className={style.name}>{reviewName}</div>

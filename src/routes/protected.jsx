@@ -31,7 +31,7 @@ export const protectedRoutes = [
       { path: '/profile', element: '<Profile />' },
       { path: '/forms', element: <Forms /> },
       { path: '/forms/create-new-form', element: <CreateNewForm /> },
-      { path: '/forms/:id', element: <FormPreview /> },
+      { path: '/forms/:formTitle', element: <FormPreview /> },
       { path: '/reviews', element: <Reviews /> },
       { path: '/reports', element: '<Reports />' },
       { path: '/settings', element: <Settings /> },

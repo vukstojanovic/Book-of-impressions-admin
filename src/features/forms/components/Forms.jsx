@@ -66,17 +66,18 @@ export const Forms = () => {
               <Card
                 hoverable
                 key={id}
-                onClick={() => navigate(`/forms/${id}`)}
+                onClick={() => navigate(`/forms/${title}?id=${id}`)}
                 style={{ width: 335, borderRadius: '20px' }}
               >
                 <div style={divFlex}>
                   <Title level={5}>{title}</Title>
                   <QrcodeOutlined
-                    onClick={() => {
+                    onClick={(e) => {
                       setFormId(id)
                       setFormTitle(title)
                       setQrValue(id)
                       setModalVisible(true)
+                      e.stopPropagation()
                     }}
                   />
                 </div>
