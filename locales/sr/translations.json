@@ -173,5 +173,12 @@
     "user_verified": "Korisnik verifikovan",
     "bad_confirmation_token": "Pogrešan token",
     "error": "Došlo je do greške"
+  },
+  "Reports": {
+    "name": "Ime",
+    "created_by": "Kreirao",
+    "url": "Url",
+    "created_at": "Datum kreiranja",
+    "action": "Akcije"
   }
 }
