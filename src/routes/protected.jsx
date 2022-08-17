@@ -6,6 +6,7 @@ import { Reviews } from '@/features/reviews'
 import { Forms, CreateNewForm } from '@/features/forms'
 import { Settings } from '@/features/settings'
 import { ProfileSettings } from '@/features/profileSettings'
+import { Reports } from '@/features/reports'
 
 const App = () => {
   return (
@@ -32,7 +33,7 @@ export const protectedRoutes = [
       { path: '/forms', element: <Forms /> },
       { path: '/forms/create-new-form', element: <CreateNewForm /> },
       { path: '/reviews', element: <Reviews /> },
-      { path: '/reports', element: '<Reports />' },
+      { path: '/reports', element: <Reports /> },
       { path: '/settings', element: <Settings /> },
       { path: '/my-profile', element: <ProfileSettings /> },
       { path: '/', element: '<Dashboard />' },
