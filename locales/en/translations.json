@@ -157,12 +157,12 @@
     "no_spaces_at_beggining_or_end": "No spaces at beggining or the end allowed"
   },
   "settings": {
-    "company_name": "Company name:",
+    "company_name": "Company name",
     "error_name": "Name is required",
-    "company_email": "Company email:",
+    "company_email": "Company email",
     "error_email": "Email is required",
     "error_valid_email": "The input is not valid E-mail!",
-    "company_description": "Company description:",
+    "company_description": "Company description",
     "error_description": "Both descriptions are required",
     "company_logo": "Company logo",
     "error_logo": "Logo is required",
@@ -177,5 +177,12 @@
     "user_verified": "User verified",
     "bad_confirmation_token": "Bad confirmation token",
     "error": "There's been an error"
+  },
+  "Reports": {
+    "name": "Name",
+    "created_by": "Created by",
+    "url": "Url",
+    "created_at": "Created at",
+    "action": "Action"
   }
 }

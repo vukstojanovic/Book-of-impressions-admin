@@ -1,9 +1,10 @@
 import { PlusOutlined } from '@ant-design/icons'
-import { Form, Input, Upload, Tabs, Button, Row, Col } from 'antd'
-import { useState } from 'react'
+import { Form, Input, Upload, Tabs, Button, Row, Col, Spin } from 'antd'
+import { useState, useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
 
 import { useUpdateCompanyInfo } from '../api/postCompanyInfo'
+import { useGetCompanyInfo } from '../api/getCompanyInfo'
 
 import style from './Settings.module.css'
 
@@ -11,11 +12,12 @@ import { useAuth } from '@/providers/authProvider'
 import { beforeUpload } from '@/utils/beforeImageUpload'
 
 export function Settings() {
+  const { data: company, isLoading } = useGetCompanyInfo()
+
   const [descriptionErrorEn, setDescriptionErrorEn] = useState(false)
   const [descriptionErrorSr, setDescriptionErrorSr] = useState(false)
-  const [image, setImage] = useState('')
-  const [selectedLogos, setSelectedLogos] = useState(null)
-  const [removeButton, setRemovedButton] = useState(false)
+
+  const [selectedLogos, setSelectedLogos] = useState()
   const [buttonDisabled, setButtonDisabled] = useState(true)
 
   const {
@@ -28,32 +30,38 @@ export function Settings() {
   const { TabPane } = Tabs
   const [form] = Form.useForm()
 
-  const companyInfoMutation = useUpdateCompanyInfo({ form, setSelectedLogos, setButtonDisabled, t })
+  const companyInfoMutation = useUpdateCompanyInfo({
+    setButtonDisabled,
+    t,
+  })
 
   const onFinish = ({
     'company-name': name,
     'company-email': email,
     'en-desc': enDescription,
     'sr-desc': srDescription,
+    logo,
   }) => {
-    const companyInfo = {
-      name,
-      email,
-      description: [
-        {
-          key: 'en',
-          text: enDescription,
-        },
-        {
-          key: 'sr',
-          text: srDescription,
-        },
-      ],
-      logo: image ? image : null,
-    }
+    const formData = new FormData()
+    const desc = [
+      {
+        key: 'en',
+        text: enDescription,
+      },
+      {
+        key: 'sr',
+        text: srDescription,
+      },
+    ]
 
-    // to do: replace hardcoded id with dynamic
-    companyInfoMutation.mutate('d1e350dd-8406-4c64-8a55-69901b040ad5', companyInfo)
+    if (logo) {
+      formData.append('logo', logo[0].originFileObj)
+    }
+    formData.append('name', name)
+    formData.append('email', email)
+    formData.append('description', JSON.stringify(desc))
+
+    companyInfoMutation.mutate({ formData })
   }
 
   const onValuesChange = (
@@ -72,25 +80,16 @@ export function Settings() {
       setDescriptionErrorSr(false)
     }
 
-    if (email && name && enDesc && srDesc) {
+    if (email.trim(' ') && name.trim(' ') && enDesc.trim(' ') && srDesc.trim(' ')) {
       setButtonDisabled(false)
       return
     }
     setButtonDisabled(true)
   }
 
-  const handleChange = ({ file, fileList }) => {
+  const handleChange = ({ fileList }) => {
     setSelectedLogos(fileList)
-    if (removeButton) {
-      setImage(null)
-      return
-    }
-
-    setImage(file)
-  }
-
-  const onRemoveImage = () => {
-    setRemovedButton(true)
+    setButtonDisabled(false)
   }
 
   const uploadButton = (
@@ -106,112 +105,154 @@ export function Settings() {
     </div>
   )
 
-  return (
-    <Form
-      size="large"
-      layout="vertical"
-      requiredMark={false}
-      form={form}
-      onFinish={onFinish}
-      style={{ backgroundColor: 'white', padding: '10px 30px' }}
-      onValuesChange={onValuesChange}
-    >
-      <Row gutter={24}>
-        <Col lg={8} md={12} xs={24} className={style.relativeContainer}>
-          <span className={style.mark}>*</span>
-          <Form.Item
-            className={style['ant-col']}
-            label={t('company_name')}
-            name="company-name"
-            rules={[{ required: true, message: t('error_name') }]}
-          >
-            <Input placeholder={t('company_name')} />
-          </Form.Item>
-        </Col>
-        <Col lg={8} md={12} xs={24} className={style.relativeContainer}>
-          <span className={style.mark}>*</span>
-          <Form.Item
-            className={style['ant-col']}
-            label={t('company_email')}
-            name="company-email"
-            rules={[
-              { required: true, message: t('error_email') },
-              { type: 'email', message: t('error_valid_email') },
-            ]}
-          >
-            <Input placeholder={t('company_email')} />
-          </Form.Item>
-        </Col>
+  // Set Initial Form Values
+  useEffect(() => {
+    if (company) {
+      form.setFieldsValue({
+        'company-name': company.name,
+        'company-email': company.email,
+        'en-desc': company.description.filter((lang) => lang.key === 'en')[0].text,
+        'sr-desc': company.description.filter((lang) => lang.key === 'sr')[0].text,
+      })
+    }
+  }, [company])
+
+  if (isLoading)
+    return (
+      <Row align="middle" justify="center" style={{ minHeight: '30vh' }}>
+        <Spin size="large" />
       </Row>
-      <div className={style.relativeContainer}>
-        <span className={style.markParagraph}>*</span>
-        <p className={style.paragraph}>{t('company_description')}</p>
-      </div>
-      <Tabs
-        defaultActiveKey="en"
-        type="line"
-        hideAdd
-        tabBarGutter={40}
-        tabBarStyle={{ margin: '0 0 10px 30px', width: 85 }}
+    )
+
+  return (
+    company && (
+      <Form
+        size="large"
+        layout="vertical"
+        requiredMark={false}
+        form={form}
+        style={{ backgroundColor: 'white', padding: '10px 30px' }}
+        onFinish={onFinish}
+        onValuesChange={onValuesChange}
       >
-        <TabPane tab="EN" key="en" forceRender={true}>
-          <Row>
-            <Col lg={16} md={24} xs={24}>
-              <Form.Item name="en-desc">
-                <TextArea
-                  placeholder={t('company_description')}
-                  name="english-desc"
-                  autoSize={{ minRows: 6, maxRows: 10 }}
-                  style={{ marginTop: '6px' }}
-                />
-              </Form.Item>
-              <p className={descriptionErrorEn ? style.errorParagrah : style.hidden}>
-                {t('error_description')}
-              </p>
-            </Col>
-          </Row>
-        </TabPane>
-        <TabPane tab="SR" key="sr" forceRender={true}>
-          <Row>
-            <Col lg={16} md={24} xs={24}>
-              <Form.Item name="sr-desc">
-                <TextArea
-                  placeholder={t('company_description')}
-                  name="serbian-dec"
-                  autoSize={{ minRows: 6, maxRows: 10 }}
-                  style={{ marginTop: '6px' }}
-                />
-              </Form.Item>
-              <p className={descriptionErrorSr ? style.errorParagrah : style.hidden}>
-                {t('error_description')}
-              </p>
-            </Col>
-          </Row>
-        </TabPane>
-      </Tabs>
-      <Form.Item label={t('company_logo')} valuePropName="fileList">
-        <Upload
-          name="avatar"
-          listType="picture-card"
-          className="avatar-uploader"
-          showUploadList={(true, { showPreviewIcon: false })}
-          fileList={selectedLogos}
-          beforeUpload={beforeUpload}
-          onChange={handleChange}
-          onRemove={onRemoveImage}
-          maxCount={1}
-          disabled={role !== 'Manager'}
+        <Row gutter={24}>
+          <Col lg={8} md={12} xs={24} className={style.relativeContainer}>
+            <span className={style.mark}>*</span>
+            <Form.Item
+              dependencies={[company]}
+              className={style['ant-col']}
+              label={t('company_name')}
+              name="company-name"
+              rules={[{ required: true, message: t('error_name') }]}
+            >
+              <Input placeholder={t('company_name')} />
+            </Form.Item>
+          </Col>
+          <Col lg={8} md={12} xs={24} className={style.relativeContainer}>
+            <span className={style.mark}>*</span>
+            <Form.Item
+              className={style['ant-col']}
+              label={t('company_email')}
+              name="company-email"
+              rules={[
+                { required: true, message: t('error_email') },
+                { type: 'email', message: t('error_valid_email') },
+              ]}
+            >
+              <Input placeholder={t('company_email')} />
+            </Form.Item>
+          </Col>
+        </Row>
+        <div className={style.relativeContainer}>
+          <span className={style.markParagraph}>*</span>
+          <p className={style.paragraph}>{t('company_description')}</p>
+        </div>
+        <Tabs
+          defaultActiveKey="en"
+          type="line"
+          hideAdd
+          tabBarGutter={40}
+          tabBarStyle={{ margin: '0 0 10px 30px', width: 85 }}
         >
-          {uploadButton}
-        </Upload>
-      </Form.Item>
-      {role !== 'Manager' ? null : (
-        <Form.Item style={{ textAlign: 'right' }}>
-          <Button type="primary" htmlType="submit" disabled={buttonDisabled ? true : false}>
-            {t('submit')}
-          </Button>
+          <TabPane tab="EN" key="en" forceRender={true}>
+            <Row>
+              <Col lg={16} md={24} xs={24}>
+                <Form.Item name="en-desc">
+                  <TextArea
+                    placeholder={`${t('company_description')}`}
+                    name="english-desc"
+                    autoSize={{ minRows: 6, maxRows: 10 }}
+                    style={{ marginTop: '6px' }}
+                  />
+                </Form.Item>
+                <p className={descriptionErrorEn ? style.errorParagrah : style.hidden}>
+                  {t('error_description')}
+                </p>
+              </Col>
+            </Row>
+          </TabPane>
+          <TabPane tab="SR" key="sr" forceRender={true}>
+            <Row>
+              <Col lg={16} md={24} xs={24}>
+                <Form.Item
+                  name="sr-desc"
+                  initialValue={company.description.filter((lang) => lang.key === 'sr')[0].text}
+                >
+                  <TextArea
+                    placeholder={t('company_description')}
+                    name="serbian-dec"
+                    autoSize={{ minRows: 6, maxRows: 10 }}
+                    style={{ marginTop: '6px' }}
+                  />
+                </Form.Item>
+                <p className={descriptionErrorSr ? style.errorParagrah : style.hidden}>
+                  {t('error_description')}
+                </p>
+              </Col>
+            </Row>
+          </TabPane>
+        </Tabs>
+        <Form.Item
+          label={t('company_logo')}
+          name={'logo'}
+          valuePropName="fileList"
+          getValueFromEvent={(e) => {
+            if (Array.isArray(e)) {
+              return e
+            }
+            return e && e.fileList
+          }}
+        >
+          <Upload
+            name="avatar"
+            listType="picture-card"
+            className="avatar-uploader"
+            showUploadList={(true, { showPreviewIcon: false })}
+            defaultFileList={[
+              {
+                uid: '-1',
+                name: 'company-logo.png',
+                status: 'done',
+                url: `${company.logo}`,
+              },
+            ]}
+            fileList={selectedLogos}
+            beforeUpload={beforeUpload}
+            onChange={handleChange}
+            maxCount={1}
+            disabled={role !== 'Manager'}
+          >
+            {uploadButton}
+          </Upload>
         </Form.Item>
-      )}
-    </Form>
+        {role !== 'Manager' ? null : (
+          <Form.Item style={{ textAlign: 'right' }}>
+            <Button type="primary" htmlType="submit" disabled={buttonDisabled ? true : false}>
+              {t('submit')}
+            </Button>
+          </Form.Item>
+        )}
+      </Form>
+    )
   )
 }
