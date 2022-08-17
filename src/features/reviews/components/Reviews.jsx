@@ -1,5 +1,5 @@
 import { Card, Rate, Row, Col, Typography, Spin } from 'antd'
-import { LikeOutlined } from '@ant-design/icons'
+import { LikeOutlined, DislikeOutlined } from '@ant-design/icons'
 import { useTranslation } from 'react-i18next'
 import dayjs from 'dayjs'
 
@@ -9,7 +9,7 @@ import style from './Reviews.module.css'
 
 export const Reviews = () => {
   const { data, isLoading, isError, error } = useGetReviewsQuery()
-
+  console.log(data)
   const { t } = useTranslation('Reviews')
   const { Paragraph, Title } = Typography
 
@@ -43,9 +43,13 @@ export const Reviews = () => {
                   <div className={style.cardWrapper}>
                     <div className={style.name}>{reviewName}</div>
                     <div className={style.date}>{dayjs(createdDate).format('DD/MM/YYYY')}</div>
-                    {answer && (
+                    {answer === null ? null : (
                       <div className={style.formType}>
-                        <LikeOutlined style={{ fontSize: '24px', color: 'green' }} />
+                        {answer ? (
+                          <LikeOutlined style={{ fontSize: '24px', color: 'green' }} />
+                        ) : (
+                          <DislikeOutlined style={{ fontSize: '24px', color: 'red' }} />
+                        )}
                       </div>
                     )}
                     {rating && (
