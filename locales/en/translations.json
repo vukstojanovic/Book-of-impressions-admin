@@ -173,5 +173,12 @@
     "user_verified": "User verified",
     "bad_confirmation_token": "Bad confirmation token",
     "error": "There's been an error"
+  },
+  "Reports": {
+    "name": "Name",
+    "created_by": "Created by",
+    "url": "Url",
+    "created_at": "Created at",
+    "action": "Action"
   }
 }
