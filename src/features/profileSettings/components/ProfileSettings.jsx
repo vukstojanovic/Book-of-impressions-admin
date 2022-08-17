@@ -45,7 +45,6 @@ export function ProfileSettings() {
 
   const handleFinish = () => {
     const formData = new FormData()
-
     const changedFieldsKeys = Object.keys(changedFields)
     changedFieldsKeys.forEach((key) => formData.append(key, changedFields[key]))
 
