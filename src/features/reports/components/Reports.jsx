@@ -1,32 +1,35 @@
 import { Space, Table } from 'antd'
 import { EyeOutlined, DeleteOutlined } from '@ant-design/icons'
+import { useTranslation } from 'react-i18next'
 
 import { AddButton } from '@/components/buttons/AddButton'
 
 export const Reports = () => {
+  const { t } = useTranslation('Reports')
+
   const columns = [
     {
-      title: 'Name',
+      title: t('name'),
       dataIndex: 'name',
       key: 'name',
     },
     {
-      title: 'Created by',
+      title: t('created_by'),
       dataIndex: 'createdBy',
       key: 'createBy',
     },
     {
-      title: 'URL',
+      title: t('url'),
       dataIndex: 'url',
       key: 'url',
     },
     {
-      title: 'Created at',
+      title: t('created_at'),
       dataIndex: 'createdAt',
       key: 'cretedAt',
     },
     {
-      title: 'Action',
+      title: t('action'),
       key: 'action',
       render: () => (
         <Space size="small">
