@@ -1,17 +1,16 @@
-import { Card, Rate, Row, Col, Typography, Spin } from 'antd'
-import { LikeOutlined, DislikeOutlined } from '@ant-design/icons'
+import { Row, Typography, Spin } from 'antd'
 import { useTranslation } from 'react-i18next'
-import dayjs from 'dayjs'
 
 import { useGetReviewsQuery } from '../api/getReviews'
 
-import style from './Reviews.module.css'
+import { ReviewCard } from '@/components/reviewCard'
 
 export const Reviews = () => {
   const { data, isLoading, isError, error } = useGetReviewsQuery()
 
   const { t } = useTranslation('Reviews')
-  const { Paragraph, Title } = Typography
+  
+  const { Title } = Typography
 
   if (isLoading) {
     return (
@@ -31,56 +30,7 @@ export const Reviews = () => {
         <Title>{t('reviews')}</Title>
         <Row style={{ gap: 16 }}>
           {data[0]?.map((review) => {
-            const { answer, comment, createdDate, id, rating, ratings, reviewName } = review
-            return (
-              <Col key={id} xs={{ span: 24 }} lg={{ span: 20 }} xl={{ span: 17 }}>
-                <Card
-                  hoverable
-                  bordered
-                  type="inner"
-                  style={{ borderRadius: '8px', width: '100%' }}
-                >
-                  <div className={style.cardWrapper}>
-                    <div className={style.name}>{reviewName}</div>
-                    <div className={style.date}>{dayjs(createdDate).format('DD/MM/YYYY')}</div>
-                    {answer === null ? null : (
-                      <div className={style.formType}>
-                        {answer ? (
-                          <LikeOutlined style={{ fontSize: '24px', color: 'green' }} />
-                        ) : (
-                          <DislikeOutlined style={{ fontSize: '24px', color: 'red' }} />
-                        )}
-                      </div>
-                    )}
-                    {rating && (
-                      <div className={style.formType}>
-                        <Rate disabled allowHalf defaultValue={rating} />
-                      </div>
-                    )}
-                    {ratings && (
-                      <div className={style.formType}>
-                        {ratings.map((rating, i) => {
-                          return <Rate key={i} defaultValue={rating || 0} allowHalf disabled />
-                        })}
-                      </div>
-                    )}
-
-                    <div className={style.comment}>
-                      <Paragraph
-                        ellipsis={{
-                          expandable: true,
-                          rows: 3,
-                          symbol: t('readMore') + '...',
-                        }}
-                        title="review description"
-                      >
-                        {comment}
-                      </Paragraph>
-                    </div>
-                  </div>
-                </Card>
-              </Col>
-            )
+            return <ReviewCard key={review.id} review={review} />
           })}
         </Row>
       </>
