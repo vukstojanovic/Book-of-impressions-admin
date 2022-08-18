@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
-import { Typography, Row, Card, Progress, Skeleton, Empty } from 'antd'
+import { Typography, Row, Col, Card, Progress, Skeleton, Empty } from 'antd'
 import { QrcodeOutlined } from '@ant-design/icons'
 
 import { useForms } from '../api/getForms'
@@ -9,6 +9,8 @@ import { useForms } from '../api/getForms'
 import QRCodeFormModal from './QRCodeFormModal'
 
 import { AddButton } from '@/components/buttons/AddButton'
+import { FilterComponent } from '@/components/filterComponent'
+import { useFilterBySearchParams } from '@/utils/useFilterBySearchParams'
 
 const { Title, Paragraph, Text } = Typography
 
@@ -22,6 +24,7 @@ export const Forms = () => {
   const [modalVisible, setModalVisible] = useState(false)
   const [qrValue, setQrValue] = useState('asd')
   const divFlex = { display: 'flex', justifyContent: 'space-between', alignItems: 'center' }
+  const filteredData = useFilterBySearchParams(isLoading ? [] : data[0], 'title')
 
   const columnDivFlex = {
     textAlign: 'center',
@@ -48,7 +51,14 @@ export const Forms = () => {
 
   return (
     <>
-      <AddButton linkTo="/forms/create-new-form" />
+      <Row justify="space-between" align="middle">
+        <Col>
+          <FilterComponent />
+        </Col>
+        <Col>
+          <AddButton linkTo="/forms/create-new-form" />
+        </Col>
+      </Row>
 
       <QRCodeFormModal
         formTitle={formTitle}
@@ -60,7 +70,7 @@ export const Forms = () => {
 
       <Row align="middle" style={{ gap: 50 }}>
         {!isLoading ? (
-          data[0].map((form) => {
+          filteredData.map((form) => {
             const { id, name, title } = form
             return (
               <Card
