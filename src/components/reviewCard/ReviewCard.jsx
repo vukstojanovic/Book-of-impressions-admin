@@ -27,7 +27,7 @@ export const ReviewCard = ({
             <div>{reviewName ? reviewName : 'Anonimous'}</div>
             <div>{reviewEmail}</div>
           </div>
-          <div className={style.date}>{dayjs(createdDate).format('DD/MM/YYYY')}</div>
+          <div className={style.date}>{dayjs(createdDate).format('DD/MM/YYYY HH:mm')}</div>
           {answer === null ? null : (
             <div className={style.formType}>
               {answer ? (
