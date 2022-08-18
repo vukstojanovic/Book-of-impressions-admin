@@ -1,4 +1,4 @@
-import { Row, Col, Form, Input, Checkbox, Button, Typography, message } from 'antd'
+import { Row, Col, Form, Input, Button, Typography, message } from 'antd'
 import { useTranslation } from 'react-i18next'
 import { Link } from 'react-router-dom'
 
@@ -48,7 +48,7 @@ export const LoginForm = () => {
 
   return (
     <AdminLayout>
-      <Col style={{ width: '380px' }}>
+      <Col style={{ padding: '0px 20px', width: '380px' }}>
         <Title level={2}>{t('login_welcome')}</Title>
         <Paragraph>
           {t('welcome_create')} <Link to="/sign-up">{t('create_account')}</Link>
@@ -59,7 +59,6 @@ export const LoginForm = () => {
           name="normal_login"
           className="login-form"
           initialValues={{ remember: true }}
-          wrapperCol={{ span: 24 }}
           onFinish={onFinish}
         >
           <Form.Item
@@ -86,25 +85,13 @@ export const LoginForm = () => {
             <Input.Password type="password" placeholder={t('password')} size="large" />
           </Form.Item>
           <Form.Item>
-            <Row justify="space-between">
-              <Form.Item name="remember" valuePropName="checked" noStyle>
-                <Checkbox>{t('remember_me')}</Checkbox>
-              </Form.Item>
-
-              <a className="login-form-forgot" href="">
-                {t('forgot_password')}
-              </a>
+            <Row justify="end">
+              <Link to="">{t('forgot_password')}</Link>
             </Row>
           </Form.Item>
 
           <Form.Item>
-            <Button
-              type="primary"
-              htmlType="submit"
-              className="login-form-button"
-              block={true}
-              size="large"
-            >
+            <Button type="primary" htmlType="submit" block size="large">
               {t('log_in')}
             </Button>
           </Form.Item>

@@ -111,8 +111,8 @@ export function Settings() {
       form.setFieldsValue({
         'company-name': company.name,
         'company-email': company.email,
-        'en-desc': company.description.filter((lang) => lang.key === 'en')[0].text,
-        'sr-desc': company.description.filter((lang) => lang.key === 'sr')[0].text,
+        'en-desc': company.description.filter((lang) => lang.key === 'en')[0]?.text || '',
+        'sr-desc': company.description.filter((lang) => lang.key === 'sr')[0]?.text || '',
       })
     }
   }, [company])
@@ -196,7 +196,9 @@ export function Settings() {
               <Col lg={16} md={24} xs={24}>
                 <Form.Item
                   name="sr-desc"
-                  initialValue={company.description.filter((lang) => lang.key === 'sr')[0].text}
+                  initialValue={
+                    company.description?.filter((lang) => lang.key === 'sr')[0]?.text || ''
+                  }
                 >
                   <TextArea
                     placeholder={t('company_description')}
