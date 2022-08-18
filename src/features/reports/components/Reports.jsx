@@ -1,3 +1,4 @@
+import { useRef } from 'react'
 import { Space, Table, Modal, Button } from 'antd'
 import { EyeOutlined, DeleteOutlined } from '@ant-design/icons'
 import { useTranslation } from 'react-i18next'
@@ -6,6 +7,7 @@ import { useState } from 'react'
 import 'react-pdf/dist/esm/Page/AnnotationLayer.css'
 
 import { AddButton } from '@/components/buttons/AddButton'
+import { getColumnSearchProps } from '@/utils/columnSearchFilter'
 
 pdfjs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.js`
 
@@ -59,26 +61,32 @@ export const Reports = () => {
     if (pageNumber < numPages) setPageNumber((prevPageNumber) => prevPageNumber + 1)
   }
 
+  const searchInput = useRef(null)
+
   const columns = [
     {
       title: t('name'),
       dataIndex: 'name',
       key: 'name',
+      ...getColumnSearchProps('name', searchInput),
     },
     {
       title: t('created_by'),
       dataIndex: 'createdBy',
       key: 'createBy',
+      ...getColumnSearchProps('createdBy', searchInput),
     },
     {
       title: t('url'),
       dataIndex: 'url',
       key: 'url',
+      ...getColumnSearchProps('url', searchInput),
     },
     {
       title: t('created_at'),
       dataIndex: 'createdAt',
       key: 'cretedAt',
+      ...getColumnSearchProps('createdAt', searchInput),
     },
     {
       title: t('action'),

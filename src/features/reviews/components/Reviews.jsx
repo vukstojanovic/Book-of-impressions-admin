@@ -9,7 +9,7 @@ import style from './Reviews.module.css'
 
 export const Reviews = () => {
   const { data, isLoading, isError, error } = useGetReviewsQuery()
-  console.log(data)
+
   const { t } = useTranslation('Reviews')
   const { Paragraph, Title } = Typography
 
