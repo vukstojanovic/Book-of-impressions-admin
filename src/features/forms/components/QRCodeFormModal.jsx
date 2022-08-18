@@ -3,7 +3,7 @@ import { QRCodeCanvas } from 'qrcode.react'
 import { useTranslation } from 'react-i18next'
 import jsPDF from 'jspdf'
 
-const QRCodeFormModal = ({ formId, formTitle, setModalVisible, modalVisible, qrValue }) => {
+const QRCodeFormModal = ({ formId, formTitle, setModalVisible, modalVisible }) => {
   const { Text } = Typography
 
   const { t } = useTranslation('QRCode')
@@ -15,7 +15,7 @@ const QRCodeFormModal = ({ formId, formTitle, setModalVisible, modalVisible, qrV
     let downloadLink = document.createElement('a')
 
     downloadLink.href = pngUrl
-    downloadLink.download = `${qrValue}.png`
+    downloadLink.download = `${formTitle}.png`
     document.body.appendChild(downloadLink)
     downloadLink.click()
     document.body.removeChild(downloadLink)
@@ -31,7 +31,7 @@ const QRCodeFormModal = ({ formId, formTitle, setModalVisible, modalVisible, qrV
     })
     doc.html(document.querySelector('.ant-modal-body'), {
       callback: function (pdf) {
-        pdf.save('qr-code.pdf')
+        pdf.save(`${formTitle}.pdf`)
       },
     })
   }
@@ -73,7 +73,7 @@ const QRCodeFormModal = ({ formId, formTitle, setModalVisible, modalVisible, qrV
       >
         <QRCodeCanvas
           id="qr-gen"
-          value={formId}
+          value={`review/${formId}`}
           includeMargin
           size={256}
           level="H"
