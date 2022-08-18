@@ -183,6 +183,12 @@
     "created_by": "Created by",
     "url": "Url",
     "created_at": "Created at",
-    "action": "Action"
+    "action": "Action",
+    "download_pdf": "Download pdf",
+    "prev": "Previous",
+    "next": "Next",
+    "page": "Page",
+    "of": "of",
+    "loading": "Loading..."
   }
 }

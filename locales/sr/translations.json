@@ -183,6 +183,12 @@
     "created_by": "Kreirao",
     "url": "Url",
     "created_at": "Datum kreiranja",
-    "action": "Akcije"
+    "action": "Akcije",
+    "download_pdf": "Skini pdf",
+    "prev": "Prethodna",
+    "next": "Naredna",
+    "page": "Strana",
+    "of": "od",
+    "loading": "Učitavanje..."
   }
 }
