@@ -26,7 +26,7 @@ export const MenuForDropdown = ({ name, email, profilePhoto }) => {
           }}
           onClick={(e) => e.preventDefault()}
         >
-          <Col>
+          <Col style={{ marginRight: '1rem' }}>
             <Avatar
               style={{ color: '#f56a00', backgroundColor: '#fde3cf' }}
               src={profilePhoto}
@@ -35,7 +35,7 @@ export const MenuForDropdown = ({ name, email, profilePhoto }) => {
               {name.split(' ').length > 1 ? `${name[0]}${name.split(' ')[1][0]}` : `${name[0]}`}
             </Avatar>
           </Col>
-          <Col style={{ paddingLeft: '1rem' }}>
+          <Col>
             <Typography.Paragraph style={{ margin: 0, wordBreak: 'break-word' }}>
               <b>{name}</b>
             </Typography.Paragraph>

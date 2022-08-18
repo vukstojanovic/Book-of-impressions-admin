@@ -11,6 +11,7 @@ export const Reviews = () => {
   const { t } = useTranslation('Reviews')
 
   const { Title } = Typography
+
   if (isLoading) {
     return (
       <div style={{ marginTop: '20px' }}>
@@ -29,7 +30,7 @@ export const Reviews = () => {
         <Title>{t('reviews')}</Title>
         <Row style={{ gap: 16 }}>
           {data[0]?.map((review) => {
-            return <ReviewCard key={review.id} review={review} />
+            return <ReviewCard key={review.id} {...review} />
           })}
         </Row>
       </>

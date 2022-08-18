@@ -26,7 +26,8 @@
     "password_warning": "Please enter your password! Required minimum 8 characters.",
     "company_name_warning": "Please enter your company name!",
     "error": "Email is alredy in use",
-    "errorServer": "Something went wrong!"
+    "errorServer": "Something went wrong!",
+    "no_spaces_at_beggining_or_end": "No spaces at beggining or end"
   },
   "Login": {
     "login_welcome": "Welcome to Boi!",
