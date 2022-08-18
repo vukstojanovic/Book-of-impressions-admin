@@ -9,7 +9,7 @@ export const Reviews = () => {
   const { data, isLoading, isError, error } = useGetReviewsQuery()
 
   const { t } = useTranslation('Reviews')
-  
+
   const { Title } = Typography
 
   if (isLoading) {
