@@ -5,8 +5,16 @@ import { LikeOutlined, DislikeOutlined } from '@ant-design/icons'
 
 import style from './ReviewCard.module.css'
 
-export const ReviewCard = ({ review }) => {
-  const { answer, comment, createdDate, id, rating, ratings, reviewName } = review
+export const ReviewCard = ({
+  answer,
+  comment,
+  createdDate,
+  id,
+  rating,
+  ratings,
+  reviewName,
+  reviewEmail,
+}) => {
   const { Paragraph } = Typography
 
   const { t } = useTranslation('Reviews')
@@ -15,8 +23,11 @@ export const ReviewCard = ({ review }) => {
     <Col key={id} xs={{ span: 24 }}>
       <Card hoverable bordered type="inner" style={{ borderRadius: '8px', width: '100%' }}>
         <div className={style.cardWrapper}>
-          <div className={style.name}>{reviewName}</div>
-          <div className={style.date}>{dayjs(createdDate).format('DD/MM/YYYY')}</div>
+          <div>
+            <div>{reviewName ? reviewName : 'Anonimous'}</div>
+            <div>{reviewEmail}</div>
+          </div>
+          <div className={style.date}>{dayjs(createdDate).format('DD/MM/YYYY HH:mm')}</div>
           {answer === null ? null : (
             <div className={style.formType}>
               {answer ? (
