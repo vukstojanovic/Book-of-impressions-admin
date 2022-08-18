@@ -116,6 +116,12 @@ export const SignupForm = () => {
                 message: t('password_warning'),
                 min: 8,
               },
+              {
+                validator: (_, value) =>
+                  value.trim() === value
+                    ? Promise.resolve()
+                    : Promise.reject(new Error(t('no_spaces_at_beggining_or_end'))),
+              },
             ]}
           >
             <Input.Password size="large" />

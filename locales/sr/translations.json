@@ -26,7 +26,8 @@
     "password_warning": "Molimo unesite lozinku! Potrebno je minimum 8 karaktera.",
     "company_name_warning": "Molimo unesite ime vaše firme!",
     "error": "Email adresa već postoji",
-    "errorServer": "Nešto je krenulo naopako!"
+    "errorServer": "Nešto je krenulo naopako!",
+    "no_spaces_at_beggining_or_end": "Bez praznih mesta na početku i na kraju"
   },
   "Login": {
     "login_welcome": "Dobrodosli na Boi!",
