@@ -66,10 +66,13 @@
   },
   "Forms": {
     "forms": "Forms",
-    "no_forms": "There are no forms"
+    "no_forms": "There are no forms",
+    "questions": "Questions",
+    "reviews": "Reviews"
   },
   "CreateNewForm": {
     "main": "Create New Form",
+    "edit_main": "Edit Form",
     "formTitle": "Form Title",
     "formDescription": "Form Description",
     "formType": "Form Type",
@@ -105,7 +108,8 @@
     "create_new_form": "Create New Form",
     "settings": "Settings",
     "my_profile": "My Profile",
-    "invite_user": "Invite user"
+    "invite_user": "Invite user",
+    "edit": "Uredi"
   },
   "QRCode": {
     "requiredError": "Field can not be empty!",
