@@ -34,10 +34,10 @@ deploy:
 
   script:
     - ln -s .env.prod .env
-    - DEPLOYMENT_URL=$(VERCEL_ORG_ID=$VERCEL_ORG_ID VERCEL_PROJECT_ID=$VERCEL_PROJECT_ID vercel --confirm -t $VERCEL_TOKEN --scope $VERCEL_SCOPE)
+    - DEPLOYMENT_URL=$(VERCEL_ORG_ID=$VERCEL_ORG_ID VERCEL_PROJECT_ID=$VERCEL_PROJECT_ID vercel --prod --confirm -t $VERCEL_TOKEN --scope $VERCEL_SCOPE)
     - if [ ${CI_MERGE_REQUEST_IID} ]; then SLUG=${CI_MERGE_REQUEST_IID}; else SLUG=${CI_COMMIT_BRANCH}; fi;
     - PREVIEW_URL=${SLUG}-${CI_PROJECT_NAME}.${VERCEL_SCOPE}.vercel.app
-    - vercel alias set $DEPLOYMENT_URL $PREVIEW_URL -t $VERCEL_TOKEN --scope $VERCEL_SCOPE --prod
+    - vercel alias set $DEPLOYMENT_URL $PREVIEW_URL -t $VERCEL_TOKEN --scope $VERCEL_SCOPE
 
   environment:
     name: vercel/$CI_COMMIT_REF_NAME
