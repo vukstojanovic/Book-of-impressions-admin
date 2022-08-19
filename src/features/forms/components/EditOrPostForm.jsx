@@ -83,6 +83,7 @@ export const EditOrPostForm = ({ type }) => {
   const onTypeChange = (value) => {
     setShowInfoQuestion(true)
     const questionLength = form.getFieldsValue().questions?.length
+    console.log(questionLength)
     if (value === 'Rating' || value === 'Answer') {
       setSelectedFormType('oneQuestion')
       if (questionLength >= 1) {
@@ -110,7 +111,7 @@ export const EditOrPostForm = ({ type }) => {
     let enable = true
 
     questions?.map((question) => {
-      if (!question['question-sr'].trim() || !question['question-en'].trim()) {
+      if (!question['question-sr']?.trim() || !question['question-en']?.trim()) {
         enable = false
         return
       }
