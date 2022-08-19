@@ -53,7 +53,7 @@ export const Forms = () => {
     <>
       <Row justify="space-between" align="middle">
         <Col>
-          <FilterComponent />
+          <FilterComponent hasType />
         </Col>
         <Col>
           <AddButton linkTo="/forms/create-new-form" />

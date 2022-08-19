@@ -31,7 +31,7 @@ export const Reviews = () => {
     data && (
       <>
         {/* <Title>{t('reviews')}</Title> */}
-        <FilterComponent />
+        <FilterComponent hasEmail hasRating hasAnswer hasType hasDate />
         <Row style={{ gap: 16 }}>
           {filteredData?.map((review) => {
             return <ReviewCard key={review.id} {...review} />
