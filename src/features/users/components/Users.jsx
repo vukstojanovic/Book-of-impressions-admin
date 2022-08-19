@@ -16,7 +16,7 @@ import { useAuth } from '@/providers/authProvider'
 export const Users = () => {
   const { t } = useTranslation('Users')
 
-  const { Paragraph, Text } = Typography
+  const { Paragraph } = Typography
 
   const { data: users, refetch, isLoading } = useGetUsers()
   const { mutate: deleteUser } = useDeleteUser({ refetchUsers: refetch, closeDeleteModal })
@@ -68,28 +68,16 @@ export const Users = () => {
       title: t('name'),
       dataIndex: 'name',
       key: 'name',
-      render: (_, record) => {
-        const surname = record.name.split(' ')[0]
-        return <Text>{surname}</Text>
-      },
       ...getColumnSearchProps('name', searchInput),
-    },
-
-    {
-      title: t('surname'),
-      dataIndex: 'name',
-      key: 'id',
-      render: (_, record) => {
-        const surname = record.name.split(' ')[1]
-        return <Text>{surname}</Text>
-      },
-      ...getColumnSearchProps('surname', searchInput),
     },
     {
       title: t('email'),
       dataIndex: 'email',
       key: 'email',
       ...getColumnSearchProps('email', searchInput),
+      render: (email) => {
+        return <a href={`mailto:${email}`}>{email}</a>
+      },
     },
     {
       title: t('role'),

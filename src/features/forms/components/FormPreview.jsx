@@ -54,7 +54,7 @@ export const FormPreview = () => {
       <Col style={{ padding: '0 24px' }}>
         <Row style={{ gap: 16 }}>
           {formReviewData.map((review) => {
-            return <ReviewCard key={review.id} review={review} />
+            return <ReviewCard key={review.id} {...review} />
           })}
         </Row>
       </Col>
