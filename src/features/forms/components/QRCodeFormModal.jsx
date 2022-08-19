@@ -1,9 +1,11 @@
-import { Button, Modal, Row, Typography } from 'antd'
+import { Button, Modal, Row, Typography, Col } from 'antd'
 import { QRCodeCanvas } from 'qrcode.react'
 import { useTranslation } from 'react-i18next'
 import jsPDF from 'jspdf'
 
 const QRCodeFormModal = ({ formId, formTitle, setModalVisible, modalVisible }) => {
+  const SITE_URL = import.meta.env.VITE_APP_SITE_URL
+
   const { Text } = Typography
 
   const { t } = useTranslation('QRCode')
@@ -45,22 +47,28 @@ const QRCodeFormModal = ({ formId, formTitle, setModalVisible, modalVisible }) =
       onCancel={() => setModalVisible(false)}
       bodyStyle={{ padding: '24px 0', display: 'grid', justifyItems: 'center' }}
       footer={[
-        <div style={{ display: 'grid' }} key="back">
-          <Button style={{ marginLeft: '0' }} key="pdf-submit" onClick={handlePDFOk}>
-            {t('downloadQRCode')} PDF
-          </Button>
-          <Button style={{ marginLeft: '0' }} key="submit" type="primary" onClick={handleOk}>
-            {t('downloadQRCode')}
-          </Button>
-          <Button
-            style={{ marginLeft: '0' }}
-            onClick={() => {
-              setModalVisible(false)
-            }}
-          >
-            {t('done')}
-          </Button>
-        </div>,
+        <Row key="back" gutter={[8, 8]}>
+          <Col span={24}>
+            <Button block key="pdf-submit" onClick={handlePDFOk}>
+              {t('downloadQRCode')} PDF
+            </Button>
+          </Col>
+          <Col span={24}>
+            <Button block key="submit" type="primary" onClick={handleOk}>
+              {t('downloadQRCode')}
+            </Button>
+          </Col>
+          <Col span={24}>
+            <Button
+              block
+              onClick={() => {
+                setModalVisible(false)
+              }}
+            >
+              {t('done')}
+            </Button>
+          </Col>
+        </Row>,
       ]}
     >
       <Row
@@ -73,7 +81,7 @@ const QRCodeFormModal = ({ formId, formTitle, setModalVisible, modalVisible }) =
       >
         <QRCodeCanvas
           id="qr-gen"
-          value={`review/${formId}`}
+          value={`${SITE_URL}/review/${formId}`}
           includeMargin
           size={256}
           level="H"

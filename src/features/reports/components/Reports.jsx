@@ -166,6 +166,7 @@ export const Reports = () => {
       <AddButton linkTo={'/reports/download-report'} />
       <Table columns={columns} dataSource={data} />
       <Modal
+        centered
         title={modalTitle}
         visible={isViewModalOpen}
         okText="Download pdf"
