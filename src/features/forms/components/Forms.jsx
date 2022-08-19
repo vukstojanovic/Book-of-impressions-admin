@@ -22,7 +22,6 @@ export const Forms = () => {
   const [formTitle, setFormTitle] = useState('')
   const [formId, setFormId] = useState('')
   const [modalVisible, setModalVisible] = useState(false)
-  const [qrValue, setQrValue] = useState('asd')
   const divFlex = { display: 'flex', justifyContent: 'space-between', alignItems: 'center' }
   const filteredData = useFilterBySearchParams(isLoading ? [] : data[0], 'title')
 
@@ -63,7 +62,6 @@ export const Forms = () => {
       <QRCodeFormModal
         formTitle={formTitle}
         formId={formId}
-        qrValue={qrValue}
         setModalVisible={setModalVisible}
         modalVisible={modalVisible}
       />
@@ -87,7 +85,6 @@ export const Forms = () => {
                     onClick={(e) => {
                       setFormId(id)
                       setFormTitle(title)
-                      setQrValue(id)
                       setModalVisible(true)
                       e.stopPropagation()
                     }}

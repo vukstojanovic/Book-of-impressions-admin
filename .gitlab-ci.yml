@@ -12,17 +12,20 @@ stages:
     - merge_requests
 
 build:
-  <<: *base_rules
+  only:
+    - dev
   stage: build
   script:
     - npm install
+    - ln -s .env.prod .env
     - npm run build
   artifacts:
     paths:
       - dist/
 
 deploy:
-  <<: *base_rules
+  only:
+    - dev
   stage: deploy
 
   variables:
@@ -30,7 +33,8 @@ deploy:
     VERCEL_PROJECT_ID: $VERCEL_PROJECT_ID
 
   script:
-    - DEPLOYMENT_URL=$(VERCEL_ORG_ID=$VERCEL_ORG_ID VERCEL_PROJECT_ID=$VERCEL_PROJECT_ID vercel --confirm -t $VERCEL_TOKEN --scope $VERCEL_SCOPE)
+    - ln -s .env.prod .env
+    - DEPLOYMENT_URL=$(VERCEL_ORG_ID=$VERCEL_ORG_ID VERCEL_PROJECT_ID=$VERCEL_PROJECT_ID vercel --prod --confirm -t $VERCEL_TOKEN --scope $VERCEL_SCOPE)
     - if [ ${CI_MERGE_REQUEST_IID} ]; then SLUG=${CI_MERGE_REQUEST_IID}; else SLUG=${CI_COMMIT_BRANCH}; fi;
     - PREVIEW_URL=${SLUG}-${CI_PROJECT_NAME}.${VERCEL_SCOPE}.vercel.app
     - vercel alias set $DEPLOYMENT_URL $PREVIEW_URL -t $VERCEL_TOKEN --scope $VERCEL_SCOPE
