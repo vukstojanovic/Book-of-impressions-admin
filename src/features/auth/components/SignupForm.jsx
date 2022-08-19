@@ -1,27 +1,30 @@
-import { Button, Form, Input, Typography, Row, Col, Checkbox, message } from 'antd'
+import { useState } from 'react'
+import { Button, Form, Input, Typography, Row, Col, message, Modal } from 'antd'
 import { Link, useNavigate } from 'react-router-dom'
 import 'antd/dist/antd.css'
 import { useTranslation } from 'react-i18next'
 
+import style from './SignupForm.module.css'
+
 import { registerUser } from '@/features/auth/api/register'
 import { AdminLayout } from '@/components/layout/AdminLayout'
 
-const { Title, Paragraph } = Typography
+const { Title, Paragraph, Text } = Typography
 
 export const SignupForm = () => {
   const [form] = Form.useForm()
   const navigate = useNavigate()
-  const inputStyle = { padding: '10px 8px' }
+  const [isModalOpened, setModalOpened] = useState(false)
 
   const { t } = useTranslation('Signup')
 
-  const handleSubmit = async ({ firstName, lastName, email, password }) => {
+  const handleSubmit = async ({ firstName, lastName, email, password, companyName }) => {
     try {
       const userData = {
         name: `${firstName.trim()} ${lastName.trim()}`,
         email,
         password,
-        role: ['SuperUser'],
+        companyName,
       }
       const { response } = await registerUser(userData)
 
@@ -41,8 +44,8 @@ export const SignupForm = () => {
 
   return (
     <AdminLayout>
-      <Col span={24} style={{ padding: '0px 20px' }}>
-        <Title level={3}>{t('welcome')}</Title>
+      <Col style={{ padding: '0px 20px', width: '380px' }}>
+        <Title level={2}>{t('welcome')}</Title>
         <Paragraph>
           {t('question')} <Link to="/sign-in">{t('sign_in')}</Link>
         </Paragraph>
@@ -68,7 +71,7 @@ export const SignupForm = () => {
                   },
                 ]}
               >
-                <Input size="large" style={inputStyle} />
+                <Input size="large" />
               </Form.Item>
             </Col>
             <Col xs={{ span: 24 }} sm={{ span: 24 }} md={{ span: 12 }}>
@@ -82,7 +85,7 @@ export const SignupForm = () => {
                   },
                 ]}
               >
-                <Input size="large" style={inputStyle} />
+                <Input size="large" />
               </Form.Item>
             </Col>
           </Row>
@@ -101,7 +104,7 @@ export const SignupForm = () => {
               },
             ]}
           >
-            <Input size="large" style={inputStyle} />
+            <Input size="large" />
           </Form.Item>
 
           <Form.Item
@@ -113,13 +116,28 @@ export const SignupForm = () => {
                 message: t('password_warning'),
                 min: 8,
               },
+              {
+                validator: (_, value) =>
+                  value.trim() === value
+                    ? Promise.resolve()
+                    : Promise.reject(new Error(t('no_spaces_at_beggining_or_end'))),
+              },
             ]}
           >
-            <Input.Password size="large" style={inputStyle} />
+            <Input.Password size="large" />
           </Form.Item>
 
-          <Form.Item name="agree" valuePropName="checked" noStyle>
-            <Checkbox style={{ marginBottom: '20px' }}>{t('agree')}</Checkbox>
+          <Form.Item
+            label={t('company_name')}
+            name="companyName"
+            rules={[
+              {
+                required: true,
+                message: t('company_name_warning'),
+              },
+            ]}
+          >
+            <Input size="large" />
           </Form.Item>
 
           <Form.Item>
@@ -127,7 +145,37 @@ export const SignupForm = () => {
               {t('sign_up')}
             </Button>
           </Form.Item>
+          <Paragraph>
+            {t('agree')}{' '}
+            <Text
+              type="danger"
+              underline
+              className={style.termsLink}
+              onClick={() => {
+                setModalOpened(true)
+              }}
+            >
+              {t('agree_link')}
+            </Text>
+          </Paragraph>
         </Form>
+        <Modal
+          title={t('terms_modal_title')}
+          visible={isModalOpened}
+          onOk={() => {
+            setModalOpened(false)
+          }}
+          onCancel={() => {
+            setModalOpened(false)
+          }}
+          cancelButtonProps={{
+            style: {
+              display: 'none',
+            },
+          }}
+        >
+          <p>{t('terms_content')}</p>
+        </Modal>
       </Col>
     </AdminLayout>
   )

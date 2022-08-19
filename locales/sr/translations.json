@@ -6,7 +6,7 @@
     "homepage_title": "abc123"
   },
   "Signup": {
-    "welcome": "Dobrodošli u Boi",
+    "welcome": "Dobrodošli u Boi!",
     "question": "Već imate nalog?",
     "sign_in": "Ulogujte se",
     "sign_up": "Registrujte se",
@@ -14,20 +14,25 @@
     "last_name": "Prezime",
     "email": "Email",
     "password": "Lozinka",
-    "agree": "Slažem se",
+    "company_name": "Ime firme",
+    "agree": "Klikom na dugme 'Registrujte se' potvđujete naše",
+    "agree_link": "uslove korišćenja",
+    "terms_modal_title": "Uslovi korišćenja",
+    "terms_content": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
     "first_name_warning": "Molimo unesite vaše ime!",
     "last_name_warning": "Molimo unesite vaše prezime!",
     "email_warning": "Molimo unesite vaš email!",
     "valid_email_warning": "Niste uneli validan email",
     "password_warning": "Molimo unesite lozinku! Potrebno je minimum 8 karaktera.",
+    "company_name_warning": "Molimo unesite ime vaše firme!",
     "error": "Email adresa već postoji",
-    "errorServer": "Nešto je krenulo naopako!"
+    "errorServer": "Nešto je krenulo naopako!",
+    "no_spaces_at_beggining_or_end": "Bez praznih mesta na početku i na kraju"
   },
   "Login": {
     "login_welcome": "Dobrodosli na Boi!",
-    "welcome_create": "Nemate BOI nalog? ",
+    "welcome_create": "Nemate Boi nalog? ",
     "create_account": "Registrujte se",
-    "remember_me": "Zapamti me",
     "forgot_password": "Zaboravili ste lozinku",
     "log_in": "Prijavite se",
     "email_warning": "Molimo unesite vaš email!",
@@ -135,7 +140,6 @@
     "log_out": "Odjavi se"
   },
   "ProfileSettings": {
-    "my_profile": "Moj Nalog",
     "name": "Ime",
     "profilePhoto": "Profilna Slika",
     "password": "Lozinka",
@@ -179,6 +183,12 @@
     "created_by": "Kreirao",
     "url": "Url",
     "created_at": "Datum kreiranja",
-    "action": "Akcije"
+    "action": "Akcije",
+    "download_pdf": "Skini pdf",
+    "prev": "Prethodna",
+    "next": "Naredna",
+    "page": "Strana",
+    "of": "od",
+    "loading": "Učitavanje..."
   }
 }

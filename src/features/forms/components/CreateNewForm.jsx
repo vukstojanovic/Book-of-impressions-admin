@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { Row, Col, Form, Typography, Input, Button, Select, Space, Tabs, Card } from 'antd'
+import { Row, Col, Form, Input, Button, Select, Space, Tabs, Card } from 'antd'
 import { MinusCircleOutlined, PlusOutlined } from '@ant-design/icons'
 
 import { usePostFormQuery } from '../api/postForm'
@@ -9,7 +9,6 @@ import style from './CreateNewForm.module.css'
 
 import { useAuth } from '@/providers/authProvider'
 
-const { Title } = Typography
 const { TextArea } = Input
 const { Option } = Select
 const { TabPane } = Tabs
@@ -101,7 +100,6 @@ export const CreateNewForm = () => {
 
   return (
     <>
-      <Title level={2}>{t('main')}</Title>
       <Card>
         <Form
           form={form}
