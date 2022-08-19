@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
-import { Typography, Row, Card, Progress, Skeleton, Empty } from 'antd'
+import { Typography, Row, Card, Progress, Skeleton, Empty, Button } from 'antd'
 import { QrcodeOutlined } from '@ant-design/icons'
 
 import { useForms } from '../api/getForms'
@@ -71,7 +71,9 @@ export const Forms = () => {
               >
                 <div style={divFlex}>
                   <Title level={5}>{title}</Title>
-                  <QrcodeOutlined
+                  <Button
+                    type="text"
+                    size="large"
                     onClick={(e) => {
                       setFormId(id)
                       setFormTitle(title)
@@ -79,7 +81,9 @@ export const Forms = () => {
                       setModalVisible(true)
                       e.stopPropagation()
                     }}
-                  />
+                  >
+                    <QrcodeOutlined style={{ fontSize: '18px' }} />
+                  </Button>
                 </div>
                 {/* Form Description */}
                 <Paragraph>{name}</Paragraph>

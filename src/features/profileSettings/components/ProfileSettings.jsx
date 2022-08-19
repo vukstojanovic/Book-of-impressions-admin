@@ -1,5 +1,5 @@
 import { LoadingOutlined, PlusOutlined } from '@ant-design/icons'
-import { Typography, Row, Col, Button, Form, Input, Upload, message, Spin } from 'antd'
+import { Row, Col, Button, Form, Input, Upload, message, Spin } from 'antd'
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 
@@ -18,7 +18,6 @@ export function ProfileSettings() {
 
   const { t } = useTranslation('ProfileSettings')
 
-  const { Title } = Typography
   const [form] = Form.useForm()
 
   const patchUserData = usePatchUserDataMutation()
@@ -87,7 +86,6 @@ export function ProfileSettings() {
 
   return (
     <>
-      <Title>{t('my_profile')}</Title>
       {isError && <div style={{ marginTop: '15px' }}>{error.message}</div>}
       {isLoading ? (
         <Spin size="large" />

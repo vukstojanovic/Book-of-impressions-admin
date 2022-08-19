@@ -15,7 +15,7 @@ export const ReviewCard = ({
   reviewName,
   reviewEmail,
 }) => {
-  const { Paragraph } = Typography
+  const { Paragraph, Text } = Typography
 
   const { t } = useTranslation('Reviews')
 
@@ -24,10 +24,12 @@ export const ReviewCard = ({
       <Card hoverable bordered type="inner" style={{ borderRadius: '8px', width: '100%' }}>
         <div className={style.cardWrapper}>
           <div>
-            <div>{reviewName ? reviewName : 'Anonimous'}</div>
-            <div>{reviewEmail}</div>
+            <Text strong style={{ display: 'block' }}>
+              {reviewName ? reviewName : 'Anonimous'}
+            </Text>
+            <Text italic>{reviewEmail}</Text>
           </div>
-          <div className={style.date}>{dayjs(createdDate).format('DD/MM/YYYY HH:mm')}</div>
+          <div className={style.date}>{dayjs(createdDate).format('DD.MM.YYYY HH:mm')}</div>
           {answer === null ? null : (
             <div className={style.formType}>
               {answer ? (
