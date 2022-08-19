@@ -3,9 +3,9 @@ import { QRCodeCanvas } from 'qrcode.react'
 import { useTranslation } from 'react-i18next'
 import jsPDF from 'jspdf'
 
-const QRCodeFormModal = ({ formId, formTitle, setModalVisible, modalVisible }) => {
-  const SITE_URL = import.meta.env.VITE_APP_SITE_URL
+import { appConfig } from '@/config/'
 
+const QRCodeFormModal = ({ formId, formTitle, setModalVisible, modalVisible }) => {
   const { Text } = Typography
 
   const { t } = useTranslation('QRCode')
@@ -81,7 +81,7 @@ const QRCodeFormModal = ({ formId, formTitle, setModalVisible, modalVisible }) =
       >
         <QRCodeCanvas
           id="qr-gen"
-          value={`${SITE_URL}/review/${formId}`}
+          value={`${appConfig.siteUrl}/review/${formId}`}
           includeMargin
           size={256}
           level="H"
