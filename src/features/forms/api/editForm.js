@@ -7,7 +7,7 @@ export const editForm = ({ data, id }) => {
   return axios({ method: 'patch', url: `/api/wapp/form/${id}`, data })
 }
 
-export const useEditFormQuery = ({ form, t, setShowInfoQuestion }) => {
+export const useEditFormQuery = ({ t, setShowInfoQuestion }) => {
   return useMutation({
     onError: () => {
       message.error(t('submitError'))
@@ -15,7 +15,6 @@ export const useEditFormQuery = ({ form, t, setShowInfoQuestion }) => {
     onSuccess: () => {
       message.success(t('submitSuccess'))
       setShowInfoQuestion(false)
-      form.resetFields()
     },
     mutationFn: editForm,
   })

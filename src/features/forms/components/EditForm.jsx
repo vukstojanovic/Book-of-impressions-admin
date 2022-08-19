@@ -59,7 +59,6 @@ export const EditForm = () => {
 
     const formData = {
       title,
-      name: title,
       type: formType,
       description: [
         {
@@ -78,24 +77,50 @@ export const EditForm = () => {
 
   const onTypeChange = (value) => {
     setShowInfoQuestion(true)
+    const questionLength = form.getFieldsValue().questions.length
     if (value === 'Rating' || value === 'Answer') {
       setSelectedFormType('oneQuestion')
+      if (questionLength >= 1) {
+        setDisabledButton(true)
+      } else {
+        setDisabledButton(false)
+      }
       return
     }
     if (value === 'Ratings') {
       setSelectedFormType('threeQuestions')
+      if (questionLength >= 3) {
+        setDisabledButton(true)
+      } else {
+        setDisabledButton(false)
+      }
       return
     }
   }
 
   const onValuesChange = (
     _,
-    { ['en-desc']: enDesc, ['sr-desc']: srDesc, ['form-type']: formType, title }
+    { ['en-desc']: enDesc, ['sr-desc']: srDesc, ['form-type']: formType, title, questions }
   ) => {
-    if (enDesc && srDesc && formType && title) {
-      setSubmitButton(false)
-    } else {
+    let disable
+    questions.map((question) => {
+      if (!question['question-sr'] || !question['question-en']) {
+        disable = false
+        return
+      }
+      if (question['question-en'] !== '' || question['question-sr'] !== '') {
+        disable = true
+      }
+    })
+    if (questions.length === 0) {
+      return setSubmitButton(true)
+    }
+    if (!enDesc || !srDesc || !formType || !title || !disable) {
       setSubmitButton(true)
+      return
+    }
+    if (form.isFieldsTouched()) {
+      setSubmitButton(false)
     }
   }
 
@@ -104,26 +129,42 @@ export const EditForm = () => {
     form.resetFields()
   }
 
+  const handleDisabledButton = ({ formType, formLength }) => {
+    if (formLength === 0) {
+      return setSubmitButton(true)
+    }
+    if (formType === 'oneQuestion' && formLength >= 1) {
+      return setDisabledButton(true)
+    }
+    if (formType === 'threeQuestions' && formLength >= 3) {
+      return setDisabledButton(true)
+    }
+  }
+
   useEffect(() => {
     if (data) {
-      setSelectedFormType(data.type)
+      setSelectedFormType(`${data.type === 'Ratings' ? 'threeQuestions' : 'oneQuestion'}`)
 
       const initialQuestions = data.questions.map(({ texts }) => ({
-        'question-sr': texts.filter((lang) => lang.key === 'sr')[0].text,
-        'question-en': texts.filter((lang) => lang.key === 'en')[0].text,
+        'question-sr': texts.filter((lang) => lang.key === 'sr')[0]?.text,
+        'question-en': texts.filter((lang) => lang.key === 'en')[0]?.text,
       }))
 
       form.setFieldsValue({
         title: data.title,
-        'form-type': 'Ratings',
+        'form-type': data.type,
         'en-desc': data.description.filter((lang) => lang.key === 'en')[0]?.text,
         'sr-desc': data.description.filter((lang) => lang.key === 'sr')[0]?.text,
         questions: initialQuestions,
       })
+      handleDisabledButton({
+        formType: `${data.type === 'Ratings' ? 'threeQuestions' : 'oneQuestion'}`,
+        formLength: data.questions.length,
+      })
     }
   }, [data])
 
-  if (isLoading)
+  if (isLoading || selectedFormType === null)
     return (
       <Row align="middle" justify="center" style={{ minHeight: '30vh' }}>
         <Spin size="large" />
@@ -166,7 +207,7 @@ export const EditForm = () => {
                 tabBarGutter={40}
                 tabBarStyle={{ margin: '0 0 10px 30px', width: 85 }}
               >
-                <TabPane tab="EN" key="en">
+                <TabPane tab="EN" key="en" forceRender>
                   <Form.Item
                     name="en-desc"
                     rules={[
@@ -184,7 +225,7 @@ export const EditForm = () => {
                     />
                   </Form.Item>
                 </TabPane>
-                <TabPane tab="SR" key="sr">
+                <TabPane tab="SR" key="sr" forceRender>
                   <Form.Item
                     name="sr-desc"
                     rules={[
@@ -230,12 +271,11 @@ export const EditForm = () => {
                 rules={[
                   {
                     validator: async (_, fields) => {
-                      if (selectedFormType === 'oneQuestion' && fields.length >= 1) {
-                        setDisabledButton(true)
-                      }
-                      if (selectedFormType === 'threeQuestions' && fields.length >= 3) {
-                        setDisabledButton(true)
-                      }
+                      console.log(fields.length)
+                      handleDisabledButton({
+                        formType: selectedFormType,
+                        formLength: fields.length,
+                      })
                     },
                   },
                 ]}
@@ -294,6 +334,7 @@ export const EditForm = () => {
                           <p
                             onClick={() => {
                               remove(name)
+                              console.log('Name:', name, 'FIELDS:', fields)
                               setDisabledButton(false)
                             }}
                           >
@@ -306,7 +347,10 @@ export const EditForm = () => {
                     <Form.Item>
                       <Button
                         size="middle"
-                        onClick={() => add()}
+                        onClick={() => {
+                          setSubmitButton(true)
+                          add({ 'question-en': '', 'question-sr': '' })
+                        }}
                         block
                         icon={<PlusOutlined />}
                         disabled={role !== 'Manager' || disabledButton || !selectedFormType}
