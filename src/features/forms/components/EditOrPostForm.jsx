@@ -82,6 +82,7 @@ export const EditOrPostForm = ({ type }) => {
   const onTypeChange = (value) => {
     setShowInfoQuestion(true)
     const questionLength = form.getFieldsValue().questions?.length
+    const questions = form.getFieldsValue().questions
     if (value === 'Rating' || value === 'Answer') {
       setSelectedFormType('oneQuestion')
 
@@ -104,6 +105,8 @@ export const EditOrPostForm = ({ type }) => {
         return
       }
 
+      checkQuestions(questions)
+
       if (questionLength >= 3) {
         setDisabledButton(true)
       } else {
@@ -113,8 +116,24 @@ export const EditOrPostForm = ({ type }) => {
       return
     }
   }
+  const checkQuestions = (questions) => {
+    let enable = true
+    questions?.map((question) => {
+      if (!question['question-sr']?.trim() || !question['question-en']?.trim()) {
+        enable = false
+        return
+      }
+
+      if (!enable) return
+
+      if (question['question-en'] !== '' || question['question-sr'] !== '') {
+        enable = true
+      }
+    })
+    return enable
+  }
   // Check all question fields when field is removed or added
-  const onFieldsChange = (changedFields) => {
+  const onFieldsChange = (changedFields, allFields) => {
     if (changedFields[0].name.length === 1 && changedFields[0].name[0] === 'questions') {
       const questions = changedFields[0].value
 
@@ -127,23 +146,18 @@ export const EditOrPostForm = ({ type }) => {
         setSubmitButton(true)
         return
       }
+      const checkedQuestionsOnFieldChange = checkQuestions(questions)
 
-      let enable = true
-
-      questions?.map((question) => {
-        if (!question['question-sr']?.trim() || !question['question-en']?.trim()) {
-          enable = false
-          return
+      let missingValue = false
+      allFields.forEach((field) => {
+        if (!field.value) {
+          setSubmitButton(true)
+          missingValue = true
         }
-
-        if (!enable) return
-
-        if (question['question-en'] !== '' || question['question-sr'] !== '') {
-          enable = true
+        if (!missingValue && checkedQuestionsOnFieldChange) {
+          setSubmitButton(false)
         }
       })
-
-      setSubmitButton(!enable)
     }
   }
 
@@ -179,6 +193,12 @@ export const EditOrPostForm = ({ type }) => {
       return setSubmitButton(true)
     }
 
+    const checkedQuestions = checkQuestions(questions)
+
+    if (!enDesc || !srDesc || !formType || !title || !checkedQuestions) {
+      setSubmitButton(true)
+      return
+    }
     if (!enDesc || !srDesc || !formType || !title || !enable) {
       setSubmitButton(true)
       return
