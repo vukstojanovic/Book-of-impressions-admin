@@ -36,7 +36,6 @@ export const EditOrPostForm = ({ type }) => {
 
   const editFormData = useEditFormQuery({ form, setShowInfoQuestion, t })
   const postFormData = usePostFormQuery({ form, setShowInfoQuestion, t })
-
   const handleSubmit = ({
     title,
     ['en-desc']: enDescription,
@@ -83,19 +82,26 @@ export const EditOrPostForm = ({ type }) => {
   const onTypeChange = (value) => {
     setShowInfoQuestion(true)
     const questionLength = form.getFieldsValue().questions?.length
-    console.log(questionLength)
     if (value === 'Rating' || value === 'Answer') {
       setSelectedFormType('oneQuestion')
+
+      if (!questionLength) {
+        setSubmitButton(true)
+        return
+      }
+
       if (questionLength === 1) {
         setDisabledButton(true)
         setSubmitButton(true)
         return
       }
+
       if (questionLength > 1) {
         setDisabledButton(true)
         setSubmitButton(true)
         return
       }
+
       if (questionLength >= 1) {
         setDisabledButton(true)
       } else {
@@ -103,18 +109,22 @@ export const EditOrPostForm = ({ type }) => {
       }
       return
     }
+
     if (value === 'Ratings') {
       setSelectedFormType('threeQuestions')
+
       if (questionLength <= 3 || questionLength >= 1) {
         setSubmitButton(false)
       } else {
         setSubmitButton(true)
       }
+
       if (questionLength >= 3) {
         setDisabledButton(true)
       } else {
         setDisabledButton(false)
       }
+
       return
     }
   }
@@ -125,16 +135,13 @@ export const EditOrPostForm = ({ type }) => {
 
       if (questions.length === 0) {
         setDisabledButton(false)
+        return
       }
-
-      let moreThanOneQuestion = false
 
       if (selectedFormType === 'oneQuestion' && questions.length !== 1) {
-        moreThanOneQuestion = true
         setSubmitButton(true)
+        return
       }
-
-      if (moreThanOneQuestion === true) return
 
       let enable = true
 
@@ -150,6 +157,7 @@ export const EditOrPostForm = ({ type }) => {
           enable = true
         }
       })
+
       setSubmitButton(!enable)
     }
   }
@@ -159,6 +167,7 @@ export const EditOrPostForm = ({ type }) => {
     { ['en-desc']: enDesc, ['sr-desc']: srDesc, ['form-type']: formType, title, questions }
   ) => {
     let moreThanOneQuestion = false
+
     if (questions && selectedFormType === 'oneQuestion' && questions.length !== 1) {
       moreThanOneQuestion = true
       setSubmitButton(true)
@@ -201,21 +210,13 @@ export const EditOrPostForm = ({ type }) => {
   }
 
   const handleDisabledButton = ({ formType, formLength }) => {
-    if (formLength !== 1 && formType === 'oneQuestion') {
-      setDisabledButton(true)
-      setSubmitButton(false)
-      return
-    }
-
     if (formType === 'oneQuestion' && formLength >= 1) {
       setDisabledButton(true)
-      setSubmitButton(false)
       return
     }
 
     if (formType === 'threeQuestions' && formLength >= 3) {
       setDisabledButton(true)
-      setSubmitButton(false)
       return
     }
   }
