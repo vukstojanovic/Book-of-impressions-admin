@@ -84,7 +84,6 @@ export const EditOrPostForm = ({ type }) => {
     const questionLength = form.getFieldsValue().questions?.length
     if (value === 'Rating' || value === 'Answer') {
       setSelectedFormType('oneQuestion')
-
       if (!questionLength) {
         setSubmitButton(true)
         return
@@ -112,7 +111,10 @@ export const EditOrPostForm = ({ type }) => {
 
     if (value === 'Ratings') {
       setSelectedFormType('threeQuestions')
-
+      if (!questionLength) {
+        setSubmitButton(true)
+        return
+      }
       if (questionLength <= 3 || questionLength >= 1) {
         setSubmitButton(false)
       } else {
