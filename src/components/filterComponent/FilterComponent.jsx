@@ -1,5 +1,5 @@
 import { Form, Row, Col, Input, Radio, Select, Collapse, Button, DatePicker, Slider } from 'antd'
-import { useSearchParams } from 'react-router-dom'
+import { useLocation, useSearchParams } from 'react-router-dom'
 import dayjs from 'dayjs'
 import moment from 'moment'
 
@@ -14,6 +14,9 @@ export const FilterComponent = ({
   const [searchParams, setSearchParams] = useSearchParams()
   const [form] = Form.useForm()
   const dateFormat = 'YYYY-MM-DD'
+  const location = useLocation()
+
+  console.log(decodeURIComponent(location.search))
 
   function handleFinish({
     name: reviewName,
@@ -23,10 +26,9 @@ export const FilterComponent = ({
     type,
     createdDate,
   }) {
-    console.log(reviewName, reviewEmail, rating, answer, type, createdDate)
     const [fromRating, toRating] = rating
     const [fromCreatedDate, toCreatedDate] = createdDate
-    // dayjs(fromCreatedDate._d).format(dateFormat)
+
     const modifiedObject = {
       reviewName,
       reviewEmail,
@@ -34,13 +36,18 @@ export const FilterComponent = ({
       toRating,
       answer,
       type,
-      fromCreatedDate: dayjs(fromCreatedDate._d).format(dateFormat),
-      toCreatedDate: dayjs(toCreatedDate._d).format(dateFormat),
+      fromCreatedDate: fromCreatedDate && dayjs(fromCreatedDate?._d).format(dateFormat),
+      toCreatedDate: toCreatedDate && dayjs(toCreatedDate?._d).format(dateFormat),
     }
     const modifiedObjectKeys = Object.keys(modifiedObject)
 
     modifiedObjectKeys.forEach((key) => {
-      if (modifiedObject[key]) {
+      if (key === 'type') {
+        modifiedObject[key].forEach((type) => {
+          searchParams.append('formType[]', type)
+        })
+        setSearchParams(searchParams)
+      } else if (modifiedObject[key]) {
         searchParams.set(key, modifiedObject[key])
         setSearchParams(searchParams)
       } else {
@@ -59,7 +66,7 @@ export const FilterComponent = ({
     form.setFieldsValue({
       name: '',
       email: '',
-      rating: [0, 5],
+      rating: [],
       answer: null,
       type: [],
       createdDate: [],
