@@ -83,9 +83,13 @@ export const EditOrPostForm = ({ type }) => {
   const onTypeChange = (value) => {
     setShowInfoQuestion(true)
     const questionLength = form.getFieldsValue().questions?.length
-    console.log(questionLength)
     if (value === 'Rating' || value === 'Answer') {
       setSelectedFormType('oneQuestion')
+      if (questionLength === 1) {
+        setSubmitButton(false)
+      } else {
+        setSubmitButton(true)
+      }
       if (questionLength >= 1) {
         setDisabledButton(true)
       } else {
@@ -95,6 +99,11 @@ export const EditOrPostForm = ({ type }) => {
     }
     if (value === 'Ratings') {
       setSelectedFormType('threeQuestions')
+      if (questionLength <= 3 || questionLength >= 1) {
+        setSubmitButton(false)
+      } else {
+        setSubmitButton(true)
+      }
       if (questionLength >= 3) {
         setDisabledButton(true)
       } else {
@@ -148,11 +157,15 @@ export const EditOrPostForm = ({ type }) => {
     }
 
     if (formType === 'oneQuestion' && formLength >= 1) {
-      return setDisabledButton(true)
+      setDisabledButton(true)
+      setSubmitButton(false)
+      return
     }
 
     if (formType === 'threeQuestions' && formLength >= 3) {
-      return setDisabledButton(true)
+      setDisabledButton(true)
+      setSubmitButton(false)
+      return
     }
   }
 
