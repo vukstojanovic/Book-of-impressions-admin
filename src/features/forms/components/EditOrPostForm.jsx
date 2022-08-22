@@ -201,6 +201,7 @@ export const EditOrPostForm = ({ type }) => {
       return
     }
 
+    console.log(form.isFieldsTouched())
     if (form.isFieldsTouched()) {
       setSubmitButton(false)
     }
@@ -261,7 +262,7 @@ export const EditOrPostForm = ({ type }) => {
 
   return (
     <>
-      <Title level={2}>{t('edit_main')}</Title>
+      <Title level={2}>{type === 'edit' ? t('edit_main') : t('main')}</Title>
       <Card>
         <Form
           form={form}
