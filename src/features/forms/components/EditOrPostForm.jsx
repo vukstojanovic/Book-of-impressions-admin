@@ -116,6 +116,7 @@ export const EditOrPostForm = ({ type }) => {
       return
     }
   }
+
   const checkQuestions = (questions) => {
     let enable = true
     questions?.map((question) => {
@@ -132,7 +133,7 @@ export const EditOrPostForm = ({ type }) => {
     })
     return enable
   }
-  // Check all question fields when field is removed or added
+
   const onFieldsChange = (changedFields, allFields) => {
     if (changedFields[0].name.length === 1 && changedFields[0].name[0] === 'questions') {
       const questions = changedFields[0].value
@@ -165,29 +166,10 @@ export const EditOrPostForm = ({ type }) => {
     _,
     { ['en-desc']: enDesc, ['sr-desc']: srDesc, ['form-type']: formType, title, questions }
   ) => {
-    let moreThanOneQuestion = false
-
     if (questions && selectedFormType === 'oneQuestion' && questions.length !== 1) {
-      moreThanOneQuestion = true
       setSubmitButton(true)
+      return
     }
-
-    if (moreThanOneQuestion === true) return
-
-    let enable = true
-    // Check question fields while typing
-    questions?.map((question) => {
-      if (!question['question-sr']?.trim() || !question['question-en']?.trim()) {
-        enable = false
-        return
-      }
-
-      if (!enable) return
-
-      if (question['question-en'] !== '' || question['question-sr'] !== '') {
-        enable = true
-      }
-    })
 
     if (questions?.length === 0) {
       return setSubmitButton(true)
@@ -196,10 +178,6 @@ export const EditOrPostForm = ({ type }) => {
     const checkedQuestions = checkQuestions(questions)
 
     if (!enDesc || !srDesc || !formType || !title || !checkedQuestions) {
-      setSubmitButton(true)
-      return
-    }
-    if (!enDesc || !srDesc || !formType || !title || !enable) {
       setSubmitButton(true)
       return
     }
