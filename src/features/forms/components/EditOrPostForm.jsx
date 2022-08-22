@@ -83,12 +83,18 @@ export const EditOrPostForm = ({ type }) => {
   const onTypeChange = (value) => {
     setShowInfoQuestion(true)
     const questionLength = form.getFieldsValue().questions?.length
+    console.log(questionLength)
     if (value === 'Rating' || value === 'Answer') {
       setSelectedFormType('oneQuestion')
       if (questionLength === 1) {
-        setSubmitButton(false)
-      } else {
+        setDisabledButton(true)
         setSubmitButton(true)
+        return
+      }
+      if (questionLength > 1) {
+        setDisabledButton(true)
+        setSubmitButton(true)
+        return
       }
       if (questionLength >= 1) {
         setDisabledButton(true)
@@ -112,13 +118,56 @@ export const EditOrPostForm = ({ type }) => {
       return
     }
   }
+  // Check all question fields when field is removed or added
+  const onFieldsChange = (changedFields) => {
+    if (changedFields[0].name.length === 1 && changedFields[0].name[0] === 'questions') {
+      const questions = changedFields[0].value
+
+      if (questions.length === 0) {
+        setDisabledButton(false)
+      }
+
+      let moreThanOneQuestion = false
+
+      if (selectedFormType === 'oneQuestion' && questions.length !== 1) {
+        moreThanOneQuestion = true
+        setSubmitButton(true)
+      }
+
+      if (moreThanOneQuestion === true) return
+
+      let enable = true
+
+      questions?.map((question) => {
+        if (!question['question-sr']?.trim() || !question['question-en']?.trim()) {
+          enable = false
+          return
+        }
+
+        if (!enable) return
+
+        if (question['question-en'] !== '' || question['question-sr'] !== '') {
+          enable = true
+        }
+      })
+      setSubmitButton(!enable)
+    }
+  }
 
   const onValuesChange = (
     _,
     { ['en-desc']: enDesc, ['sr-desc']: srDesc, ['form-type']: formType, title, questions }
   ) => {
-    let enable = true
+    let moreThanOneQuestion = false
+    if (questions && selectedFormType === 'oneQuestion' && questions.length !== 1) {
+      moreThanOneQuestion = true
+      setSubmitButton(true)
+    }
 
+    if (moreThanOneQuestion === true) return
+
+    let enable = true
+    // Check question fields while typing
     questions?.map((question) => {
       if (!question['question-sr']?.trim() || !question['question-en']?.trim()) {
         enable = false
@@ -152,8 +201,10 @@ export const EditOrPostForm = ({ type }) => {
   }
 
   const handleDisabledButton = ({ formType, formLength }) => {
-    if (formLength === 0) {
-      return setSubmitButton(true)
+    if (formLength !== 1 && formType === 'oneQuestion') {
+      setDisabledButton(true)
+      setSubmitButton(false)
+      return
     }
 
     if (formType === 'oneQuestion' && formLength >= 1) {
@@ -191,6 +242,7 @@ export const EditOrPostForm = ({ type }) => {
           formType: `${data.type === 'Ratings' ? 'threeQuestions' : 'oneQuestion'}`,
           formLength: data.questions.length,
         })
+        setShowInfoQuestion(true)
       }
     }
   }, [data])
@@ -203,6 +255,7 @@ export const EditOrPostForm = ({ type }) => {
         </Row>
       )
   }
+
   return (
     <>
       <Title level={2}>{t('edit_main')}</Title>
@@ -213,6 +266,7 @@ export const EditOrPostForm = ({ type }) => {
           layout="vertical"
           size="large"
           onValuesChange={onValuesChange}
+          onFieldsChange={onFieldsChange}
         >
           <Row>
             <Col sm={24} md={12} lg={6}>
