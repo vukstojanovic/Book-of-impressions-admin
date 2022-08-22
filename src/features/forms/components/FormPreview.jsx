@@ -34,11 +34,12 @@ export const FormPreview = () => {
       </Row>
     )
 
+  console.log(formData)
   return (
     <>
       <QRCodeFormModal
-        formTitle={formData.title}
-        formId={formData.id}
+        formTitle={formData?.title}
+        formId={formData?.id}
         qrValue={qrValue}
         setModalVisible={setQRModalVisible}
         modalVisible={QRModalVisible}
@@ -50,11 +51,11 @@ export const FormPreview = () => {
         <Row gutter={16} align="middle" style={{ margin: '0 0 12px 0' }}>
           <Col>
             <Title level={3} strong style={{ margin: 0 }}>
-              {formData.title}
+              {formData?.title}
             </Title>
           </Col>
           <Col>
-            <Tag color="green">{formData.type}</Tag>
+            <Tag color="green">{formData?.type}</Tag>
           </Col>
           <Col style={{ marginLeft: 'auto', fontSize: '22px' }}>
             <QrcodeOutlined
@@ -66,11 +67,11 @@ export const FormPreview = () => {
           </Col>
         </Row>
         <Paragraph>
-          {formData.description.filter((lang) => lang.key === language)[0]?.text}
+          {formData?.description.filter((lang) => lang.key === language)[0]?.text}
         </Paragraph>
         <Paragraph>{t('questions')}: </Paragraph>
         <ul>
-          {formData.questions.map((question) => (
+          {formData?.questions.map((question) => (
             <li key={question.id}>
               <Text>{question.texts.filter((lang) => lang.key === language)[0]?.text}</Text>
             </li>

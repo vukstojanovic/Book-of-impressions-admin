@@ -109,7 +109,7 @@
     "settings": "Settings",
     "my_profile": "My Profile",
     "invite_user": "Invite user",
-    "edit": "Uredi"
+    "edit": "Edit"
   },
   "QRCode": {
     "requiredError": "Field can not be empty!",

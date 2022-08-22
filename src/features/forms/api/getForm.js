@@ -7,5 +7,5 @@ export const getForm = ({ id }) => {
 }
 
 export const useGetForm = ({ id }) => {
-  return useQuery(['allForms', id], () => getForm({ id }))
+  return useQuery(['allForms', id], () => getForm({ id }), { enabled: !!id })
 }
