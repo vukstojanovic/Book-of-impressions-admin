@@ -1,5 +1,7 @@
-import { Form, Row, Col, Input, Rate, Radio, Select, Collapse, Button, DatePicker } from 'antd'
+import { Form, Row, Col, Input, Radio, Select, Collapse, Button, DatePicker, Slider } from 'antd'
 import { useSearchParams } from 'react-router-dom'
+import dayjs from 'dayjs'
+import moment from 'moment'
 
 export const FilterComponent = ({
   hasName = true,
@@ -11,6 +13,7 @@ export const FilterComponent = ({
 }) => {
   const [searchParams, setSearchParams] = useSearchParams()
   const [form] = Form.useForm()
+  const dateFormat = 'YYYY-MM-DD'
 
   function handleFinish({
     name: reviewName,
@@ -20,12 +23,24 @@ export const FilterComponent = ({
     type,
     createdDate,
   }) {
-    console.log(createdDate)
-    const modifiedObject = { reviewName, reviewEmail, rating, answer, type, createdDate }
+    console.log(reviewName, reviewEmail, rating, answer, type, createdDate)
+    const [fromRating, toRating] = rating
+    const [fromCreatedDate, toCreatedDate] = createdDate
+    // dayjs(fromCreatedDate._d).format(dateFormat)
+    const modifiedObject = {
+      reviewName,
+      reviewEmail,
+      fromRating,
+      toRating,
+      answer,
+      type,
+      fromCreatedDate: dayjs(fromCreatedDate._d).format(dateFormat),
+      toCreatedDate: dayjs(toCreatedDate._d).format(dateFormat),
+    }
     const modifiedObjectKeys = Object.keys(modifiedObject)
 
     modifiedObjectKeys.forEach((key) => {
-      if (modifiedObject[key] && modifiedObject[key]?.length) {
+      if (modifiedObject[key]) {
         searchParams.set(key, modifiedObject[key])
         setSearchParams(searchParams)
       } else {
@@ -44,11 +59,20 @@ export const FilterComponent = ({
     form.setFieldsValue({
       name: '',
       email: '',
-      rating: 0,
+      rating: [0, 5],
       answer: null,
       type: [],
-      createdDate: '',
+      createdDate: [],
     })
+  }
+
+  const marks = {
+    0: 0,
+    1: 1,
+    2: 2,
+    3: 3,
+    4: 4,
+    5: 5,
   }
 
   return (
@@ -62,10 +86,16 @@ export const FilterComponent = ({
             initialValues={{
               name: searchParams.get('reviewName'),
               email: searchParams.get('reviewEmail'),
-              rating: searchParams.get('rating'),
+              rating: [searchParams.get('fromRating'), searchParams.get('toRating')],
               answer: searchParams.get('answer'),
-              type: searchParams.get('type'),
-              createdDate: searchParams.get('createdDate'),
+              type: searchParams.get('type') || [],
+              createdDate:
+                searchParams.get('fromCreatedDate') && searchParams.get('toCreatedDate')
+                  ? [
+                      moment(searchParams.get('fromCreatedDate'), dateFormat),
+                      moment(searchParams.get('toCreatedDate'), dateFormat),
+                    ]
+                  : [],
             }}
           >
             <Row gutter={16}>
@@ -93,7 +123,14 @@ export const FilterComponent = ({
               {hasRating && (
                 <Col style={{ display: 'flex', alignItems: 'center' }}>
                   <Form.Item name="rating">
-                    <Rate allowHalf />
+                    <Slider
+                      range
+                      min={0}
+                      max={5}
+                      step={0.5}
+                      marks={marks}
+                      style={{ width: '200px' }}
+                    />
                   </Form.Item>
                 </Col>
               )}
