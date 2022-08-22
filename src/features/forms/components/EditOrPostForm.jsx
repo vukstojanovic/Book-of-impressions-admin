@@ -304,7 +304,6 @@ export const EditOrPostForm = ({ type }) => {
                 rules={[
                   {
                     validator: async (_, fields) => {
-                      console.log(fields.length)
                       handleDisabledButton({
                         formType: selectedFormType,
                         formLength: fields.length,
@@ -367,7 +366,6 @@ export const EditOrPostForm = ({ type }) => {
                           <p
                             onClick={() => {
                               remove(name)
-                              console.log('Name:', name, 'FIELDS:', fields)
                               setDisabledButton(false)
                             }}
                           >
