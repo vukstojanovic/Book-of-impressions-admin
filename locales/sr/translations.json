@@ -194,5 +194,22 @@
     "page": "Strana",
     "of": "od",
     "loading": "Učitavanje..."
+  },
+  "Filters": {
+    "name": "Ime",
+    "email": "Email",
+    "title": "Naslov",
+    "type": "Tip",
+    "start_date": "Početni datum",
+    "end_date": "Završni datum",
+    "like": "Odobravam",
+    "dislike": "Ne odobravam",
+    "select_form_type": "Odaberi tip forme",
+    "filter": "Filtriraj",
+    "reset_filters": "Resetuj filtere",
+    "filters": "Filteri",
+    "answer": "Odgovor",
+    "rating": "Ocena",
+    "ratings": "Ocene"
   }
 }

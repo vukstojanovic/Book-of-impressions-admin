@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 import { useNavigate, useLocation } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import { Typography, Row, Card, Progress, Skeleton, Empty, Button, Col } from 'antd'
@@ -16,7 +16,7 @@ const { Title, Paragraph, Text } = Typography
 export const Forms = () => {
   const location = useLocation()
   const decodedQueryParams = decodeURIComponent(location.search)
-  const { data, isLoading, isFetching } = useForms(decodedQueryParams)
+  const { data, isLoading } = useForms(decodedQueryParams)
   const { t } = useTranslation('Forms')
 
   const navigate = useNavigate()
@@ -33,14 +33,17 @@ export const Forms = () => {
     alignItems: 'center',
   }
 
-  useEffect(() => {
-    console.log(data)
-  }, [isFetching])
-
   if (!isLoading && data[0].length === 0) {
     return (
       <>
-        <AddButton linkTo="/forms/create-new-form" />
+        <Row justify="space-between" align="top">
+          <Col span={22}>
+            <FilterComponent hasType hasTitle />
+          </Col>
+          <Col style={{ paddingTop: '2px' }}>
+            <AddButton linkTo="/forms/create-new-form" />
+          </Col>
+        </Row>
         <Empty
           description={
             <span>
@@ -54,11 +57,11 @@ export const Forms = () => {
 
   return (
     <>
-      <Row justify="space-between" align="middle">
-        <Col>
+      <Row justify="space-between" align="top">
+        <Col span={22}>
           <FilterComponent hasType hasTitle />
         </Col>
-        <Col>
+        <Col style={{ paddingTop: '2px' }}>
           <AddButton linkTo="/forms/create-new-form" />
         </Col>
       </Row>

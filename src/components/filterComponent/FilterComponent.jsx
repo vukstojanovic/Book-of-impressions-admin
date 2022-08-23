@@ -2,6 +2,7 @@ import { Form, Row, Col, Input, Radio, Select, Collapse, Button, DatePicker, Sli
 import { useSearchParams } from 'react-router-dom'
 import dayjs from 'dayjs'
 import moment from 'moment'
+import { useTranslation } from 'react-i18next'
 
 export const FilterComponent = ({
   hasName,
@@ -16,10 +17,17 @@ export const FilterComponent = ({
   const [searchParams, setSearchParams] = useSearchParams()
   const [form] = Form.useForm()
   const dateFormat = 'YYYY-MM-DD'
+  const { t } = useTranslation('Filters')
 
   function handleFinish(formValues) {
+    for (const key of searchParams.keys()) {
+      searchParams.delete(key)
+    }
+    setSearchParams(searchParams)
+
     const valuesKeys = Object.keys(formValues)
     const modifiedObject = {}
+
     valuesKeys.forEach((key) => {
       if (
         (formValues[key] || formValues[key] === 0 || formValues[key] === false) &&
@@ -77,10 +85,12 @@ export const FilterComponent = ({
     5: 5,
   }
 
+  console.log('rendered')
+
   return (
     <>
       <Collapse style={{ marginBottom: '25px' }}>
-        <Collapse.Panel header="Filters">
+        <Collapse.Panel header={t('filter')}>
           <Form
             form={form}
             onFinish={handleFinish}
@@ -107,54 +117,59 @@ export const FilterComponent = ({
           >
             <Row gutter={16} wrap>
               {hasName && (
-                <Col span={8}>
+                <Col>
                   <Form.Item name="reviewName">
-                    <Input placeholder="Name" />
+                    <Input placeholder={t('name')} style={{ maxWidth: '300px' }} />
                   </Form.Item>
                 </Col>
               )}
               {hasEmail && (
-                <Col span={8}>
+                <Col>
                   <Form.Item name="reviewEmail">
-                    <Input placeholder="Email" />
+                    <Input placeholder={t('email')} style={{ maxWidth: '250px' }} />
                   </Form.Item>
                 </Col>
               )}
               {hasTitle && (
-                <Col span={8}>
+                <Col>
                   <Form.Item name="title">
-                    <Input placeholder="Title" />
+                    <Input placeholder={t('title')} style={{ maxWidth: '250px' }} />
                   </Form.Item>
                 </Col>
               )}
               {hasType && (
-                <Col span={8} style={{ display: 'flex', alignItems: 'center' }}>
+                <Col style={{ display: 'flex', alignItems: 'center' }}>
                   <Form.Item name="type">
                     <Select
                       mode="multiple"
                       allowClear
                       style={{
-                        minWidth: '150px',
+                        minWidth: '200px',
                       }}
-                      placeholder="Select type..."
+                      placeholder={t('type')}
                     >
-                      <Select.Option key="Answer">Answer</Select.Option>
-                      <Select.Option key="Rating">Rating</Select.Option>
-                      <Select.Option key="Ratings">Ratings</Select.Option>
+                      <Select.Option key="Answer">{t('answer')}</Select.Option>
+                      <Select.Option key="Rating">{t('rating')}</Select.Option>
+                      <Select.Option key="Ratings">{t('ratings')}</Select.Option>
                     </Select>
                   </Form.Item>
                 </Col>
               )}
               {hasDate && (
-                <Col span={8}>
+                <Col>
                   <Form.Item name="createdDate">
-                    <DatePicker.RangePicker style={{ maxWidth: '300px' }} />
+                    <DatePicker.RangePicker
+                      style={{ maxWidth: '250px' }}
+                      placeholder={[t('start_date'), t('end_date')]}
+                    />
                   </Form.Item>
                 </Col>
               )}
+            </Row>
+            <Row gutter={16} wrap>
               {hasRating && (
-                <Col span={8} style={{ display: 'flex', alignItems: 'center' }}>
-                  <Form.Item name="rating">
+                <Col style={{ display: 'flex', alignItems: 'center' }}>
+                  <Form.Item name="rating" style={{ marginBottom: 0 }}>
                     <Slider
                       range
                       min={0}
@@ -167,44 +182,44 @@ export const FilterComponent = ({
                 </Col>
               )}
               {hasAnswer && (
-                <Col span={8} style={{ display: 'flex', alignItems: 'center' }}>
-                  <Form.Item name="answer">
+                <Col style={{ display: 'flex', alignItems: 'center' }}>
+                  <Form.Item name="answer" style={{ marginBottom: 0 }}>
                     <Radio.Group>
-                      <Radio value={true}>Like</Radio>
-                      <Radio value={false}>Dislike</Radio>
+                      <Radio value={true}>{t('like')}</Radio>
+                      <Radio value={false}>{t('dislike')}</Radio>
                     </Radio.Group>
                   </Form.Item>
                 </Col>
               )}
               {hasFormType && (
-                <Col span={8} style={{ display: 'flex', alignItems: 'center' }}>
-                  <Form.Item name="formType">
+                <Col style={{ display: 'flex', alignItems: 'center' }}>
+                  <Form.Item name="formType" style={{ marginBottom: 0 }}>
                     <Select
                       mode="multiple"
                       allowClear
                       style={{
-                        minWidth: '150px',
+                        minWidth: '200px',
                       }}
-                      placeholder="Select type..."
+                      placeholder={t('select_form_type')}
                     >
-                      <Select.Option key="Answer">Answer</Select.Option>
-                      <Select.Option key="Rating">Rating</Select.Option>
-                      <Select.Option key="Ratings">Ratings</Select.Option>
+                      <Select.Option key="Answer">{t('answer')}</Select.Option>
+                      <Select.Option key="Rating">{t('rating')}</Select.Option>
+                      <Select.Option key="Ratings">{t('ratings')}</Select.Option>
                     </Select>
                   </Form.Item>
                 </Col>
               )}
             </Row>
-            <Row gutter={[10, 0]} justify="end">
+            <Row gutter={[10, 0]} justify="end" style={{ marginTop: '10px' }}>
               <Col>
-                <Form.Item>
-                  <Button onClick={handleReset}>Reset filters</Button>
+                <Form.Item style={{ marginBottom: 0 }}>
+                  <Button onClick={handleReset}>{t('reset_filters')}</Button>
                 </Form.Item>
               </Col>
               <Col>
-                <Form.Item>
+                <Form.Item style={{ marginBottom: 0 }}>
                   <Button htmlType="submit" type="primary">
-                    Filter
+                    {t('filter')}
                   </Button>
                 </Form.Item>
               </Col>

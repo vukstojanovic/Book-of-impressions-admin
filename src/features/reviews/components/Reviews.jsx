@@ -19,6 +19,14 @@ export const Reviews = () => {
     )
   }
 
+  if (!isLoading && data[0].length === 0) {
+    return (
+      <>
+        <FilterComponent hasName hasEmail hasRating hasAnswer hasFormType hasDate />
+      </>
+    )
+  }
+
   if (isError) {
     return <div style={{ marginTop: '20px' }}>{error.message}</div>
   }
