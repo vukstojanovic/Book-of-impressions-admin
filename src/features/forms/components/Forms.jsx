@@ -1,5 +1,5 @@
-import { useState } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { useState, useEffect } from 'react'
+import { useNavigate, useLocation } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import { Typography, Row, Card, Progress, Skeleton, Empty, Button, Col } from 'antd'
 import { QrcodeOutlined } from '@ant-design/icons'
@@ -10,12 +10,13 @@ import QRCodeFormModal from './QRCodeFormModal'
 
 import { AddButton } from '@/components/buttons/AddButton'
 import { FilterComponent } from '@/components/filterComponent'
-import { useFilterBySearchParams } from '@/utils/useFilterBySearchParams'
 
 const { Title, Paragraph, Text } = Typography
 
 export const Forms = () => {
-  const { data, isLoading } = useForms()
+  const location = useLocation()
+  const decodedQueryParams = decodeURIComponent(location.search)
+  const { data, isLoading, isFetching } = useForms(decodedQueryParams)
   const { t } = useTranslation('Forms')
 
   const navigate = useNavigate()
@@ -24,7 +25,6 @@ export const Forms = () => {
   const [modalVisible, setModalVisible] = useState(false)
   const [qrValue, setQrValue] = useState('asd')
   const divFlex = { display: 'flex', justifyContent: 'space-between', alignItems: 'center' }
-  const filteredData = useFilterBySearchParams(isLoading ? [] : data[0], 'title')
 
   const columnDivFlex = {
     textAlign: 'center',
@@ -33,6 +33,10 @@ export const Forms = () => {
     justifyContent: 'center',
     alignItems: 'center',
   }
+
+  useEffect(() => {
+    console.log(data)
+  }, [isFetching])
 
   if (!isLoading && data[0].length === 0) {
     return (
@@ -53,7 +57,7 @@ export const Forms = () => {
     <>
       <Row justify="space-between" align="middle">
         <Col>
-          <FilterComponent hasType />
+          <FilterComponent hasType hasTitle />
         </Col>
         <Col>
           <AddButton linkTo="/forms/create-new-form" />
@@ -70,7 +74,7 @@ export const Forms = () => {
 
       <Row align="middle" style={{ gap: 50 }}>
         {!isLoading ? (
-          filteredData.map((form) => {
+          data[0]?.map((form) => {
             const { id, name, title } = form
             return (
               <Card
