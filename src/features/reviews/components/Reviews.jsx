@@ -1,19 +1,15 @@
 import { Row, Spin } from 'antd'
-// import { useTranslation } from 'react-i18next'
+import { useLocation } from 'react-router-dom'
 
 import { useGetReviewsQuery } from '../api/getReviews'
 
 import { ReviewCard } from '@/components/reviewCard'
 import { FilterComponent } from '@/components/filterComponent'
-import { useFilterBySearchParams } from '@/utils/useFilterBySearchParams'
 
 export const Reviews = () => {
-  const { data, isLoading, isError, error } = useGetReviewsQuery()
-  const filteredData = useFilterBySearchParams(isLoading ? [] : data[0], 'reviewName')
-
-  // const { t } = useTranslation('Reviews')
-
-  // const { Title } = Typography
+  const location = useLocation()
+  const decodedQueryParams = decodeURIComponent(location.search)
+  const { data, isLoading, isError, error } = useGetReviewsQuery(decodedQueryParams)
 
   if (isLoading) {
     return (
@@ -30,10 +26,9 @@ export const Reviews = () => {
   return (
     data && (
       <>
-        {/* <Title>{t('reviews')}</Title> */}
-        <FilterComponent />
+        <FilterComponent hasName hasEmail hasRating hasAnswer hasFormType hasDate />
         <Row style={{ gap: 16 }}>
-          {filteredData?.map((review) => {
+          {data[0]?.map((review) => {
             return <ReviewCard key={review.id} {...review} />
           })}
         </Row>
