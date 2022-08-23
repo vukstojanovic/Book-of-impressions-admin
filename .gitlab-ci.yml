@@ -1,44 +1,46 @@
-default:
-  image: node:latest
-
 stages:
   - build
   - deploy
 
-.base_rules: &base_rules
-  only:
-    - master
-    - dev
-    - merge_requests
+variables:
+  DOCKER_IMAGE: quantox/dev
+  DOCKER_TAG: boi-wapp
+  SERVICE_NAME: boi-wapp_stage
 
-build:
-  only:
-    - dev
+build-image:
   stage: build
+  image: docker:dind
+  services:
+    - docker:dind
+  tags:
+    - docker
+  environment:
+    name: dev
+    url: boi-wapp.qlab.network
+  rules:
+    - if: $CI_COMMIT_BRANCH == "dev"
+  before_script:
+    - docker login -u ${DOCKERHUB_USER} -p ${DOCKERHUB_PASSWORD}
   script:
-    - npm install
-    - ln -s .env.prod .env
-    - npm run build
-  artifacts:
-    paths:
-      - dist/
+    - docker build --tag "${DOCKER_IMAGE}":${DOCKER_TAG} --build-arg ENV_FILE="${ENV_FILE}" .
+    - docker push "${DOCKER_IMAGE}":${DOCKER_TAG}
 
 deploy:
-  only:
-    - dev
   stage: deploy
-
-  variables:
-    VERCEL_ORG_ID: $VERCEL_ORG_ID
-    VERCEL_PROJECT_ID: $VERCEL_PROJECT_ID
-
-  script:
-    - ln -s .env.prod .env
-    - DEPLOYMENT_URL=$(VERCEL_ORG_ID=$VERCEL_ORG_ID VERCEL_PROJECT_ID=$VERCEL_PROJECT_ID vercel --prod --confirm -t $VERCEL_TOKEN --scope $VERCEL_SCOPE)
-    - if [ ${CI_MERGE_REQUEST_IID} ]; then SLUG=${CI_MERGE_REQUEST_IID}; else SLUG=${CI_COMMIT_BRANCH}; fi;
-    - PREVIEW_URL=${SLUG}-${CI_PROJECT_NAME}.${VERCEL_SCOPE}.vercel.app
-    - vercel alias set $DEPLOYMENT_URL $PREVIEW_URL -t $VERCEL_TOKEN --scope $VERCEL_SCOPE
-
+  tags:
+    - shell
   environment:
-    name: vercel/$CI_COMMIT_REF_NAME
-    url: https://$PREVIEW_URL
+    name: dev
+    url: boi-wapp.qlab.network
+  rules:
+    - if: $CI_COMMIT_BRANCH == "dev"
+  before_script:
+    - 'command -v ssh-agent >/dev/null || ( apt-get update -y && apt-get install openssh-client -y )'
+    - eval $(ssh-agent -s)
+    - echo "${SSH_PRIVATE_KEY}" | tr -d '\r' | ssh-add -
+    - mkdir -p ~/.ssh
+    - chmod 700 ~/.ssh
+    - echo "${SSH_KNOWN_HOSTS}" > ~/.ssh/known_hosts
+    - chmod 644 ~/.ssh/known_hosts
+  script:
+    - ssh ${DEV_SERVER_SSH} "docker service update --force --image "${DOCKER_IMAGE}":${DOCKER_TAG} --with-registry-auth ${SERVICE_NAME}"
