@@ -1,6 +1,6 @@
 import { LoadingOutlined, PlusOutlined } from '@ant-design/icons'
 import { Row, Col, Button, Form, Input, Upload, message, Spin } from 'antd'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
 
 import {
@@ -22,6 +22,10 @@ export function ProfileSettings() {
 
   const patchUserData = usePatchUserDataMutation()
   const { data, isLoading, isError, error } = useGetUserDataQuery()
+
+  useEffect(() => {
+    console.log(data)
+  }, [isLoading])
 
   const handleChange = (info) => {
     getBase64(info.file.originFileObj, () => {
