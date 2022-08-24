@@ -66,10 +66,13 @@
   },
   "Forms": {
     "forms": "Formulari",
-    "no_forms": "Nema formulara"
+    "no_forms": "Nema formulara",
+    "questions": "Pitanja",
+    "reviews": "Recenzije"
   },
   "CreateNewForm": {
     "main": "Kreiraj novu formu",
+    "edit_main": "Uredi Formu",
     "formTitle": "Naslov forme",
     "formDescription": "Opis forme",
     "formType": "Tip forme",
@@ -102,10 +105,11 @@
     "home": "Početna strana",
     "getSupport": "Podrška",
     "leaveComment": "Ostavite komentar",
-    "create_new_form": "Napravi novu formu",
+    "create_new_form": "Kreiraj novu formu",
     "settings": "Podešavanja",
     "my_profile": "Moj Nalog",
-    "invite_user": "Pozovi Korisnika"
+    "invite_user": "Pozovi Korisnika",
+    "edit": "Uredi"
   },
   "QRCode": {
     "requiredError": "Polje ne može biti prazno!",
