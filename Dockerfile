@@ -4,6 +4,8 @@ ARG ENV_FILE
 COPY . /opt/app
 WORKDIR /opt/app
 
+RUN echo "${ENV_FILE}" > /opt/app/.env
+
 RUN npm install
 RUN npm run build
 
