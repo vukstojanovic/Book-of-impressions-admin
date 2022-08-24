@@ -7,6 +7,7 @@ import { Forms, FormPreview, EditOrPostForm } from '@/features/forms'
 import { Settings } from '@/features/settings'
 import { ProfileSettings } from '@/features/profileSettings'
 import { Reports } from '@/features/reports'
+import Dashboard from '@/features/dashboard/Dashboard'
 
 const App = () => {
   return (
@@ -38,7 +39,7 @@ export const protectedRoutes = [
       { path: '/reports', element: <Reports /> },
       { path: '/settings', element: <Settings /> },
       { path: '/my-profile', element: <ProfileSettings /> },
-      { path: '/', element: '<Dashboard />' },
+      { path: '/', element: <Dashboard /> },
       { path: '*', element: <Navigate to="/" /> },
     ],
   },
