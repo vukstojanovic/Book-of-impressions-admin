@@ -47,10 +47,10 @@ export const FilterComponent = ({
     const modifiedObjectKeys = Object.keys(modifiedObject)
 
     modifiedObjectKeys.forEach((key) => {
-      if (key === 'formType') {
-        searchParams.delete('formType[]')
+      if (key === 'formType' || key === 'type') {
+        searchParams.delete(`${key}[]`)
         modifiedObject[key]?.forEach((type) => {
-          searchParams.append('formType[]', type)
+          searchParams.append(`${key}[]`, type)
         })
         setSearchParams(searchParams)
       } else {
@@ -100,7 +100,7 @@ export const FilterComponent = ({
                   ? [searchParams.get('fromRating'), searchParams.get('toRating')]
                   : [],
               answer: JSON.parse(searchParams.get('answer')),
-              formType: searchParams.get('formType[]') ? searchParams.getAll('formType[]') : [],
+              formType: searchParams.getAll('formType[]'),
               createdDate:
                 searchParams.get('fromCreatedDate') && searchParams.get('toCreatedDate')
                   ? [
@@ -109,7 +109,7 @@ export const FilterComponent = ({
                     ]
                   : [],
               title: searchParams.get('title'),
-              type: searchParams.get('type') || [],
+              type: searchParams.getAll('type[]'),
             }}
           >
             <Row gutter={16} wrap>

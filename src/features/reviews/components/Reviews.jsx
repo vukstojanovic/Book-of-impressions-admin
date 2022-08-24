@@ -13,9 +13,12 @@ export const Reviews = () => {
 
   if (isLoading) {
     return (
-      <div style={{ marginTop: '20px' }}>
-        <Spin size="large" />
-      </div>
+      <>
+        <FilterComponent hasName hasEmail hasRating hasAnswer hasFormType hasDate />
+        <div style={{ marginTop: '20px' }}>
+          <Spin size="large" />
+        </div>
+      </>
     )
   }
 
