@@ -1,8 +1,6 @@
 import { BarChart, XAxis, YAxis, CartesianGrid, Tooltip, Bar, ResponsiveContainer } from 'recharts'
 
-import { data } from './barDummyData'
-
-export const ChartBar = () => {
+export const ChartBar = ({ data }) => {
   return (
     <ResponsiveContainer width="100%" minHeight={200}>
       <BarChart margin={{ top: 30 }} width={260} height={200} data={data}>
@@ -10,7 +8,7 @@ export const ChartBar = () => {
         <XAxis dataKey="name" />
         <YAxis />
         <Tooltip />
-        <Bar dataKey={'value'} fill={'#8aa325'} barSize={20} />
+        <Bar dataKey={'value'} fill={'#1890ff'} barSize={20} />
       </BarChart>
     </ResponsiveContainer>
   )

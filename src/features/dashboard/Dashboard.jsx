@@ -1,12 +1,15 @@
 import { Col, Row, Select, Space, Statistic } from 'antd'
 
+import { data as BarRatingData } from '../../components/charts/barRatingDummydata'
+import { data as AnswerRatingData } from '../../components/charts/answerBarRatingDummydata'
+import { data as DummyData } from '../../components/charts/barDummyData'
+import { data as TopPieData } from '../../components/charts/pieDummyData'
+
 import RatingTypes from './RatingTypes'
 
 import { ChartPie } from '@/components/charts/ChartPie'
 import { ChartBar } from '@/components/charts/ChartBar'
-
 const { Option } = Select
-
 const Dashboard = () => {
   return (
     <Col style={{ background: 'white', padding: '24px', borderRadius: '8px' }}>
@@ -38,10 +41,10 @@ const Dashboard = () => {
           <p style={{ marginTop: '16px' }}>9% of total Reviews</p>
         </Col>
         <Col xs={{ span: 20 }} sm={{ span: 20 }} md={{ span: 10 }} xxl={{ span: 6 }}>
-          <ChartPie />
+          <ChartPie data={TopPieData} halfPie />
         </Col>
         <Col xs={{ span: 20 }} sm={{ span: 20 }} md={{ span: 10 }} xxl={{ span: 6 }}>
-          <ChartBar />
+          <ChartBar data={DummyData} />
         </Col>
         <Col
           xs={{ span: 20 }}
@@ -65,21 +68,21 @@ const Dashboard = () => {
       </Row>
       <Space direction="vertical" size={50} style={{ width: '100%', marginTop: '30px' }}>
         <Row align="middle" className="Rating Type">
-          <RatingTypes ratingType={'Rating'} />
+          <RatingTypes ratingType={'Rating'} ratingData={BarRatingData} />
           <Col sm={{ span: 22 }} md={{ span: 12 }} xl={{ span: 10 }}>
-            <ChartBar />
+            <ChartBar data={BarRatingData} />
           </Col>
         </Row>
         <Row align="middle" className="Ratings Type">
-          <RatingTypes ratingType={'Ratings'} />
+          <RatingTypes ratingType={'Ratings'} ratingData={BarRatingData} />
           <Col sm={{ span: 22 }} md={{ span: 12 }} xl={{ span: 10 }}>
-            <ChartBar />
+            <ChartBar data={BarRatingData} />
           </Col>
         </Row>
         <Row align="middle" className="Answer Type">
-          <RatingTypes ratingType={'Answer'} />
+          <RatingTypes ratingType={'Answer'} data={AnswerRatingData} />
           <Col sm={{ span: 22 }} md={{ span: 12 }} xl={{ span: 10 }}>
-            <ChartBar />
+            <ChartPie data={AnswerRatingData} />
           </Col>
         </Row>
       </Space>

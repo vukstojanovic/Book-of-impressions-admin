@@ -1,9 +1,7 @@
 import { Pie, PieChart, Tooltip, Cell, ResponsiveContainer } from 'recharts'
 
-import { data } from './pieDummyData'
-
 const COLORS = ['#0088FE', '#00C49F', '#0d1216', '#7fc400', '#fe00d4', '#c40000']
-export const ChartPie = () => {
+export const ChartPie = ({ data, halfPie }) => {
   const renderCustomizedLabel = ({ x, y, cx, percent, name }) => {
     return (
       <>
@@ -18,14 +16,14 @@ export const ChartPie = () => {
   }
 
   return (
-    <ResponsiveContainer width="100%" height={200}>
-      <PieChart margin={{ top: 70 }}>
+    <ResponsiveContainer width="100%" height={220}>
+      <PieChart margin={{ top: halfPie ? 70 : 0 }}>
         <Tooltip />
         <Pie
           data={data}
           dataKey="value"
-          startAngle={180}
-          endAngle={0}
+          startAngle={halfPie ? 180 : 0}
+          endAngle={halfPie ? 0 : 360}
           cx="50%"
           cy="50%"
           fill="#8884d8"
