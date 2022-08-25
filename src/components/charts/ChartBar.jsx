@@ -4,8 +4,8 @@ import { data } from './barDummyData'
 
 export const ChartBar = () => {
   return (
-    <ResponsiveContainer width={300} height="80%" minWidth={150} minHeight={150}>
-      <BarChart data={data} startAngle={60} st>
+    <ResponsiveContainer width="100%" minHeight={200}>
+      <BarChart margin={{ top: 30 }} width={260} height={200} data={data}>
         <CartesianGrid strokeDasharray="3 3" />
         <XAxis dataKey="name" />
         <YAxis />

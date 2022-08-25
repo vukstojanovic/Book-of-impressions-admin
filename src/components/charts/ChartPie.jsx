@@ -1,4 +1,4 @@
-import { Pie, PieChart, ResponsiveContainer, Tooltip, Cell } from 'recharts'
+import { Pie, PieChart, Tooltip, Cell, ResponsiveContainer } from 'recharts'
 
 import { data } from './pieDummyData'
 
@@ -18,7 +18,7 @@ export const ChartPie = () => {
   }
 
   return (
-    <ResponsiveContainer minHeight={200} minWidth={200}>
+    <ResponsiveContainer width="100%" height={200}>
       <PieChart margin={{ top: 70 }}>
         <Tooltip />
         <Pie
