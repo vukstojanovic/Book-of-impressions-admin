@@ -1,6 +1,6 @@
 import { Pie, PieChart, Tooltip, Cell, ResponsiveContainer } from 'recharts'
 
-const COLORS = ['#0088FE', '#00C49F', '#0d1216', '#7fc400', '#fe00d4', '#c40000']
+const COLORS = ['#f66702', '#1b4979', '#133659', '#7fc400', '#fe00d4', '#c40000']
 export const ChartPie = ({ data, halfPie }) => {
   const renderCustomizedLabel = ({ x, y, cx, percent, name }) => {
     return (
@@ -18,7 +18,7 @@ export const ChartPie = ({ data, halfPie }) => {
   return (
     <ResponsiveContainer width="100%" height={220}>
       <PieChart margin={{ top: halfPie ? 70 : 0 }}>
-        <Tooltip />
+        <Tooltip itemStyle={{ color: 'blue' }} formatter={(props) => props + '%'} />
         <Pie
           data={data}
           dataKey="value"

@@ -7,8 +7,26 @@ export const ChartBar = ({ data }) => {
         <CartesianGrid strokeDasharray="3 3" />
         <XAxis dataKey="name" />
         <YAxis />
-        <Tooltip />
-        <Bar dataKey={'value'} fill={'#1890ff'} barSize={20} />
+        <Tooltip
+          cursor={{ fill: 'rgba(19, 54, 89, 0.5)' }}
+          labelFormatter={(props) => {
+            switch (props) {
+              case '5':
+                return '5 Stars'
+              case '4':
+                return '4 Stars'
+              case '3':
+                return '3 Stars'
+              case '2':
+                return '2 Stars'
+              case '1':
+                return '1 Star'
+              default:
+                return props
+            }
+          }}
+        />
+        <Bar dataKey={'value'} fill={'#f66702'} background={{ fill: '#1b4979' }} barSize={60} />
       </BarChart>
     </ResponsiveContainer>
   )

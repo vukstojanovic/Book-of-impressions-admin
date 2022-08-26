@@ -31,6 +31,11 @@ export const BreadcrumbComponent = () => {
           </Breadcrumb.Item>
         )
       })}
+      {pathnames.length === 0 && (
+        <Breadcrumb.Item>
+          <span style={{ opacity: 0.5 }}>Dashboard /</span> Analytics
+        </Breadcrumb.Item>
+      )}
     </Breadcrumb>
   )
 }

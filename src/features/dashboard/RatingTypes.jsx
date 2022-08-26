@@ -1,5 +1,5 @@
 import { DislikeOutlined, LikeOutlined } from '@ant-design/icons'
-import { Col, Rate, Row } from 'antd'
+import { Col, Rate, Row, Typography } from 'antd'
 
 const RatingTypes = ({ ratingType, data, ratingData }) => {
   return (
@@ -12,7 +12,8 @@ const RatingTypes = ({ ratingType, data, ratingData }) => {
           sm={{ span: 24 }}
           xs={{ span: 24 }}
         >
-          <Row justify="center" gutter={10}>
+          <Typography.Title level={3}>{ratingType}</Typography.Title>
+          <Row justify="start" gutter={10} style={{ padding: '20px 0 0 0' }}>
             <Col style={{ textAlign: 'center' }}>
               <LikeOutlined
                 style={{
@@ -30,7 +31,7 @@ const RatingTypes = ({ ratingType, data, ratingData }) => {
                 style={{
                   fontSize: '24px',
                   color: 'red',
-                  backgroundColor: '#cf5e5e',
+                  backgroundColor: '#ff8d85',
                   padding: '24px',
                   borderRadius: '100%',
                 }}
@@ -47,7 +48,7 @@ const RatingTypes = ({ ratingType, data, ratingData }) => {
           sm={{ span: 24 }}
           xs={{ span: 24 }}
         >
-          <p>{ratingType}</p>
+          <Typography.Title level={3}>{ratingType}</Typography.Title>
           <Row justify="start" align="middle" gutter={20}>
             <Col>
               <Rate defaultValue={5} disabled />
