@@ -96,6 +96,7 @@
   },
   "SideMenu": {
     "dashboard": "Komandna Tabla",
+    "analytics": "Statistika",
     "main": "Glavni meni",
     "forms": "Formulari",
     "reviews": "Recenzije",
@@ -215,5 +216,26 @@
   },
   "GoogleReviews": {
     "rating": "Rejting"
+  },
+  "Charts": {
+    "value": "Vrednost",
+    "answer": "Odgovor",
+    "rating": "Ocena",
+    "ratings": "Ocene",
+    "total_reviews": "od Ukupnih Recenzija",
+    "No": "Ne",
+    "Yes": "Da",
+    "review_count": "Broj Recenzija",
+    "anonymous": "Anonimne Recenzije",
+    "star": "Zvezdica",
+    "stars": "Zvezdice",
+    "stars_2": "Zvezdica",
+    "today": "Danas",
+    "last_day": "Prethodni dan",
+    "last_3_days": "Prethodna 3 dana",
+    "last_week": "Prethodna nedelja",
+    "last_3_weeks": "Prethodna 3 nedelje",
+    "last_month": "Prethodni mesec",
+    "custom": "Ručno"
   }
 }

@@ -17,6 +17,7 @@ export const FormPreview = () => {
     i18n: { language },
     t,
   } = useTranslation('Forms')
+
   const [param] = useSearchParams()
   const id = param.get('id')
 
@@ -34,7 +35,6 @@ export const FormPreview = () => {
       </Row>
     )
 
-  console.log(formData)
   return (
     <>
       <QRCodeFormModal
@@ -84,7 +84,7 @@ export const FormPreview = () => {
       </Title>
       <Col style={{ padding: '0 24px' }}>
         <Row style={{ gap: 16 }}>
-          {formReviewData.map((review) => {
+          {formReviewData[0].map((review) => {
             return <ReviewCard key={review.id} {...review} />
           })}
         </Row>

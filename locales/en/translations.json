@@ -96,6 +96,7 @@
   },
   "SideMenu": {
     "dashboard": "Dashboard",
+    "analytics": "Analytics",
     "main": "Main",
     "forms": "Forms",
     "reviews": "Reviews",
@@ -215,5 +216,26 @@
   },
   "GoogleReviews": {
     "rating": "Rating"
+  },
+  "Charts": {
+    "value": "Value",
+    "answer": "Answer",
+    "rating": "Rating",
+    "ratings": "Ratings",
+    "total_reviews": "of Total Reviews",
+    "No": "No",
+    "Yes": "Yes",
+    "review_count": "Review Count",
+    "anonymous": "Anonymous Reviews",
+    "star": "Star",
+    "stars": "Stars",
+    "star_2": "Stars",
+    "today": "Today",
+    "last_day": "Last day",
+    "last_3_days": "Last 3 days",
+    "last_week": "Last week",
+    "last_3_weeks": "Last 3 weeks",
+    "last_month": "Last month",
+    "custom": "Custom"
   }
 }
