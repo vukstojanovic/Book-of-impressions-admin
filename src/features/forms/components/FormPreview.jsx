@@ -17,6 +17,7 @@ export const FormPreview = () => {
     i18n: { language },
     t,
   } = useTranslation('Forms')
+
   const [param] = useSearchParams()
   const id = param.get('id')
 
