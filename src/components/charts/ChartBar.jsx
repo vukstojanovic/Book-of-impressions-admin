@@ -9,8 +9,7 @@ export const ChartBar = ({ data }) => {
         <YAxis />
         <Tooltip
           cursor={{ fill: 'rgba(19, 54, 89, 0.5)' }}
-          formatter={(value, name, props) => {
-            console.log(value, name, props)
+          formatter={(value) => {
             return [`${value}`, 'Value']
           }}
           labelFormatter={(props) => {
