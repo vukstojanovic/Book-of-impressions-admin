@@ -1,4 +1,5 @@
 import { Col, Row, Select, Space, Statistic, Typography } from 'antd'
+import { useTranslation } from 'react-i18next'
 
 import { data as BarRatingData } from '../../components/charts/barRatingDummydata'
 import { data as AnswerRatingData } from '../../components/charts/answerBarRatingDummydata'
@@ -13,17 +14,18 @@ const { Option } = Select
 
 const Dashboard = () => {
   const { Paragraph } = Typography
+  const { t } = useTranslation('Charts')
   return (
     <Col style={{ background: 'white', padding: '24px', borderRadius: '8px' }}>
       <Row>
-        <Select defaultValue={'today'} style={{ minWidth: '140px' }}>
-          <Option value="today">Today</Option>
-          <Option value="last-day">Last day</Option>
-          <Option value="last-3-days">Last 3 days</Option>
-          <Option value="last-week">Last Week</Option>
-          <Option value="last-2-weeks">Last 2 weeks</Option>
-          <Option value="last-month">Last month</Option>
-          <Option value="custom">Custom</Option>
+        <Select defaultValue={'today'} style={{ minWidth: '200px' }}>
+          <Option value="today">{t('today')}</Option>
+          <Option value="last-day">{t('last_day')}</Option>
+          <Option value="last-3-days">{t('last_3_days')}</Option>
+          <Option value="last-week">{t('last_week')}</Option>
+          <Option value="last-2-weeks">{t('last_3_weeks')}</Option>
+          <Option value="last-month">{t('last_month')}</Option>
+          <Option value="custom">{t('custom')}</Option>
         </Select>
       </Row>
       <Row
@@ -50,11 +52,11 @@ const Dashboard = () => {
           }}
         >
           <Statistic
-            title={'Review Count'}
+            title={t('review_count')}
             value={654}
             valueStyle={{ textAlign: 'center', padding: '1rem 0', color: '#1b4979' }}
           />
-          <Paragraph>9% of total Reviews</Paragraph>
+          <Paragraph>9% {t('total_reviews')}</Paragraph>
         </Col>
         <Col xs={{ span: 20 }} sm={{ span: 20 }} md={{ span: 10 }} xxl={{ span: 6 }}>
           <ChartPie data={TopPieData} halfPie />
@@ -75,11 +77,11 @@ const Dashboard = () => {
           }}
         >
           <Statistic
-            title={'Anonymous Reviews'}
+            title={t('anonymous')}
             value={3642}
             valueStyle={{ textAlign: 'center', padding: '1rem 0', color: '#1b4979' }}
           />
-          <Paragraph>90% of Total Reviews</Paragraph>
+          <Paragraph>90% {t('total_reviews')}</Paragraph>
         </Col>
       </Row>
       <Space direction="vertical" size={30} style={{ width: '100%', marginTop: '30px' }}>

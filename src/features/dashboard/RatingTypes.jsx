@@ -1,7 +1,9 @@
+import { useTranslation } from 'react-i18next'
 import { DislikeOutlined, LikeOutlined } from '@ant-design/icons'
 import { Col, Rate, Row, Typography } from 'antd'
 
 const RatingTypes = ({ ratingType, data, ratingData }) => {
+  const { t } = useTranslation('Charts')
   return (
     <>
       {ratingType === 'Answer' ? (
@@ -12,7 +14,7 @@ const RatingTypes = ({ ratingType, data, ratingData }) => {
           sm={{ span: 24 }}
           xs={{ span: 24 }}
         >
-          <Typography.Title level={3}>{ratingType}</Typography.Title>
+          <Typography.Title level={3}>{t(`${ratingType.toLowerCase()}`)}</Typography.Title>
           <Row justify="start" gutter={10} style={{ padding: '20px 0 0 0' }}>
             <Col style={{ textAlign: 'center' }}>
               <LikeOutlined
@@ -48,7 +50,7 @@ const RatingTypes = ({ ratingType, data, ratingData }) => {
           sm={{ span: 24 }}
           xs={{ span: 24 }}
         >
-          <Typography.Title level={3}>{ratingType}</Typography.Title>
+          <Typography.Title level={3}>{t(`${ratingType.toLowerCase()}`)}</Typography.Title>
           <Row justify="start" align="middle" gutter={20}>
             <Col>
               <Rate defaultValue={5} disabled />
