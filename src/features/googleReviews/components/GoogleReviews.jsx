@@ -1,19 +1,13 @@
-import { useEffect } from 'react'
-import { Row, Col, Card, Typography, Rate, Spin } from 'antd'
-// import { GoogleMap, Marker, useLoadScript } from '@react-google-maps/api'
+import { Row, Col, Card, Typography, Rate, Spin, Statistic } from 'antd'
+import { useTranslation } from 'react-i18next'
 
 import { useGetGoogleReviewsQuery } from '../api/getGoogleReviews'
 import { SingleReview } from '../components/SingleReview'
 
 export const GoogleReviews = () => {
-  const { data, isLoading } = useGetGoogleReviewsQuery()
-  // const { isLoaded } = useLoadScript({
-  //   googleMapsApiKey: 'ChIJgUbEo8cfqokR5lP9_Wh_DaM',
-  // })
-
-  useEffect(() => {
-    console.log(data)
-  }, [isLoading])
+  const currentLocationId = 'ChIJUfDPCbJ6WkcRd7fUAGRPUFI'
+  const { data, isLoading } = useGetGoogleReviewsQuery(currentLocationId)
+  const { t } = useTranslation('GoogleReviews')
 
   if (isLoading) {
     return <Spin />
@@ -23,26 +17,30 @@ export const GoogleReviews = () => {
     <div>
       {data && (
         <>
-          <Row justify="space-between">
-            <Card>
-              <Typography.Title level={2}>{data?.name}</Typography.Title>
-              <Rate allowHalf disabled defaultValue={data?.rating} />
-            </Card>
-            {/* {isLoaded && (
-              <GoogleMap
-                zoom={10}
-                center={{ lat: 44, lng: -80 }}
-                style={{ width: '300px', height: '300px' }}
-              >
-                <Marker position={{ lat: 44, lng: -80 }} />
-              </GoogleMap>
-            )} */}
-            <iframe
-              width={500}
-              height={300}
-              src="https://maps.google.com/maps?q=Hotel%20Moskva&t=&z=13&ie=UTF8&iwloc=&output=embed"
-              frameBorder={0}
-            ></iframe>
+          <Typography.Title level={2} style={{ padding: '0px 20px', marginBottom: '20px' }}>
+            {data?.name}
+          </Typography.Title>
+          <Row justify="space-between" style={{ marginBottom: '50px' }}>
+            <Col xs={24} lg={12}>
+              <Card style={{ textAlign: 'center', width: 'fit-content' }}>
+                <Statistic
+                  title={t('rating')}
+                  value={data?.rating}
+                  valueStyle={{ fontSize: '50px' }}
+                />
+                <Rate allowHalf disabled defaultValue={data?.rating} style={{ fontSize: '35px' }} />
+              </Card>
+            </Col>
+            <Col xs={24} lg={12}>
+              <iframe
+                height={300}
+                style={{ width: '100%' }}
+                src={`https://www.google.com/maps/embed/v1/place?key=${
+                  import.meta.env.VITE_APP_GOOGLE_MAPS_KEY
+                }&q=place_id:${currentLocationId}`}
+                frameBorder={0}
+              ></iframe>
+            </Col>
           </Row>
           <Row gutter={[10, 10]}>
             {data?.reviews?.map((review, index) => {

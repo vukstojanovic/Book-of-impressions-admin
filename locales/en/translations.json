@@ -212,5 +212,8 @@
     "answer": "Answer",
     "rating": "Rating",
     "ratings": "Ratings"
+  },
+  "GoogleReviews": {
+    "rating": "Rating"
   }
 }

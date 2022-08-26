@@ -212,5 +212,8 @@
     "answer": "Odgovor",
     "rating": "Ocena",
     "ratings": "Ocene"
+  },
+  "GoogleReviews": {
+    "rating": "Rejting"
   }
 }

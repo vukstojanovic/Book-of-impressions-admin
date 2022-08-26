@@ -79,16 +79,16 @@ export const SideMenu = ({ collapsed }) => {
             onClick: () => navigate('/reviews'),
           },
           {
-            key: 'reports',
-            icon: <FileTextOutlined style={{ fontSize: '18px' }} />,
-            label: t('reports'),
-            onClick: () => navigate('/reports'),
-          },
-          {
             key: 'google-reviews',
             icon: <GoogleOutlined style={{ fontSize: '18px' }} />,
             label: t('google_reviews'),
             onClick: () => navigate('/google-reviews'),
+          },
+          {
+            key: 'reports',
+            icon: <FileTextOutlined style={{ fontSize: '18px' }} />,
+            label: t('reports'),
+            onClick: () => navigate('/reports'),
           },
           {
             key: 'organization',
