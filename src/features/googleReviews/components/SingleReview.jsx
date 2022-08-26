@@ -1,14 +1,7 @@
 import { Card, Row, Typography, Image, Rate } from 'antd'
 import dayjs from 'dayjs'
-import relativeTime from 'dayjs/plugin/relativeTime'
-import 'dayjs/locale/sr'
-import { useTranslation } from 'react-i18next'
 
 export const SingleReview = ({ author_name, profile_photo_url, text, rating, time }) => {
-  const { i18n } = useTranslation()
-  dayjs.locale(i18n.language)
-  dayjs.extend(relativeTime)
-
   return (
     <Card style={{ height: '100%', borderRadius: '12px' }}>
       <Row align="middle" style={{ marginBottom: '15px' }}>

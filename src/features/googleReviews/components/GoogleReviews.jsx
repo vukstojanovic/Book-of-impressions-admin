@@ -1,5 +1,8 @@
 import { Row, Col, Card, Typography, Rate, Spin, Statistic } from 'antd'
 import { useTranslation } from 'react-i18next'
+import dayjs from 'dayjs'
+import relativeTime from 'dayjs/plugin/relativeTime'
+import 'dayjs/locale/sr'
 
 import { useGetGoogleReviewsQuery } from '../api/getGoogleReviews'
 import { SingleReview } from '../components/SingleReview'
@@ -7,7 +10,9 @@ import { SingleReview } from '../components/SingleReview'
 export const GoogleReviews = () => {
   const currentLocationId = 'ChIJUfDPCbJ6WkcRd7fUAGRPUFI'
   const { data, isLoading } = useGetGoogleReviewsQuery(currentLocationId)
-  const { t } = useTranslation('GoogleReviews')
+  const { t, i18n } = useTranslation('GoogleReviews')
+  dayjs.locale(i18n.language)
+  dayjs.extend(relativeTime)
 
   if (isLoading) {
     return <Spin />
