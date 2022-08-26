@@ -7,6 +7,7 @@ import { Forms, FormPreview, EditOrPostForm } from '@/features/forms'
 import { Settings } from '@/features/settings'
 import { ProfileSettings } from '@/features/profileSettings'
 import { Reports } from '@/features/reports'
+import { GoogleReviews } from '@/features/googleReviews'
 import Dashboard from '@/features/dashboard/Dashboard'
 
 const App = () => {
@@ -36,6 +37,7 @@ export const protectedRoutes = [
       { path: '/forms/edit', element: <EditOrPostForm type="edit" /> },
       { path: '/forms/:formTitle', element: <FormPreview /> },
       { path: '/reviews', element: <Reviews /> },
+      { path: '/google-reviews', element: <GoogleReviews /> },
       { path: '/reports', element: <Reports /> },
       { path: '/settings', element: <Settings /> },
       { path: '/my-profile', element: <ProfileSettings /> },

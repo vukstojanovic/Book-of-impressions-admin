@@ -100,6 +100,7 @@
     "main": "Main",
     "forms": "Forms",
     "reviews": "Reviews",
+    "google_reviews": "Google reviews",
     "reports": "Reports",
     "organization": "Organization",
     "users": "Users",
@@ -212,6 +213,9 @@
     "answer": "Answer",
     "rating": "Rating",
     "ratings": "Ratings"
+  },
+  "GoogleReviews": {
+    "rating": "Rating"
   },
   "Charts": {
     "value": "Value",

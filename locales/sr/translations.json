@@ -100,6 +100,7 @@
     "main": "Glavni meni",
     "forms": "Formulari",
     "reviews": "Recenzije",
+    "google_reviews": "Google recenzije",
     "reports": "Izveštaji",
     "organization": "Organizacija",
     "users": "Korisnici",
@@ -212,6 +213,9 @@
     "answer": "Odgovor",
     "rating": "Ocena",
     "ratings": "Ocene"
+  },
+  "GoogleReviews": {
+    "rating": "Rejting"
   },
   "Charts": {
     "value": "Vrednost",

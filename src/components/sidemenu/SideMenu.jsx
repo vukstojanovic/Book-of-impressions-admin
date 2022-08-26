@@ -8,6 +8,7 @@ import {
   QuestionCircleOutlined,
   CommentOutlined,
   SettingOutlined,
+  GoogleOutlined,
 } from '@ant-design/icons'
 import { useLocation, useNavigate } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
@@ -76,6 +77,12 @@ export const SideMenu = ({ collapsed }) => {
             icon: <StarOutlined style={{ fontSize: '18px' }} />,
             label: t('reviews'),
             onClick: () => navigate('/reviews'),
+          },
+          {
+            key: 'google-reviews',
+            icon: <GoogleOutlined style={{ fontSize: '18px' }} />,
+            label: t('google_reviews'),
+            onClick: () => navigate('/google-reviews'),
           },
           {
             key: 'reports',
