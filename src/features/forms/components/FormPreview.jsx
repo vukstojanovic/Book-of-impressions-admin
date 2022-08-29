@@ -1,5 +1,5 @@
 import { Spin, Typography, Card, Tag, Row, Col, Divider } from 'antd'
-import { useSearchParams } from 'react-router-dom'
+import { useSearchParams, useLocation } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import { useState } from 'react'
 import { QrcodeOutlined } from '@ant-design/icons'
@@ -11,6 +11,7 @@ import QRCodeFormModal from './QRCodeFormModal'
 
 import { ReviewCard } from '@/components/reviewCard'
 import { EditButton } from '@/components/buttons/EditButton'
+import { FilterComponent } from '@/components/filterComponent/FilterComponent'
 
 export const FormPreview = () => {
   const {
@@ -21,8 +22,12 @@ export const FormPreview = () => {
   const [param] = useSearchParams()
   const id = param.get('id')
 
+  const location = useLocation()
+  const searchQuery = location.search
   const { data: formData, isLoading: formIsLoading } = useGetForm({ id })
-  const { data: formReviewData, isLoading: reviewIsLoading } = useGetFormReviews({ id })
+  const { data: formReviewData, isLoading: reviewIsLoading } = useGetFormReviews({
+    searchQuery,
+  })
   const [qrValue, setQrValue] = useState('asd')
 
   const [QRModalVisible, setQRModalVisible] = useState(false)
@@ -83,6 +88,13 @@ export const FormPreview = () => {
         {t('reviews')}:
       </Title>
       <Col style={{ padding: '0 24px' }}>
+        <FilterComponent
+          hasName
+          hasEmail
+          hasDate
+          hasAnswer={formData?.type === 'Answer'}
+          hasRating={formData?.type === 'Rating' || formData?.type === 'Ratings'}
+        />
         <Row style={{ gap: 16 }}>
           {formReviewData[0].map((review) => {
             return <ReviewCard key={review.id} {...review} />

@@ -2,10 +2,10 @@ import { useQuery } from 'react-query'
 
 import { axios } from '@/lib/axios'
 
-export const getFormReviews = ({ id }) => {
-  return axios.get(`/api/wapp/reviews/${id}`)
+export const getFormReviews = ({ searchQuery }) => {
+  return axios.get(`/api/wapp/reviews/${searchQuery}`)
 }
 
-export const useGetFormReviews = ({ id }) => {
-  return useQuery(['reviews', id], () => getFormReviews({ id }))
+export const useGetFormReviews = ({ searchQuery }) => {
+  return useQuery(['formReviews', searchQuery], () => getFormReviews({ searchQuery }))
 }

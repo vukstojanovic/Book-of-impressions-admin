@@ -18,19 +18,23 @@ export const FilterComponent = ({
   const dateFormat = 'YYYY-MM-DD'
   const { t } = useTranslation('Filters')
 
-  function handleFinish(formValues) {
-    for (const key of searchParams.keys()) {
-      searchParams.delete(key)
-    }
-    setSearchParams(searchParams)
+  function deleteFilters() {
+    const filterKeys = [...searchParams.keys()]
+    filterKeys.forEach((key) => {
+      if (key !== 'id') searchParams.delete(key)
+    })
+  }
 
+  function handleFinish(formValues) {
     const valuesKeys = Object.keys(formValues)
     const modifiedObject = {}
+    deleteFilters()
 
     valuesKeys.forEach((key) => {
       if (
-        (formValues[key] || formValues[key] === 0 || formValues[key] === false) &&
-        !(Array.isArray(formValues[key]) && !formValues[key]?.length)
+        formValues[key]?.length ||
+        typeof formValues[key] === 'number' ||
+        typeof formValues[key] === 'boolean'
       ) {
         if (key === 'createdDate') {
           modifiedObject.fromCreatedDate = moment(formValues[key][0]?._d).format(dateFormat)
@@ -45,24 +49,21 @@ export const FilterComponent = ({
     })
 
     const modifiedObjectKeys = Object.keys(modifiedObject)
-
     modifiedObjectKeys.forEach((key) => {
       if (key === 'formType' || key === 'type') {
-        searchParams.delete(`${key}[]`)
         modifiedObject[key]?.forEach((type) => {
           searchParams.append(`${key}[]`, type)
         })
-        setSearchParams(searchParams)
       } else {
-        searchParams.delete(key)
         searchParams.set(key, modifiedObject[key])
-        setSearchParams(searchParams)
       }
     })
+    setSearchParams(searchParams)
   }
 
   function handleReset() {
-    setSearchParams({})
+    deleteFilters()
+    setSearchParams(searchParams)
     form.setFieldsValue({
       reviewName: '',
       reviewEmail: '',
