@@ -24,8 +24,11 @@ export const FormPreview = () => {
 
   const location = useLocation()
   const searchQuery = location.search
-  const { data: formData, isLoading: formIsLoading } = useGetForm({ id })
+  const { data: formData, isLoading: formIsLoading } = useGetForm({
+    id,
+  })
   const { data: formReviewData, isLoading: reviewIsLoading } = useGetFormReviews({
+    id,
     searchQuery,
   })
   const [qrValue, setQrValue] = useState('asd')
