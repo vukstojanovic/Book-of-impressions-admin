@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, useLocation } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import { Typography, Row, Card, Progress, Skeleton, Empty, Button, Col } from 'antd'
 import { QrcodeOutlined } from '@ant-design/icons'
@@ -10,12 +10,13 @@ import QRCodeFormModal from './QRCodeFormModal'
 
 import { AddButton } from '@/components/buttons/AddButton'
 import { FilterComponent } from '@/components/filterComponent'
-import { useFilterBySearchParams } from '@/utils/useFilterBySearchParams'
 
 const { Title, Paragraph, Text } = Typography
 
 export const Forms = () => {
-  const { data, isLoading } = useForms()
+  const location = useLocation()
+  const decodedQueryParams = decodeURIComponent(location.search)
+  const { data, isLoading } = useForms(decodedQueryParams)
   const { t } = useTranslation('Forms')
 
   const navigate = useNavigate()
@@ -23,7 +24,6 @@ export const Forms = () => {
   const [formId, setFormId] = useState('')
   const [modalVisible, setModalVisible] = useState(false)
   const divFlex = { display: 'flex', justifyContent: 'space-between', alignItems: 'center' }
-  const filteredData = useFilterBySearchParams(isLoading ? [] : data[0], 'title')
 
   const columnDivFlex = {
     textAlign: 'center',
@@ -36,7 +36,14 @@ export const Forms = () => {
   if (!isLoading && data[0].length === 0) {
     return (
       <>
-        <AddButton linkTo="/forms/create-new-form" />
+        <Row justify="space-between" align="top">
+          <Col span={22}>
+            <FilterComponent hasType hasTitle />
+          </Col>
+          <Col style={{ paddingTop: '2px' }}>
+            <AddButton linkTo="/forms/create-new-form" />
+          </Col>
+        </Row>
         <Empty
           description={
             <span>
@@ -50,11 +57,11 @@ export const Forms = () => {
 
   return (
     <>
-      <Row justify="space-between" align="middle">
-        <Col>
-          <FilterComponent />
+      <Row justify="space-between" align="top">
+        <Col span={22}>
+          <FilterComponent hasType hasTitle />
         </Col>
-        <Col>
+        <Col style={{ paddingTop: '2px' }}>
           <AddButton linkTo="/forms/create-new-form" />
         </Col>
       </Row>
@@ -68,7 +75,7 @@ export const Forms = () => {
 
       <Row align="middle" style={{ gap: 50 }}>
         {!isLoading ? (
-          filteredData.map((form) => {
+          data[0]?.map((form) => {
             const { id, name, title } = form
             return (
               <Card

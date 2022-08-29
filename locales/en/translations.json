@@ -96,9 +96,11 @@
   },
   "SideMenu": {
     "dashboard": "Dashboard",
+    "analytics": "Analytics",
     "main": "Main",
     "forms": "Forms",
     "reviews": "Reviews",
+    "google_reviews": "Google reviews",
     "reports": "Reports",
     "organization": "Organization",
     "users": "Users",
@@ -194,5 +196,46 @@
     "page": "Page",
     "of": "of",
     "loading": "Loading..."
+  },
+  "Filters": {
+    "name": "Name",
+    "email": "Email",
+    "title": "Title",
+    "type": "Type",
+    "start_date": "Start date",
+    "end_date": "End date",
+    "like": "Like",
+    "dislike": "Dislike",
+    "select_form_type": "Select form type",
+    "filter": "Filter",
+    "reset_filters": "Reset filters",
+    "filters": "Filters",
+    "answer": "Answer",
+    "rating": "Rating",
+    "ratings": "Ratings"
+  },
+  "GoogleReviews": {
+    "rating": "Rating"
+  },
+  "Charts": {
+    "value": "Value",
+    "answer": "Answer",
+    "rating": "Rating",
+    "ratings": "Ratings",
+    "total_reviews": "of Total Reviews",
+    "No": "No",
+    "Yes": "Yes",
+    "review_count": "Review Count",
+    "anonymous": "Anonymous Reviews",
+    "star": "Star",
+    "stars": "Stars",
+    "star_2": "Stars",
+    "today": "Today",
+    "last_day": "Last day",
+    "last_3_days": "Last 3 days",
+    "last_week": "Last week",
+    "last_3_weeks": "Last 3 weeks",
+    "last_month": "Last month",
+    "custom": "Custom"
   }
 }

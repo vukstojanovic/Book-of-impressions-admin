@@ -2,10 +2,10 @@ import { useQuery } from 'react-query'
 
 import { axios } from '@/lib/axios'
 
-export const getReviews = () => {
-  return axios.get('/api/wapp/reviews')
+export const getReviews = (queryParams) => {
+  return axios.get(`/api/wapp/reviews${queryParams}`)
 }
 
-export const useGetReviewsQuery = () => {
-  return useQuery(['reviews'], getReviews)
+export const useGetReviewsQuery = (reviewSearchParams) => {
+  return useQuery(['reviews', reviewSearchParams], () => getReviews(reviewSearchParams))
 }
