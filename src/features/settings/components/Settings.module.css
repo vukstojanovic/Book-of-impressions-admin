@@ -29,3 +29,8 @@
 .hidden {
   display: none;
 }
+
+.tagContent {
+  display: grid;
+  gap: 10px;
+}
