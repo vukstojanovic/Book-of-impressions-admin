@@ -199,20 +199,26 @@
   },
   "Filters": {
     "name": "Ime",
+    "enter_name": "Unesi ime...",
     "email": "Email",
+    "enter_email": "Unesi email...",
     "title": "Naslov",
+    "enter_title": "Unesi naslov...",
     "type": "Tip",
     "start_date": "Početni datum",
     "end_date": "Završni datum",
     "like": "Odobravam",
     "dislike": "Ne odobravam",
     "select_form_type": "Odaberi tip forme",
+    "select_type": "Odaberi tip",
     "filter": "Filtriraj",
     "reset_filters": "Resetuj filtere",
     "filters": "Filteri",
     "answer": "Odgovor",
     "rating": "Ocena",
-    "ratings": "Ocene"
+    "ratings": "Ocene",
+    "date": "Datum",
+    "form_type": "Tip forme"
   },
   "GoogleReviews": {
     "rating": "Rejting"
