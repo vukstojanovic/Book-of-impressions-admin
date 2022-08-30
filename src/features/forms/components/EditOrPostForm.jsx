@@ -291,7 +291,7 @@ export const EditOrPostForm = ({ type }) => {
                     <TextArea
                       placeholder="Form description"
                       name="english-desc"
-                      autoSize={{ minRows: 6, maxRows: 10 }}
+                      autoSize={{ minRows: 3, maxRows: 10 }}
                       style={{ marginTop: '6px' }}
                     />
                   </Form.Item>
@@ -309,7 +309,7 @@ export const EditOrPostForm = ({ type }) => {
                     <TextArea
                       placeholder="Opis forme"
                       name="serbian-dec"
-                      autoSize={{ minRows: 6, maxRows: 10 }}
+                      autoSize={{ minRows: 3, maxRows: 10 }}
                       style={{ marginTop: '6px' }}
                     />
                   </Form.Item>
@@ -374,10 +374,9 @@ export const EditOrPostForm = ({ type }) => {
                                   },
                                 ]}
                               >
-                                <TextArea
+                                <Input
                                   placeholder="Question"
                                   name="question-en"
-                                  autoSize={{ minRows: 6, maxRows: 10 }}
                                   style={{ marginTop: '6px' }}
                                 />
                               </Form.Item>
@@ -392,10 +391,9 @@ export const EditOrPostForm = ({ type }) => {
                                   },
                                 ]}
                               >
-                                <TextArea
+                                <Input
                                   placeholder="Pitanje"
                                   name="question-sr"
-                                  autoSize={{ minRows: 6, maxRows: 10 }}
                                   style={{ marginTop: '6px' }}
                                 />
                               </Form.Item>
