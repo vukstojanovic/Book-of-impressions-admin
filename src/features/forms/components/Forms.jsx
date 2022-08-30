@@ -11,13 +11,16 @@ import QRCodeFormModal from './QRCodeFormModal'
 import { AddButton } from '@/components/buttons/AddButton'
 import { FilterComponent } from '@/components/filterComponent'
 
-const { Title, Paragraph, Text } = Typography
+const { Title, Text } = Typography
 
 export const Forms = () => {
   const location = useLocation()
   const decodedQueryParams = decodeURIComponent(location.search)
   const { data, isLoading } = useForms(decodedQueryParams)
-  const { t } = useTranslation('Forms')
+  const {
+    i18n: { language },
+    t,
+  } = useTranslation('Forms')
 
   const navigate = useNavigate()
   const [formTitle, setFormTitle] = useState('')
@@ -76,7 +79,7 @@ export const Forms = () => {
       <Row align="middle" style={{ gap: 50 }}>
         {!isLoading ? (
           data[0]?.map((form) => {
-            const { id, name, title } = form
+            const { id, title, description } = form
             return (
               <Card
                 hoverable
@@ -99,8 +102,9 @@ export const Forms = () => {
                     <QrcodeOutlined style={{ fontSize: '18px' }} />
                   </Button>
                 </div>
-                {/* Form Description */}
-                <Paragraph>{name}</Paragraph>
+                <Text ellipsis style={{ marginTop: '1rem', marginBottom: '1rem' }}>
+                  {description.filter((lang) => lang.key === language)[0]?.text}
+                </Text>
                 <div style={divFlex}>
                   <div style={columnDivFlex}>
                     <Progress
