@@ -68,3 +68,40 @@ code {
 .sidemenu-trigger-button:hover {
   color: #f66702 !important;
 }
+
+html,
+body {
+  overflow: hidden;
+}
+@media print {
+  .ant-layout {
+    margin: 0;
+    overflow: hidden;
+  }
+  .ant-layout-content {
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+  }
+  .ant-layout-sider,
+  .ant-layout-header,
+  .ant-breadcrumb,
+  h2 {
+    display: none;
+    overflow: hidden;
+  }
+  html,
+  body {
+    overflow: hidden;
+  }
+  .barRow {
+    width: 70%;
+    justify-content: space-between;
+  }
+  .barRow > div {
+    max-width: 30%;
+  }
+  #example-print {
+    height: 100%;
+  }
+}

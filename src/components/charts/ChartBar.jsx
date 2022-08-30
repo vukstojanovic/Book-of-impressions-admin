@@ -5,11 +5,12 @@ export const ChartBar = ({ data }) => {
   const { t } = useTranslation('Charts')
   return (
     <ResponsiveContainer width="100%" minHeight={200}>
-      <BarChart margin={{ top: 30 }} width={260} height={200} data={data}>
+      <BarChart margin={{ top: 30 }} data={data}>
         <CartesianGrid strokeDasharray="3 3" />
         <XAxis dataKey="name" tickFormatter={(props) => t(`${props.toLowerCase()}`)} />
         <YAxis />
         <Tooltip
+          wrapperStyle={{ outline: 'none' }}
           cursor={{ fill: 'rgba(19, 54, 89, 0.5)' }}
           formatter={(value) => [value, t('value')]}
           labelFormatter={(props) => {
@@ -21,7 +22,7 @@ export const ChartBar = ({ data }) => {
               case 'Ratings':
                 return t('ratings')
               case '5':
-                return `5 ${t('stars_2')}`
+                return `5 ${t('star_2')}`
               case '4':
                 return `4 ${t('stars')}`
               case '3':

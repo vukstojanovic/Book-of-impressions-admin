@@ -2,7 +2,7 @@ import { useTranslation } from 'react-i18next'
 import { DislikeOutlined, LikeOutlined } from '@ant-design/icons'
 import { Col, Rate, Row, Typography } from 'antd'
 
-const RatingTypes = ({ ratingType, data, ratingData }) => {
+const RatingTypes = ({ ratingType, ratingData }) => {
   const { t } = useTranslation('Charts')
   return (
     <>
@@ -26,7 +26,7 @@ const RatingTypes = ({ ratingType, data, ratingData }) => {
                   borderRadius: '100%',
                 }}
               />
-              <p>{data[0].value}</p>
+              <p>{ratingData.positive}</p>
             </Col>
             <Col style={{ textAlign: 'center' }}>
               <DislikeOutlined
@@ -38,7 +38,7 @@ const RatingTypes = ({ ratingType, data, ratingData }) => {
                   borderRadius: '100%',
                 }}
               />
-              <p>{data[1].value}</p>
+              <p>{ratingData.negative}</p>
             </Col>
           </Row>
         </Col>
@@ -55,31 +55,31 @@ const RatingTypes = ({ ratingType, data, ratingData }) => {
             <Col>
               <Rate defaultValue={5} disabled />
             </Col>
-            <Col>{ratingData[0]?.value}</Col>
+            <Col>{ratingData.five}</Col>
           </Row>
           <Row justify="start" align="middle" gutter={20}>
             <Col>
               <Rate defaultValue={4} disabled />
             </Col>
-            <Col>{ratingData[1]?.value}</Col>
+            <Col>{ratingData.four}</Col>
           </Row>
           <Row justify="start" align="middle" gutter={20}>
             <Col>
               <Rate defaultValue={3} disabled />
             </Col>
-            <Col>{ratingData[2]?.value}</Col>
+            <Col>{ratingData.three}</Col>
           </Row>
           <Row justify="start" align="middle" gutter={20}>
             <Col>
               <Rate defaultValue={2} disabled />
             </Col>
-            <Col>{ratingData[3]?.value}</Col>
+            <Col>{ratingData.two}</Col>
           </Row>
           <Row justify="start" align="middle" gutter={20}>
             <Col>
               <Rate defaultValue={1} disabled />
             </Col>
-            <Col>{ratingData[4]?.value}</Col>
+            <Col>{ratingData.one}</Col>
           </Row>
         </Col>
       )}
