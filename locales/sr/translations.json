@@ -56,7 +56,8 @@
     "cancel": "Poništi",
     "empty_warning": "Ne može biti prazno!",
     "confirm_delete": "Da li ste sigurni da hoćete da obrišete",
-    "no_users": "Nema korisnika"
+    "no_users": "Nema korisnika",
+    "no_results": "Nema rezultata"
   },
   "Reviews": {
     "name": "Ime",
@@ -196,7 +197,8 @@
     "next": "Naredna",
     "page": "Strana",
     "of": "od",
-    "loading": "Učitavanje..."
+    "loading": "Učitavanje...",
+    "no_results": "Nema rezultata"
   },
   "Filters": {
     "name": "Ime",

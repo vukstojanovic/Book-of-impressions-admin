@@ -1,5 +1,5 @@
 import { useRef } from 'react'
-import { Space, Table, Modal, Button } from 'antd'
+import { Space, Table, Modal, Button, Empty } from 'antd'
 import { EyeOutlined, DeleteOutlined } from '@ant-design/icons'
 import { useTranslation } from 'react-i18next'
 import { Document, Page, pdfjs } from 'react-pdf'
@@ -164,7 +164,21 @@ export const Reports = () => {
   return (
     <>
       <AddButton linkTo={'/reports/download-report'} />
-      <Table columns={columns} dataSource={data} />
+      <Table
+        columns={columns}
+        dataSource={data}
+        locale={{
+          emptyText: (
+            <Empty
+              description={
+                <span>
+                  <b>{t('no_results')}</b>
+                </span>
+              }
+            />
+          ),
+        }}
+      />
       <Modal
         centered
         title={modalTitle}

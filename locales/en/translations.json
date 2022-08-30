@@ -56,7 +56,8 @@
     "cancel": "Cancel",
     "empty_warning": "Cannot be empty!",
     "confirm_delete": "Are you sure you want to delete",
-    "no_users": "No Users"
+    "no_users": "No Users",
+    "no_results": "No results"
   },
   "Reviews": {
     "name": "Name",
@@ -196,7 +197,8 @@
     "next": "Next",
     "page": "Page",
     "of": "of",
-    "loading": "Loading..."
+    "loading": "Loading...",
+    "no_results": "No results"
   },
   "Filters": {
     "name": "Name",
