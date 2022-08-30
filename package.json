@@ -12,6 +12,7 @@
   "dependencies": {
     "@ant-design/icons": "^4.7.0",
     "@hookform/resolvers": "^2.9.7",
+    "@react-google-maps/api": "^2.12.2",
     "antd": "^4.21.5",
     "axios": "^0.27.2",
     "cookies-next": "^2.1.1",
@@ -19,6 +20,7 @@
     "i18next": "^21.8.12",
     "i18next-http-backend": "^1.4.1",
     "jspdf": "^2.5.1",
+    "moment": "^2.29.4",
     "next-intl": "^2.7.4",
     "qrcode.react": "^3.1.0",
     "react": "^18.0.0",
@@ -32,6 +34,7 @@
     "react-query-auth": "^1.1.0",
     "react-router-dom": "^6.3.0",
     "react-scripts": "^5.0.1",
+    "recharts": "^2.1.13",
     "vercel": "^27.1.5",
     "yup": "^0.32.11"
   },

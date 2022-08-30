@@ -31,6 +31,11 @@ export const BreadcrumbComponent = () => {
           </Breadcrumb.Item>
         )
       })}
+      {pathnames.length === 0 && (
+        <Breadcrumb.Item>
+          <span style={{ color: '#8a8b8d' }}>{t('dashboard')} /</span> {t('analytics')}
+        </Breadcrumb.Item>
+      )}
     </Breadcrumb>
   )
 }
