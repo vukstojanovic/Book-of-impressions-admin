@@ -181,7 +181,7 @@ export function Settings() {
                   <TextArea
                     placeholder={`${t('company_description')}`}
                     name="english-desc"
-                    autoSize={{ minRows: 6, maxRows: 10 }}
+                    autoSize={{ minRows: 3, maxRows: 10 }}
                     style={{ marginTop: '6px' }}
                   />
                 </Form.Item>
@@ -203,7 +203,7 @@ export function Settings() {
                   <TextArea
                     placeholder={t('company_description')}
                     name="serbian-dec"
-                    autoSize={{ minRows: 6, maxRows: 10 }}
+                    autoSize={{ minRows: 3, maxRows: 10 }}
                     style={{ marginTop: '6px' }}
                   />
                 </Form.Item>
