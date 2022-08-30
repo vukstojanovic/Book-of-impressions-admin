@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Row, Col, Form, Typography, Input, Button, Select, Space, Tabs, Card, Spin } from 'antd'
-import { MinusCircleOutlined, PlusOutlined, PrinterFilled } from '@ant-design/icons'
+import { MinusCircleOutlined, PlusOutlined } from '@ant-design/icons'
 import { useSearchParams } from 'react-router-dom'
 
 import { useGetForm } from '../api/getForm'
@@ -10,7 +10,6 @@ import { usePostFormQuery } from '../api/postForm'
 
 import style from './EditOrPostForm.module.css'
 
-import { ChartBar } from '@/components/charts/ChartBar'
 import { useAuth } from '@/providers/authProvider'
 
 const { Title } = Typography
@@ -243,12 +242,8 @@ export const EditOrPostForm = ({ type }) => {
 
   return (
     <>
-      <Button id="printButton" onClick={() => window.print()}>
-        <PrinterFilled />
-      </Button>
-
       <Title level={2}>{type === 'edit' ? t('edit_main') : t('main')}</Title>
-      <Card id={'example-print'}>
+      <Card>
         <Form
           form={form}
           onFinish={handleSubmit}
@@ -257,44 +252,6 @@ export const EditOrPostForm = ({ type }) => {
           onValuesChange={onValuesChange}
           onFieldsChange={onFieldsChange}
         >
-          <Row className="barRow">
-            <Col sm={24} md={11} lg={6}>
-              <ChartBar
-                data={[
-                  {
-                    name: '1',
-                    value: 2,
-                  },
-                  {
-                    name: '2',
-                    value: 23,
-                  },
-                  {
-                    name: '3',
-                    value: 20,
-                  },
-                ]}
-              />
-            </Col>
-            <Col sm={24} md={11} lg={6}>
-              <ChartBar
-                data={[
-                  {
-                    name: '1',
-                    value: 2,
-                  },
-                  {
-                    name: '2',
-                    value: 23,
-                  },
-                  {
-                    name: '3',
-                    value: 20,
-                  },
-                ]}
-              />
-            </Col>{' '}
-          </Row>
           <Row>
             <Col sm={24} md={12} lg={6}>
               <Form.Item
