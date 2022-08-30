@@ -1,4 +1,4 @@
-import { Row, Col, Card, Typography, Rate, Spin, Statistic } from 'antd'
+import { Row, Col, Card, Typography, Rate, Spin, Statistic, Empty } from 'antd'
 import { useTranslation } from 'react-i18next'
 import dayjs from 'dayjs'
 import relativeTime from 'dayjs/plugin/relativeTime'
@@ -55,6 +55,15 @@ export const GoogleReviews = () => {
                 </Col>
               )
             })}
+            {data && data[0]?.length === 0 && (
+              <Empty
+                description={
+                  <span>
+                    <b>{t('no_results')}</b>
+                  </span>
+                }
+              />
+            )}
           </Row>
         </>
       )}

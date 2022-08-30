@@ -62,11 +62,12 @@
     "name": "Name",
     "home": "Home",
     "reviews": "Reviews",
-    "readMore": "Read more"
+    "readMore": "Read more",
+    "no_results": "No results"
   },
   "Forms": {
     "forms": "Forms",
-    "no_forms": "There are no forms",
+    "no_results": "No results",
     "questions": "Questions",
     "reviews": "Reviews"
   },
@@ -221,7 +222,8 @@
     "form_type": "Form type"
   },
   "GoogleReviews": {
-    "rating": "Rating"
+    "rating": "Rating",
+    "no_results": "No results"
   },
   "Charts": {
     "value": "Value",

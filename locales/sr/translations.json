@@ -62,11 +62,12 @@
     "name": "Ime",
     "home": "Početna strana",
     "reviews": "Recenzije",
-    "readMore": "Pročitaj više"
+    "readMore": "Pročitaj više",
+    "no_results": "Nema rezultata"
   },
   "Forms": {
     "forms": "Formulari",
-    "no_forms": "Nema formulara",
+    "no_results": "Nema rezultata",
     "questions": "Pitanja",
     "reviews": "Recenzije"
   },
@@ -221,7 +222,8 @@
     "form_type": "Tip forme"
   },
   "GoogleReviews": {
-    "rating": "Rejting"
+    "rating": "Rejting",
+    "no_results": "Nema rezultata"
   },
   "Charts": {
     "value": "Vrednost",
