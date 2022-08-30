@@ -50,7 +50,7 @@ export const Forms = () => {
         <Empty
           description={
             <span>
-              <b>{t('no_forms')}</b>
+              <b>{t('no_results')}</b>
             </span>
           }
         />

@@ -62,11 +62,12 @@
     "name": "Name",
     "home": "Home",
     "reviews": "Reviews",
-    "readMore": "Read more"
+    "readMore": "Read more",
+    "no_results": "No results"
   },
   "Forms": {
     "forms": "Forms",
-    "no_forms": "There are no forms",
+    "no_results": "No results",
     "questions": "Questions",
     "reviews": "Reviews"
   },
@@ -199,23 +200,30 @@
   },
   "Filters": {
     "name": "Name",
+    "enter_name": "Enter name...",
     "email": "Email",
+    "enter_email": "Enter email...",
     "title": "Title",
+    "enter_title": "Enter title...",
     "type": "Type",
     "start_date": "Start date",
     "end_date": "End date",
     "like": "Like",
     "dislike": "Dislike",
     "select_form_type": "Select form type",
+    "select_type": "Select type",
     "filter": "Filter",
     "reset_filters": "Reset filters",
     "filters": "Filters",
     "answer": "Answer",
     "rating": "Rating",
-    "ratings": "Ratings"
+    "ratings": "Ratings",
+    "date": "Date",
+    "form_type": "Form type"
   },
   "GoogleReviews": {
-    "rating": "Rating"
+    "rating": "Rating",
+    "no_results": "No results"
   },
   "Charts": {
     "value": "Value",
