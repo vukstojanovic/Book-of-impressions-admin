@@ -286,6 +286,24 @@ export const EditOrPostForm = ({ type }) => {
                         required: true,
                         message: t('emptyDescription'),
                       },
+                      {
+                        min: 20,
+                        message: 'Not enough characters',
+                      },
+                      {
+                        validator: (_, value) =>
+                          value
+                            .trim()
+                            .split('')
+                            .filter((letter) => letter === ' ').length >= 2 &&
+                          value[value.length - 1] === '?'
+                            ? Promise.resolve()
+                            : Promise.reject(
+                                new Error(
+                                  'Must have at least two spaces and end with question mark!'
+                                )
+                              ),
+                      },
                     ]}
                   >
                     <TextArea
