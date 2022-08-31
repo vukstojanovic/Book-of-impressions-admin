@@ -57,6 +57,7 @@ export const GoogleReviews = () => {
             })}
             {data && data[0]?.length === 0 && (
               <Empty
+                style={{ margin: 'auto' }}
                 description={
                   <span>
                     <b>{t('no_results')}</b>
