@@ -123,6 +123,7 @@ export const SideMenu = ({ collapsed }) => {
         }}
       >
         <Link
+          href="mailto:support@boi.rs"
           style={{
             display: 'flex',
             alignItems: 'center',

@@ -1,5 +1,6 @@
-import { Row, Spin } from 'antd'
+import { Row, Spin, Empty } from 'antd'
 import { useLocation } from 'react-router-dom'
+import { useTranslation } from 'react-i18next'
 
 import { useGetReviewsQuery } from '../api/getReviews'
 
@@ -10,6 +11,7 @@ export const Reviews = () => {
   const location = useLocation()
   const decodedQueryParams = decodeURIComponent(location.search)
   const { data, isLoading, isError, error } = useGetReviewsQuery(decodedQueryParams)
+  const { t } = useTranslation('Reviews')
 
   if (isLoading) {
     return (
@@ -26,6 +28,13 @@ export const Reviews = () => {
     return (
       <>
         <FilterComponent hasName hasEmail hasRating hasAnswer hasFormType hasDate />
+        <Empty
+          description={
+            <span>
+              <b>{t('no_results')}</b>
+            </span>
+          }
+        />
       </>
     )
   }

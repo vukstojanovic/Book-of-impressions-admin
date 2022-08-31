@@ -146,6 +146,17 @@ export const Users = () => {
         columns={columns}
         span={24}
         style={{ overflow: 'auto' }}
+        locale={{
+          emptyText: (
+            <Empty
+              description={
+                <span>
+                  <b>{t('no_results')}</b>
+                </span>
+              }
+            />
+          ),
+        }}
         rowKey={'id'}
       />
       <Modal

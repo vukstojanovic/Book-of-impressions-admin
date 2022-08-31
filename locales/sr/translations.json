@@ -56,17 +56,19 @@
     "cancel": "Poništi",
     "empty_warning": "Ne može biti prazno!",
     "confirm_delete": "Da li ste sigurni da hoćete da obrišete",
-    "no_users": "Nema korisnika"
+    "no_users": "Nema korisnika",
+    "no_results": "Nema rezultata"
   },
   "Reviews": {
     "name": "Ime",
     "home": "Početna strana",
     "reviews": "Recenzije",
-    "readMore": "Pročitaj više"
+    "readMore": "Pročitaj više",
+    "no_results": "Nema rezultata"
   },
   "Forms": {
     "forms": "Formulari",
-    "no_forms": "Nema formulara",
+    "no_results": "Nema rezultata",
     "questions": "Pitanja",
     "reviews": "Recenzije"
   },
@@ -195,27 +197,35 @@
     "next": "Naredna",
     "page": "Strana",
     "of": "od",
-    "loading": "Učitavanje..."
+    "loading": "Učitavanje...",
+    "no_results": "Nema rezultata"
   },
   "Filters": {
     "name": "Ime",
+    "enter_name": "Unesi ime...",
     "email": "Email",
+    "enter_email": "Unesi email...",
     "title": "Naslov",
+    "enter_title": "Unesi naslov...",
     "type": "Tip",
     "start_date": "Početni datum",
     "end_date": "Završni datum",
     "like": "Odobravam",
     "dislike": "Ne odobravam",
     "select_form_type": "Odaberi tip forme",
+    "select_type": "Odaberi tip",
     "filter": "Filtriraj",
     "reset_filters": "Resetuj filtere",
     "filters": "Filteri",
     "answer": "Odgovor",
     "rating": "Ocena",
-    "ratings": "Ocene"
+    "ratings": "Ocene",
+    "date": "Datum",
+    "form_type": "Tip forme"
   },
   "GoogleReviews": {
-    "rating": "Rejting"
+    "rating": "Rejting",
+    "no_results": "Nema rezultata"
   },
   "Charts": {
     "value": "Vrednost",
