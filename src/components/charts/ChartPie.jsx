@@ -7,15 +7,20 @@ import styles from './ChartPie.module.css'
 
 export const ChartPie = ({ data, halfPie }) => {
   const { t } = useTranslation('Charts')
+
+  const createDataArray = () => {
+    return Object.entries(data).map(([key, value]) => {
+      return {
+        name: `${key === 'positive' ? 'yes' : ''}${key === 'negative' ? 'no' : ''}`,
+        value: Number(value) || 1,
+      }
+    })
+  }
+
   const pieChartData =
     !halfPie && data
       ? // Case for Answers chart
-        Object.entries(data).map(([key, value]) => {
-          return {
-            name: `${key === 'positive' ? 'yes' : ''}${key === 'negative' ? 'no' : ''}`,
-            value: Number(value) || 1,
-          }
-        })
+        createDataArray()
       : // Case for halfPie chart
         [
           { name: 'positive', value: Number(data?.total_positive) || 1 },
@@ -46,7 +51,7 @@ export const ChartPie = ({ data, halfPie }) => {
   }
   return (
     <ResponsiveContainer width="100%" height={220}>
-      <PieChart margin={{ top: halfPie ? 70 : 0 }}>
+      <PieChart id="chart-pie" margin={{ top: halfPie ? 70 : 0 }}>
         <Tooltip
           itemStyle={{ textTransform: 'capitalize' }}
           formatter={(value, name) => [value, t(`${name}`)]}

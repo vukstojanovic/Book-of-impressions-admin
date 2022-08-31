@@ -12,7 +12,7 @@ export const ChartBar = ({ data }) => {
 
   return (
     <ResponsiveContainer width="100%" minHeight={200}>
-      <BarChart margin={{ top: 30 }} data={barChartData}>
+      <BarChart id="chart-bar" margin={{ top: 30 }} data={barChartData}>
         <CartesianGrid strokeDasharray="3 3" />
         <XAxis dataKey="name" tickFormatter={(props) => t(`${props}`)} />
         <YAxis />

@@ -80,14 +80,14 @@ code {
     margin-top: -100px;
   }
   .print-page {
-    scale: 0.8;
+    scale: 0.9;
     font-size: 10px;
   }
   .top-charts {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
-    padding-left: 100px;
     justify-content: center;
+    padding-left: 100px;
   }
   .top-charts > .chart {
     max-height: 150px;
@@ -98,11 +98,17 @@ code {
     grid-template-columns: repeat(2, 1fr);
     font-size: 0.5rem;
     gap: 120px;
+    height: 300px;
+  }
+  #chart-pie,
+  #chart-bar {
+    margin-top: 20px;
+    width: 70%;
   }
   .chart-row > div {
-    margin-top: 40px;
     max-width: 200px;
-    max-height: 120px;
+    max-height: 150px;
+    /* padding-top: 50px; */
   }
 
   .ant-layout-content,

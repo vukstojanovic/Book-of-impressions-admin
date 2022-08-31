@@ -9,7 +9,7 @@ export const ChartRow = ({ children, ratingType, ratingData }) => {
       style={{ backgroundColor: '#f0f2f5', borderRadius: '8px', padding: '1rem' }}
     >
       <RatingTypes ratingType={ratingType} data={ratingData} ratingData={ratingData} />
-      <Col sm={{ span: 22 }} md={{ span: 12 }} xl={{ span: 10 }}>
+      <Col id="chart-row-graph" sm={{ span: 22 }} md={{ span: 12 }} xl={{ span: 10 }}>
         {children}
       </Col>
     </Row>
