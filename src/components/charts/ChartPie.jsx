@@ -7,7 +7,20 @@ import styles from './ChartPie.module.css'
 
 export const ChartPie = ({ data, halfPie }) => {
   const { t } = useTranslation('Charts')
-  console.log(data)
+  const pieChartData =
+    !halfPie && data
+      ? // Case for Answers chart
+        Object.entries(data).map(([key, value]) => {
+          return {
+            name: `${key === 'positive' ? 'yes' : ''}${key === 'negative' ? 'no' : ''}`,
+            value: Number(value) || 1,
+          }
+        })
+      : // Case for halfPie chart
+        [
+          { name: 'positive', value: Number(data?.total_positive) || 1 },
+          { name: 'negative', value: Number(data?.total_negative) || 1 },
+        ]
 
   const renderCustomizedLabel = ({ x, y, cx, percent, name }) => {
     return (
@@ -31,7 +44,6 @@ export const ChartPie = ({ data, halfPie }) => {
       </>
     )
   }
-
   return (
     <ResponsiveContainer width="100%" height={220}>
       <PieChart margin={{ top: halfPie ? 70 : 0 }}>
@@ -41,7 +53,7 @@ export const ChartPie = ({ data, halfPie }) => {
           wrapperStyle={{ outline: 'none' }}
         />
         <Pie
-          data={data}
+          data={pieChartData}
           dataKey="value"
           startAngle={halfPie ? 180 : 0}
           endAngle={halfPie ? 0 : 360}
@@ -52,7 +64,7 @@ export const ChartPie = ({ data, halfPie }) => {
           innerRadius={35}
           label={renderCustomizedLabel}
         >
-          {data.map((entry, index) => (
+          {pieChartData.map((entry, index) => (
             <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
           ))}
         </Pie>

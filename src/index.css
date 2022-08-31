@@ -69,16 +69,44 @@ code {
   color: #f66702 !important;
 }
 
-html,
-body {
-  overflow: hidden;
+.print-date-text {
+  display: none;
 }
+
 @media print {
-  .ant-layout {
-    margin: 0;
-    overflow: hidden;
+  .print-date-text {
+    display: block;
+    text-align: center;
+    margin-top: -100px;
   }
-  .ant-layout-content {
+  .print-page {
+    scale: 0.8;
+    font-size: 10px;
+  }
+  .top-charts {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    padding-left: 100px;
+    justify-content: center;
+  }
+  .top-charts > .chart {
+    max-height: 150px;
+    margin-left: -120px;
+  }
+  .three-charts {
+    display: 'grid';
+    grid-template-columns: repeat(2, 1fr);
+    font-size: 0.5rem;
+    gap: 120px;
+  }
+  .chart-row > div {
+    margin-top: 40px;
+    max-width: 200px;
+    max-height: 120px;
+  }
+
+  .ant-layout-content,
+  .ant-layout {
     margin: 0;
     padding: 0;
     overflow: hidden;
@@ -86,22 +114,13 @@ body {
   .ant-layout-sider,
   .ant-layout-header,
   .ant-breadcrumb,
-  h2 {
+  h2,
+  form {
     display: none;
     overflow: hidden;
   }
   html,
   body {
     overflow: hidden;
-  }
-  .barRow {
-    width: 70%;
-    justify-content: space-between;
-  }
-  .barRow > div {
-    max-width: 30%;
-  }
-  #example-print {
-    height: 100%;
   }
 }

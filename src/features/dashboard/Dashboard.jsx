@@ -1,8 +1,19 @@
-import { DatePicker, Form, Col, Row, Select, Space, Statistic, Typography } from 'antd'
+import {
+  DatePicker,
+  Form,
+  Col,
+  Row,
+  Select,
+  Space,
+  Statistic,
+  Typography,
+  Spin,
+  Button,
+} from 'antd'
 import { useTranslation } from 'react-i18next'
 import { useReducer, useEffect } from 'react'
 import * as dayjs from 'dayjs'
-import * as isLeapYear from 'dayjs/plugin/isLeapYear'
+import { PrinterFilled } from '@ant-design/icons'
 
 import { useGetAnalytics } from './api/getAnalytics'
 import { ChartRow } from './ChartRow'
@@ -45,11 +56,10 @@ const Dashboard = () => {
   const [form] = Form.useForm()
 
   const [state, dispatch] = useReducer(reducer, initialState)
-  const { data } = useGetAnalytics({
+  const { data, isLoading } = useGetAnalytics({
     dateRange: { dateFrom: state.dateFrom, dateTo: state.dateTo },
   })
 
-  console.log(data)
   const { Paragraph } = Typography
   const { t } = useTranslation('Charts')
   const setTargetDate = (number, isMonth) => {
@@ -61,16 +71,14 @@ const Dashboard = () => {
   const onDateRangeChange = (values) => {
     const value = values[0].value
     const today = dayjs().format('YYYY-MM-DD')
-    console.log(isLeapYear)
-    if (value !== 'custom') {
-      form.resetFields(['pickedDate'])
-    }
+
     switch (value) {
       case 'today':
         dispatch({
           type: 'changeDate',
           payload: { dateFrom: today, dateTo: today, selectDateValue: value },
         })
+        form.resetFields(['pickedDate'])
         break
       case 'last_day':
         dispatch({
@@ -80,6 +88,7 @@ const Dashboard = () => {
             dateTo: today,
           },
         })
+        form.resetFields(['pickedDate'])
         break
       case 'last_3_days':
         dispatch({
@@ -89,6 +98,7 @@ const Dashboard = () => {
             dateTo: today,
           },
         })
+        form.resetFields(['pickedDate'])
         break
       case 'last_week':
         dispatch({
@@ -98,6 +108,7 @@ const Dashboard = () => {
             dateTo: today,
           },
         })
+        form.resetFields(['pickedDate'])
         break
       case 'last_3_weeks':
         dispatch({
@@ -107,6 +118,7 @@ const Dashboard = () => {
             dateTo: today,
           },
         })
+        form.resetFields(['pickedDate'])
         break
       case 'last_month':
         dispatch({
@@ -116,6 +128,7 @@ const Dashboard = () => {
             dateTo: today,
           },
         })
+        form.resetFields(['pickedDate'])
         break
       case 'custom':
         dispatch({ type: 'custom' })
@@ -141,47 +154,68 @@ const Dashboard = () => {
     })
   }, [])
 
-  const halfPieChartData = [
-    { name: 'positive', value: data?.total_positive === '0' ? '1' : data?.total_positive },
-    { name: 'negative', value: data?.total_negative === '0' ? '1' : data?.total_negative },
-  ]
-  const anonymousReviewPercentage = (data?.withoutname / data?.total) * 100 || 0
-  const reviewPercentage = (data?.countOfReviews / data?.totalReviews) * 100 || 0
-  if (!data) return null
+  const anonymousReviewPercentage = (data?.without_name / data?.total) * 100 || 0
+  const reviewPercentage = (data?.total / data?.totalND) * 100 || 0
+
+  if (isLoading)
+    return (
+      <Row align="middle" justify="center" style={{ minHeight: '30vh' }}>
+        <Spin size="large" />
+      </Row>
+    )
   return (
-    <Col style={{ background: 'white', padding: '24px', borderRadius: '8px' }}>
+    <Col
+      className="print-page"
+      style={{ background: 'white', padding: '24px', borderRadius: '8px' }}
+    >
+      <Typography.Paragraph className="print-date-text">
+        {form.getFieldValue('selectedDateRange') === 'today'
+          ? `${state.dateTo}`
+          : `${dayjs(state.dateFrom).format('DD.MM.YYYY')} - ${dayjs(state.dateTo).format(
+              'DD.MM.YYYY'
+            )}`}
+      </Typography.Paragraph>
       <Form onFieldsChange={onDateRangeChange} form={form}>
-        <Row gutter={16}>
-          <Col>
-            <Form.Item name="selectedDateRange">
-              <Select style={{ minWidth: '200px' }}>
-                <Option value="today">{t('today')}</Option>
-                <Option value="last_day">{t('last_day')}</Option>
-                <Option value="last_3_days">{t('last_3_days')}</Option>
-                <Option value="last_week">{t('last_week')}</Option>
-                <Option value="last_3_weeks">{t('last_3_weeks')}</Option>
-                <Option value="last_month">{t('last_month')}</Option>
-                <Option value="custom">{t('custom')}</Option>
-              </Select>
-            </Form.Item>
-          </Col>
-          {state.custom && (
+        <Row justify="space-between">
+          <Row gutter={16}>
             <Col>
-              <Form.Item name="pickedDate">
-                <DatePicker.RangePicker style={{ maxWidth: '250px' }} />
+              <Form.Item name="selectedDateRange">
+                <Select style={{ minWidth: '200px' }}>
+                  <Option value="today">{t('today')}</Option>
+                  <Option value="last_day">{t('last_day')}</Option>
+                  <Option value="last_3_days">{t('last_3_days')}</Option>
+                  <Option value="last_week">{t('last_week')}</Option>
+                  <Option value="last_3_weeks">{t('last_3_weeks')}</Option>
+                  <Option value="last_month">{t('last_month')}</Option>
+                  <Option value="custom">{t('custom')}</Option>
+                </Select>
               </Form.Item>
             </Col>
-          )}
+
+            {state.custom && (
+              <Col>
+                <Form.Item name="pickedDate">
+                  <DatePicker.RangePicker style={{ maxWidth: '250px' }} />
+                </Form.Item>
+              </Col>
+            )}
+          </Row>
+          <Button
+            onClick={() => window.print()}
+            style={{ justifySelf: 'flex-end', display: 'flex' }}
+          >
+            <PrinterFilled />
+          </Button>
         </Row>
       </Form>
-
       <Row
+        className="top-charts"
         justify="space-around"
         gutter={50}
         align="middle"
         style={{
           backgroundColor: '#f0f2f5',
-          margin: '30px 0 0',
+          margin: '15px 0 0',
           borderRadius: '8px',
           paddingBottom: '15px',
         }}
@@ -200,17 +234,29 @@ const Dashboard = () => {
         >
           <Statistic
             title={t('review_count')}
-            value={654}
+            value={data?.total}
             valueStyle={{ textAlign: 'center', padding: '1rem 0', color: '#1b4979' }}
           />
           <Paragraph>
             {reviewPercentage.toFixed(2)}% {t('total_reviews')}
           </Paragraph>
         </Col>
-        <Col xs={{ span: 20 }} sm={{ span: 20 }} md={{ span: 10 }} xxl={{ span: 6 }}>
-          <ChartPie data={halfPieChartData} halfPie />
+        <Col
+          className="chart"
+          xs={{ span: 20 }}
+          sm={{ span: 20 }}
+          md={{ span: 10 }}
+          xxl={{ span: 6 }}
+        >
+          <ChartPie data={!isLoading && data} halfPie />
         </Col>
-        <Col xs={{ span: 20 }} sm={{ span: 20 }} md={{ span: 10 }} xxl={{ span: 6 }}>
+        <Col
+          className="chart"
+          xs={{ span: 20 }}
+          sm={{ span: 20 }}
+          md={{ span: 10 }}
+          xxl={{ span: 6 }}
+        >
           <ChartBar data={data?.byType} />
         </Col>
         <Col
@@ -235,7 +281,12 @@ const Dashboard = () => {
           </Paragraph>
         </Col>
       </Row>
-      <Space direction="vertical" size={30} style={{ width: '100%', marginTop: '30px' }}>
+      <Space
+        className="three-charts"
+        direction="vertical"
+        size={30}
+        style={{ width: '100%', marginTop: '30px' }}
+      >
         <ChartRow ratingType={'Rating'} ratingData={data?.rating}>
           <ChartBar data={data?.rating} />
         </ChartRow>
@@ -243,7 +294,7 @@ const Dashboard = () => {
           <ChartBar data={data?.ratings} />
         </ChartRow>
         <ChartRow ratingType={'Answer'} ratingData={data?.answer}>
-          {/* <ChartPie data={data?.answer} /> */}
+          <ChartPie data={data?.answer} />
         </ChartRow>
       </Space>
     </Col>
