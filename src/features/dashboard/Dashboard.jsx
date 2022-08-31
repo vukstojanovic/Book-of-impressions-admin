@@ -52,7 +52,6 @@ const Dashboard = () => {
   console.log(data)
   const { Paragraph } = Typography
   const { t } = useTranslation('Charts')
-
   const setTargetDate = (number, isMonth) => {
     if (isMonth) {
       return dayjs().subtract(number, 'month').format('YYYY-MM-DD')
@@ -143,11 +142,12 @@ const Dashboard = () => {
   }, [])
 
   const halfPieChartData = [
-    { name: 'positive', value: data?.positeveReviews || 1 },
-    { name: 'negative', value: data?.negativeReviews || 1 },
+    { name: 'positive', value: data?.total_positive === '0' ? '1' : data?.total_positive },
+    { name: 'negative', value: data?.total_negative === '0' ? '1' : data?.total_negative },
   ]
   const anonymousReviewPercentage = (data?.withoutname / data?.total) * 100 || 0
-  const reviewPercentage = (data.countOfReviews / data.totalReviews) * 100 || 0
+  const reviewPercentage = (data?.countOfReviews / data?.totalReviews) * 100 || 0
+  if (!data) return null
   return (
     <Col style={{ background: 'white', padding: '24px', borderRadius: '8px' }}>
       <Form onFieldsChange={onDateRangeChange} form={form}>
@@ -243,7 +243,7 @@ const Dashboard = () => {
           <ChartBar data={data?.ratings} />
         </ChartRow>
         <ChartRow ratingType={'Answer'} ratingData={data?.answer}>
-          <ChartPie data={data?.answer} />
+          {/* <ChartPie data={data?.answer} /> */}
         </ChartRow>
       </Space>
     </Col>

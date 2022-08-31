@@ -7,6 +7,7 @@ import styles from './ChartPie.module.css'
 
 export const ChartPie = ({ data, halfPie }) => {
   const { t } = useTranslation('Charts')
+  console.log(data)
 
   const renderCustomizedLabel = ({ x, y, cx, percent, name }) => {
     return (
