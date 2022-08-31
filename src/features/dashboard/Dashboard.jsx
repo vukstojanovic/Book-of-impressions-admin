@@ -21,7 +21,6 @@ import { ChartRow } from './ChartRow'
 import { ChartPie } from '@/components/charts/ChartPie'
 import { ChartBar } from '@/components/charts/ChartBar'
 const { Option } = Select
-
 const initialState = { dateFrom: '', dateTo: '', custom: false }
 
 const reducer = (state, { type, payload }) => {
@@ -59,6 +58,7 @@ const Dashboard = () => {
   const { data, isLoading } = useGetAnalytics({
     dateRange: { dateFrom: state.dateFrom, dateTo: state.dateTo },
   })
+  console.log(data)
 
   const { Paragraph } = Typography
   const { t } = useTranslation('Charts')
@@ -273,7 +273,7 @@ const Dashboard = () => {
         >
           <Statistic
             title={t('anonymous')}
-            value={data?.withoutname}
+            value={data?.without_name}
             valueStyle={{ textAlign: 'center', padding: '1rem 0', color: '#1b4979' }}
           />
           <Paragraph>
