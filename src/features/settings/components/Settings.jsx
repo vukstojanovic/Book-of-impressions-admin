@@ -256,7 +256,6 @@ export function Settings() {
             {uploadButton}
           </Upload>
         </Form.Item>
-
         <Tags t={t} form={form} />
         {role !== 'Manager' ? null : (
           <Form.Item style={{ textAlign: 'right' }}>
