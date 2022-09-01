@@ -2,8 +2,10 @@ import { useTranslation } from 'react-i18next'
 import { DislikeOutlined, LikeOutlined } from '@ant-design/icons'
 import { Col, Rate, Row, Typography } from 'antd'
 
-const RatingTypes = ({ ratingType, data, ratingData }) => {
+const RatingTypes = ({ ratingType, ratingData }) => {
   const { t } = useTranslation('Charts')
+
+  const sortedRatingData = ratingData && Object.entries(ratingData).sort((a, b) => b[0] - a[0])
   return (
     <>
       {ratingType === 'Answer' ? (
@@ -26,7 +28,7 @@ const RatingTypes = ({ ratingType, data, ratingData }) => {
                   borderRadius: '100%',
                 }}
               />
-              <p>{data[0].value}</p>
+              <p>{ratingData?.positive}</p>
             </Col>
             <Col style={{ textAlign: 'center' }}>
               <DislikeOutlined
@@ -38,7 +40,7 @@ const RatingTypes = ({ ratingType, data, ratingData }) => {
                   borderRadius: '100%',
                 }}
               />
-              <p>{data[1].value}</p>
+              <p>{ratingData?.negative}</p>
             </Col>
           </Row>
         </Col>
@@ -51,36 +53,17 @@ const RatingTypes = ({ ratingType, data, ratingData }) => {
           xs={{ span: 24 }}
         >
           <Typography.Title level={3}>{t(`${ratingType.toLowerCase()}`)}</Typography.Title>
-          <Row justify="start" align="middle" gutter={20}>
-            <Col>
-              <Rate defaultValue={5} disabled />
-            </Col>
-            <Col>{ratingData[0]?.value}</Col>
-          </Row>
-          <Row justify="start" align="middle" gutter={20}>
-            <Col>
-              <Rate defaultValue={4} disabled />
-            </Col>
-            <Col>{ratingData[1]?.value}</Col>
-          </Row>
-          <Row justify="start" align="middle" gutter={20}>
-            <Col>
-              <Rate defaultValue={3} disabled />
-            </Col>
-            <Col>{ratingData[2]?.value}</Col>
-          </Row>
-          <Row justify="start" align="middle" gutter={20}>
-            <Col>
-              <Rate defaultValue={2} disabled />
-            </Col>
-            <Col>{ratingData[3]?.value}</Col>
-          </Row>
-          <Row justify="start" align="middle" gutter={20}>
-            <Col>
-              <Rate defaultValue={1} disabled />
-            </Col>
-            <Col>{ratingData[4]?.value}</Col>
-          </Row>
+          {sortedRatingData &&
+            sortedRatingData.map(([key, value]) => {
+              return (
+                <Row key={key} justify="start" align="middle" gutter={20}>
+                  <Col>
+                    <Rate defaultValue={key} disabled />
+                  </Col>
+                  <Col>{Number(value)}</Col>
+                </Row>
+              )
+            })}
         </Col>
       )}
     </>

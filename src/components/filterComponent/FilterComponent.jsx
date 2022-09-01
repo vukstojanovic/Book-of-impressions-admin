@@ -113,38 +113,38 @@ export const FilterComponent = ({
               type: searchParams.getAll('type[]'),
             }}
           >
-            <Row gutter={16} wrap>
+            <Row gutter={16} align="middle" wrap>
               {hasName && (
                 <Col>
-                  <Form.Item name="reviewName">
-                    <Input placeholder={t('name')} style={{ maxWidth: '300px' }} />
+                  <Form.Item name="reviewName" label={t('name')}>
+                    <Input placeholder={t('enter_name')} style={{ maxWidth: '300px' }} />
                   </Form.Item>
                 </Col>
               )}
               {hasEmail && (
                 <Col>
-                  <Form.Item name="reviewEmail">
-                    <Input placeholder={t('email')} style={{ maxWidth: '250px' }} />
+                  <Form.Item name="reviewEmail" label={t('email')}>
+                    <Input placeholder={t('enter_email')} style={{ maxWidth: '250px' }} />
                   </Form.Item>
                 </Col>
               )}
               {hasTitle && (
                 <Col>
-                  <Form.Item name="title">
-                    <Input placeholder={t('title')} style={{ maxWidth: '250px' }} />
+                  <Form.Item name="title" label={t('title')}>
+                    <Input placeholder={t('enter_title')} style={{ maxWidth: '250px' }} />
                   </Form.Item>
                 </Col>
               )}
               {hasType && (
                 <Col style={{ display: 'flex', alignItems: 'center' }}>
-                  <Form.Item name="type">
+                  <Form.Item name="type" label={t('type')}>
                     <Select
                       mode="multiple"
                       allowClear
                       style={{
                         minWidth: '200px',
                       }}
-                      placeholder={t('type')}
+                      placeholder={t('select_type')}
                     >
                       <Select.Option key="Answer">{t('answer')}</Select.Option>
                       <Select.Option key="Rating">{t('rating')}</Select.Option>
@@ -155,7 +155,7 @@ export const FilterComponent = ({
               )}
               {hasDate && (
                 <Col>
-                  <Form.Item name="createdDate">
+                  <Form.Item name="createdDate" label={t('date')}>
                     <DatePicker.RangePicker
                       style={{ maxWidth: '250px' }}
                       placeholder={[t('start_date'), t('end_date')]}
@@ -164,10 +164,10 @@ export const FilterComponent = ({
                 </Col>
               )}
             </Row>
-            <Row gutter={16} wrap>
+            <Row gutter={16} align="middle" wrap>
               {hasRating && (
                 <Col style={{ display: 'flex', alignItems: 'center' }}>
-                  <Form.Item name="rating" style={{ marginBottom: 0 }}>
+                  <Form.Item name="rating" style={{ marginBottom: 0 }} label={t('rating')}>
                     <Slider
                       range
                       min={0}
@@ -181,7 +181,7 @@ export const FilterComponent = ({
               )}
               {hasAnswer && (
                 <Col style={{ display: 'flex', alignItems: 'center' }}>
-                  <Form.Item name="answer" style={{ marginBottom: 0 }}>
+                  <Form.Item name="answer" style={{ marginBottom: 0 }} label={t('answer')}>
                     <Radio.Group>
                       <Radio value={true}>{t('like')}</Radio>
                       <Radio value={false}>{t('dislike')}</Radio>
@@ -191,7 +191,7 @@ export const FilterComponent = ({
               )}
               {hasFormType && (
                 <Col style={{ display: 'flex', alignItems: 'center' }}>
-                  <Form.Item name="formType" style={{ marginBottom: 0 }}>
+                  <Form.Item name="formType" style={{ marginBottom: 0 }} label={t('form_type')}>
                     <Select
                       mode="multiple"
                       allowClear

@@ -1,4 +1,4 @@
-import { Spin, Typography, Card, Tag, Row, Col, Divider } from 'antd'
+import { Spin, Typography, Card, Tag, Row, Col, Divider, Empty } from 'antd'
 import { useSearchParams, useLocation } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import { useState } from 'react'
@@ -32,13 +32,6 @@ export const FormPreview = () => {
 
   const [QRModalVisible, setQRModalVisible] = useState(false)
   const { Paragraph, Text, Title } = Typography
-
-  // if (formIsLoading || reviewIsLoading)
-  //   return (
-  //     <Row align="middle" justify="center" style={{ minHeight: '30vh' }}>
-  //       <Spin size="large" />
-  //     </Row>
-  //   )
 
   return (
     <>
@@ -95,26 +88,35 @@ export const FormPreview = () => {
       <Title level={3} style={{ textAlign: 'left', padding: '0 0 0 24px' }}>
         {t('reviews')}:
       </Title>
-      {!reviewIsLoading ? (
-        <Col style={{ padding: '0 24px' }}>
-          <FilterComponent
-            hasName
-            hasEmail
-            hasDate
-            hasAnswer={formData?.type === 'Answer'}
-            hasRating={formData?.type === 'Rating' || formData?.type === 'Ratings'}
-          />
+      <Col style={{ padding: '0 24px' }}>
+        <FilterComponent
+          hasName
+          hasEmail
+          hasDate
+          hasAnswer={formData?.type === 'Answer'}
+          hasRating={formData?.type === 'Rating' || formData?.type === 'Ratings'}
+        />
+        {!reviewIsLoading ? (
           <Row style={{ gap: 16 }}>
             {formReviewData[0].map((review) => {
               return <ReviewCard key={review.id} {...review} />
             })}
           </Row>
-        </Col>
-      ) : (
-        <Row align="middle" justify="center" style={{ minHeight: '30vh' }}>
-          <Spin size="large" />
-        </Row>
-      )}
+        ) : (
+          <Row align="middle" justify="center" style={{ minHeight: '30vh' }}>
+            <Spin size="large" />
+          </Row>
+        )}
+        {formReviewData && !formReviewData[0].length && (
+          <Empty
+            description={
+              <span>
+                <b>{t('no_results')}</b>
+              </span>
+            }
+          />
+        )}
+      </Col>
     </>
   )
 }
