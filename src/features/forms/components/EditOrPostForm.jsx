@@ -11,6 +11,7 @@ import { usePostFormQuery } from '../api/postForm'
 import style from './EditOrPostForm.module.css'
 
 import { useAuth } from '@/providers/authProvider'
+import { descriptionValidationProps } from '@/utils/descriptionValidation'
 
 const { Title } = Typography
 const { TextArea } = Input
@@ -286,24 +287,7 @@ export const EditOrPostForm = ({ type }) => {
                         required: true,
                         message: t('emptyDescription'),
                       },
-                      {
-                        min: 20,
-                        message: 'Not enough characters',
-                      },
-                      {
-                        validator: (_, value) =>
-                          value
-                            .trim()
-                            .split('')
-                            .filter((letter) => letter === ' ').length >= 2 &&
-                          value[value.length - 1] === '?'
-                            ? Promise.resolve()
-                            : Promise.reject(
-                                new Error(
-                                  'Must have at least two spaces and end with question mark!'
-                                )
-                              ),
-                      },
+                      ...descriptionValidationProps(t),
                     ]}
                   >
                     <TextArea
@@ -322,6 +306,7 @@ export const EditOrPostForm = ({ type }) => {
                         required: true,
                         message: t('emptyDescription'),
                       },
+                      ...descriptionValidationProps(t),
                     ]}
                   >
                     <TextArea
