@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
 
 import { useUpdateCompanyInfo } from '../api/postCompanyInfo'
+import { useUpdateCompanyMeta } from '../api/postCompanyMeta'
 import { useGetCompanyInfo } from '../api/getCompanyInfo'
 
 import { Tags } from './Tags'
@@ -37,12 +38,17 @@ export function Settings() {
     t,
   })
 
+  const companyMetaMutation = useUpdateCompanyMeta({
+    setButtonDisabled,
+    t,
+  })
   const onFinish = ({
     'company-name': name,
     'company-email': email,
     'en-desc': enDescription,
     'sr-desc': srDescription,
     logo,
+    tags,
   }) => {
     const formData = new FormData()
     const desc = [
@@ -63,7 +69,9 @@ export function Settings() {
     formData.append('email', email)
     formData.append('description', JSON.stringify(desc))
 
+    console.log(tags[0])
     companyInfoMutation.mutate({ formData })
+    companyMetaMutation.mutate({ data: tags[0] })
   }
 
   const onValuesChange = (
@@ -248,7 +256,8 @@ export function Settings() {
             {uploadButton}
           </Upload>
         </Form.Item>
-        <Tags t={t} />
+
+        <Tags t={t} form={form} />
         {role !== 'Manager' ? null : (
           <Form.Item style={{ textAlign: 'right' }}>
             <Button type="primary" htmlType="submit" disabled={buttonDisabled ? true : false}>
