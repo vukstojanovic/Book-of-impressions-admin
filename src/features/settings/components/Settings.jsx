@@ -6,6 +6,7 @@ import { useTranslation } from 'react-i18next'
 import { useUpdateCompanyInfo } from '../api/postCompanyInfo'
 import { useGetCompanyInfo } from '../api/getCompanyInfo'
 
+import { Tags } from './Tags'
 import style from './Settings.module.css'
 
 import { useAuth } from '@/providers/authProvider'
@@ -105,7 +106,6 @@ export function Settings() {
       </div>
     </div>
   )
-
   // Set Initial Form Values
   useEffect(() => {
     if (company) {
@@ -117,7 +117,6 @@ export function Settings() {
       })
     }
   }, [company])
-
   if (isLoading)
     return (
       <Row align="middle" justify="center" style={{ minHeight: '30vh' }}>
@@ -249,6 +248,7 @@ export function Settings() {
             {uploadButton}
           </Upload>
         </Form.Item>
+        <Tags t={t} />
         {role !== 'Manager' ? null : (
           <Form.Item style={{ textAlign: 'right' }}>
             <Button type="primary" htmlType="submit" disabled={buttonDisabled ? true : false}>

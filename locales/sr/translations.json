@@ -183,6 +183,7 @@
     "submit": "Posalji",
     "submit_success": "Uspesno ste poslali formu",
     "submit_error": "Nesto je poslo naopako",
+    "add_google_place_id": "Unesite Google Place ID",
     "min_characters": "Minimalan broj karaktera je",
     "min_spaces": "Minimalan broj praznih mesta je",
     "ends_with": "Mora se završavati tačkom ili upitnikom.",
