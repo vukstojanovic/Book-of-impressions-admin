@@ -12,7 +12,7 @@ import {
 } from 'antd'
 import { useTranslation } from 'react-i18next'
 import { useReducer, useEffect } from 'react'
-import * as dayjs from 'dayjs'
+import dayjs from 'dayjs'
 import { PrinterFilled } from '@ant-design/icons'
 
 import { useGetAnalytics } from './api/getAnalytics'
