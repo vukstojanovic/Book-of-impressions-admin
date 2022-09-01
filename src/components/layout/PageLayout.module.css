@@ -5,7 +5,7 @@
   margin: 64px 0 0 200px;
 }
 .transition {
-  transitionduration: '0.3s';
+  transition-duration: 0.3s;
 }
 .layoutContent {
   margin: 24px 16px;
