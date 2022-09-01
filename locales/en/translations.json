@@ -178,7 +178,8 @@
     "cancel": "Cancel",
     "submit": "Submit",
     "submit_success": "You successfully submitted form",
-    "submit_error": "Something went wrong"
+    "submit_error": "Something went wrong",
+    "add_google_place_id": "Enter Google Place ID"
   },
   "Verify_user": {
     "please_wait_while_your_account_is_being_verified": "Please wait while your account is being verified.",

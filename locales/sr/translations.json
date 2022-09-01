@@ -178,7 +178,8 @@
     "cancel": "Ponisti",
     "submit": "Posalji",
     "submit_success": "Uspesno ste poslali formu",
-    "submit_error": "Nesto je poslo naopako"
+    "submit_error": "Nesto je poslo naopako",
+    "add_google_place_id": "Unesite Google Place ID"
   },
   "Verify_user": {
     "please_wait_while_your_account_is_being_verified": "Molimo sačekajte dok nalog bude odobren.",
