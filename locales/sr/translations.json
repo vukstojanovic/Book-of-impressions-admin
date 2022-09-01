@@ -94,7 +94,11 @@
     "emptyDescription": "Opis je obavezan",
     "emptyType": "Tip je obavezen",
     "submitSuccess": "Uspesno ste poslali formu",
-    "submitError": "Nesto je poslo naopako!"
+    "submitError": "Nesto je poslo naopako!",
+    "min_characters": "Minimalan broj karaktera je",
+    "min_spaces": "Minimalan broj praznih mesta je",
+    "ends_with": "Mora se završavati tačkom ili upitnikom.",
+    "starts_with": "Prvo slovo mora biti veliko."
   },
   "SideMenu": {
     "dashboard": "Komandna Tabla",
@@ -178,7 +182,11 @@
     "cancel": "Ponisti",
     "submit": "Posalji",
     "submit_success": "Uspesno ste poslali formu",
-    "submit_error": "Nesto je poslo naopako"
+    "submit_error": "Nesto je poslo naopako",
+    "min_characters": "Minimalan broj karaktera je",
+    "min_spaces": "Minimalan broj praznih mesta je",
+    "ends_with": "Mora se završavati tačkom ili upitnikom.",
+    "starts_with": "Prvo slovo mora biti veliko."
   },
   "Verify_user": {
     "please_wait_while_your_account_is_being_verified": "Molimo sačekajte dok nalog bude odobren.",
