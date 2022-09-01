@@ -1,9 +1,9 @@
 import { useState, useRef } from 'react'
-import { Tag, Input, Col } from 'antd'
+import { Tag, Input, Col, Form } from 'antd'
 
 import style from './Tags.module.css'
 
-export const Tags = ({ t }) => {
+export const Tags = ({ t, form }) => {
   const [tags, setTags] = useState([])
   const [inputValue, setInputValue] = useState('')
   const [editInputIndex, setEditInputIndex] = useState(-1)
@@ -31,6 +31,7 @@ export const Tags = ({ t }) => {
   const handleInputConfirm = () => {
     if (inputValue && tags.indexOf(inputValue) === -1) {
       setTags([...tags, inputValue])
+      form.setFieldsValue({ tags: [...tags, inputValue] })
     }
 
     setInputValue('')
@@ -50,6 +51,7 @@ export const Tags = ({ t }) => {
 
   return (
     <Col className={style.tagContent}>
+      <Form.Item name="tags" hidden></Form.Item>
       {tags?.map((tag, index) => {
         if (editInputIndex === index) {
           return (

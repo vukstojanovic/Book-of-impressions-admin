@@ -39,7 +39,6 @@ export function Settings() {
   })
 
   const companyMetaMutation = useUpdateCompanyMeta({
-    setButtonDisabled,
     t,
   })
   const onFinish = ({
@@ -69,7 +68,7 @@ export function Settings() {
     formData.append('email', email)
     formData.append('description', JSON.stringify(desc))
 
-    console.log(tags[0])
+    console.log(tags)
     companyInfoMutation.mutate({ formData })
     companyMetaMutation.mutate({ data: tags[0] })
   }
