@@ -11,6 +11,7 @@ import style from './Settings.module.css'
 
 import { useAuth } from '@/providers/authProvider'
 import { beforeUpload } from '@/utils/beforeImageUpload'
+import { descriptionValidationProps } from '@/utils/descriptionValidation'
 
 export function Settings() {
   const { data: company, isLoading } = useGetCompanyInfo()
@@ -176,7 +177,7 @@ export function Settings() {
           <TabPane tab="EN" key="en" forceRender={true}>
             <Row>
               <Col lg={16} md={24} xs={24}>
-                <Form.Item name="en-desc">
+                <Form.Item name="en-desc" rules={[...descriptionValidationProps(t)]}>
                   <TextArea
                     placeholder={`${t('company_description')}`}
                     name="english-desc"
@@ -198,6 +199,7 @@ export function Settings() {
                   initialValue={
                     company.description?.filter((lang) => lang.key === 'sr')[0]?.text || ''
                   }
+                  rules={[...descriptionValidationProps(t)]}
                 >
                   <TextArea
                     placeholder={t('company_description')}

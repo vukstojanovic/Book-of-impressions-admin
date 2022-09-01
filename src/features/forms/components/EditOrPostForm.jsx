@@ -11,6 +11,7 @@ import { usePostFormQuery } from '../api/postForm'
 import style from './EditOrPostForm.module.css'
 
 import { useAuth } from '@/providers/authProvider'
+import { descriptionValidationProps } from '@/utils/descriptionValidation'
 
 const { Title } = Typography
 const { TextArea } = Input
@@ -286,6 +287,7 @@ export const EditOrPostForm = ({ type }) => {
                         required: true,
                         message: t('emptyDescription'),
                       },
+                      ...descriptionValidationProps(t),
                     ]}
                   >
                     <TextArea
@@ -304,6 +306,7 @@ export const EditOrPostForm = ({ type }) => {
                         required: true,
                         message: t('emptyDescription'),
                       },
+                      ...descriptionValidationProps(t),
                     ]}
                   >
                     <TextArea
