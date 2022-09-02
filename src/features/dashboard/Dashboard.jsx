@@ -24,8 +24,8 @@ const { Option } = Select
 const initialState = { dateFrom: '', dateTo: '', custom: false }
 
 const reducer = (state, { type, payload }) => {
-  console.log('Date From: ', payload.dateFrom)
-  console.log('Date To: ', payload.dateTo)
+  console.log('Date From: ', payload?.dateFrom)
+  console.log('Date To: ', payload?.dateTo)
   switch (type) {
     case 'from_to':
       if (!payload.dateFrom || !payload.dateTo) {
@@ -140,7 +140,7 @@ const Dashboard = () => {
           type: 'from_to',
           payload: {
             dateFrom: value ? dayjs(value[0]?._d).format('YYYY-MM-DD') : '',
-            dateTo: value ? dayjs(value[1]?._d).format('YYYY-MM-DD') : '',
+            dateTo: value ? dayjs(value[1]?._d).add(1, 'day').format('YYYY-MM-DD') : '',
           },
         })
         break
