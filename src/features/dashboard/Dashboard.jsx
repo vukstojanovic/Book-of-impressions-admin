@@ -172,10 +172,10 @@ const Dashboard = () => {
     >
       <Typography.Paragraph className="print-date-text">
         {form.getFieldValue('selectedDateRange') === 'today'
-          ? `${state.dateTo}`
-          : `${dayjs(state.dateFrom).format('DD.MM.YYYY')} - ${dayjs(state.dateTo).format(
-              'DD.MM.YYYY'
-            )}`}
+          ? `${dayjs().format('DD.MM.YYYY')}`
+          : `${dayjs(state.dateFrom).format('DD.MM.YYYY')} - ${dayjs(state.dateTo)
+              .subtract(1, 'day')
+              .format('DD.MM.YYYY')}`}
       </Typography.Paragraph>
       <Form onFieldsChange={onDateRangeChange} form={form}>
         <Row justify="space-between">
