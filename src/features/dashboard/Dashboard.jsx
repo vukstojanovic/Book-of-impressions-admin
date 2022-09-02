@@ -24,8 +24,6 @@ const { Option } = Select
 const initialState = { dateFrom: '', dateTo: '', custom: false }
 
 const reducer = (state, { type, payload }) => {
-  console.log('Date From: ', payload?.dateFrom)
-  console.log('Date To: ', payload?.dateTo)
   switch (type) {
     case 'from_to':
       if (!payload.dateFrom || !payload.dateTo) {
@@ -60,7 +58,6 @@ const Dashboard = () => {
   const { data, isLoading } = useGetAnalytics({
     dateRange: { dateFrom: state.dateFrom, dateTo: state.dateTo },
   })
-  console.log(data)
 
   const { Paragraph } = Typography
   const { t } = useTranslation('Charts')
