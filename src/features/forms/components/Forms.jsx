@@ -5,6 +5,7 @@ import { Typography, Row, Card, Progress, Skeleton, Empty, Button, Col } from 'a
 import { QrcodeOutlined } from '@ant-design/icons'
 
 import { useForms } from '../api/getForms'
+import { useGetFormAnalyticsAllQuery } from '../api/getFormAnalytics'
 
 import QRCodeFormModal from './QRCodeFormModal'
 
@@ -17,6 +18,7 @@ export const Forms = () => {
   const location = useLocation()
   const decodedQueryParams = decodeURIComponent(location.search)
   const { data, isLoading } = useForms(decodedQueryParams)
+  const { data: analyticsData } = useGetFormAnalyticsAllQuery(data)
   const {
     i18n: { language },
     t,
@@ -27,6 +29,8 @@ export const Forms = () => {
   const [formId, setFormId] = useState('')
   const [modalVisible, setModalVisible] = useState(false)
   const divFlex = { display: 'flex', justifyContent: 'space-between', alignItems: 'center' }
+
+  console.log(analyticsData)
 
   const columnDivFlex = {
     textAlign: 'center',
