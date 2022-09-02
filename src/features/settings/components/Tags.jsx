@@ -1,14 +1,17 @@
 import { useState, useRef } from 'react'
-import { Tag, Input, Col, Form } from 'antd'
+import { Typography, Tag, Input, Col, Form } from 'antd'
 
 import style from './Tags.module.css'
 
 export const Tags = ({ t, form }) => {
+  const { Text } = Typography
+
   const [tags, setTags] = useState([])
   const [inputValue, setInputValue] = useState('')
   const [editInputIndex, setEditInputIndex] = useState(-1)
   const [editInputValue, setEditInputValue] = useState('')
 
+  const [errorMessage, setErrorMessage] = useState(true)
   const inputRef = useRef(null)
   const editInputRef = useRef(null)
 
@@ -32,8 +35,16 @@ export const Tags = ({ t, form }) => {
     if (inputValue && tags.indexOf(inputValue) === -1) {
       setTags([...tags, inputValue])
       form.setFieldsValue({ tags: [...tags, inputValue] })
+      setErrorMessage('')
+      setInputValue('')
+      return
     }
-
+    if (!inputValue) {
+      setErrorMessage(t('empty_tag_field'))
+      setInputValue('')
+      return
+    }
+    setErrorMessage(t('equal_value_tag_field'))
     setInputValue('')
   }
 
@@ -50,52 +61,53 @@ export const Tags = ({ t, form }) => {
   }
 
   return (
-    <Col className={style.tagContent}>
-      <Form.Item name="tags" hidden></Form.Item>
-      {tags?.map((tag, index) => {
-        if (editInputIndex === index) {
-          return (
-            <Input
-              ref={editInputRef}
-              key={tag}
-              value={editInputValue}
-              onChange={handleEditInputChange}
-              onBlur={handleEditInputConfirm}
-              onPressEnter={handleEditInputConfirm}
-            />
-          )
-        }
+    <>
+      <Col className={style.tagContent}>
+        <Form.Item name="tags" hidden></Form.Item>
+        {tags?.map((tag, index) => {
+          if (editInputIndex === index) {
+            return (
+              <Input
+                ref={editInputRef}
+                key={tag}
+                value={editInputValue}
+                onChange={handleEditInputChange}
+                onPressEnter={handleEditInputConfirm}
+              />
+            )
+          }
 
-        const tagElem = (
-          <Tag id={style.tagStyle} key={tag} closable={true} onClose={() => handleClose(tag)}>
-            <span
-              style={{ fontSize: '1rem' }}
-              onDoubleClick={(e) => {
-                if (index !== 0) {
-                  setEditInputIndex(index)
-                  setEditInputValue(tag)
-                  e.preventDefault()
-                }
-              }}
-            >
-              {tag}
-            </span>
-          </Tag>
-        )
-        return tagElem
-      })}
-      <Input
-        id={style.inputAddTag}
-        ref={inputRef}
-        type="text"
-        value={inputValue}
-        bordered={false}
-        placeholder={tags.length === 0 && t('add_google_place_id')}
-        onChange={handleInputChange}
-        onBlur={handleInputConfirm}
-        onPressEnter={handleInputConfirm}
-        onKeyDown={handleBackspace}
-      />
-    </Col>
+          const tagElem = (
+            <Tag id={style.tagStyle} key={tag} closable={true} onClose={() => handleClose(tag)}>
+              <span
+                style={{ fontSize: '1rem' }}
+                onDoubleClick={(e) => {
+                  if (index !== 0) {
+                    setEditInputIndex(index)
+                    setEditInputValue(tag)
+                    e.preventDefault()
+                  }
+                }}
+              >
+                {tag}
+              </span>
+            </Tag>
+          )
+          return tagElem
+        })}
+        <Input
+          id={style.inputAddTag}
+          ref={inputRef}
+          type="text"
+          value={inputValue}
+          bordered={false}
+          placeholder={tags.length === 0 ? t('add_google_place_id') : ''}
+          onChange={handleInputChange}
+          onPressEnter={handleInputConfirm}
+          onKeyDown={handleBackspace}
+        />
+      </Col>
+      {errorMessage && <Text type="danger">{errorMessage}</Text>}
+    </>
   )
 }

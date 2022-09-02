@@ -187,7 +187,9 @@
     "min_characters": "Minimum number of characters is",
     "min_spaces": "Minimum number of spaces is",
     "ends_with": "Must end with question mark or fullstop.",
-    "starts_with": "Must start with an uppercase letter."
+    "starts_with": "Must start with an uppercase letter.",
+    "empty_tag_field": "Cannot add empty tag",
+    "equal_value_tag_field": "Cannot add tag that alredy exists"
   },
   "Verify_user": {
     "please_wait_while_your_account_is_being_verified": "Please wait while your account is being verified.",
