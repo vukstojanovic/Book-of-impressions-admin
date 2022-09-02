@@ -24,6 +24,8 @@ const { Option } = Select
 const initialState = { dateFrom: '', dateTo: '', custom: false }
 
 const reducer = (state, { type, payload }) => {
+  console.log('Date From: ', payload.dateFrom)
+  console.log('Date To: ', payload.dateTo)
   switch (type) {
     case 'from_to':
       if (!payload.dateFrom || !payload.dateTo) {
@@ -70,13 +72,13 @@ const Dashboard = () => {
   }
   const onDateRangeChange = (values) => {
     const value = values[0].value
-    const today = dayjs().format('YYYY-MM-DD')
+    const today = dayjs().add(1, 'day').format('YYYY-MM-DD')
 
     switch (value) {
       case 'today':
         dispatch({
           type: 'changeDate',
-          payload: { dateFrom: today, dateTo: today, selectDateValue: value },
+          payload: { dateFrom: setTargetDate(0), dateTo: today, selectDateValue: value },
         })
         form.resetFields(['pickedDate'])
         break
@@ -146,11 +148,11 @@ const Dashboard = () => {
   }
 
   useEffect(() => {
-    const today = dayjs().format('YYYY-MM-DD')
+    const today = dayjs().add(1, 'day').format('YYYY-MM-DD')
     form.setFieldsValue({ selectedDateRange: 'today' })
     dispatch({
       type: 'changeDate',
-      payload: { dateFrom: today, dateTo: today },
+      payload: { dateFrom: setTargetDate(0), dateTo: today },
     })
   }, [])
 
