@@ -1,9 +1,9 @@
 import { useState, useRef } from 'react'
-import { Typography, Tag, Input, Col, Form } from 'antd'
+import { Typography, Tag, Input, Col } from 'antd'
 
 import style from './Tags.module.css'
 
-export const Tags = ({ t, form }) => {
+export const Tags = ({ t, onChange }) => {
   const { Text } = Typography
 
   const [tags, setTags] = useState([])
@@ -15,6 +15,9 @@ export const Tags = ({ t, form }) => {
   const inputRef = useRef(null)
   const editInputRef = useRef(null)
 
+  const triggerChange = (changedValue) => {
+    onChange?.(changedValue)
+  }
   const handleClose = (removedTag) => {
     const newTags = tags.filter((tag) => tag !== removedTag)
     setTags(newTags)
@@ -24,6 +27,7 @@ export const Tags = ({ t, form }) => {
     if (e.code === 'Backspace' && e.target.value === '') {
       const newTags = tags.slice(0, -1)
       setTags(newTags)
+      triggerChange([...newTags])
     }
   }
 
@@ -31,10 +35,11 @@ export const Tags = ({ t, form }) => {
     setInputValue(e.target.value)
   }
 
-  const handleInputConfirm = () => {
+  const handleInputConfirm = (e) => {
+    e.preventDefault()
     if (inputValue && tags.indexOf(inputValue) === -1) {
       setTags([...tags, inputValue])
-      form.setFieldsValue({ tags: [...tags, inputValue] })
+      triggerChange([...tags, inputValue])
       setErrorMessage('')
       setInputValue('')
       return
@@ -56,6 +61,7 @@ export const Tags = ({ t, form }) => {
     const newTags = [...tags]
     newTags[editInputIndex] = editInputValue
     setTags(newTags)
+
     setEditInputIndex(-1)
     setInputValue('')
   }
@@ -63,7 +69,6 @@ export const Tags = ({ t, form }) => {
   return (
     <>
       <Col className={style.tagContent}>
-        <Form.Item name="tags" hidden></Form.Item>
         {tags?.map((tag, index) => {
           if (editInputIndex === index) {
             return (
