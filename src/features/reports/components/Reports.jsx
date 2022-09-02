@@ -1,5 +1,5 @@
 import { useRef } from 'react'
-import { Space, Table, Modal, Button, Empty } from 'antd'
+import { Row, Col, Skeleton, Space, Table, Modal, Button, Empty } from 'antd'
 import { EyeOutlined, DeleteOutlined } from '@ant-design/icons'
 import { useTranslation } from 'react-i18next'
 import { Document, Page, pdfjs } from 'react-pdf'
@@ -8,6 +8,7 @@ import 'react-pdf/dist/esm/Page/AnnotationLayer.css'
 
 import { AddButton } from '@/components/buttons/AddButton'
 import { getColumnSearchProps } from '@/utils/columnSearchFilter'
+import { useReports } from '@/features/reports/api/getReports'
 
 pdfjs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.js`
 
@@ -19,6 +20,9 @@ export const Reports = () => {
   const [numPages, setNumPages] = useState(null)
   const [pageNumber, setPageNumber] = useState(1)
   const [isError, setIsError] = useState(false)
+
+  const { data: reports, isLoading } = useReports()
+  console.log(reports, isLoading)
 
   // function for fixing misalignment bug in pdf contents
   function removeTextLayerOffset() {
@@ -160,6 +164,33 @@ export const Reports = () => {
       createdAt: '10.11.2022',
     },
   ]
+
+  if (isLoading) {
+    return (
+      <>
+        <Row justify="end" style={{ marginBottom: '20px' }}>
+          <Col>
+            <Skeleton.Button shape="circle" />
+          </Col>
+        </Row>
+        <Row>
+          <Skeleton />
+        </Row>
+      </>
+    )
+  }
+
+  if (reports[0].length === 0) {
+    return (
+      <Empty
+        description={
+          <span>
+            <b>{t('no_results')}</b>
+          </span>
+        }
+      />
+    )
+  }
 
   return (
     <>
