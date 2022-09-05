@@ -121,7 +121,7 @@ export const Forms = () => {
                 <div style={divFlex}>
                   <div style={columnDivFlex}>
                     <Statistic
-                      title="Total number of reviews"
+                      title={t('total_number_of_reviews')}
                       value={singleAnalytic.total}
                       valueStyle={{ fontSize: '25px' }}
                     />
@@ -135,7 +135,7 @@ export const Forms = () => {
                   </div>
                   <div style={columnDivFlex}>
                     <Statistic
-                      title="Anonymous reviews"
+                      title={t('anonymous_reviews')}
                       value={singleAnalytic.anonymous}
                       valueStyle={{ fontSize: '25px' }}
                     />

@@ -70,7 +70,9 @@
     "forms": "Formulari",
     "no_results": "Nema rezultata",
     "questions": "Pitanja",
-    "reviews": "Recenzije"
+    "reviews": "Recenzije",
+    "total_number_of_reviews": "Totalni broj recenzija",
+    "anonymous_reviews": "Anonimne recenzije"
   },
   "CreateNewForm": {
     "main": "Kreiraj novu formu",

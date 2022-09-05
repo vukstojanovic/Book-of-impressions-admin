@@ -70,7 +70,9 @@
     "forms": "Forms",
     "no_results": "No results",
     "questions": "Questions",
-    "reviews": "Reviews"
+    "reviews": "Reviews",
+    "total_number_of_reviews": "Total number of reviews",
+    "anonymous_reviews": "Anonymous reviews"
   },
   "CreateNewForm": {
     "main": "Create New Form",
