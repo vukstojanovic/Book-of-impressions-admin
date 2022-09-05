@@ -58,7 +58,6 @@ const Dashboard = () => {
   const { data, isLoading } = useGetAnalytics({
     dateRange: { dateFrom: state.dateFrom, dateTo: state.dateTo },
   })
-  console.log(data)
 
   const { Paragraph } = Typography
   const { t } = useTranslation('Charts')
@@ -70,13 +69,13 @@ const Dashboard = () => {
   }
   const onDateRangeChange = (values) => {
     const value = values[0].value
-    const today = dayjs().format('YYYY-MM-DD')
+    const today = dayjs().add(1, 'day').format('YYYY-MM-DD')
 
     switch (value) {
       case 'today':
         dispatch({
           type: 'changeDate',
-          payload: { dateFrom: today, dateTo: today, selectDateValue: value },
+          payload: { dateFrom: setTargetDate(0), dateTo: today, selectDateValue: value },
         })
         form.resetFields(['pickedDate'])
         break
@@ -138,7 +137,7 @@ const Dashboard = () => {
           type: 'from_to',
           payload: {
             dateFrom: value ? dayjs(value[0]?._d).format('YYYY-MM-DD') : '',
-            dateTo: value ? dayjs(value[1]?._d).format('YYYY-MM-DD') : '',
+            dateTo: value ? dayjs(value[1]?._d).add(1, 'day').format('YYYY-MM-DD') : '',
           },
         })
         break
@@ -146,11 +145,11 @@ const Dashboard = () => {
   }
 
   useEffect(() => {
-    const today = dayjs().format('YYYY-MM-DD')
+    const today = dayjs().add(1, 'day').format('YYYY-MM-DD')
     form.setFieldsValue({ selectedDateRange: 'today' })
     dispatch({
       type: 'changeDate',
-      payload: { dateFrom: today, dateTo: today },
+      payload: { dateFrom: setTargetDate(0), dateTo: today },
     })
   }, [])
 
@@ -170,10 +169,10 @@ const Dashboard = () => {
     >
       <Typography.Paragraph className="print-date-text">
         {form.getFieldValue('selectedDateRange') === 'today'
-          ? `${state.dateTo}`
-          : `${dayjs(state.dateFrom).format('DD.MM.YYYY')} - ${dayjs(state.dateTo).format(
-              'DD.MM.YYYY'
-            )}`}
+          ? `${dayjs().format('DD.MM.YYYY')}`
+          : `${dayjs(state.dateFrom).format('DD.MM.YYYY')} - ${dayjs(state.dateTo)
+              .subtract(1, 'day')
+              .format('DD.MM.YYYY')}`}
       </Typography.Paragraph>
       <Form onFieldsChange={onDateRangeChange} form={form}>
         <Row justify="space-between">
