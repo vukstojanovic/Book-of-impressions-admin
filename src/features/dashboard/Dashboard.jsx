@@ -153,7 +153,7 @@ const Dashboard = () => {
     })
   }, [])
 
-  const anonymousReviewPercentage = (data?.without_name / data?.total) * 100 || 0
+  const anonymousReviewPercentage = (data?.without_name / data?.totalND) * 100 || 0
   const reviewPercentage = (data?.total / data?.totalND) * 100 || 0
 
   if (isLoading)
