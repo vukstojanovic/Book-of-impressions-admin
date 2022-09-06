@@ -165,6 +165,7 @@ export const Reports = () => {
     <>
       <AddButton linkTo={'/reports/download-report'} />
       <Table
+        style={{ overflowX: 'auto' }}
         columns={columns}
         dataSource={data}
         locale={{
