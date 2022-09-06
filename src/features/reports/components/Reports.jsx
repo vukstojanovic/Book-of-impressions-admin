@@ -50,18 +50,11 @@ export const Reports = () => {
   }
 
   function onFieldsChange(values) {
-    console.log('VALUES: ', values)
-    if (values.length !== 0) {
-      console.log('Length not 0')
-      console.log('Value Name: ', values[0].name[0])
-      if (values[0].name[0] !== 'forms' && values[0].name[0] !== 'name') {
-        console.log('Not forms and not name')
-        selectDateRange({ values, form })
-      }
-    }
+    selectDateRange({ values, form })
   }
 
   const handleSubmitReports = (values) => {
+    console.log(state)
     const data = {
       name: values.name,
       forms: values.forms,
@@ -275,7 +268,7 @@ export const Reports = () => {
             >
               {data.map((option, i) => {
                 return (
-                  <Option value={option.name} key={i}>
+                  <Option value={option.id} key={i}>
                     {option.name}
                   </Option>
                 )

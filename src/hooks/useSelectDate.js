@@ -106,13 +106,17 @@ export const useSelectDate = () => {
         dispatch({ type: 'custom' })
         break
       default:
-        dispatch({
-          type: 'from_to',
-          payload: {
-            dateFrom: value ? dayjs(value[0]?._d).format('YYYY-MM-DD') : '',
-            dateTo: value ? dayjs(value[1]?._d).add(1, 'day').format('YYYY-MM-DD') : '',
-          },
-        })
+        if (values.length !== 0) {
+          if (values[0].name[0] === 'pickedDate') {
+            dispatch({
+              type: 'from_to',
+              payload: {
+                dateFrom: value ? dayjs(value[0]?._d).format('YYYY-MM-DD') : '',
+                dateTo: value ? dayjs(value[1]?._d).add(1, 'day').format('YYYY-MM-DD') : '',
+              },
+            })
+          }
+        }
         break
     }
   }
