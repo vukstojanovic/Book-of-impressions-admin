@@ -71,8 +71,10 @@
     "no_results": "No results",
     "questions": "Questions",
     "reviews": "Reviews",
-    "total_number_of_reviews": "Total number of reviews",
-    "anonymous_reviews": "Anonymous reviews"
+    "total_reviews": "Total reviews",
+    "anonymous_reviews": "Anonymous reviews",
+    "positive_answer": "Positive answer",
+    "negative_answer": "Negative answer"
   },
   "CreateNewForm": {
     "main": "Create New Form",

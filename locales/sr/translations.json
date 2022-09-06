@@ -71,8 +71,10 @@
     "no_results": "Nema rezultata",
     "questions": "Pitanja",
     "reviews": "Recenzije",
-    "total_number_of_reviews": "Totalni broj recenzija",
-    "anonymous_reviews": "Anonimne recenzije"
+    "total_reviews": "Sve recenzije",
+    "anonymous_reviews": "Anonimne recenzije",
+    "positive_answer": "Pozitivan odgovor",
+    "negative_answer": "Negativan odgovor"
   },
   "CreateNewForm": {
     "main": "Kreiraj novu formu",
