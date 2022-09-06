@@ -49,7 +49,6 @@ export function Settings() {
     logo,
     tags,
   }) => {
-    console.log(tags)
     const formData = new FormData()
     const desc = [
       {
@@ -70,7 +69,10 @@ export function Settings() {
     formData.append('description', JSON.stringify(desc))
 
     companyInfoMutation.mutate({ formData })
-    companyMetaMutation.mutate({ data: tags[0] })
+
+    if (form.isFieldTouched('tags')) {
+      companyMetaMutation.mutate({ data: tags })
+    }
   }
 
   const onValuesChange = (

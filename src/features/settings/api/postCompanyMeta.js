@@ -4,11 +4,10 @@ import { message } from 'antd'
 import { axios } from '@/lib/axios'
 
 export const updateCompanyMeta = ({ data }) => {
-  console.log('Data: ', data)
   return axios({
     method: 'patch',
     url: `/api/wapp/company-meta`,
-    data: { google_place_id: data },
+    data: { google_place_ids: data },
   })
 }
 
