@@ -5,6 +5,7 @@ import { useTranslation } from 'react-i18next'
 import { Document, Page, pdfjs } from 'react-pdf'
 import { useState } from 'react'
 import 'react-pdf/dist/esm/Page/AnnotationLayer.css'
+import dayjs from 'dayjs'
 
 import { AddButton } from '@/components/buttons/AddButton'
 import { getColumnSearchProps } from '@/utils/columnSearchFilter'
@@ -47,7 +48,6 @@ export const Reports = () => {
   function openModal(reportData) {
     setModalUrl(reportData?.url?.props?.href || '')
     setModalTitle(reportData.name)
-    console.log(reportData?.url?.props?.href)
     setIsViewModalOpen(true)
   }
 
@@ -134,7 +134,7 @@ export const Reports = () => {
   }
 
   const data = reports[0].map((report) => {
-    const { createdBy, createdDate: createdAt, id: key, name, url } = report
+    const { createdBy, createdDate, id: key, name, url } = report
     return {
       key,
       name,
@@ -144,7 +144,7 @@ export const Reports = () => {
           {name}.pdf
         </a>
       ),
-      createdAt,
+      createdAt: dayjs(createdDate).format('DD/MM/YYYY'),
     }
   })
 
