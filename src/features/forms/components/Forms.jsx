@@ -18,8 +18,12 @@ const { Title, Text } = Typography
 export const Forms = () => {
   const location = useLocation()
   const decodedQueryParams = decodeURIComponent(location.search)
-  const { data, isLoading } = useForms(decodedQueryParams)
-  const { data: analyticsData, isLoading: isAnalyticsLoading } = useGetFormAnalyticsAllQuery(data)
+  const { data, isLoading, isFetching } = useForms(decodedQueryParams)
+  const {
+    data: analyticsData,
+    isLoading: isAnalyticsLoading,
+    isFetching: isAnalyticsFetching,
+  } = useGetFormAnalyticsAllQuery(data)
   const {
     i18n: { language },
     t,
@@ -82,11 +86,11 @@ export const Forms = () => {
       />
 
       <Row align="middle" style={{ gap: 50 }}>
-        {!isLoading && !isAnalyticsLoading ? (
+        {!isLoading && !isAnalyticsLoading && !isFetching && !isAnalyticsFetching ? (
           data[0]?.map((form, index) => {
             const { id, title, description } = form
             const singleAnalytic = analyticsData[index]
-            const pieChartData = Object.entries(singleAnalytic || {})
+            const pieChartData = Object.entries(singleAnalytic)
               .filter(
                 (entry) => entry[0] !== 'anonymous' && entry[0] !== 'total' && entry[0] !== 'type'
               )
@@ -121,19 +125,19 @@ export const Forms = () => {
                   <div style={columnDivFlex}>
                     <Statistic
                       title={t('total_reviews')}
-                      value={singleAnalytic?.total}
+                      value={singleAnalytic.total}
                       valueStyle={{ fontSize: '25px' }}
                     />
                   </div>
                   <div style={columnDivFlex}>
                     <Statistic
                       title={t('anonymous_reviews')}
-                      value={singleAnalytic?.anonymous}
+                      value={singleAnalytic.anonymous}
                       valueStyle={{ fontSize: '25px' }}
                     />
                     <p style={{ fontSize: '11px' }}>
                       {(
-                        (Number(singleAnalytic?.anonymous) / Number(singleAnalytic?.total)) *
+                        (Number(singleAnalytic.anonymous) / Number(singleAnalytic.total)) *
                         100
                       ).toFixed(1)}{' '}
                       %

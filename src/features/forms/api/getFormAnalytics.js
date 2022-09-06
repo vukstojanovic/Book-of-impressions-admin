@@ -13,7 +13,7 @@ export const getFormAnalyticsAll = async (arr) => {
 }
 
 export const useGetFormAnalyticsAllQuery = (dependantQuery) => {
-  return useQuery(['formAnalytics'], () => getFormAnalyticsAll(dependantQuery[0]), {
+  return useQuery(['formAnalytics', dependantQuery], () => getFormAnalyticsAll(dependantQuery[0]), {
     enabled: !!dependantQuery,
   })
 }
