@@ -207,7 +207,12 @@
     "page": "Page",
     "of": "of",
     "loading": "Loading...",
-    "no_results": "No results"
+    "no_results": "No results",
+    "create_new_report": "Create new report",
+    "generate": "Generate",
+    "cancel": "Cancel",
+    "label_name": "Name",
+    "label_forms": "Forms"
   },
   "Filters": {
     "name": "Name",
@@ -257,6 +262,7 @@
     "last_week": "Last week",
     "last_3_weeks": "Last 3 weeks",
     "last_month": "Last month",
-    "custom": "Custom"
+    "custom": "Custom",
+    "label_date": "Date"
   }
 }

@@ -1,24 +1,38 @@
 import { useRef } from 'react'
-import { Space, Table, Modal, Button, Empty } from 'antd'
-import { EyeOutlined, DeleteOutlined } from '@ant-design/icons'
+import { DatePicker, Col, Select, Row, Space, Table, Modal, Button, Empty, Form, Input } from 'antd'
+import { EyeOutlined, DeleteOutlined, PlusCircleOutlined } from '@ant-design/icons'
 import { useTranslation } from 'react-i18next'
 import { Document, Page, pdfjs } from 'react-pdf'
 import { useState } from 'react'
+
+import { useCreateNewReport } from '../api/createNewReport.js'
 import 'react-pdf/dist/esm/Page/AnnotationLayer.css'
 
-import { AddButton } from '@/components/buttons/AddButton'
+import { useSelectDate } from '@/hooks/useSelectDate'
 import { getColumnSearchProps } from '@/utils/columnSearchFilter'
+/* import { selectDateRange } from '@/utils/selectDateRange' */
+import { SelectDateRange } from '@/components/buttons'
 
 pdfjs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.js`
 
 export const Reports = () => {
   const { t } = useTranslation('Reports')
+  const [form] = Form.useForm()
+
+  const { mutate: createReport } = useCreateNewReport()
+  const [selectDateRange, state] = useSelectDate()
+
   const [isViewModalOpen, setIsViewModalOpen] = useState(false)
+  const [isCreateReportModalOpen, setIsCreateReportModalOpen] = useState(false)
+
   const [modalUrl, setModalUrl] = useState('')
   const [modalTitle, setModalTitle] = useState('')
+
   const [numPages, setNumPages] = useState(null)
   const [pageNumber, setPageNumber] = useState(1)
   const [isError, setIsError] = useState(false)
+
+  const { Option } = Select
 
   // function for fixing misalignment bug in pdf contents
   function removeTextLayerOffset() {
@@ -29,6 +43,40 @@ export const Reports = () => {
       style.left = '0'
       style.transform = ''
     })
+  }
+
+  function onFormSelectChange(value) {
+    console.log(`selected ${value}`)
+  }
+
+  function onFieldsChange(values) {
+    console.log('VALUES: ', values)
+    if (values.length !== 0) {
+      console.log('Length not 0')
+      console.log('Value Name: ', values[0].name[0])
+      if (values[0].name[0] !== 'forms' && values[0].name[0] !== 'name') {
+        console.log('Not forms and not name')
+        selectDateRange({ values, form })
+      }
+    }
+  }
+
+  const handleSubmitReports = (values) => {
+    const data = {
+      name: values.name,
+      forms: values.forms,
+      dateFrom: state.dateFrom,
+      dateTo: state.dateTo,
+    }
+    createReport(data)
+  }
+
+  function handleOpenCreateReportModal() {
+    setIsCreateReportModalOpen(true)
+  }
+
+  function handleCloseCreateReportModal() {
+    setIsCreateReportModalOpen(false)
   }
 
   function onDocumentLoadSuccess({ numPages }) {
@@ -163,7 +211,15 @@ export const Reports = () => {
 
   return (
     <>
-      <AddButton linkTo={'/reports/download-report'} />
+      <Row align="middle" justify="end" style={{ marginBottom: '1.75rem' }}>
+        <Button
+          onClick={handleOpenCreateReportModal}
+          icon={<PlusCircleOutlined />}
+          type="primary"
+          shape="circle"
+          size="large"
+        />
+      </Row>
       <Table
         columns={columns}
         dataSource={data}
@@ -179,6 +235,55 @@ export const Reports = () => {
           ),
         }}
       />
+      <Modal
+        as="form"
+        visible={isCreateReportModalOpen}
+        okText={t('generate')}
+        cancelText={t('cancel')}
+        centered
+        title={t('create_new_report')}
+        onCancel={handleCloseCreateReportModal}
+        okButtonProps={{ htmlType: 'submit', form: 'report-form' }}
+      >
+        <Form
+          onFieldsChange={onFieldsChange}
+          form={form}
+          onFinish={handleSubmitReports}
+          layout="vertical"
+          name="report-form"
+        >
+          <Form.Item label={t('label_name')} name="name">
+            <Input allowClear />
+          </Form.Item>
+          <SelectDateRange />
+          {state.custom && (
+            <Col>
+              <Form.Item name="pickedDate">
+                <DatePicker.RangePicker style={{ maxWidth: '250px' }} />
+              </Form.Item>
+            </Col>
+          )}
+          <Form.Item label={t('label_forms')} name="forms">
+            <Select
+              mode="multiple"
+              allowClear
+              style={{
+                width: '100%',
+              }}
+              placeholder="Please select"
+              onChange={onFormSelectChange}
+            >
+              {data.map((option, i) => {
+                return (
+                  <Option value={option.name} key={i}>
+                    {option.name}
+                  </Option>
+                )
+              })}{' '}
+            </Select>
+          </Form.Item>
+        </Form>
+      </Modal>
       <Modal
         centered
         title={modalTitle}

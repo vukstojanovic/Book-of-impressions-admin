@@ -207,7 +207,12 @@
     "page": "Strana",
     "of": "od",
     "loading": "Učitavanje...",
-    "no_results": "Nema rezultata"
+    "no_results": "Nema rezultata",
+    "create_new_report": "Kreiraj novi izveštaj",
+    "generate": "Generiši",
+    "cancel": "Otkaži",
+    "label_name": "Ime",
+    "label_forms": "Formulari"
   },
   "Filters": {
     "name": "Ime",
@@ -257,6 +262,7 @@
     "last_week": "Prethodna nedelja",
     "last_3_weeks": "Prethodna 3 nedelje",
     "last_month": "Prethodni mesec",
-    "custom": "Ručno"
+    "custom": "Ručno",
+    "label_date": "Datum"
   }
 }

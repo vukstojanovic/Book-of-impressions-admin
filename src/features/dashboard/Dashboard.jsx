@@ -1,156 +1,35 @@
-import {
-  DatePicker,
-  Form,
-  Col,
-  Row,
-  Select,
-  Space,
-  Statistic,
-  Typography,
-  Spin,
-  Button,
-} from 'antd'
+import { DatePicker, Form, Col, Row, Space, Statistic, Typography, Spin, Button } from 'antd'
 import { useTranslation } from 'react-i18next'
-import { useReducer, useEffect } from 'react'
+import { useEffect } from 'react'
 import dayjs from 'dayjs'
 import { PrinterFilled } from '@ant-design/icons'
 
 import { useGetAnalytics } from './api/getAnalytics'
 import { ChartRow } from './ChartRow'
 
-import { ChartPie } from '@/components/charts/ChartPie'
-import { ChartBar } from '@/components/charts/ChartBar'
-const { Option } = Select
-const initialState = { dateFrom: '', dateTo: '', custom: false }
-
-const reducer = (state, { type, payload }) => {
-  switch (type) {
-    case 'from_to':
-      if (!payload.dateFrom || !payload.dateTo) {
-        return { ...state }
-      }
-      return {
-        ...state,
-        dateFrom: payload.dateFrom,
-        dateTo: payload.dateTo,
-      }
-    case 'changeDate':
-      return {
-        ...state,
-        dateFrom: payload.dateFrom,
-        dateTo: payload.dateTo,
-        custom: false,
-      }
-    case 'custom':
-      return {
-        ...state,
-        custom: true,
-      }
-    default:
-      return state
-  }
-}
+import { useSelectDate } from '@/hooks/useSelectDate'
+import { SelectDateRange } from '@/components/buttons'
+import { ChartPie } from '@/components/charts'
+import { ChartBar } from '@/components/charts'
 
 const Dashboard = () => {
   const [form] = Form.useForm()
+  const [selectDateRange, state] = useSelectDate()
 
-  const [state, dispatch] = useReducer(reducer, initialState)
   const { data, isLoading } = useGetAnalytics({
     dateRange: { dateFrom: state.dateFrom, dateTo: state.dateTo },
   })
 
   const { Paragraph } = Typography
   const { t } = useTranslation('Charts')
-  const setTargetDate = (number, isMonth) => {
-    if (isMonth) {
-      return dayjs().subtract(number, 'month').format('YYYY-MM-DD')
-    }
-    return dayjs().subtract(number, 'day').format('YYYY-MM-DD')
-  }
-  const onDateRangeChange = (values) => {
-    const value = values[0].value
-    const today = dayjs().add(1, 'day').format('YYYY-MM-DD')
 
-    switch (value) {
-      case 'today':
-        dispatch({
-          type: 'changeDate',
-          payload: { dateFrom: setTargetDate(0), dateTo: today, selectDateValue: value },
-        })
-        form.resetFields(['pickedDate'])
-        break
-      case 'last_day':
-        dispatch({
-          type: 'changeDate',
-          payload: {
-            dateFrom: setTargetDate(1),
-            dateTo: today,
-          },
-        })
-        form.resetFields(['pickedDate'])
-        break
-      case 'last_3_days':
-        dispatch({
-          type: 'changeDate',
-          payload: {
-            dateFrom: setTargetDate(3),
-            dateTo: today,
-          },
-        })
-        form.resetFields(['pickedDate'])
-        break
-      case 'last_week':
-        dispatch({
-          type: 'changeDate',
-          payload: {
-            dateFrom: setTargetDate(7),
-            dateTo: today,
-          },
-        })
-        form.resetFields(['pickedDate'])
-        break
-      case 'last_3_weeks':
-        dispatch({
-          type: 'changeDate',
-          payload: {
-            dateFrom: setTargetDate(21),
-            dateTo: today,
-          },
-        })
-        form.resetFields(['pickedDate'])
-        break
-      case 'last_month':
-        dispatch({
-          type: 'changeDate',
-          payload: {
-            dateFrom: setTargetDate(1, 'month'),
-            dateTo: today,
-          },
-        })
-        form.resetFields(['pickedDate'])
-        break
-      case 'custom':
-        dispatch({ type: 'custom' })
-        break
-      default:
-        dispatch({
-          type: 'from_to',
-          payload: {
-            dateFrom: value ? dayjs(value[0]?._d).format('YYYY-MM-DD') : '',
-            dateTo: value ? dayjs(value[1]?._d).add(1, 'day').format('YYYY-MM-DD') : '',
-          },
-        })
-        break
-    }
+  const onDateRangeChange = (values) => {
+    selectDateRange({ values, form })
   }
 
   useEffect(() => {
-    const today = dayjs().add(1, 'day').format('YYYY-MM-DD')
     form.setFieldsValue({ selectedDateRange: 'today' })
-    dispatch({
-      type: 'changeDate',
-      payload: { dateFrom: setTargetDate(0), dateTo: today },
-    })
+    selectDateRange({ values: ['today'], form })
   }, [])
 
   const anonymousReviewPercentage = (data?.without_name / data?.total) * 100 || 0
@@ -178,17 +57,7 @@ const Dashboard = () => {
         <Row justify="space-between">
           <Row gutter={16}>
             <Col>
-              <Form.Item name="selectedDateRange">
-                <Select style={{ minWidth: '200px' }}>
-                  <Option value="today">{t('today')}</Option>
-                  <Option value="last_day">{t('last_day')}</Option>
-                  <Option value="last_3_days">{t('last_3_days')}</Option>
-                  <Option value="last_week">{t('last_week')}</Option>
-                  <Option value="last_3_weeks">{t('last_3_weeks')}</Option>
-                  <Option value="last_month">{t('last_month')}</Option>
-                  <Option value="custom">{t('custom')}</Option>
-                </Select>
-              </Form.Item>
+              <SelectDateRange />
             </Col>
 
             {state.custom && (
