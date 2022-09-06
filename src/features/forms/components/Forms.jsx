@@ -91,7 +91,6 @@ export const Forms = () => {
                 (entry) => entry[0] !== 'anonymous' && entry[0] !== 'total' && entry[0] !== 'type'
               )
               .map((entry) => ({ name: entry[0], value: Number(entry[1]) || 1 }))
-            console.log(pieChartData)
             return (
               <Card
                 hoverable
