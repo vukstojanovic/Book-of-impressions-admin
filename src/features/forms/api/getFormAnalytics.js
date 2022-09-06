@@ -9,7 +9,6 @@ export const getFormAnalytics = ({ id }) => {
 export const getFormAnalyticsAll = async (arr) => {
   const arrForFetching = arr.map((item) => getFormAnalytics({ id: item.id }))
   const result = await Promise.all(arrForFetching)
-  console.log(result)
   return result
 }
 

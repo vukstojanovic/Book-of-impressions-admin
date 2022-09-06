@@ -90,7 +90,8 @@ export const Forms = () => {
               .filter(
                 (entry) => entry[0] !== 'anonymous' && entry[0] !== 'total' && entry[0] !== 'type'
               )
-              .map((entry) => ({ name: entry[0], value: Number(entry[1]) || 1 }))
+              .map((entry) => ({ name: entry[0], value: Number(entry[1]) }))
+            const hasNoValuesAtAll = pieChartData.every((item) => !item.value)
             return (
               <Card
                 hoverable
@@ -139,26 +140,30 @@ export const Forms = () => {
                     </p>
                   </div>
                   <div style={columnDivFlex}>
-                    <PieChart width={100} height={100}>
-                      <Tooltip
-                        itemStyle={{ textTransform: 'capitalize' }}
-                        formatter={(value, name) => [value, t(name)]}
-                        wrapperStyle={{ outline: 'none' }}
-                      />
-                      <Pie
-                        data={pieChartData}
-                        dataKey="value"
-                        nameKey="name"
-                        cx="50%"
-                        cy="50%"
-                        outerRadius={50}
-                        fill="#8884d8"
-                      >
-                        {pieChartData.map((_entry, index) => (
-                          <Cell key={`cell-${index}`} fill={colors[index]} />
-                        ))}
-                      </Pie>
-                    </PieChart>
+                    {hasNoValuesAtAll ? (
+                      <p>{t('no_values')}</p>
+                    ) : (
+                      <PieChart width={100} height={100}>
+                        <Tooltip
+                          itemStyle={{ textTransform: 'capitalize' }}
+                          formatter={(value, name) => [value, t(name)]}
+                          wrapperStyle={{ outline: 'none' }}
+                        />
+                        <Pie
+                          data={pieChartData}
+                          dataKey="value"
+                          nameKey="name"
+                          cx="50%"
+                          cy="50%"
+                          outerRadius={50}
+                          fill="#8884d8"
+                        >
+                          {pieChartData.map((_entry, index) => (
+                            <Cell key={`cell-${index}`} fill={colors[index]} />
+                          ))}
+                        </Pie>
+                      </PieChart>
+                    )}
                   </div>
                 </div>
               </Card>

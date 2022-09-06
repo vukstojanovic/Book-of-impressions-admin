@@ -74,7 +74,8 @@
     "total_reviews": "Sve recenzije",
     "anonymous_reviews": "Anonimne recenzije",
     "positive_answer": "Pozitivan odgovor",
-    "negative_answer": "Negativan odgovor"
+    "negative_answer": "Negativan odgovor",
+    "no_values": "Bez vrednosti"
   },
   "CreateNewForm": {
     "main": "Kreiraj novu formu",
