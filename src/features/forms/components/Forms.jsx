@@ -86,7 +86,7 @@ export const Forms = () => {
           data[0]?.map((form, index) => {
             const { id, title, description } = form
             const singleAnalytic = analyticsData[index]
-            const pieChartData = Object.entries(singleAnalytic)
+            const pieChartData = Object.entries(singleAnalytic || {})
               .filter(
                 (entry) => entry[0] !== 'anonymous' && entry[0] !== 'total' && entry[0] !== 'type'
               )
@@ -121,19 +121,19 @@ export const Forms = () => {
                   <div style={columnDivFlex}>
                     <Statistic
                       title={t('total_reviews')}
-                      value={singleAnalytic.total}
+                      value={singleAnalytic?.total}
                       valueStyle={{ fontSize: '25px' }}
                     />
                   </div>
                   <div style={columnDivFlex}>
                     <Statistic
                       title={t('anonymous_reviews')}
-                      value={singleAnalytic.anonymous}
+                      value={singleAnalytic?.anonymous}
                       valueStyle={{ fontSize: '25px' }}
                     />
                     <p style={{ fontSize: '11px' }}>
                       {(
-                        (Number(singleAnalytic.anonymous) / Number(singleAnalytic.total)) *
+                        (Number(singleAnalytic?.anonymous) / Number(singleAnalytic?.total)) *
                         100
                       ).toFixed(1)}{' '}
                       %
