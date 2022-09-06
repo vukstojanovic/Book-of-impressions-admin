@@ -94,7 +94,11 @@
     "emptyDescription": "Description is required",
     "emptyType": "Type is required",
     "submitSuccess": "You successfully submitted the form!",
-    "submitError": "Something went wrong!"
+    "submitError": "Something went wrong!",
+    "min_characters": "Minimum number of characters is",
+    "min_spaces": "Minimum number of spaces is",
+    "ends_with": "Must end with question mark or fullstop.",
+    "starts_with": "Must start with an uppercase letter."
   },
   "SideMenu": {
     "dashboard": "Dashboard",
@@ -178,7 +182,12 @@
     "cancel": "Cancel",
     "submit": "Submit",
     "submit_success": "You successfully submitted form",
-    "submit_error": "Something went wrong"
+    "submit_error": "Something went wrong",
+    "add_google_place_id": "Enter Google Place ID",
+    "min_characters": "Minimum number of characters is",
+    "min_spaces": "Minimum number of spaces is",
+    "ends_with": "Must end with question mark or fullstop.",
+    "starts_with": "Must start with an uppercase letter."
   },
   "Verify_user": {
     "please_wait_while_your_account_is_being_verified": "Please wait while your account is being verified.",
