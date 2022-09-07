@@ -3,20 +3,21 @@ import { message } from 'antd'
 
 import { axios } from '@/lib/axios'
 
-export const createNewReport = (data) => {
+export const deleteReport = (id) => {
   return axios({
-    method: 'post',
-    url: '/api/wapp/report',
-    data,
+    method: 'delete',
+    url: `/api/wapp/report/${id}`,
   })
 }
 
-export const useCreateNewReport = ({ t }) => {
+export const useDeleteReport = ({ close, t }) => {
   const queryClient = useQueryClient()
-  return useMutation(createNewReport, {
+
+  return useMutation(deleteReport, {
     onSuccess: () => {
       queryClient.invalidateQueries(['allReports'])
-      message.success(t('success_create'))
+      message.success(t('success_delete'))
+      close()
     },
     onError: () => message.error(t('error')),
   })

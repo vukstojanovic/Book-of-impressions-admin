@@ -217,7 +217,17 @@
     "generate": "Generate",
     "cancel": "Cancel",
     "label_name": "Name",
-    "label_forms": "Forms"
+    "label_forms": "Forms",
+    "title_delete": "Are you sure you want to delete this report ?",
+    "confirm_delete": "Are you sure you want to delete",
+    "yes": "Yes",
+    "no": "No",
+    "success_create": "Successfully created new report",
+    "success_delete": "Successfully deleted report",
+    "error": "There's been an error",
+    "error_name": "Name is required",
+    "error_formIds": "Forms are requiered",
+    "error_date": "You must input date"
   },
   "Filters": {
     "name": "Name",

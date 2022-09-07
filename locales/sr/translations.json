@@ -217,7 +217,17 @@
     "generate": "Generiši",
     "cancel": "Otkaži",
     "label_name": "Ime",
-    "label_forms": "Formulari"
+    "label_forms": "Formulari",
+    "title_delete": "Da li ste sigurni da želite da obrišete izveštaj ?",
+    "confirm_delete": "Da li ste sigurni da hoćete da obrišete",
+    "yes": "Da",
+    "no": "Ne",
+    "success_create": "Uspešno kreiran novi izvešta",
+    "success_delete": "Uspešno izbrisan izvešta",
+    "error": "Došlo je do greške",
+    "error_name": "Ime je obavezno",
+    "error_formIds": "Formulari su obavezni",
+    "error_date": "Datum je obavezan"
   },
   "Filters": {
     "name": "Ime",

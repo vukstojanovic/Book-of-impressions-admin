@@ -1,54 +1,40 @@
-import { useState, useEffect, useRef } from 'react'
-import {
-  DatePicker,
-  Col,
-  Select,
-  Row,
-  Space,
-  Table,
-  Modal,
-  Button,
-  Empty,
-  Form,
-  Input,
-  Skeleton,
-} from 'antd'
+import { useState, useRef } from 'react'
+import { Col, Row, Space, Table, Modal, Button, Empty, Skeleton } from 'antd'
 import { EyeOutlined, DeleteOutlined, PlusCircleOutlined } from '@ant-design/icons'
 import { useTranslation } from 'react-i18next'
 import { Document, Page, pdfjs } from 'react-pdf'
 import dayjs from 'dayjs'
 
-import { useCreateNewReport } from '../api/createNewReport.js'
-
 import 'react-pdf/dist/esm/Page/AnnotationLayer.css'
+import { CreateReportModal } from './CreateReportModal'
 
-import { useSelectDate } from '@/hooks/useSelectDate'
 import { getColumnSearchProps } from '@/utils/columnSearchFilter'
-import { SelectDateRange } from '@/components/buttons'
 import { useReports } from '@/features/reports/api/getReports'
+import { useDeleteReport } from '@/features/reports/api/deleteReport'
 
 pdfjs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.js`
 
 export const Reports = () => {
   const { t } = useTranslation('Reports')
-  const [form] = Form.useForm()
-
-  const { mutate: createReport } = useCreateNewReport()
-  const [selectDateRange, state] = useSelectDate()
 
   const [isViewModalOpen, setIsViewModalOpen] = useState(false)
   const [isCreateReportModalOpen, setIsCreateReportModalOpen] = useState(false)
+  const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false)
 
   const [modalUrl, setModalUrl] = useState('')
   const [modalTitle, setModalTitle] = useState('')
 
+  const [deleteModalData, setDeleteModalData] = useState('')
   const [numPages, setNumPages] = useState(null)
   const [pageNumber, setPageNumber] = useState(1)
   const [isError, setIsError] = useState(false)
 
-  const { Option } = Select
-  const { data: reports, isLoading } = useReports()
+  const { data: reports, isLoading } = useReports({ t })
 
+  const { mutate: deleteReport } = useDeleteReport({
+    close: handleCloseDeleteModal,
+    t,
+  })
   // function for fixing misalignment bug in pdf contents
   function removeTextLayerOffset() {
     const textLayers = document.querySelectorAll('.react-pdf__Page__textContent')
@@ -60,23 +46,13 @@ export const Reports = () => {
     })
   }
 
-  function onFormSelectChange(value) {
-    console.log(`selected ${value}`)
+  function handleOpenDeleteModal(record) {
+    setDeleteModalData(record)
+    setIsDeleteModalOpen(true)
   }
 
-  function onFieldsChange(values) {
-    selectDateRange({ values, form })
-  }
-
-  const handleSubmitReports = (values) => {
-    console.log(state)
-    const data = {
-      name: values.name,
-      forms: values.forms,
-      dateFrom: state.dateFrom,
-      dateTo: state.dateTo,
-    }
-    createReport(data)
+  function handleCloseDeleteModal() {
+    setIsDeleteModalOpen(false)
   }
 
   function handleOpenCreateReportModal() {
@@ -152,7 +128,10 @@ export const Reports = () => {
             onClick={() => openModal(record)}
             style={{ fontSize: '20px', cursor: 'pointer' }}
           />
-          <DeleteOutlined style={{ fontSize: '20px', cursor: 'pointer' }} />
+          <DeleteOutlined
+            onClick={() => handleOpenDeleteModal(record)}
+            style={{ fontSize: '20px', cursor: 'pointer' }}
+          />{' '}
         </Space>
       ),
     },
@@ -175,13 +154,30 @@ export const Reports = () => {
 
   if (reports[0].length === 0) {
     return (
-      <Empty
-        description={
-          <span>
-            <b>{t('no_results')}</b>
-          </span>
-        }
-      />
+      <>
+        <Row align="middle" justify="end" style={{ marginBottom: '1.75rem' }}>
+          <Button
+            onClick={handleOpenCreateReportModal}
+            icon={<PlusCircleOutlined />}
+            type="primary"
+            shape="circle"
+            size="large"
+          />
+        </Row>
+        <CreateReportModal
+          t={t}
+          isCreateReportModalOpen={isCreateReportModalOpen}
+          handleCloseCreateReportModal={handleCloseCreateReportModal}
+          data={reports}
+        />
+        <Empty
+          description={
+            <span>
+              <b>{t('no_results')}</b>
+            </span>
+          }
+        />
+      </>
     )
   }
 
@@ -199,11 +195,6 @@ export const Reports = () => {
       createdAt: dayjs(createdDate).format('DD/MM/YYYY'),
     }
   })
-
-  useEffect(() => {
-    form.setFieldsValue({ selectedDateRange: 'today' })
-    selectDateRange({ values: [{ value: 'today' }], form })
-  }, [])
 
   return (
     <>
@@ -232,54 +223,26 @@ export const Reports = () => {
           ),
         }}
       />
+      <CreateReportModal
+        t={t}
+        isCreateReportModalOpen={isCreateReportModalOpen}
+        handleCloseCreateReportModal={handleCloseCreateReportModal}
+        data={reports}
+      />{' '}
       <Modal
-        as="form"
-        visible={isCreateReportModalOpen}
-        okText={t('generate')}
-        cancelText={t('cancel')}
         centered
-        title={t('create_new_report')}
-        onCancel={handleCloseCreateReportModal}
-        okButtonProps={{ htmlType: 'submit', form: 'report-form' }}
+        title={t('title_delete')}
+        okText={t('yes')}
+        cancelText={t('no')}
+        onOk={() => {
+          deleteReport(deleteModalData.key)
+        }}
+        onCancel={handleCloseDeleteModal}
+        visible={isDeleteModalOpen}
       >
-        <Form
-          onFieldsChange={onFieldsChange}
-          form={form}
-          onFinish={handleSubmitReports}
-          layout="vertical"
-          name="report-form"
-        >
-          <Form.Item label={t('label_name')} name="name">
-            <Input placeholder={t('label_name')} allowClear />
-          </Form.Item>
-          <SelectDateRange />
-          {state.custom && (
-            <Col>
-              <Form.Item name="pickedDate">
-                <DatePicker.RangePicker style={{ maxWidth: '250px' }} />
-              </Form.Item>
-            </Col>
-          )}
-          <Form.Item label={t('label_forms')} name="forms">
-            <Select
-              placeholder={t('label_forms')}
-              mode="multiple"
-              allowClear
-              style={{
-                width: '100%',
-              }}
-              onChange={onFormSelectChange}
-            >
-              {data.map((option, i) => {
-                return (
-                  <Option value={option.id} key={i}>
-                    {option.name}
-                  </Option>
-                )
-              })}{' '}
-            </Select>
-          </Form.Item>
-        </Form>
+        <p>
+          {t('confirm_delete')}: {deleteModalData.name} ?
+        </p>
       </Modal>
       <Modal
         centered

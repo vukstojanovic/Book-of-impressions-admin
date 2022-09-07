@@ -1,12 +1,12 @@
 import { Form, Select } from 'antd'
 import { useTranslation } from 'react-i18next'
 
-export const SelectDateRange = () => {
+export const SelectDateRange = ({ required }) => {
   const { t: selectTexts } = useTranslation('Charts')
   const { Option } = Select
 
   return (
-    <Form.Item label={selectTexts('label_date')} name="selectedDateRange">
+    <Form.Item label={selectTexts('label_date')} required={required} name="selectedDateRange">
       <Select style={{ minWidth: '200px' }}>
         <Option value="today">{selectTexts('today')}</Option>
         <Option value="last_day">{selectTexts('last_day')}</Option>
