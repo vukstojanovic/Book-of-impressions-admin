@@ -70,7 +70,12 @@
     "forms": "Forms",
     "no_results": "No results",
     "questions": "Questions",
-    "reviews": "Reviews"
+    "reviews": "Reviews",
+    "total_reviews": "Total reviews",
+    "anonymous_reviews": "Anonymous reviews",
+    "positive_answer": "Positive answer",
+    "negative_answer": "Negative answer",
+    "no_values": "No values"
   },
   "CreateNewForm": {
     "main": "Create New Form",
@@ -210,7 +215,22 @@
     "page": "Page",
     "of": "of",
     "loading": "Loading...",
-    "no_results": "No results"
+    "no_results": "No results",
+    "create_new_report": "Create new report",
+    "generate": "Generate",
+    "cancel": "Cancel",
+    "label_name": "Name",
+    "label_forms": "Forms",
+    "title_delete": "Are you sure you want to delete this report ?",
+    "confirm_delete": "Are you sure you want to delete",
+    "yes": "Yes",
+    "no": "No",
+    "success_create": "Successfully created new report",
+    "success_delete": "Successfully deleted report",
+    "error": "There's been an error",
+    "error_name": "Name is required",
+    "error_formIds": "Forms are requiered",
+    "error_date": "You must input date"
   },
   "Filters": {
     "name": "Name",
@@ -260,6 +280,7 @@
     "last_week": "Last week",
     "last_3_weeks": "Last 3 weeks",
     "last_month": "Last month",
-    "custom": "Custom"
+    "custom": "Custom",
+    "label_date": "Date"
   }
 }

@@ -1,7 +1,7 @@
 import { Form, Row, Col, Input, Radio, Select, Collapse, Button, DatePicker, Slider } from 'antd'
 import { useSearchParams } from 'react-router-dom'
-import moment from 'moment'
 import { useTranslation } from 'react-i18next'
+import dayjs from 'dayjs'
 
 export const FilterComponent = ({
   hasName,
@@ -37,8 +37,8 @@ export const FilterComponent = ({
         typeof formValues[key] === 'boolean'
       ) {
         if (key === 'createdDate') {
-          modifiedObject.fromCreatedDate = moment(formValues[key][0]?._d).format(dateFormat)
-          modifiedObject.toCreatedDate = moment(formValues[key][1]?._d).format(dateFormat)
+          modifiedObject.fromCreatedDate = dayjs(formValues[key][0]?._d).format(dateFormat)
+          modifiedObject.toCreatedDate = dayjs(formValues[key][1]?._d).format(dateFormat)
         } else if (key === 'rating') {
           modifiedObject.fromRating = formValues[key][0]
           modifiedObject.toRating = formValues[key][1]
@@ -105,8 +105,8 @@ export const FilterComponent = ({
               createdDate:
                 searchParams.get('fromCreatedDate') && searchParams.get('toCreatedDate')
                   ? [
-                      moment(searchParams.get('fromCreatedDate'), dateFormat),
-                      moment(searchParams.get('toCreatedDate'), dateFormat),
+                      dayjs(searchParams.get('fromCreatedDate')).format(dateFormat),
+                      dayjs(searchParams.get('toCreatedDate')).format(dateFormat),
                     ]
                   : [],
               title: searchParams.get('title'),

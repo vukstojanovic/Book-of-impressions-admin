@@ -1,25 +1,40 @@
-import { useRef } from 'react'
-import { Space, Table, Modal, Button, Empty } from 'antd'
-import { EyeOutlined, DeleteOutlined } from '@ant-design/icons'
+import { useState, useRef } from 'react'
+import { Col, Row, Space, Table, Modal, Button, Empty, Skeleton } from 'antd'
+import { EyeOutlined, DeleteOutlined, PlusCircleOutlined } from '@ant-design/icons'
 import { useTranslation } from 'react-i18next'
 import { Document, Page, pdfjs } from 'react-pdf'
-import { useState } from 'react'
-import 'react-pdf/dist/esm/Page/AnnotationLayer.css'
+import dayjs from 'dayjs'
 
-import { AddButton } from '@/components/buttons/AddButton'
+import 'react-pdf/dist/esm/Page/AnnotationLayer.css'
+import { CreateReportModal } from './CreateReportModal'
+
 import { getColumnSearchProps } from '@/utils/columnSearchFilter'
+import { useReports } from '@/features/reports/api/getReports'
+import { useDeleteReport } from '@/features/reports/api/deleteReport'
 
 pdfjs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.js`
 
 export const Reports = () => {
   const { t } = useTranslation('Reports')
+
   const [isViewModalOpen, setIsViewModalOpen] = useState(false)
+  const [isCreateReportModalOpen, setIsCreateReportModalOpen] = useState(false)
+  const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false)
+
   const [modalUrl, setModalUrl] = useState('')
   const [modalTitle, setModalTitle] = useState('')
+
+  const [deleteModalData, setDeleteModalData] = useState('')
   const [numPages, setNumPages] = useState(null)
   const [pageNumber, setPageNumber] = useState(1)
   const [isError, setIsError] = useState(false)
 
+  const { data: reports, isLoading } = useReports({ t })
+
+  const { mutate: deleteReport } = useDeleteReport({
+    close: handleCloseDeleteModal,
+    t,
+  })
   // function for fixing misalignment bug in pdf contents
   function removeTextLayerOffset() {
     const textLayers = document.querySelectorAll('.react-pdf__Page__textContent')
@@ -29,6 +44,23 @@ export const Reports = () => {
       style.left = '0'
       style.transform = ''
     })
+  }
+
+  function handleOpenDeleteModal(record) {
+    setDeleteModalData(record)
+    setIsDeleteModalOpen(true)
+  }
+
+  function handleCloseDeleteModal() {
+    setIsDeleteModalOpen(false)
+  }
+
+  function handleOpenCreateReportModal() {
+    setIsCreateReportModalOpen(true)
+  }
+
+  function handleCloseCreateReportModal() {
+    setIsCreateReportModalOpen(false)
   }
 
   function onDocumentLoadSuccess({ numPages }) {
@@ -44,7 +76,6 @@ export const Reports = () => {
   function openModal(reportData) {
     setModalUrl(reportData?.url?.props?.href || '')
     setModalTitle(reportData.name)
-    console.log(reportData?.url?.props?.href)
     setIsViewModalOpen(true)
   }
 
@@ -97,74 +128,87 @@ export const Reports = () => {
             onClick={() => openModal(record)}
             style={{ fontSize: '20px', cursor: 'pointer' }}
           />
-          <DeleteOutlined style={{ fontSize: '20px', cursor: 'pointer' }} />
+          <DeleteOutlined
+            onClick={() => handleOpenDeleteModal(record)}
+            style={{ fontSize: '20px', cursor: 'pointer' }}
+          />{' '}
         </Space>
       ),
     },
   ]
 
-  const data = [
-    {
-      key: '1',
-      name: 'Boi',
-      createdBy: 'Danilo Markicevic',
+  if (isLoading) {
+    return (
+      <>
+        <Row justify="end" style={{ marginBottom: '20px' }}>
+          <Col>
+            <Skeleton.Button shape="circle" />
+          </Col>
+        </Row>
+        <Row>
+          <Skeleton />
+        </Row>
+      </>
+    )
+  }
+
+  if (reports[0].length === 0) {
+    return (
+      <>
+        <Row align="middle" justify="end" style={{ marginBottom: '1.75rem' }}>
+          <Button
+            onClick={handleOpenCreateReportModal}
+            icon={<PlusCircleOutlined />}
+            type="primary"
+            shape="circle"
+            size="large"
+          />
+        </Row>
+        <CreateReportModal
+          t={t}
+          isCreateReportModalOpen={isCreateReportModalOpen}
+          handleCloseCreateReportModal={handleCloseCreateReportModal}
+          data={reports}
+        />
+        <Empty
+          description={
+            <span>
+              <b>{t('no_results')}</b>
+            </span>
+          }
+        />
+      </>
+    )
+  }
+
+  const data = reports[0].map((report) => {
+    const { createdBy, createdDate, id: key, name, url } = report
+    return {
+      key,
+      name,
+      createdBy,
       url: (
-        <a href="/sample.pdf" download>
-          sample.pdf
+        <a href={url} download>
+          {name}.pdf
         </a>
       ),
-      createdAt: '12.05.2022',
-    },
-    {
-      key: '2',
-      name: 'Boi2',
-      createdBy: 'Vuk Stojanovic',
-      url: (
-        <a href="/masina_za_ves.pdf" download>
-          masina_za_ves.pdf
-        </a>
-      ),
-      createdAt: '11.06.2021',
-    },
-    {
-      key: '3',
-      name: 'Boi3',
-      createdBy: 'Stefan Meza',
-      url: (
-        <a href="/it_academy.pdf" download>
-          it_academy.pdf
-        </a>
-      ),
-      createdAt: '05.08.2022',
-    },
-    {
-      key: '4',
-      name: 'Travel App',
-      createdBy: 'Vlada Stojanovic',
-      url: (
-        <a href="/pdf_test.pdf" download>
-          pdf_test
-        </a>
-      ),
-      createdAt: '24.06.2021',
-    },
-    {
-      key: '5',
-      name: 'Benefit',
-      createdBy: 'Nikola Markovic',
-      url: (
-        <a href="/" download>
-          no pdf available
-        </a>
-      ),
-      createdAt: '10.11.2022',
-    },
-  ]
+      createdAt: dayjs(createdDate).format('DD/MM/YYYY'),
+    }
+  })
 
   return (
     <>
-      <AddButton linkTo={'/reports/download-report'} />
+      <Row align="middle" justify="end" style={{ marginBottom: '1.75rem' }}>
+        <Button
+          onClick={handleOpenCreateReportModal}
+          icon={<PlusCircleOutlined />}
+          type="primary"
+          shape="circle"
+          size="large"
+        />
+      </Row>
       <Table
+        style={{ overflowX: 'auto' }}
         columns={columns}
         dataSource={data}
         locale={{
@@ -179,6 +223,27 @@ export const Reports = () => {
           ),
         }}
       />
+      <CreateReportModal
+        t={t}
+        isCreateReportModalOpen={isCreateReportModalOpen}
+        handleCloseCreateReportModal={handleCloseCreateReportModal}
+        data={reports}
+      />{' '}
+      <Modal
+        centered
+        title={t('title_delete')}
+        okText={t('yes')}
+        cancelText={t('no')}
+        onOk={() => {
+          deleteReport(deleteModalData.key)
+        }}
+        onCancel={handleCloseDeleteModal}
+        visible={isDeleteModalOpen}
+      >
+        <p>
+          {t('confirm_delete')}: {deleteModalData.name} ?
+        </p>
+      </Modal>
       <Modal
         centered
         title={modalTitle}
