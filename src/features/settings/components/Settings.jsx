@@ -41,13 +41,15 @@ export function Settings() {
   const companyMetaMutation = useUpdateCompanyMeta({
     t,
   })
+
   const onFinish = ({
     'company-name': name,
     'company-email': email,
     'en-desc': enDescription,
     'sr-desc': srDescription,
     logo,
-    tags,
+    google_place_ids,
+    tripadvisor_urls,
   }) => {
     const formData = new FormData()
     const desc = [
@@ -70,9 +72,30 @@ export function Settings() {
 
     companyInfoMutation.mutate({ formData })
 
-    if (form.isFieldTouched('tags')) {
-      companyMetaMutation.mutate({ data: tags })
+    if (form.isFieldTouched('google_place_ids') || form.isFieldTouched('tripadvisor_urls')) {
+      companyMetaMutation.mutate({ google_place_ids, tripadvisor_urls })
     }
+  }
+
+  const onFieldsChange = (_, allFields) => {
+    let errorInValue = false
+    allFields.forEach((field) => {
+      if (
+        field.name[0] === 'company-name' ||
+        field.name[0] === 'company-email' ||
+        field.name[0] === 'en-desc' ||
+        field.name[0] === 'sr-desc'
+      )
+        if (field.errors.length !== 0 || !field.value) {
+          setButtonDisabled(true)
+          errorInValue = true
+        }
+    })
+    if (errorInValue === true) {
+      setButtonDisabled(true)
+      return
+    }
+    setButtonDisabled(false)
   }
 
   const onValuesChange = (
@@ -95,8 +118,7 @@ export function Settings() {
       setButtonDisabled(false)
       return
     }
-
-    if (form.isFieldTouched('tags')) {
+    if (form.isFieldTouched('google_place_ids') || form.isFieldTouched('tripadvisor_urls')) {
       setButtonDisabled(false)
       return
     }
@@ -124,13 +146,14 @@ export function Settings() {
   useEffect(() => {
     if (company) {
       form.setFieldsValue({
-        'company-name': company.name,
-        'company-email': company.email,
+        'company-name': company.name || '',
+        'company-email': company.email || '',
         'en-desc': company.description.filter((lang) => lang.key === 'en')[0]?.text || '',
         'sr-desc': company.description.filter((lang) => lang.key === 'sr')[0]?.text || '',
       })
     }
   }, [company])
+
   if (isLoading)
     return (
       <Row align="middle" justify="center" style={{ minHeight: '30vh' }}>
@@ -148,6 +171,7 @@ export function Settings() {
           form={form}
           style={{ backgroundColor: 'white', padding: '10px 30px' }}
           onFinish={onFinish}
+          onFieldsChange={onFieldsChange}
           onValuesChange={onValuesChange}
         >
           <Row gutter={24}>
@@ -263,8 +287,11 @@ export function Settings() {
               {uploadButton}
             </Upload>
           </Form.Item>
-          <Form.Item name="tags">
-            <Tags t={t} form={form} />
+          <Form.Item name="google_place_ids">
+            <Tags t={t} form={form} placeholderText={t('add_google_place_id')} />
+          </Form.Item>
+          <Form.Item name="tripadvisor_urls">
+            <Tags t={t} form={form} placeholderText={t('add_tripadvisor_url')} />
           </Form.Item>
           {role !== 'Manager' ? null : (
             <Form.Item style={{ textAlign: 'right' }}>

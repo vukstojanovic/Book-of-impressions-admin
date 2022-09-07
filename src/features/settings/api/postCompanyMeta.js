@@ -3,11 +3,11 @@ import { message } from 'antd'
 
 import { axios } from '@/lib/axios'
 
-export const updateCompanyMeta = ({ data }) => {
+export const updateCompanyMeta = (data) => {
   return axios({
-    method: 'patch',
+    method: 'PATCH',
     url: `/api/wapp/company-meta`,
-    data: { google_place_ids: data },
+    data,
   })
 }
 

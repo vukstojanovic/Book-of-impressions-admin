@@ -186,6 +186,7 @@
     "submit_success": "Uspešno ste poslali formu",
     "submit_error": "Nešto je pošlo naopako",
     "add_google_place_id": "Unesite Google Place ID",
+    "add_tripadvisor_url": "Unesite Tripadvisor URL",
     "min_characters": "Minimalan broj karaktera je",
     "min_spaces": "Minimalan broj praznih mesta je",
     "ends_with": "Mora se završavati tačkom ili upitnikom.",

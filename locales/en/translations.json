@@ -184,6 +184,7 @@
     "submit_success": "You successfully submitted form",
     "submit_error": "Something went wrong",
     "add_google_place_id": "Enter Google Place ID",
+    "add_tripadvisor_url": "Enter Tripadvisor URL",
     "min_characters": "Minimum number of characters is",
     "min_spaces": "Minimum number of spaces is",
     "ends_with": "Must end with question mark or fullstop.",

@@ -3,7 +3,7 @@ import { Typography, Tag, Input, Col } from 'antd'
 
 import style from './Tags.module.css'
 
-export const Tags = ({ t, onChange }) => {
+export const Tags = ({ t, onChange, placeholderText }) => {
   const { Text } = Typography
 
   const [tags, setTags] = useState([])
@@ -21,6 +21,7 @@ export const Tags = ({ t, onChange }) => {
   const handleClose = (removedTag) => {
     const newTags = tags.filter((tag) => tag !== removedTag)
     setTags(newTags)
+    triggerChange([...newTags])
   }
 
   const handleBackspace = (e) => {
@@ -61,7 +62,6 @@ export const Tags = ({ t, onChange }) => {
     const newTags = [...tags]
     newTags[editInputIndex] = editInputValue
     setTags(newTags)
-
     setEditInputIndex(-1)
     setInputValue('')
   }
@@ -106,7 +106,7 @@ export const Tags = ({ t, onChange }) => {
           type="text"
           value={inputValue}
           bordered={false}
-          placeholder={tags.length === 0 ? t('add_google_place_id') : ''}
+          placeholder={placeholderText}
           onChange={handleInputChange}
           onPressEnter={handleInputConfirm}
           onKeyDown={handleBackspace}
