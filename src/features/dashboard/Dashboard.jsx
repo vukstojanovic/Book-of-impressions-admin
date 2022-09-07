@@ -35,12 +35,14 @@ const Dashboard = () => {
   const anonymousReviewPercentage = (data?.without_name / data?.totalND) * 100 || 0
   const reviewPercentage = (data?.total / data?.totalND) * 100 || 0
 
-  if (isLoading)
+  if (isLoading) {
     return (
       <Row align="middle" justify="center" style={{ minHeight: '30vh' }}>
         <Spin size="large" />
       </Row>
     )
+  }
+
   return (
     <Col
       className="print-page"
