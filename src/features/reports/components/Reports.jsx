@@ -1,16 +1,14 @@
-import { useRef } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { DatePicker, Col, Select, Row, Space, Table, Modal, Button, Empty, Form, Input } from 'antd'
 import { EyeOutlined, DeleteOutlined, PlusCircleOutlined } from '@ant-design/icons'
 import { useTranslation } from 'react-i18next'
 import { Document, Page, pdfjs } from 'react-pdf'
-import { useState } from 'react'
 
 import { useCreateNewReport } from '../api/createNewReport.js'
 import 'react-pdf/dist/esm/Page/AnnotationLayer.css'
 
 import { useSelectDate } from '@/hooks/useSelectDate'
 import { getColumnSearchProps } from '@/utils/columnSearchFilter'
-/* import { selectDateRange } from '@/utils/selectDateRange' */
 import { SelectDateRange } from '@/components/buttons'
 
 pdfjs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.js`
@@ -202,6 +200,11 @@ export const Reports = () => {
     },
   ]
 
+  useEffect(() => {
+    form.setFieldsValue({ selectedDateRange: 'today' })
+    selectDateRange({ values: [{ value: 'today' }], form })
+  }, [])
+
   return (
     <>
       <Row align="middle" justify="end" style={{ marginBottom: '1.75rem' }}>
@@ -246,7 +249,7 @@ export const Reports = () => {
           name="report-form"
         >
           <Form.Item label={t('label_name')} name="name">
-            <Input allowClear />
+            <Input placeholder={t('label_name')} allowClear />
           </Form.Item>
           <SelectDateRange />
           {state.custom && (
@@ -258,12 +261,12 @@ export const Reports = () => {
           )}
           <Form.Item label={t('label_forms')} name="forms">
             <Select
+              placeholder={t('label_forms')}
               mode="multiple"
               allowClear
               style={{
                 width: '100%',
               }}
-              placeholder="Please select"
               onChange={onFormSelectChange}
             >
               {data.map((option, i) => {

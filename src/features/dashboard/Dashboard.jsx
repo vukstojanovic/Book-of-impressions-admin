@@ -27,7 +27,6 @@ const Dashboard = () => {
     selectDateRange({ values, form })
   }
 
-  console.log(data)
   useEffect(() => {
     form.setFieldsValue({ selectedDateRange: 'today' })
     selectDateRange({ values: [{ value: 'today' }], form })
