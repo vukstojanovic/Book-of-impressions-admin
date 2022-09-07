@@ -72,9 +72,11 @@ export function Settings() {
 
     companyInfoMutation.mutate({ formData })
 
-    if (form.isFieldTouched('google_place_ids') || form.isFieldTouched('tripadvisor_urls')) {
+    if (
+      JSON.stringify(company.meta.tripadvisor_urls) !== JSON.stringify(tripadvisor_urls) ||
+      JSON.stringify(company.meta.google_place_ids) !== JSON.stringify(google_place_ids)
+    ) {
       companyMetaMutation.mutate({ google_place_ids, tripadvisor_urls })
-      return
     }
   }
 
@@ -96,6 +98,7 @@ export function Settings() {
       setButtonDisabled(true)
       return
     }
+
     setButtonDisabled(false)
   }
 
@@ -117,12 +120,8 @@ export function Settings() {
 
     if (email.trim(' ') && name.trim(' ') && enDesc.trim(' ') && srDesc.trim(' ')) {
       setButtonDisabled(false)
-      return
     }
-    if (form.isFieldTouched('google_place_ids') || form.isFieldTouched('tripadvisor_urls')) {
-      setButtonDisabled(false)
-      return
-    }
+
     setButtonDisabled(true)
   }
 
@@ -281,7 +280,7 @@ export function Settings() {
                   url: `${company.logo}`,
                 },
               ]}
-              fileList={selectedLogos}
+              fileList={selectedLogos ? selectedLogos : null}
               beforeUpload={beforeUpload}
               onChange={handleChange}
               maxCount={1}
@@ -290,7 +289,7 @@ export function Settings() {
               {uploadButton}
             </Upload>
           </Form.Item>
-          <Form.Item name="google_place_ids">
+          <Form.Item initialValue={company.meta.google_place_ids} name="google_place_ids">
             <Tags t={t} form={form} placeholderText={t('add_google_place_id')} />
           </Form.Item>
           <Form.Item name="tripadvisor_urls">
