@@ -212,7 +212,22 @@
     "page": "Strana",
     "of": "od",
     "loading": "Učitavanje...",
-    "no_results": "Nema rezultata"
+    "no_results": "Nema rezultata",
+    "create_new_report": "Kreiraj novi izveštaj",
+    "generate": "Generiši",
+    "cancel": "Otkaži",
+    "label_name": "Ime",
+    "label_forms": "Formulari",
+    "title_delete": "Da li ste sigurni da želite da obrišete izveštaj ?",
+    "confirm_delete": "Da li ste sigurni da hoćete da obrišete",
+    "yes": "Da",
+    "no": "Ne",
+    "success_create": "Uspešno kreiran novi izvešta",
+    "success_delete": "Uspešno izbrisan izvešta",
+    "error": "Došlo je do greške",
+    "error_name": "Ime je obavezno",
+    "error_formIds": "Formulari su obavezni",
+    "error_date": "Datum je obavezan"
   },
   "Filters": {
     "name": "Ime",
@@ -262,6 +277,7 @@
     "last_week": "Prethodna nedelja",
     "last_3_weeks": "Prethodna 3 nedelje",
     "last_month": "Prethodni mesec",
-    "custom": "Ručno"
+    "custom": "Ručno",
+    "label_date": "Datum"
   }
 }
