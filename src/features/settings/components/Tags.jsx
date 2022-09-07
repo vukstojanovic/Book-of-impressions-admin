@@ -1,12 +1,12 @@
-import { useState, useRef } from 'react'
+import { useEffect, useState, useRef } from 'react'
 import { Typography, Tag, Input, Col } from 'antd'
 
 import style from './Tags.module.css'
 
-export const Tags = ({ t, onChange, placeholderText }) => {
+export const Tags = ({ t, onChange, placeholderText, value }) => {
   const { Text } = Typography
 
-  const [tags, setTags] = useState([])
+  const [tags, setTags] = useState(value)
   const [inputValue, setInputValue] = useState('')
   const [editInputIndex, setEditInputIndex] = useState(-1)
   const [editInputValue, setEditInputValue] = useState('')
@@ -66,6 +66,9 @@ export const Tags = ({ t, onChange, placeholderText }) => {
     setInputValue('')
   }
 
+  useEffect(() => {
+    setTags(value)
+  }, [value])
   return (
     <>
       <Col className={style.tagContent}>

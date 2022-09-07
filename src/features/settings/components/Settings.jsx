@@ -74,6 +74,7 @@ export function Settings() {
 
     if (form.isFieldTouched('google_place_ids') || form.isFieldTouched('tripadvisor_urls')) {
       companyMetaMutation.mutate({ google_place_ids, tripadvisor_urls })
+      return
     }
   }
 
@@ -150,6 +151,8 @@ export function Settings() {
         'company-email': company.email || '',
         'en-desc': company.description.filter((lang) => lang.key === 'en')[0]?.text || '',
         'sr-desc': company.description.filter((lang) => lang.key === 'sr')[0]?.text || '',
+        tripadvisor_urls: company.meta.tripadvisor_urls || '',
+        google_place_ids: company.meta.google_place_ids || '',
       })
     }
   }, [company])
