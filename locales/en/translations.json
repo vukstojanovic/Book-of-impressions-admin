@@ -257,7 +257,8 @@
   },
   "GoogleReviews": {
     "rating": "Rating",
-    "no_results": "No results"
+    "no_results": "No results",
+    "select_google_id": "Select google id: "
   },
   "Charts": {
     "value": "Value",
