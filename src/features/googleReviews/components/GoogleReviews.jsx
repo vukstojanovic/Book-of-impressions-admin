@@ -18,7 +18,7 @@ export const GoogleReviews = () => {
     isLoading: isCompanyDataLoading,
   } = useGetCompanyInfo()
   const [currentLocationId, setCurrentLocationId] = useState('')
-  const { data, isError, error } = useGetGoogleReviewsQuery(currentLocationId)
+  const { data, isLoading, isError, error } = useGetGoogleReviewsQuery(currentLocationId)
   const { t, i18n } = useTranslation('GoogleReviews')
   dayjs.locale(i18n.language)
   dayjs.extend(relativeTime)
@@ -41,7 +41,7 @@ export const GoogleReviews = () => {
 
   return (
     <div>
-      {!isCompanyDataLoading ? (
+      {companyData && (
         <Row align="middle" wrap style={{ marginBottom: '30px', padding: '0px 20px' }}>
           <Typography.Paragraph style={{ margin: 0, marginRight: '10px' }}>
             {t('select_google_id')}{' '}
@@ -60,13 +60,23 @@ export const GoogleReviews = () => {
             })}
           </Select>
         </Row>
-      ) : (
-        <Spin style={{ width: '100%', marginBottom: '20px' }} />
       )}
+      {isCompanyDataLoading && <Spin style={{ width: '100%', marginBottom: '20px' }} />}
       {isError && (
         <Typography.Paragraph style={{ textAlign: 'center' }}>{error.message}</Typography.Paragraph>
       )}
-      {data ? (
+      {isLoading && <Spin style={{ width: '100%' }} />}
+      {currentLocationId === undefined && (
+        <Empty
+          style={{ margin: 'auto' }}
+          description={
+            <span>
+              <b>{t('no_results')}</b>
+            </span>
+          }
+        />
+      )}
+      {data && (
         <>
           <Typography.Title level={2} style={{ padding: '0px 20px', marginBottom: '20px' }}>
             {data?.name}
@@ -113,8 +123,6 @@ export const GoogleReviews = () => {
             )}
           </Row>
         </>
-      ) : (
-        <Spin style={{ width: '100%' }} />
       )}
     </div>
   )
