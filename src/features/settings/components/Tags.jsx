@@ -1,5 +1,5 @@
 import { useEffect, useState, useRef } from 'react'
-import { Typography, Tag, Input, Col } from 'antd'
+import { Typography, Tag, Input, Col, Tooltip } from 'antd'
 
 import style from './Tags.module.css'
 
@@ -85,6 +85,7 @@ export const Tags = ({ t, onChange, placeholderText, value }) => {
               />
             )
           }
+          const isLongTag = tag.length > 20
 
           const tagElem = (
             <Tag id={style.tagStyle} key={tag} closable={true} onClose={() => handleClose(tag)}>
@@ -98,11 +99,18 @@ export const Tags = ({ t, onChange, placeholderText, value }) => {
                   }
                 }}
               >
-                {tag}
+                {isLongTag ? `${tag.slice(0, 20)}...` : tag}
               </span>
             </Tag>
           )
-          return tagElem
+
+          return isLongTag ? (
+            <Tooltip title={tag} key={tag}>
+              {tagElem}
+            </Tooltip>
+          ) : (
+            tagElem
+          )
         })}
         <Input
           id={style.inputAddTag}

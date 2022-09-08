@@ -8,6 +8,7 @@ import { Settings } from '@/features/settings'
 import { ProfileSettings } from '@/features/profileSettings'
 import { Reports } from '@/features/reports'
 import { GoogleReviews } from '@/features/googleReviews'
+import { TripadvisorReviews } from '@/features/tripadvisorReviews'
 import Dashboard from '@/features/dashboard/Dashboard'
 
 const App = () => {
@@ -38,6 +39,7 @@ export const protectedRoutes = [
       { path: '/forms/:formTitle', element: <FormPreview /> },
       { path: '/reviews', element: <Reviews /> },
       { path: '/google-reviews', element: <GoogleReviews /> },
+      { path: '/tripadvisor-reviews', element: <TripadvisorReviews /> },
       { path: '/reports', element: <Reports /> },
       { path: '/settings', element: <Settings /> },
       { path: '/my-profile', element: <ProfileSettings /> },

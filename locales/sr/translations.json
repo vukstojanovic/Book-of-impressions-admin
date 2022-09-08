@@ -89,8 +89,6 @@
     "question": "Pitanja",
     "oneQuestion": "Možete dodati samo 1 pitanje za ovaj tip forme!",
     "threeQuestions": "Možete dodati maximalno 3 pitanja za ovaj tip forme",
-    "question": "Pitanja",
-    "oneQuestion": "Možete dodati samo 1 pitanje za ovaj tip forme!",
     "addAnoterQuestion": "Dodaj još jedno pitanje",
     "cancel": "Obriši",
     "create": "Pošalji",
@@ -114,6 +112,7 @@
     "forms": "Formulari",
     "reviews": "Recenzije",
     "google_reviews": "Google recenzije",
+    "tripadvisor_reviews": "Tripadvisor recenzije",
     "reports": "Izveštaji",
     "organization": "Organizacija",
     "users": "Korisnici",
@@ -260,6 +259,9 @@
   "GoogleReviews": {
     "rating": "Rejting",
     "no_results": "Nema rezultata"
+  },
+  "TripadvisorReviews": {
+    "label_tripadvisor_reviews": "Izaberite Recenzije Hotela"
   },
   "Charts": {
     "value": "Vrednost",

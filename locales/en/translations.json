@@ -112,6 +112,7 @@
     "forms": "Forms",
     "reviews": "Reviews",
     "google_reviews": "Google reviews",
+    "tripadvisor_reviews": "Tripadvisor reviews",
     "reports": "Reports",
     "organization": "Organization",
     "users": "Users",
@@ -258,6 +259,9 @@
   "GoogleReviews": {
     "rating": "Rating",
     "no_results": "No results"
+  },
+  "TripadvisorReviews": {
+    "label_tripadvisor_reviews": "Choose Hotel Reviews"
   },
   "Charts": {
     "value": "Value",

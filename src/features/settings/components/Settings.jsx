@@ -271,15 +271,19 @@ export function Settings() {
               name="avatar"
               listType="picture-card"
               className="avatar-uploader"
-              showUploadList={(true, { showPreviewIcon: false })}
-              defaultFileList={[
-                {
-                  uid: '-1',
-                  name: 'company-logo.png',
-                  status: 'done',
-                  url: `${company.logo}`,
-                },
-              ]}
+              showUploadList={(true, { showPreviewIcon: false, showRemoveIcon: false })}
+              defaultFileList={
+                company.logo
+                  ? [
+                      {
+                        uid: '-1',
+                        name: 'company-logo.png',
+                        status: 'done',
+                        url: `${company.logo}`,
+                      },
+                    ]
+                  : []
+              }
               fileList={selectedLogos ? selectedLogos : null}
               beforeUpload={beforeUpload}
               onChange={handleChange}
