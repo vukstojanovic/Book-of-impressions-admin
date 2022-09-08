@@ -258,7 +258,8 @@
   },
   "GoogleReviews": {
     "rating": "Rejting",
-    "no_results": "Nema rezultata"
+    "no_results": "Nema rezultata",
+    "select_google_id": "Odaberi google id: "
   },
   "TripadvisorReviews": {
     "label_tripadvisor_reviews": "Izaberite Recenzije Hotela"

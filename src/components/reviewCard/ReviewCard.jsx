@@ -52,18 +52,20 @@ export const ReviewCard = ({
             </div>
           )}
 
-          <div className={style.comment}>
-            <Paragraph
-              ellipsis={{
-                expandable: true,
-                rows: 3,
-                symbol: t('readMore') + '...',
-              }}
-              title="review description"
-            >
-              {comment}
-            </Paragraph>
-          </div>
+          {answer === null && (
+            <div className={style.comment}>
+              <Paragraph
+                ellipsis={{
+                  expandable: true,
+                  rows: 3,
+                  symbol: t('readMore') + '...',
+                }}
+                title="review description"
+              >
+                {comment}
+              </Paragraph>
+            </div>
+          )}
         </div>
       </Card>
     </Col>

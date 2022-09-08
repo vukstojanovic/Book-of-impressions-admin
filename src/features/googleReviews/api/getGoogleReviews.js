@@ -10,5 +10,5 @@ export const getGoogleReviews = ({ id }) => {
 }
 
 export const useGetGoogleReviewsQuery = (id) => {
-  return useQuery(['googleReviews', id], () => getGoogleReviews({ id }))
+  return useQuery(['googleReviews', id], () => getGoogleReviews({ id }), { enabled: !!id })
 }
