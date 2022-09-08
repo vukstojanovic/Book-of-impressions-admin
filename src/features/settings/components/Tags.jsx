@@ -1,26 +1,34 @@
-import { useState, useRef } from 'react'
-import { Tag, Input, Col } from 'antd'
+import { useEffect, useState, useRef } from 'react'
+import { Typography, Tag, Input, Col } from 'antd'
 
 import style from './Tags.module.css'
 
-export const Tags = ({ t }) => {
+export const Tags = ({ t, onChange, placeholderText, value }) => {
+  const { Text } = Typography
+
   const [tags, setTags] = useState([])
   const [inputValue, setInputValue] = useState('')
   const [editInputIndex, setEditInputIndex] = useState(-1)
   const [editInputValue, setEditInputValue] = useState('')
 
+  const [errorMessage, setErrorMessage] = useState(true)
   const inputRef = useRef(null)
   const editInputRef = useRef(null)
 
+  const triggerChange = (changedValue) => {
+    onChange?.(changedValue)
+  }
   const handleClose = (removedTag) => {
     const newTags = tags.filter((tag) => tag !== removedTag)
     setTags(newTags)
+    triggerChange([...newTags])
   }
 
   const handleBackspace = (e) => {
     if (e.code === 'Backspace' && e.target.value === '') {
       const newTags = tags.slice(0, -1)
       setTags(newTags)
+      triggerChange([...newTags])
     }
   }
 
@@ -28,11 +36,21 @@ export const Tags = ({ t }) => {
     setInputValue(e.target.value)
   }
 
-  const handleInputConfirm = () => {
+  const handleInputConfirm = (e) => {
+    e.preventDefault()
     if (inputValue && tags.indexOf(inputValue) === -1) {
       setTags([...tags, inputValue])
+      triggerChange([...tags, inputValue])
+      setErrorMessage('')
+      setInputValue('')
+      return
     }
-
+    if (!inputValue) {
+      setErrorMessage(t('empty_tag_field'))
+      setInputValue('')
+      return
+    }
+    setErrorMessage(t('equal_value_tag_field'))
     setInputValue('')
   }
 
@@ -48,52 +66,57 @@ export const Tags = ({ t }) => {
     setInputValue('')
   }
 
-  return (
-    <Col className={style.tagContent}>
-      {tags?.map((tag, index) => {
-        if (editInputIndex === index) {
-          return (
-            <Input
-              ref={editInputRef}
-              key={tag}
-              value={editInputValue}
-              onChange={handleEditInputChange}
-              onBlur={handleEditInputConfirm}
-              onPressEnter={handleEditInputConfirm}
-            />
-          )
-        }
+  useEffect(() => {
+    setTags(value)
+  }, [value])
 
-        const tagElem = (
-          <Tag id={style.tagStyle} key={tag} closable={true} onClose={() => handleClose(tag)}>
-            <span
-              style={{ fontSize: '1rem' }}
-              onDoubleClick={(e) => {
-                if (index !== 0) {
-                  setEditInputIndex(index)
-                  setEditInputValue(tag)
-                  e.preventDefault()
-                }
-              }}
-            >
-              {tag}
-            </span>
-          </Tag>
-        )
-        return tagElem
-      })}
-      <Input
-        id={style.inputAddTag}
-        ref={inputRef}
-        type="text"
-        value={inputValue}
-        bordered={false}
-        placeholder={tags.length === 0 && t('add_google_place_id')}
-        onChange={handleInputChange}
-        onBlur={handleInputConfirm}
-        onPressEnter={handleInputConfirm}
-        onKeyDown={handleBackspace}
-      />
-    </Col>
+  return (
+    <>
+      <Col className={style.tagContent}>
+        {tags?.map((tag, index) => {
+          if (editInputIndex === index) {
+            return (
+              <Input
+                ref={editInputRef}
+                key={tag}
+                value={editInputValue}
+                onChange={handleEditInputChange}
+                onPressEnter={handleEditInputConfirm}
+              />
+            )
+          }
+
+          const tagElem = (
+            <Tag id={style.tagStyle} key={tag} closable={true} onClose={() => handleClose(tag)}>
+              <span
+                style={{ fontSize: '1rem' }}
+                onDoubleClick={(e) => {
+                  if (index !== 0) {
+                    setEditInputIndex(index)
+                    setEditInputValue(tag)
+                    e.preventDefault()
+                  }
+                }}
+              >
+                {tag}
+              </span>
+            </Tag>
+          )
+          return tagElem
+        })}
+        <Input
+          id={style.inputAddTag}
+          ref={inputRef}
+          type="text"
+          value={inputValue}
+          bordered={false}
+          placeholder={placeholderText}
+          onChange={handleInputChange}
+          onPressEnter={handleInputConfirm}
+          onKeyDown={handleBackspace}
+        />
+      </Col>
+      {errorMessage && <Text type="danger">{errorMessage}</Text>}
+    </>
   )
 }

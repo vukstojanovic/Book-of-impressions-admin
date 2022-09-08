@@ -15,7 +15,7 @@ export const ChartBar = ({ data }) => {
       <BarChart id="chart-bar" margin={{ top: 30 }} data={barChartData}>
         <CartesianGrid strokeDasharray="3 3" />
         <XAxis dataKey="name" tickFormatter={(props) => t(`${props}`)} />
-        <YAxis />
+        <YAxis allowDecimals={false} />
         <Tooltip
           wrapperStyle={{ outline: 'none' }}
           cursor={{ fill: 'rgba(19, 54, 89, 0.5)' }}
