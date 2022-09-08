@@ -11,9 +11,14 @@ import { SingleReview } from '../components/SingleReview'
 import { useGetCompanyInfo } from '@/features/settings/api/getCompanyInfo'
 
 export const GoogleReviews = () => {
-  const { data: companyData, isLoading: isCompanyDataLoading } = useGetCompanyInfo()
+  const {
+    data: companyData,
+    isError: isCompanyError,
+    error: companyError,
+    isLoading: isCompanyDataLoading,
+  } = useGetCompanyInfo()
   const [currentLocationId, setCurrentLocationId] = useState('')
-  const { data } = useGetGoogleReviewsQuery(currentLocationId)
+  const { data, isError, error } = useGetGoogleReviewsQuery(currentLocationId)
   const { t, i18n } = useTranslation('GoogleReviews')
   dayjs.locale(i18n.language)
   dayjs.extend(relativeTime)
@@ -25,6 +30,14 @@ export const GoogleReviews = () => {
   useEffect(() => {
     if (!isCompanyDataLoading) setCurrentLocationId(companyData.meta.google_place_ids[0])
   }, [isCompanyDataLoading])
+
+  if (isCompanyError) {
+    return (
+      <Typography.Paragraph style={{ textAlign: 'center' }}>
+        {companyError.message}
+      </Typography.Paragraph>
+    )
+  }
 
   return (
     <div>
@@ -49,6 +62,9 @@ export const GoogleReviews = () => {
         </Row>
       ) : (
         <Spin style={{ width: '100%', marginBottom: '20px' }} />
+      )}
+      {isError && (
+        <Typography.Paragraph style={{ textAlign: 'center' }}>{error.message}</Typography.Paragraph>
       )}
       {data ? (
         <>
