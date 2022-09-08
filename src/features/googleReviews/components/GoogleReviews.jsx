@@ -1,4 +1,5 @@
-import { Row, Col, Card, Typography, Rate, Spin, Statistic, Empty } from 'antd'
+import { Row, Col, Card, Typography, Rate, Spin, Statistic, Empty, Select } from 'antd'
+import { useState, useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
 import dayjs from 'dayjs'
 import relativeTime from 'dayjs/plugin/relativeTime'
@@ -7,20 +8,49 @@ import 'dayjs/locale/sr'
 import { useGetGoogleReviewsQuery } from '../api/getGoogleReviews'
 import { SingleReview } from '../components/SingleReview'
 
+import { useGetCompanyInfo } from '@/features/settings/api/getCompanyInfo'
+
 export const GoogleReviews = () => {
-  const currentLocationId = 'ChIJUfDPCbJ6WkcRd7fUAGRPUFI'
-  const { data, isLoading } = useGetGoogleReviewsQuery(currentLocationId)
+  const { data: companyData, isLoading: isCompanyDataLoading } = useGetCompanyInfo()
+  const [currentLocationId, setCurrentLocationId] = useState('')
+  const { data } = useGetGoogleReviewsQuery(currentLocationId)
   const { t, i18n } = useTranslation('GoogleReviews')
   dayjs.locale(i18n.language)
   dayjs.extend(relativeTime)
 
-  if (isLoading) {
-    return <Spin />
+  function handleLocationIdChange(value) {
+    setCurrentLocationId(value)
   }
+
+  useEffect(() => {
+    if (!isCompanyDataLoading) setCurrentLocationId(companyData.meta.google_place_ids[0])
+  }, [isCompanyDataLoading])
 
   return (
     <div>
-      {data && (
+      {!isCompanyDataLoading ? (
+        <Row align="middle" wrap style={{ marginBottom: '30px', padding: '0px 20px' }}>
+          <Typography.Paragraph style={{ margin: 0, marginRight: '10px' }}>
+            {t('select_google_id')}{' '}
+          </Typography.Paragraph>
+          <Select
+            defaultValue={companyData.meta.google_place_ids[0]}
+            style={{ maxWidth: '300px', minWidth: '150px' }}
+            onChange={handleLocationIdChange}
+          >
+            {companyData.meta.google_place_ids.map((singleId) => {
+              return (
+                <Select.Option key={singleId} value={singleId}>
+                  {singleId}
+                </Select.Option>
+              )
+            })}
+          </Select>
+        </Row>
+      ) : (
+        <Spin style={{ width: '100%', marginBottom: '20px' }} />
+      )}
+      {data ? (
         <>
           <Typography.Title level={2} style={{ padding: '0px 20px', marginBottom: '20px' }}>
             {data?.name}
@@ -67,6 +97,8 @@ export const GoogleReviews = () => {
             )}
           </Row>
         </>
+      ) : (
+        <Spin style={{ width: '100%' }} />
       )}
     </div>
   )
