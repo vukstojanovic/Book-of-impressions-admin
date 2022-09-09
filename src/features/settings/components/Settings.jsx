@@ -10,6 +10,7 @@ import { useGetCompanyInfo } from '../api/getCompanyInfo'
 import { Tags } from './Tags'
 import style from './Settings.module.css'
 
+import { SpinnerWithBackdrop } from '@/components/spinners'
 import { useAuth } from '@/providers/authProvider'
 import { beforeUpload } from '@/utils/beforeImageUpload'
 import { descriptionValidationProps } from '@/utils/descriptionValidation'
@@ -33,12 +34,12 @@ export function Settings() {
   const { TabPane } = Tabs
   const [form] = Form.useForm()
 
-  const companyInfoMutation = useUpdateCompanyInfo({
+  const { mutateAsync: companyInfoMutate, isLoading: infoMutateIsLoading } = useUpdateCompanyInfo({
     setButtonDisabled,
     t,
   })
 
-  const companyMetaMutation = useUpdateCompanyMeta({
+  const { mutateAsync: companyMetaMutate, isLoading: metaMutateIsLoading } = useUpdateCompanyMeta({
     t,
   })
 
@@ -71,13 +72,13 @@ export function Settings() {
     formData.append('description', JSON.stringify(desc))
 
     const mutationArray = []
-    mutationArray.push(companyInfoMutation.mutateAsync({ formData }))
+    mutationArray.push(companyInfoMutate({ formData }))
 
     if (
       JSON.stringify(company.meta.tripadvisor_urls) !== JSON.stringify(tripadvisor_urls) ||
       JSON.stringify(company.meta.google_place_ids) !== JSON.stringify(google_place_ids)
     ) {
-      mutationArray.push(companyMetaMutation.mutateAsync({ google_place_ids, tripadvisor_urls }))
+      mutationArray.push(companyMetaMutate({ google_place_ids, tripadvisor_urls }))
     }
     Promise.all(mutationArray)
       .then(() => message.success(t('submit_success'), 3))
@@ -170,6 +171,8 @@ export function Settings() {
   return (
     company && (
       <>
+        {metaMutateIsLoading || infoMutateIsLoading ? <SpinnerWithBackdrop /> : null}
+
         <Form
           size="large"
           layout="vertical"

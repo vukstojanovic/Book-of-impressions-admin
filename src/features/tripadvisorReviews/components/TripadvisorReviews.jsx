@@ -1,8 +1,9 @@
 import { Card, Col, Empty, Form, Rate, Row, Select, Spin, Statistic, Typography } from 'antd'
 import { useTranslation } from 'react-i18next'
-// import { useGetTripadvisorReviewsQuery } from '../api/getTripadvisorReviews'
 import { useState } from 'react'
 import { useEffect } from 'react'
+
+import { useGetTripadvisorReviewsQuery } from '../api/getTripadvisorReviews'
 
 import { SingleReview } from './SingleReview'
 
@@ -21,9 +22,9 @@ export const TripadvisorReviews = () => {
     setTripadvisorUrl(value.urls)
     console.log(tripadvisorUrl)
   }
-  // const { data } = useGetTripadvisorReviewsQuery({ uri: uri })
+  const { data } = useGetTripadvisorReviewsQuery({ uri: tripadvisorUrl })
 
-  const data = []
+  /* const data = [] */
 
   console.log(data)
   useEffect(() => {

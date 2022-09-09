@@ -14,7 +14,9 @@ export const PageLayout = ({ children }) => {
   return (
     <Layout>
       <HeaderComponent collapsed={collapsed} setCollapsed={setCollapsed} />
-      <Layout className={`${collapsed ? style.collapsed : style.notCollapsed} ${style.transition}`}>
+      <Layout
+        className={`${collapsed ? style.collapsed : style.notCollapsed} ${style.layoutStyle}`}
+      >
         <SideMenu collapsed={collapsed} />
         <Content className={style.layoutContent}>
           <BreadcrumbComponent />

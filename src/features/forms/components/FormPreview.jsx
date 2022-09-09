@@ -9,6 +9,7 @@ import { useGetFormReviews } from '../api/getFormReviews'
 
 import QRCodeFormModal from './QRCodeFormModal'
 
+import { useAuth } from '@/providers/authProvider'
 import { ReviewCard } from '@/components/reviewCard'
 import { EditButton } from '@/components/buttons/EditButton'
 import { FilterComponent } from '@/components/filterComponent/FilterComponent'
@@ -18,6 +19,10 @@ export const FormPreview = () => {
     i18n: { language },
     t,
   } = useTranslation('Forms')
+
+  const {
+    user: { role },
+  } = useAuth()
 
   const [param] = useSearchParams()
   const id = param.get('id')
@@ -45,7 +50,7 @@ export const FormPreview = () => {
             modalVisible={QRModalVisible}
           />
 
-          <EditButton linkTo={`/forms/edit?id=${id}`} />
+          {role === 'Manager' && <EditButton linkTo={`/forms/edit?id=${id}`} />}
 
           <Card style={{ borderRadius: '8px' }}>
             <Row gutter={16} align="middle" style={{ margin: '0 0 12px 0' }}>

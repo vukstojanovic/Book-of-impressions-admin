@@ -5,16 +5,19 @@ import { useCreateNewReport } from '../api/createNewReport.js'
 
 import { useSelectDate } from '@/hooks/useSelectDate'
 import { SelectDateRange } from '@/components/buttons'
-import { useForms } from '@/features/forms/api/getForms'
-export const CreateReportModal = ({ t, isCreateReportModalOpen, handleCloseCreateReportModal }) => {
+export const CreateReportModal = ({
+  t,
+  isCreateReportModalOpen,
+  handleCloseCreateReportModal,
+  forms,
+}) => {
   const [form] = Form.useForm()
 
   const [selectDateRange, state] = useSelectDate()
 
-  const { mutate: createReport } = useCreateNewReport({ t })
+  const { mutate: createReport, isLoading: mutateIsLoading } = useCreateNewReport({ t })
 
-  const { data: forms, isLoading } = useForms('')
-
+  console.log(forms)
   const { Option } = Select
 
   function onFieldsChange(values) {
@@ -37,7 +40,7 @@ export const CreateReportModal = ({ t, isCreateReportModalOpen, handleCloseCreat
     selectDateRange({ values: [{ value: 'today' }], form })
   }, [])
 
-  if (isLoading)
+  if (mutateIsLoading) {
     return (
       <Col
         style={{
@@ -56,7 +59,7 @@ export const CreateReportModal = ({ t, isCreateReportModalOpen, handleCloseCreat
         <Spin size="large" />
       </Col>
     )
-
+  }
   return (
     <Modal
       as="form"
@@ -66,7 +69,7 @@ export const CreateReportModal = ({ t, isCreateReportModalOpen, handleCloseCreat
       centered
       title={t('create_new_report')}
       onCancel={handleCloseCreateReportModal}
-      okButtonProps={{ htmlType: 'submit', form: 'report-form', disabled: form[0] === 0 }}
+      okButtonProps={{ htmlType: 'submit', form: 'report-form', disabled: forms[0] === 0 }}
     >
       <Form
         onFieldsChange={onFieldsChange}
@@ -74,7 +77,7 @@ export const CreateReportModal = ({ t, isCreateReportModalOpen, handleCloseCreat
         onFinish={handleSubmitReports}
         layout="vertical"
         name="report-form"
-        disabled={form[1] === 0}
+        disabled={forms[1] === 0}
       >
         <Form.Item
           rules={[

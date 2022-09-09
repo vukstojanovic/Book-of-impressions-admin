@@ -10,6 +10,7 @@ import { useGetFormAnalyticsAllQuery } from '../api/getFormAnalytics'
 
 import QRCodeFormModal from './QRCodeFormModal'
 
+import { useAuth } from '@/providers/authProvider'
 import { AddButton } from '@/components/buttons/AddButton'
 import { FilterComponent } from '@/components/filterComponent'
 
@@ -28,6 +29,9 @@ export const Forms = () => {
     i18n: { language },
     t,
   } = useTranslation('Forms')
+  const {
+    user: { role },
+  } = useAuth()
 
   const navigate = useNavigate()
   const [formTitle, setFormTitle] = useState('')
@@ -73,9 +77,11 @@ export const Forms = () => {
         <Col span={22}>
           <FilterComponent hasType hasTitle />
         </Col>
-        <Col style={{ paddingTop: '2px' }}>
-          <AddButton linkTo="/forms/create-new-form" />
-        </Col>
+        {role === 'Manager' && (
+          <Col style={{ paddingTop: '2px' }}>
+            <AddButton linkTo="/forms/create-new-form" />
+          </Col>
+        )}
       </Row>
 
       <QRCodeFormModal
