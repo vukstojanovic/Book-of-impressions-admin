@@ -1,10 +1,11 @@
 import { useEffect } from 'react'
-import { Spin, DatePicker, Input, Modal, Form, Select, Col } from 'antd'
+import { DatePicker, Input, Modal, Form, Select, Col } from 'antd'
 
 import { useCreateNewReport } from '../api/createNewReport.js'
 
 import { useSelectDate } from '@/hooks/useSelectDate'
 import { SelectDateRange } from '@/components/buttons'
+import { SpinnerWithBackdrop } from '@/components/spinners'
 export const CreateReportModal = ({
   t,
   isCreateReportModalOpen,
@@ -41,25 +42,9 @@ export const CreateReportModal = ({
   }, [])
 
   if (mutateIsLoading) {
-    return (
-      <Col
-        style={{
-          position: 'fixed',
-          top: '0',
-          left: '0',
-          display: 'grid',
-          zIndex: 1000,
-          justifyItems: 'center',
-          alignItems: 'center',
-          backgroundColor: 'rgba(0,0,0, 0.6)',
-          width: '100%',
-          minHeight: '100vh',
-        }}
-      >
-        <Spin size="large" />
-      </Col>
-    )
+    return <SpinnerWithBackdrop />
   }
+
   return (
     <Modal
       as="form"

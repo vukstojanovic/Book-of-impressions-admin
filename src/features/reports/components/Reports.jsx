@@ -234,31 +234,33 @@ export const Reports = () => {
             />
           ),
         }}
-      />
-      <CreateReportModal
-        t={t}
-        isCreateReportModalOpen={isCreateReportModalOpen}
-        handleCloseCreateReportModal={handleCloseCreateReportModal}
-        forms={forms}
       />{' '}
       {deleteReportIsLoading || isFetchingReports ? (
         <SpinnerWithBackdrop />
       ) : (
-        <Modal
-          centered
-          title={t('title_delete')}
-          okText={t('yes')}
-          cancelText={t('no')}
-          onOk={() => {
-            deleteReport(deleteModalData.key)
-          }}
-          onCancel={handleCloseDeleteModal}
-          visible={isDeleteModalOpen}
-        >
-          <p>
-            {t('confirm_delete')}: {deleteModalData.name} ?
-          </p>
-        </Modal>
+        <>
+          <CreateReportModal
+            t={t}
+            isCreateReportModalOpen={isCreateReportModalOpen}
+            handleCloseCreateReportModal={handleCloseCreateReportModal}
+            forms={forms}
+          />
+          <Modal
+            centered
+            title={t('title_delete')}
+            okText={t('yes')}
+            cancelText={t('no')}
+            onOk={() => {
+              deleteReport(deleteModalData.key)
+            }}
+            onCancel={handleCloseDeleteModal}
+            visible={isDeleteModalOpen}
+          >
+            <p>
+              {t('confirm_delete')}: {deleteModalData.name} ?
+            </p>
+          </Modal>
+        </>
       )}
       <Modal
         centered
