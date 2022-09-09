@@ -84,6 +84,7 @@ export const EditOrPostForm = ({ type }) => {
       questions: formattedQuestions,
     }
 
+    setSubmitButton(true)
     if (type === 'edit') return editFormData({ data: formData, id })
 
     if (type === 'post') return postFormData(formData)

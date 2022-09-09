@@ -110,7 +110,9 @@ export const Forms = () => {
                 style={{ width: 335, borderRadius: '20px' }}
               >
                 <div style={divFlex}>
-                  <Title level={5}>{title}</Title>
+                  <Title ellipsis={{ tooltip: true }} level={5}>
+                    {title}
+                  </Title>
                   <Button
                     type="text"
                     size="large"
