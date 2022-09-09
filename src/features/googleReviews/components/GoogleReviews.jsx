@@ -42,7 +42,7 @@ export const GoogleReviews = () => {
   return (
     <div>
       {companyData && (
-        <Row align="middle" wrap style={{ marginBottom: '30px', padding: '0px 20px' }}>
+        <Row align="middle" wrap style={{ marginBottom: '30px' }}>
           <Typography.Paragraph style={{ margin: 0, marginRight: '10px' }}>
             {t('select_google_id')}{' '}
           </Typography.Paragraph>
@@ -78,12 +78,12 @@ export const GoogleReviews = () => {
       )}
       {data && (
         <>
-          <Typography.Title level={2} style={{ padding: '0px 20px', marginBottom: '20px' }}>
+          <Typography.Title level={2} style={{ marginBottom: '20px' }}>
             {data?.name}
           </Typography.Title>
           <Row justify="space-between" style={{ marginBottom: '50px' }}>
             <Col xs={24} lg={12}>
-              <Card style={{ textAlign: 'center', width: 'fit-content' }}>
+              <Card style={{ textAlign: 'center', width: 'fit-content', borderRadius: '12px' }}>
                 <Statistic
                   title={t('rating')}
                   value={data?.rating}
