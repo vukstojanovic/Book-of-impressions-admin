@@ -18,7 +18,6 @@ export const CreateReportModal = ({
 
   const { mutate: createReport, isLoading: mutateIsLoading } = useCreateNewReport({ t })
 
-  console.log(forms)
   const { Option } = Select
 
   function onFieldsChange(values) {

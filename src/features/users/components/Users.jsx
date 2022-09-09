@@ -19,7 +19,7 @@ export const Users = () => {
 
   const { Paragraph } = Typography
 
-  const { data: users, refetch, isLoading, isFetching } = useGetUsers()
+  const { data: users, refetch, isLoading, isFetching, isFetchedAfterMount } = useGetUsers()
   const { mutate: deleteUser, isLoading: deleteMutationIsLoading } = useDeleteUser({
     refetchUsers: refetch,
     closeDeleteModal,
@@ -163,7 +163,10 @@ export const Users = () => {
         }}
         rowKey={'id'}
       />
-      {isFetching || deleteMutationIsLoading ? (
+      {console.log('Is Fetching: ', isFetching)}
+      {console.log('Is Fetched After Mount : ', isFetchedAfterMount)}
+      {console.log('Delete Mutation is Loading', deleteMutationIsLoading)}
+      {(isFetching && isFetchedAfterMount) || deleteMutationIsLoading ? (
         <SpinnerWithBackdrop />
       ) : (
         <Modal
@@ -183,7 +186,7 @@ export const Users = () => {
           />
         </Modal>
       )}
-      {isFetching || deleteMutationIsLoading ? (
+      {(isFetching && isFetchedAfterMount) || deleteMutationIsLoading ? (
         <SpinnerWithBackdrop />
       ) : (
         <Modal

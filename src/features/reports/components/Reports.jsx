@@ -31,7 +31,12 @@ export const Reports = () => {
   const [pageNumber, setPageNumber] = useState(1)
   const [isError, setIsError] = useState(false)
 
-  const { data: reports, isLoading, isFetching: isFetchingReports } = useReports({ t })
+  const {
+    data: reports,
+    isLoading,
+    isFetchedAfterMount,
+    isFetching: isFetchingReports,
+  } = useReports({ t })
   const { data: forms, isLoading: formsIsLoading } = useForms('')
 
   const { mutate: deleteReport, isLoading: deleteReportIsLoading } = useDeleteReport({
@@ -42,7 +47,6 @@ export const Reports = () => {
   const {
     user: { role },
   } = useAuth()
-  console.log(role)
   // function for fixing misalignment bug in pdf contents
   function removeTextLayerOffset() {
     const textLayers = document.querySelectorAll('.react-pdf__Page__textContent')
@@ -235,7 +239,7 @@ export const Reports = () => {
           ),
         }}
       />{' '}
-      {deleteReportIsLoading || isFetchingReports ? (
+      {deleteReportIsLoading || (isFetchedAfterMount && isFetchingReports) ? (
         <SpinnerWithBackdrop />
       ) : (
         <>
