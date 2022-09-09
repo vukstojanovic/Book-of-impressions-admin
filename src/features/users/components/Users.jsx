@@ -128,6 +128,7 @@ export const Users = () => {
       </>
     )
   }
+
   if (users[1] === 0) {
     return (
       <>
@@ -142,6 +143,7 @@ export const Users = () => {
       </>
     )
   }
+
   return (
     <>
       {role === 'Manager' && <AddButton linkTo={'/users/invite-user'} />}
@@ -163,9 +165,6 @@ export const Users = () => {
         }}
         rowKey={'id'}
       />
-      {console.log('Is Fetching: ', isFetching)}
-      {console.log('Is Fetched After Mount : ', isFetchedAfterMount)}
-      {console.log('Delete Mutation is Loading', deleteMutationIsLoading)}
       {(isFetching && isFetchedAfterMount) || deleteMutationIsLoading ? (
         <SpinnerWithBackdrop />
       ) : (

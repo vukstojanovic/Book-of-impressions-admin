@@ -18,15 +18,10 @@ export const TripadvisorReviews = () => {
   const [form] = Form.useForm()
 
   const onValuesChange = (value) => {
-    console.log(value)
     setTripadvisorUrl(value.urls)
-    console.log(tripadvisorUrl)
   }
   const { data } = useGetTripadvisorReviewsQuery({ uri: tripadvisorUrl })
 
-  /* const data = [] */
-
-  console.log(data)
   useEffect(() => {
     if (companyMeta) {
       setTripadvisorUrl(companyMeta.tripadvisor_urls[0])
@@ -39,6 +34,7 @@ export const TripadvisorReviews = () => {
         <Spin size="large" />
       </Row>
     )
+
   return (
     <>
       <Form
