@@ -6,7 +6,6 @@
 }
 .layoutStyle {
   transition-duration: 0.3s;
-  position: relative;
 }
 .layoutContent {
   margin: 24px 16px;

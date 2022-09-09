@@ -1,21 +1,10 @@
-import { Col, Spin } from 'antd'
+import { Spin } from 'antd'
+
+import style from './SpinnerWithBackdrop.module.css'
 export const SpinnerWithBackdrop = () => {
   return (
-    <Col
-      style={{
-        position: 'absolute',
-        top: '0',
-        left: '0',
-        display: 'grid',
-        justifyItems: 'center',
-        zIndex: '5',
-        alignItems: 'center',
-        backgroundColor: 'rgba(0,0,0, 0.6)',
-        width: '100%',
-        minHeight: '100%',
-      }}
-    >
-      <Spin size="large" />
-    </Col>
+    <div className={style.spinner}>
+      <Spin />
+    </div>
   )
 }

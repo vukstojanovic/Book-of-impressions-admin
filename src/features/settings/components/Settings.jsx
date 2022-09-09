@@ -172,7 +172,6 @@ export function Settings() {
     company && (
       <>
         {metaMutateIsLoading || infoMutateIsLoading ? <SpinnerWithBackdrop /> : null}
-
         <Form
           size="large"
           layout="vertical"
