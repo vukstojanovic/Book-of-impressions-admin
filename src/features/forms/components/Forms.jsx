@@ -136,7 +136,6 @@ export const Forms = () => {
                       valueStyle={{ fontSize: '25px' }}
                     />
                     <p style={{ fontSize: '11px' }}>
-                      {console.log(singleAnalytic)}
                       {(
                         (Number(singleAnalytic.anonymous) / Number(singleAnalytic.total) || 0) * 100
                       ).toFixed(1)}

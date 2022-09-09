@@ -1,5 +1,5 @@
 import { PlusOutlined } from '@ant-design/icons'
-import { Form, Input, Upload, Tabs, Button, Row, Col, Spin } from 'antd'
+import { Form, Input, Upload, Tabs, Button, Row, Col, Spin, message } from 'antd'
 import { useState, useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
 
@@ -70,14 +70,18 @@ export function Settings() {
     formData.append('email', email)
     formData.append('description', JSON.stringify(desc))
 
-    companyInfoMutation.mutate({ formData })
+    const mutationArray = []
+    mutationArray.push(companyInfoMutation.mutateAsync({ formData }))
 
     if (
       JSON.stringify(company.meta.tripadvisor_urls) !== JSON.stringify(tripadvisor_urls) ||
       JSON.stringify(company.meta.google_place_ids) !== JSON.stringify(google_place_ids)
     ) {
-      companyMetaMutation.mutate({ google_place_ids, tripadvisor_urls })
+      mutationArray.push(companyMetaMutation.mutateAsync({ google_place_ids, tripadvisor_urls }))
     }
+    Promise.all(mutationArray)
+      .then(() => message.success(t('submit_success'), 3))
+      .catch(() => message.error(t('submit_error'), 3))
   }
 
   const onFieldsChange = (_, allFields) => {

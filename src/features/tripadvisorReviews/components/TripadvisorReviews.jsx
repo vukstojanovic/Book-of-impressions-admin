@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next'
 import { useState } from 'react'
 import { useEffect } from 'react'
 
-import { SingleReview } from './singleReview'
+import { SingleReview } from './SingleReview'
 
 import { useGetCompanyMeta } from '@/features/settings/api/getCompanyMeta'
 
