@@ -258,7 +258,7 @@ export const EditOrPostForm = ({ type }) => {
           onFieldsChange={onFieldsChange}
         >
           <Row>
-            <Col sm={24} md={12} lg={8}>
+            <Col sm={24} md={12} lg={9}>
               <Form.Item
                 label={t('formTitle')}
                 name="title"
