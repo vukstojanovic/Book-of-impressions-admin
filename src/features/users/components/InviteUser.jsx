@@ -23,7 +23,13 @@ export const InviteUser = () => {
   const handleFormChange = () => {
     const hasValues = form.getFieldsValue()
     const hasErrors = form.getFieldsError()
-    if (!hasValues.name || !hasValues.email || !hasValues.role || hasErrors[1].errors.length) {
+    if (
+      !hasValues.name ||
+      !hasValues.email ||
+      !hasValues.role ||
+      hasErrors[1].errors.length ||
+      hasErrors[0].errors.length
+    ) {
       return setDisabled(true)
     }
     return setDisabled(false)
@@ -55,9 +61,13 @@ export const InviteUser = () => {
                 required: true,
                 message: t('empty_warning'),
               },
+              {
+                pattern: new RegExp(/^[a-zA-Z\s]*$/),
+                message: t('no_special_characters'),
+              },
             ]}
           >
-            <Input />
+            <Input allowClear maxLength={100} />
           </Form.Item>
         </Col>
       </Row>
