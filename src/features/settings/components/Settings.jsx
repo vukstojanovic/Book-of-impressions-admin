@@ -73,8 +73,6 @@ export function Settings() {
 
     companyInfoMutation.mutate({ formData })
 
-    console.log(company.logo, logo)
-
     if (
       JSON.stringify(company.meta?.tripadvisor_urls) !== JSON.stringify(tripadvisor_urls) ||
       JSON.stringify(company.meta?.google_place_ids) !== JSON.stringify(google_place_ids)
@@ -131,11 +129,6 @@ export function Settings() {
     if (email.trim(' ') && name.trim(' ') && enDesc.trim(' ') && srDesc.trim(' ')) {
       setButtonDisabled(false)
     }
-
-    console.log(
-      JSON.stringify(company.meta?.google_place_ids?.sort()),
-      JSON.stringify(google_place_ids?.sort())
-    )
 
     if (
       email === company.email &&
