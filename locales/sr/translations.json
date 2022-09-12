@@ -80,7 +80,7 @@
   "CreateNewForm": {
     "main": "Kreiraj novu formu",
     "edit_main": "Uredi Formu",
-    "formTitle": "Naslov forme",
+    "formTitle": "Naslov forme (Maximalno 20 karaktera)",
     "formDescription": "Opis forme",
     "formType": "Tip forme",
     "rating": "Ocena",
@@ -89,8 +89,6 @@
     "question": "Pitanja",
     "oneQuestion": "Možete dodati samo 1 pitanje za ovaj tip forme!",
     "threeQuestions": "Možete dodati maximalno 3 pitanja za ovaj tip forme",
-    "question": "Pitanja",
-    "oneQuestion": "Možete dodati samo 1 pitanje za ovaj tip forme!",
     "addAnoterQuestion": "Dodaj još jedno pitanje",
     "cancel": "Obriši",
     "create": "Pošalji",

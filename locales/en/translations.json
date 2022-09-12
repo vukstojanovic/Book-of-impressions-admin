@@ -80,7 +80,7 @@
   "CreateNewForm": {
     "main": "Create New Form",
     "edit_main": "Edit Form",
-    "formTitle": "Form Title",
+    "formTitle": "Form Title (Max 20 characters)",
     "formDescription": "Form Description",
     "formType": "Form Type",
     "rating": "Rating",
@@ -93,7 +93,7 @@
     "cancel": "Cancel",
     "create": "Submit",
     "removeQuestion": "Remove question",
-    "fillQuestion": "Please fill the question filed!",
+    "fillQuestion": "Please fill in question filed!",
     "emptyTitle": "Title is required",
     "descriptionFor": "Description for",
     "emptyDescription": "Description is required",
