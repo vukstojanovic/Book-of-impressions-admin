@@ -80,7 +80,7 @@
   "CreateNewForm": {
     "main": "Create New Form",
     "edit_main": "Edit Form",
-    "formTitle": "Form Title",
+    "formTitle": "Form Title (Max 20 characters)",
     "formDescription": "Form Description",
     "formType": "Form Type",
     "rating": "Rating",
