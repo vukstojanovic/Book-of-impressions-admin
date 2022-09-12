@@ -67,12 +67,13 @@ export function Settings() {
     if (logo) {
       formData.append('logo', logo[0]?.originFileObj)
     }
-    console.log(logo, company.logo)
     formData.append('name', name)
     formData.append('email', email)
     formData.append('description', JSON.stringify(desc))
 
     companyInfoMutation.mutate({ formData })
+
+    console.log(company.logo, logo)
 
     if (
       JSON.stringify(company.meta?.tripadvisor_urls) !== JSON.stringify(tripadvisor_urls) ||
@@ -130,7 +131,12 @@ export function Settings() {
     if (email.trim(' ') && name.trim(' ') && enDesc.trim(' ') && srDesc.trim(' ')) {
       setButtonDisabled(false)
     }
-    console.log(tripadvisor_urls)
+
+    console.log(
+      JSON.stringify(company.meta?.google_place_ids?.sort()),
+      JSON.stringify(google_place_ids?.sort())
+    )
+
     if (
       email === company.email &&
       name === company.name &&
@@ -141,7 +147,6 @@ export function Settings() {
       JSON.stringify(company.meta?.google_place_ids?.sort()) ===
         JSON.stringify(google_place_ids?.sort())
     ) {
-      console.log(company?.logo)
       setIsEverythingSame(true)
     } else {
       setIsEverythingSame(false)
@@ -176,8 +181,8 @@ export function Settings() {
         'company-email': company.email || '',
         'en-desc': company.description.filter((lang) => lang.key === 'en')[0]?.text || '',
         'sr-desc': company.description.filter((lang) => lang.key === 'sr')[0]?.text || '',
-        tripadvisor_urls: company.meta?.tripadvisor_urls || '',
-        google_place_ids: company.meta?.google_place_ids || '',
+        tripadvisor_urls: company.meta?.tripadvisor_urls || [],
+        google_place_ids: company.meta?.google_place_ids || [],
       })
     }
   }, [company])
