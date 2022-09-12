@@ -136,10 +136,12 @@ export const Forms = () => {
                       valueStyle={{ fontSize: '25px' }}
                     />
                     <p style={{ fontSize: '11px' }}>
-                      {(
-                        (Number(singleAnalytic.anonymous) / Number(singleAnalytic.total)) *
-                        100
-                      ).toFixed(1)}{' '}
+                      {Number(singleAnalytic.total) > 0
+                        ? (
+                            (Number(singleAnalytic.anonymous) / Number(singleAnalytic.total)) *
+                            100
+                          ).toFixed(1)
+                        : (0).toFixed(1)}{' '}
                       %
                     </p>
                   </div>
