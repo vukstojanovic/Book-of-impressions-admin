@@ -35,6 +35,7 @@ const Dashboard = () => {
   const anonymousReviewPercentage = (data?.without_name / data?.totalND) * 100 || 0
   const reviewPercentage = (data?.total / data?.totalND) * 100 || 0
 
+  console.log(data)
   if (isLoading) {
     return (
       <Row align="middle" justify="center" style={{ minHeight: '30vh' }}>
@@ -118,7 +119,11 @@ const Dashboard = () => {
           md={{ span: 10 }}
           xxl={{ span: 6 }}
         >
-          <ChartPie data={!isLoading && data} halfPie />
+          {data?.total_negative && data?.total_positive === '0' ? (
+            <Paragraph style={{ textAlign: 'center' }}>No Data</Paragraph>
+          ) : (
+            <ChartPie data={!isLoading && data} halfPie />
+          )}
         </Col>
         <Col
           className="chart"
@@ -164,7 +169,11 @@ const Dashboard = () => {
           <ChartBar data={data?.ratings} />
         </ChartRow>
         <ChartRow ratingType={'Answer'} ratingData={data?.answer}>
-          <ChartPie data={data?.answer} />
+          {data?.total_negative && data?.total_positive === '0' ? (
+            <Paragraph style={{ textAlign: 'center' }}>No Data</Paragraph>
+          ) : (
+            <ChartPie data={data?.answer} />
+          )}
         </ChartRow>
       </Space>
     </Col>
