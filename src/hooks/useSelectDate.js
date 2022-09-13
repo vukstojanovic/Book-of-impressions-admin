@@ -57,7 +57,7 @@ export const useSelectDate = () => {
           type: 'changeDate',
           payload: {
             dateFrom: setTargetDate(1),
-            dateTo: today,
+            dateTo: setTargetDate(0),
           },
         })
         form.resetFields(['pickedDate'])
@@ -67,17 +67,17 @@ export const useSelectDate = () => {
           type: 'changeDate',
           payload: {
             dateFrom: setTargetDate(3),
-            dateTo: today,
+            dateTo: setTargetDate(0),
           },
         })
         form.resetFields(['pickedDate'])
         break
-      case 'last_week':
+      case 'last_7_days':
         dispatch({
           type: 'changeDate',
           payload: {
             dateFrom: setTargetDate(7),
-            dateTo: today,
+            dateTo: setTargetDate(0),
           },
         })
         form.resetFields(['pickedDate'])
@@ -87,7 +87,7 @@ export const useSelectDate = () => {
           type: 'changeDate',
           payload: {
             dateFrom: setTargetDate(21),
-            dateTo: today,
+            dateTo: setTargetDate(0),
           },
         })
         form.resetFields(['pickedDate'])
@@ -97,7 +97,7 @@ export const useSelectDate = () => {
           type: 'changeDate',
           payload: {
             dateFrom: setTargetDate(1, 'month'),
-            dateTo: today,
+            dateTo: setTargetDate(0),
           },
         })
         form.resetFields(['pickedDate'])

@@ -283,8 +283,8 @@
     "today": "Danas",
     "last_day": "Prethodni dan",
     "last_3_days": "Prethodna 3 dana",
-    "last_week": "Prethodna nedelja",
-    "last_3_weeks": "Prethodna 3 nedelje",
+    "last_7_days": "Prethodnih 7 dana",
+    "last_3_weeks": "Prethodne 3 nedelje",
     "last_month": "Prethodni mesec",
     "custom": "Ručno",
     "label_date": "Datum"
