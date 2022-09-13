@@ -24,7 +24,13 @@ export const InviteUser = () => {
   const handleFormChange = () => {
     const hasValues = form.getFieldsValue()
     const hasErrors = form.getFieldsError()
-    if (!hasValues.name || !hasValues.email || !hasValues.role || hasErrors[1].errors.length) {
+    if (
+      !hasValues.name ||
+      !hasValues.email ||
+      !hasValues.role ||
+      hasErrors[1].errors.length ||
+      hasErrors[0].errors.length
+    ) {
       return setDisabled(true)
     }
     return setDisabled(false)

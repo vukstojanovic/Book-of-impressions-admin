@@ -80,7 +80,7 @@
   "CreateNewForm": {
     "main": "Kreiraj novu formu",
     "edit_main": "Uredi Formu",
-    "formTitle": "Naslov forme",
+    "formTitle": "Naslov forme (Maximalno 20 karaktera)",
     "formDescription": "Opis forme",
     "formType": "Tip forme",
     "rating": "Ocena",
@@ -151,7 +151,8 @@
     "viewer": "Posmatrač",
     "description": "Lorem ipsum dolor sit amet, qui minim labore adipisicing minim sint cillum sint consectetur cupidatat.",
     "invite_success": "Uspešno poslata pozivnica",
-    "invite_error": "Pozivnica nije poslata"
+    "invite_error": "Korisnik sa ovim Email-om već postoji",
+    "no_special_characters": "Možete uneti samo slova"
   },
   "AccountMenu": {
     "your_profile": "Tvoj profil",

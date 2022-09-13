@@ -84,14 +84,14 @@ export const EditOrPostForm = ({ type }) => {
       questions: formattedQuestions,
     }
 
-    setSubmitButton(true)
     if (type === 'edit') return editFormData({ data: formData, id })
 
     if (type === 'post') return postFormData(formData)
   }
 
-  const onTypeChange = (value) => {
+  const onTypeChange = async (value) => {
     setShowInfoQuestion(true)
+    await form.resetFields(['questions'])
     const questionLength = form.getFieldsValue().questions?.length
     const questions = form.getFieldsValue().questions
     if (value === 'Rating' || value === 'Answer') {
@@ -112,6 +112,7 @@ export const EditOrPostForm = ({ type }) => {
     if (value === 'Ratings') {
       setSelectedFormType('threeQuestions')
       if (!questionLength) {
+        setDisabledButton(false)
         setSubmitButton(true)
         return
       }
@@ -265,7 +266,7 @@ export const EditOrPostForm = ({ type }) => {
           onFieldsChange={onFieldsChange}
         >
           <Row>
-            <Col sm={24} md={12} lg={6}>
+            <Col sm={24} md={12} lg={9}>
               <Form.Item
                 label={t('formTitle')}
                 name="title"
@@ -276,7 +277,7 @@ export const EditOrPostForm = ({ type }) => {
                   },
                 ]}
               >
-                <Input allowClear={true} />
+                <Input maxLength={20} allowClear={true} />
               </Form.Item>
             </Col>
           </Row>
@@ -302,6 +303,8 @@ export const EditOrPostForm = ({ type }) => {
                     ]}
                   >
                     <TextArea
+                      showCount
+                      maxLength={150}
                       placeholder="Form description"
                       name="english-desc"
                       autoSize={{ minRows: 3, maxRows: 10 }}
@@ -321,6 +324,8 @@ export const EditOrPostForm = ({ type }) => {
                     ]}
                   >
                     <TextArea
+                      showCount
+                      maxLength={150}
                       placeholder="Opis forme"
                       name="serbian-dec"
                       autoSize={{ minRows: 3, maxRows: 10 }}
@@ -389,6 +394,7 @@ export const EditOrPostForm = ({ type }) => {
                                 ]}
                               >
                                 <Input
+                                  maxLength={100}
                                   placeholder="Question"
                                   name="question-en"
                                   style={{ marginTop: '6px' }}
@@ -406,6 +412,7 @@ export const EditOrPostForm = ({ type }) => {
                                 ]}
                               >
                                 <Input
+                                  maxLength={100}
                                   placeholder="Pitanje"
                                   name="question-sr"
                                   style={{ marginTop: '6px' }}
