@@ -289,7 +289,7 @@ export function Settings() {
               {uploadButton}
             </Upload>
           </Form.Item>
-          <Form.Item initialValue={company.meta.google_place_ids} name="google_place_ids">
+          <Form.Item initialValue={company?.meta?.google_place_ids} name="google_place_ids">
             <Tags t={t} form={form} placeholderText={t('add_google_place_id')} />
           </Form.Item>
           <Form.Item name="tripadvisor_urls">
