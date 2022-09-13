@@ -135,16 +135,14 @@ export const Reports = () => {
       title: t('action'),
       key: 'action',
       render: (_, record) => (
-        <Space size="small">
-          <EyeOutlined
-            onClick={() => openModal(record)}
-            style={{ fontSize: '20px', cursor: 'pointer' }}
-          />
+        <Space size={[20]}>
+          <Button onClick={() => openModal(record)}>
+            <EyeOutlined style={{ fontSize: '17px', verticalAlign: 'middle' }} />
+          </Button>
           {role === 'Manager' && (
-            <DeleteOutlined
-              onClick={() => handleOpenDeleteModal(record)}
-              style={{ fontSize: '20px', cursor: 'pointer' }}
-            />
+            <Button onClick={() => handleOpenDeleteModal(record)}>
+              <DeleteOutlined style={{ fontSize: '17px', verticalAlign: 'middle' }} />
+            </Button>
           )}
         </Space>
       ),

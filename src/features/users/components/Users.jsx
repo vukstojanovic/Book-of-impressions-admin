@@ -1,4 +1,4 @@
-import { Row, Col, Table, Tag, Space, Modal, Typography, Skeleton, Empty } from 'antd'
+import { Button, Row, Col, Table, Tag, Space, Modal, Typography, Skeleton, Empty } from 'antd'
 import { useForm } from 'antd/lib/form/Form'
 import { useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
@@ -102,12 +102,12 @@ export const Users = () => {
         if (role !== 'Manager') return
         return (
           <Space size={[20]}>
-            <button onClick={() => openEditModal(record)}>
-              <EditOutlined style={{ fontSize: '17px' }} />
-            </button>
-            <button onClick={() => openDeleteModal(record)}>
-              <DeleteOutlined style={{ fontSize: '17px' }} />
-            </button>
+            <Button onClick={() => openEditModal(record)}>
+              <EditOutlined style={{ fontSize: '17px', verticalAlign: 'middle' }} />
+            </Button>
+            <Button onClick={() => openDeleteModal(record)}>
+              <DeleteOutlined style={{ fontSize: '17px', verticalAlign: 'middle' }} />
+            </Button>
           </Space>
         )
       },
