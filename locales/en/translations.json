@@ -27,7 +27,9 @@
     "company_name_warning": "Please enter your company name!",
     "error": "Email is alredy in use",
     "errorServer": "Something went wrong!",
-    "no_spaces_at_beggining_or_end": "No spaces at beggining or end"
+    "no_spaces_at_beggining_or_end": "No spaces at beggining or end",
+    "no_special_characters": "No special characters",
+    "longer_than_2_characters": "Must have at least 2 letters"
   },
   "Login": {
     "login_welcome": "Welcome to Boi!",
