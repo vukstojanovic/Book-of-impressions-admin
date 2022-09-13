@@ -64,9 +64,13 @@ export const InviteUser = () => {
                   required: true,
                   message: t('empty_warning'),
                 },
+                {
+                  pattern: new RegExp(/^[a-zA-Z\s]*$/),
+                  message: t('no_special_characters'),
+                },
               ]}
             >
-              <Input />
+              <Input allowClear maxLength={100} />
             </Form.Item>
           </Col>
         </Row>
@@ -77,7 +81,7 @@ export const InviteUser = () => {
               name="email"
               rules={[{ type: 'email', required: true, message: t('error_email') }]}
             >
-              <Input />
+              <Input allowClear maxLength={100} />
             </Form.Item>
           </Col>
         </Row>
