@@ -65,7 +65,7 @@ export const InviteUser = () => {
                   message: t('empty_warning'),
                 },
                 {
-                  pattern: new RegExp(/^[a-zA-Z\s]*$/),
+                  pattern: new RegExp(/^[a-zšđžčć\s]*$/gi),
                   message: t('no_special_characters'),
                 },
               ]}
