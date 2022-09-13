@@ -22,6 +22,7 @@ export function Settings() {
 
   const [selectedLogos, setSelectedLogos] = useState()
   const [buttonDisabled, setButtonDisabled] = useState(true)
+  const [isEverythingSame, setIsEverythingSame] = useState(false)
 
   const {
     user: { role },
@@ -64,7 +65,7 @@ export function Settings() {
     ]
 
     if (logo) {
-      formData.append('logo', logo[0].originFileObj)
+      formData.append('logo', logo[0]?.originFileObj)
     }
     formData.append('name', name)
     formData.append('email', email)
@@ -73,8 +74,8 @@ export function Settings() {
     companyInfoMutation.mutate({ formData })
 
     if (
-      JSON.stringify(company.meta.tripadvisor_urls) !== JSON.stringify(tripadvisor_urls) ||
-      JSON.stringify(company.meta.google_place_ids) !== JSON.stringify(google_place_ids)
+      JSON.stringify(company.meta?.tripadvisor_urls) !== JSON.stringify(tripadvisor_urls) ||
+      JSON.stringify(company.meta?.google_place_ids) !== JSON.stringify(google_place_ids)
     ) {
       companyMetaMutation.mutate({ google_place_ids, tripadvisor_urls })
     }
@@ -104,7 +105,14 @@ export function Settings() {
 
   const onValuesChange = (
     changeValues,
-    { 'company-email': email, 'company-name': name, 'en-desc': enDesc, 'sr-desc': srDesc }
+    {
+      'company-email': email,
+      'company-name': name,
+      'en-desc': enDesc,
+      'sr-desc': srDesc,
+      google_place_ids,
+      tripadvisor_urls,
+    }
   ) => {
     if (enDesc && !srDesc) {
       setDescriptionErrorEn(true)
@@ -122,12 +130,28 @@ export function Settings() {
       setButtonDisabled(false)
     }
 
+    if (
+      email === company.email &&
+      name === company.name &&
+      enDesc === company.description.filter((lang) => lang.key === 'en')[0]?.text &&
+      srDesc === company.description.filter((lang) => lang.key === 'sr')[0]?.text &&
+      JSON.stringify(company.meta?.tripadvisor_urls?.sort()) ===
+        JSON.stringify(tripadvisor_urls?.sort()) &&
+      JSON.stringify(company.meta?.google_place_ids?.sort()) ===
+        JSON.stringify(google_place_ids?.sort())
+    ) {
+      setIsEverythingSame(true)
+    } else {
+      setIsEverythingSame(false)
+    }
+
     setButtonDisabled(true)
   }
 
   const handleChange = ({ fileList }) => {
     setSelectedLogos(fileList)
     setButtonDisabled(false)
+    setIsEverythingSame(false)
   }
 
   const uploadButton = (
@@ -150,8 +174,8 @@ export function Settings() {
         'company-email': company.email || '',
         'en-desc': company.description.filter((lang) => lang.key === 'en')[0]?.text || '',
         'sr-desc': company.description.filter((lang) => lang.key === 'sr')[0]?.text || '',
-        tripadvisor_urls: company.meta.tripadvisor_urls || '',
-        google_place_ids: company.meta.google_place_ids || '',
+        tripadvisor_urls: company.meta?.tripadvisor_urls || [],
+        google_place_ids: company.meta?.google_place_ids || [],
       })
     }
   }, [company])
@@ -272,14 +296,18 @@ export function Settings() {
               listType="picture-card"
               className="avatar-uploader"
               showUploadList={(true, { showPreviewIcon: false })}
-              defaultFileList={[
-                {
-                  uid: '-1',
-                  name: 'company-logo.png',
-                  status: 'done',
-                  url: `${company.logo}`,
-                },
-              ]}
+              defaultFileList={
+                company.logo === 'undefined' || !company.logo
+                  ? []
+                  : [
+                      {
+                        uid: '-1',
+                        name: 'company-logo.png',
+                        status: 'done',
+                        url: `${company.logo}`,
+                      },
+                    ]
+              }
               fileList={selectedLogos ? selectedLogos : null}
               beforeUpload={beforeUpload}
               onChange={handleChange}
@@ -289,7 +317,7 @@ export function Settings() {
               {uploadButton}
             </Upload>
           </Form.Item>
-          <Form.Item initialValue={company.meta.google_place_ids} name="google_place_ids">
+          <Form.Item initialValue={company.meta?.google_place_ids || []} name="google_place_ids">
             <Tags t={t} form={form} placeholderText={t('add_google_place_id')} />
           </Form.Item>
           <Form.Item name="tripadvisor_urls">
@@ -297,7 +325,11 @@ export function Settings() {
           </Form.Item>
           {role !== 'Manager' ? null : (
             <Form.Item style={{ textAlign: 'right' }}>
-              <Button type="primary" htmlType="submit" disabled={buttonDisabled ? true : false}>
+              <Button
+                type="primary"
+                htmlType="submit"
+                disabled={buttonDisabled || isEverythingSame}
+              >
                 {t('submit')}
               </Button>
             </Form.Item>

@@ -28,7 +28,7 @@ export const GoogleReviews = () => {
   }
 
   useEffect(() => {
-    if (!isCompanyDataLoading) setCurrentLocationId(companyData.meta.google_place_ids[0])
+    if (!isCompanyDataLoading) setCurrentLocationId(companyData.meta?.google_place_ids[0])
   }, [isCompanyDataLoading])
 
   if (isCompanyError) {
@@ -47,11 +47,11 @@ export const GoogleReviews = () => {
             {t('select_google_id')}{' '}
           </Typography.Paragraph>
           <Select
-            defaultValue={companyData.meta.google_place_ids[0]}
+            defaultValue={companyData.meta?.google_place_ids[0]}
             style={{ maxWidth: '300px', minWidth: '150px' }}
             onChange={handleLocationIdChange}
           >
-            {companyData.meta.google_place_ids.map((singleId) => {
+            {companyData.meta?.google_place_ids.map((singleId) => {
               return (
                 <Select.Option key={singleId} value={singleId}>
                   {singleId}
