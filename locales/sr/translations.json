@@ -114,6 +114,7 @@
     "forms": "Formulari",
     "reviews": "Recenzije",
     "google_reviews": "Google recenzije",
+    "tripadvisor_reviews": "Tripadvisor recenzije",
     "reports": "Izveštaji",
     "organization": "Organizacija",
     "users": "Korisnici",
@@ -229,8 +230,8 @@
     "confirm_delete": "Da li ste sigurni da hoćete da obrišete",
     "yes": "Da",
     "no": "Ne",
-    "success_create": "Uspešno kreiran novi izvešta",
-    "success_delete": "Uspešno izbrisan izvešta",
+    "success_create": "Uspešno kreiran novi izveštaj",
+    "success_delete": "Uspešno izbrisan izveštaj",
     "error": "Došlo je do greške",
     "error_name": "Ime je obavezno",
     "error_formIds": "Formulari su obavezni",
@@ -264,6 +265,9 @@
     "no_results": "Nema rezultata",
     "select_google_id": "Odaberi google id: "
   },
+  "TripadvisorReviews": {
+    "label_tripadvisor_reviews": "Izaberite Recenzije Hotela"
+  },
   "Charts": {
     "value": "Vrednost",
     "answer": "Odgovor",
@@ -282,8 +286,8 @@
     "today": "Danas",
     "last_day": "Prethodni dan",
     "last_3_days": "Prethodna 3 dana",
-    "last_week": "Prethodna nedelja",
-    "last_3_weeks": "Prethodna 3 nedelje",
+    "last_7_days": "Prethodnih 7 dana",
+    "last_3_weeks": "Prethodne 3 nedelje",
     "last_month": "Prethodni mesec",
     "custom": "Ručno",
     "label_date": "Datum"

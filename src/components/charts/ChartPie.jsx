@@ -12,7 +12,7 @@ export const ChartPie = ({ data, halfPie }) => {
     return Object.entries(data).map(([key, value]) => {
       return {
         name: `${key === 'positive' ? 'yes' : ''}${key === 'negative' ? 'no' : ''}`,
-        value: Number(value) || 1,
+        value: Number(value),
       }
     })
   }
@@ -23,8 +23,8 @@ export const ChartPie = ({ data, halfPie }) => {
         createDataArray()
       : // Case for halfPie chart
         [
-          { name: 'positive', value: Number(data?.total_positive) || 1 },
-          { name: 'negative', value: Number(data?.total_negative) || 1 },
+          { name: 'positive', value: Number(data?.total_positive) },
+          { name: 'negative', value: Number(data?.total_negative) },
         ]
 
   const renderCustomizedLabel = ({ x, y, cx, percent, name }) => {

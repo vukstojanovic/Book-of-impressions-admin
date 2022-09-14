@@ -1,0 +1,22 @@
+.spinner {
+  position: fixed;
+  top: 0;
+  left: 0;
+  display: grid;
+  justify-items: center;
+  z-index: 5;
+  align-items: center;
+  background-color: rgba(0, 0, 0, 0.6);
+  width: 100%;
+  min-height: 100%;
+}
+
+.spinner > div > span {
+  width: 110px;
+  height: 110px;
+}
+
+.spinner > div > span > i {
+  width: 45px;
+  height: 45px;
+}

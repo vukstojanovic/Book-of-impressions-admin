@@ -10,6 +10,7 @@ import { usePostFormQuery } from '../api/postForm'
 
 import style from './EditOrPostForm.module.css'
 
+import { SpinnerWithBackdrop } from '@/components/spinners'
 import { useAuth } from '@/providers/authProvider'
 import { descriptionValidationProps } from '@/utils/descriptionValidation'
 
@@ -35,8 +36,16 @@ export const EditOrPostForm = ({ type }) => {
 
   const { t } = useTranslation('CreateNewForm')
 
-  const editFormData = useEditFormQuery({ form, setShowInfoQuestion, t })
-  const postFormData = usePostFormQuery({ form, setShowInfoQuestion, t })
+  const { mutate: editFormData, isLoading: editMutationIsLoading } = useEditFormQuery({
+    form,
+    setShowInfoQuestion,
+    t,
+  })
+  const { mutate: postFormData, isLoading: postMutationIsLoading } = usePostFormQuery({
+    form,
+    setShowInfoQuestion,
+    t,
+  })
   const handleSubmit = ({
     title,
     ['en-desc']: enDescription,
@@ -75,11 +84,9 @@ export const EditOrPostForm = ({ type }) => {
       questions: formattedQuestions,
     }
 
-    form.resetFields()
+    if (type === 'edit') return editFormData({ data: formData, id })
 
-    if (type === 'edit') return editFormData.mutate({ data: formData, id })
-
-    if (type === 'post') return postFormData.mutate(formData)
+    if (type === 'post') return postFormData(formData)
   }
 
   const onTypeChange = async (value) => {
@@ -247,6 +254,7 @@ export const EditOrPostForm = ({ type }) => {
 
   return (
     <>
+      {editMutationIsLoading || postMutationIsLoading ? <SpinnerWithBackdrop /> : null}
       <Title level={2}>{type === 'edit' ? t('edit_main') : t('main')}</Title>
       <Card>
         <Form

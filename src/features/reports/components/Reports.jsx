@@ -8,10 +8,12 @@ import dayjs from 'dayjs'
 import 'react-pdf/dist/esm/Page/AnnotationLayer.css'
 import { CreateReportModal } from './CreateReportModal'
 
+import { SpinnerWithBackdrop } from '@/components/spinners'
+import { useAuth } from '@/providers/authProvider'
 import { getColumnSearchProps } from '@/utils/columnSearchFilter'
 import { useReports } from '@/features/reports/api/getReports'
+import { useForms } from '@/features/forms/api/getForms'
 import { useDeleteReport } from '@/features/reports/api/deleteReport'
-
 pdfjs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.js`
 
 export const Reports = () => {
@@ -29,12 +31,22 @@ export const Reports = () => {
   const [pageNumber, setPageNumber] = useState(1)
   const [isError, setIsError] = useState(false)
 
-  const { data: reports, isLoading } = useReports({ t })
+  const {
+    data: reports,
+    isLoading,
+    isFetchedAfterMount,
+    isFetching: isFetchingReports,
+  } = useReports({ t })
+  const { data: forms, isLoading: formsIsLoading } = useForms('')
 
-  const { mutate: deleteReport } = useDeleteReport({
+  const { mutate: deleteReport, isLoading: deleteReportIsLoading } = useDeleteReport({
     close: handleCloseDeleteModal,
     t,
   })
+
+  const {
+    user: { role },
+  } = useAuth()
   // function for fixing misalignment bug in pdf contents
   function removeTextLayerOffset() {
     const textLayers = document.querySelectorAll('.react-pdf__Page__textContent')
@@ -123,21 +135,21 @@ export const Reports = () => {
       title: t('action'),
       key: 'action',
       render: (_, record) => (
-        <Space size="small">
-          <EyeOutlined
-            onClick={() => openModal(record)}
-            style={{ fontSize: '20px', cursor: 'pointer' }}
-          />
-          <DeleteOutlined
-            onClick={() => handleOpenDeleteModal(record)}
-            style={{ fontSize: '20px', cursor: 'pointer' }}
-          />{' '}
+        <Space size={[20]}>
+          <Button onClick={() => openModal(record)}>
+            <EyeOutlined style={{ fontSize: '17px', verticalAlign: 'middle' }} />
+          </Button>
+          {role === 'Manager' && (
+            <Button onClick={() => handleOpenDeleteModal(record)}>
+              <DeleteOutlined style={{ fontSize: '17px', verticalAlign: 'middle' }} />
+            </Button>
+          )}
         </Space>
       ),
     },
   ]
 
-  if (isLoading) {
+  if (isLoading || formsIsLoading) {
     return (
       <>
         <Row justify="end" style={{ marginBottom: '20px' }}>
@@ -168,7 +180,7 @@ export const Reports = () => {
           t={t}
           isCreateReportModalOpen={isCreateReportModalOpen}
           handleCloseCreateReportModal={handleCloseCreateReportModal}
-          data={reports}
+          forms={forms}
         />
         <Empty
           description={
@@ -198,15 +210,17 @@ export const Reports = () => {
 
   return (
     <>
-      <Row align="middle" justify="end" style={{ marginBottom: '1.75rem' }}>
-        <Button
-          onClick={handleOpenCreateReportModal}
-          icon={<PlusCircleOutlined />}
-          type="primary"
-          shape="circle"
-          size="large"
-        />
-      </Row>
+      {role === 'Manager' && (
+        <Row align="middle" justify="end" style={{ marginBottom: '1.75rem' }}>
+          <Button
+            onClick={handleOpenCreateReportModal}
+            icon={<PlusCircleOutlined />}
+            type="primary"
+            shape="circle"
+            size="large"
+          />
+        </Row>
+      )}
       <Table
         style={{ overflowX: 'auto' }}
         columns={columns}
@@ -222,28 +236,34 @@ export const Reports = () => {
             />
           ),
         }}
-      />
-      <CreateReportModal
-        t={t}
-        isCreateReportModalOpen={isCreateReportModalOpen}
-        handleCloseCreateReportModal={handleCloseCreateReportModal}
-        data={reports}
       />{' '}
-      <Modal
-        centered
-        title={t('title_delete')}
-        okText={t('yes')}
-        cancelText={t('no')}
-        onOk={() => {
-          deleteReport(deleteModalData.key)
-        }}
-        onCancel={handleCloseDeleteModal}
-        visible={isDeleteModalOpen}
-      >
-        <p>
-          {t('confirm_delete')}: {deleteModalData.name} ?
-        </p>
-      </Modal>
+      {deleteReportIsLoading || (isFetchedAfterMount && isFetchingReports) ? (
+        <SpinnerWithBackdrop />
+      ) : (
+        <>
+          <CreateReportModal
+            t={t}
+            isCreateReportModalOpen={isCreateReportModalOpen}
+            handleCloseCreateReportModal={handleCloseCreateReportModal}
+            forms={forms}
+          />
+          <Modal
+            centered
+            title={t('title_delete')}
+            okText={t('yes')}
+            cancelText={t('no')}
+            onOk={() => {
+              deleteReport(deleteModalData.key)
+            }}
+            onCancel={handleCloseDeleteModal}
+            visible={isDeleteModalOpen}
+          >
+            <p>
+              {t('confirm_delete')}: {deleteModalData.name} ?
+            </p>
+          </Modal>
+        </>
+      )}
       <Modal
         centered
         title={modalTitle}

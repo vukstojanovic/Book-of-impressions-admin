@@ -1,5 +1,5 @@
 import { useEffect, useState, useRef } from 'react'
-import { Typography, Tag, Input, Col } from 'antd'
+import { Typography, Tag, Input, Col, Tooltip } from 'antd'
 
 import style from './Tags.module.css'
 
@@ -73,38 +73,45 @@ export const Tags = ({ t, onChange, placeholderText, value }) => {
   return (
     <>
       <Col className={style.tagContent}>
-        {tags &&
-          tags?.map((tag, index) => {
-            if (editInputIndex === index) {
-              return (
-                <Input
-                  ref={editInputRef}
-                  key={tag}
-                  value={editInputValue}
-                  onChange={handleEditInputChange}
-                  onPressEnter={handleEditInputConfirm}
-                />
-              )
-            }
-
-            const tagElem = (
-              <Tag id={style.tagStyle} key={tag} closable={true} onClose={() => handleClose(tag)}>
-                <span
-                  style={{ fontSize: '1rem' }}
-                  onDoubleClick={(e) => {
-                    if (index !== 0) {
-                      setEditInputIndex(index)
-                      setEditInputValue(tag)
-                      e.preventDefault()
-                    }
-                  }}
-                >
-                  {tag}
-                </span>
-              </Tag>
+        {tags?.map((tag, index) => {
+          if (editInputIndex === index) {
+            return (
+              <Input
+                ref={editInputRef}
+                key={tag}
+                value={editInputValue}
+                onChange={handleEditInputChange}
+                onPressEnter={handleEditInputConfirm}
+              />
             )
-            return tagElem
-          })}
+          }
+          const isLongTag = tag.length > 20
+
+          const tagElem = (
+            <Tag id={style.tagStyle} key={tag} closable={true} onClose={() => handleClose(tag)}>
+              <span
+                style={{ fontSize: '1rem' }}
+                onDoubleClick={(e) => {
+                  if (index !== 0) {
+                    setEditInputIndex(index)
+                    setEditInputValue(tag)
+                    e.preventDefault()
+                  }
+                }}
+              >
+                {isLongTag ? `${tag.slice(0, 20)}...` : tag}
+              </span>
+            </Tag>
+          )
+
+          return isLongTag ? (
+            <Tooltip title={tag} key={tag}>
+              {tagElem}
+            </Tooltip>
+          ) : (
+            tagElem
+          )
+        })}
         <Input
           id={style.inputAddTag}
           ref={inputRef}

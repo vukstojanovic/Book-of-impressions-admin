@@ -1,19 +1,22 @@
 import { useEffect } from 'react'
-import { Spin, DatePicker, Input, Modal, Form, Select, Col } from 'antd'
+import { DatePicker, Input, Modal, Form, Select, Col } from 'antd'
 
 import { useCreateNewReport } from '../api/createNewReport.js'
 
 import { useSelectDate } from '@/hooks/useSelectDate'
 import { SelectDateRange } from '@/components/buttons'
-import { useForms } from '@/features/forms/api/getForms'
-export const CreateReportModal = ({ t, isCreateReportModalOpen, handleCloseCreateReportModal }) => {
+import { SpinnerWithBackdrop } from '@/components/spinners'
+export const CreateReportModal = ({
+  t,
+  isCreateReportModalOpen,
+  handleCloseCreateReportModal,
+  forms,
+}) => {
   const [form] = Form.useForm()
 
   const [selectDateRange, state] = useSelectDate()
 
-  const { mutate: createReport } = useCreateNewReport({ t })
-
-  const { data: forms, isLoading } = useForms('')
+  const { mutate: createReport, isLoading: mutateIsLoading } = useCreateNewReport({ t })
 
   const { Option } = Select
 
@@ -37,25 +40,9 @@ export const CreateReportModal = ({ t, isCreateReportModalOpen, handleCloseCreat
     selectDateRange({ values: [{ value: 'today' }], form })
   }, [])
 
-  if (isLoading)
-    return (
-      <Col
-        style={{
-          position: 'fixed',
-          top: '0',
-          left: '0',
-          display: 'grid',
-          zIndex: 1000,
-          justifyItems: 'center',
-          alignItems: 'center',
-          backgroundColor: 'rgba(0,0,0, 0.6)',
-          width: '100%',
-          minHeight: '100vh',
-        }}
-      >
-        <Spin size="large" />
-      </Col>
-    )
+  if (mutateIsLoading) {
+    return <SpinnerWithBackdrop />
+  }
 
   return (
     <Modal
@@ -66,7 +53,7 @@ export const CreateReportModal = ({ t, isCreateReportModalOpen, handleCloseCreat
       centered
       title={t('create_new_report')}
       onCancel={handleCloseCreateReportModal}
-      okButtonProps={{ htmlType: 'submit', form: 'report-form', disabled: form[0] === 0 }}
+      okButtonProps={{ htmlType: 'submit', form: 'report-form', disabled: forms[0] === 0 }}
     >
       <Form
         onFieldsChange={onFieldsChange}
@@ -74,7 +61,7 @@ export const CreateReportModal = ({ t, isCreateReportModalOpen, handleCloseCreat
         onFinish={handleSubmitReports}
         layout="vertical"
         name="report-form"
-        disabled={form[1] === 0}
+        disabled={forms[1] === 0}
       >
         <Form.Item
           rules={[

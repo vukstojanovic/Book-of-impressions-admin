@@ -1,5 +1,5 @@
 import { PlusOutlined } from '@ant-design/icons'
-import { Form, Input, Upload, Tabs, Button, Row, Col, Spin } from 'antd'
+import { Form, Input, Upload, Tabs, Button, Row, Col, Spin, message } from 'antd'
 import { useState, useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
 
@@ -10,6 +10,7 @@ import { useGetCompanyInfo } from '../api/getCompanyInfo'
 import { Tags } from './Tags'
 import style from './Settings.module.css'
 
+import { SpinnerWithBackdrop } from '@/components/spinners'
 import { useAuth } from '@/providers/authProvider'
 import { beforeUpload } from '@/utils/beforeImageUpload'
 import { descriptionValidationProps } from '@/utils/descriptionValidation'
@@ -34,12 +35,12 @@ export function Settings() {
   const { TabPane } = Tabs
   const [form] = Form.useForm()
 
-  const companyInfoMutation = useUpdateCompanyInfo({
+  const { mutateAsync: companyInfoMutate, isLoading: infoMutateIsLoading } = useUpdateCompanyInfo({
     setButtonDisabled,
     t,
   })
 
-  const companyMetaMutation = useUpdateCompanyMeta({
+  const { mutateAsync: companyMetaMutate, isLoading: metaMutateIsLoading } = useUpdateCompanyMeta({
     t,
   })
 
@@ -71,14 +72,18 @@ export function Settings() {
     formData.append('email', email)
     formData.append('description', JSON.stringify(desc))
 
-    companyInfoMutation.mutate({ formData })
+    const mutationArray = []
+    mutationArray.push(companyInfoMutate({ formData }))
 
     if (
-      JSON.stringify(company.meta?.tripadvisor_urls) !== JSON.stringify(tripadvisor_urls) ||
-      JSON.stringify(company.meta?.google_place_ids) !== JSON.stringify(google_place_ids)
+      /* JSON.stringify(company.meta.tripadvisor_urls) !== JSON.stringify(tripadvisor_urls) || */
+      JSON.stringify(company.meta.google_place_ids) !== JSON.stringify(google_place_ids)
     ) {
-      companyMetaMutation.mutate({ google_place_ids, tripadvisor_urls })
+      mutationArray.push(companyMetaMutate({ google_place_ids, tripadvisor_urls }))
     }
+    Promise.all(mutationArray)
+      .then(() => message.success(t('submit_success'), 3))
+      .catch(() => message.error(t('submit_error'), 3))
   }
 
   const onFieldsChange = (_, allFields) => {
@@ -174,8 +179,8 @@ export function Settings() {
         'company-email': company.email || '',
         'en-desc': company.description.filter((lang) => lang.key === 'en')[0]?.text || '',
         'sr-desc': company.description.filter((lang) => lang.key === 'sr')[0]?.text || '',
-        tripadvisor_urls: company.meta?.tripadvisor_urls || [],
-        google_place_ids: company.meta?.google_place_ids || [],
+        /* tripadvisor_urls: company.meta.tripadvisor_urls || '', */
+        google_place_ids: company.meta.google_place_ids || '',
       })
     }
   }, [company])
@@ -190,6 +195,7 @@ export function Settings() {
   return (
     company && (
       <>
+        {metaMutateIsLoading || infoMutateIsLoading ? <SpinnerWithBackdrop /> : null}
         <Form
           size="large"
           layout="vertical"
@@ -295,7 +301,7 @@ export function Settings() {
               name="avatar"
               listType="picture-card"
               className="avatar-uploader"
-              showUploadList={(true, { showPreviewIcon: false })}
+              showUploadList={(true, { showPreviewIcon: false, showRemoveIcon: false })}
               defaultFileList={
                 company.logo === 'undefined' || !company.logo
                   ? []
@@ -320,9 +326,9 @@ export function Settings() {
           <Form.Item initialValue={company.meta?.google_place_ids || []} name="google_place_ids">
             <Tags t={t} form={form} placeholderText={t('add_google_place_id')} />
           </Form.Item>
-          <Form.Item name="tripadvisor_urls">
-            <Tags t={t} form={form} placeholderText={t('add_tripadvisor_url')} />
-          </Form.Item>
+          {/* <Form.Item name="tripadvisor_urls"> */}
+          {/*   <Tags t={t} form={form} placeholderText={t('add_tripadvisor_url')} /> */}
+          {/* </Form.Item> */}
           {role !== 'Manager' ? null : (
             <Form.Item style={{ textAlign: 'right' }}>
               <Button

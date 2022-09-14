@@ -1,4 +1,4 @@
-import { Row, Col, Table, Tag, Space, Modal, Typography, Skeleton, Empty } from 'antd'
+import { Button, Row, Col, Table, Tag, Space, Modal, Typography, Skeleton, Empty } from 'antd'
 import { useForm } from 'antd/lib/form/Form'
 import { useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
@@ -11,6 +11,7 @@ import { FormModal } from './FormModal'
 
 import { getColumnSearchProps } from '@/utils/columnSearchFilter'
 import { AddButton } from '@/components/buttons/AddButton'
+import { SpinnerWithBackdrop } from '@/components/spinners'
 import { useAuth } from '@/providers/authProvider'
 
 export const Users = () => {
@@ -18,8 +19,11 @@ export const Users = () => {
 
   const { Paragraph } = Typography
 
-  const { data: users, refetch, isLoading } = useGetUsers()
-  const { mutate: deleteUser } = useDeleteUser({ refetchUsers: refetch, closeDeleteModal })
+  const { data: users, refetch, isLoading, isFetching, isFetchedAfterMount } = useGetUsers()
+  const { mutate: deleteUser, isLoading: deleteMutationIsLoading } = useDeleteUser({
+    refetchUsers: refetch,
+    closeDeleteModal,
+  })
 
   const [isEditModalVisible, setIsEditModalVisible] = useState(false)
   const [isDeleteModalVisible, setIsDeleteModalVisible] = useState(false)
@@ -98,12 +102,12 @@ export const Users = () => {
         if (role !== 'Manager') return
         return (
           <Space size={[20]}>
-            <button onClick={() => openEditModal(record)}>
-              <EditOutlined style={{ fontSize: '17px' }} />
-            </button>
-            <button onClick={() => openDeleteModal(record)}>
-              <DeleteOutlined style={{ fontSize: '17px' }} />
-            </button>
+            <Button onClick={() => openEditModal(record)}>
+              <EditOutlined style={{ fontSize: '17px', verticalAlign: 'middle' }} />
+            </Button>
+            <Button onClick={() => openDeleteModal(record)}>
+              <DeleteOutlined style={{ fontSize: '17px', verticalAlign: 'middle' }} />
+            </Button>
           </Space>
         )
       },
@@ -124,10 +128,11 @@ export const Users = () => {
       </>
     )
   }
+
   if (users[1] === 0) {
     return (
       <>
-        <AddButton linkTo={'/users/invite-user'} />
+        {role === 'Manager' && <AddButton linkTo={'/users/invite-user'} />}
         <Empty
           description={
             <span>
@@ -138,9 +143,10 @@ export const Users = () => {
       </>
     )
   }
+
   return (
     <>
-      <AddButton linkTo={'/users/invite-user'} />
+      {role === 'Manager' && <AddButton linkTo={'/users/invite-user'} />}
       <Table
         dataSource={users[0]}
         columns={columns}
@@ -159,30 +165,43 @@ export const Users = () => {
         }}
         rowKey={'id'}
       />
-      <Modal
-        centered
-        title={`${name}`}
-        visible={isEditModalVisible}
-        onOk={handleEditUser}
-        onCancel={closeEditModal}
-        okText={t('edit')}
-        cancelText={t('cancel')}
-      >
-        <FormModal form={form} refetch={refetch} userId={userId} closeEditModal={closeEditModal} />
-      </Modal>
-      <Modal
-        centered
-        visible={isDeleteModalVisible}
-        onOk={handleDeleteUser}
-        onCancel={closeDeleteModal}
-        closable={false}
-        bodyStyle={{ textAlign: 'center' }}
-        cancelText={t('cancel')}
-        okText={t('delete')}
-      >
-        <Paragraph>{`${t('confirm_delete')}:`} </Paragraph>
-        <Paragraph strong>{`${name} ?`}</Paragraph>
-      </Modal>
+      {(isFetching && isFetchedAfterMount) || deleteMutationIsLoading ? (
+        <SpinnerWithBackdrop />
+      ) : (
+        <Modal
+          centered
+          title={`${name}`}
+          visible={isEditModalVisible}
+          onOk={handleEditUser}
+          onCancel={closeEditModal}
+          okText={t('edit')}
+          cancelText={t('cancel')}
+        >
+          <FormModal
+            form={form}
+            refetch={refetch}
+            userId={userId}
+            closeEditModal={closeEditModal}
+          />
+        </Modal>
+      )}
+      {(isFetching && isFetchedAfterMount) || deleteMutationIsLoading ? (
+        <SpinnerWithBackdrop />
+      ) : (
+        <Modal
+          centered
+          visible={isDeleteModalVisible}
+          onOk={handleDeleteUser}
+          onCancel={closeDeleteModal}
+          closable={false}
+          bodyStyle={{ textAlign: 'center' }}
+          cancelText={t('cancel')}
+          okText={t('delete')}
+        >
+          <Paragraph>{`${t('confirm_delete')}:`} </Paragraph>
+          <Paragraph strong>{`${name} ?`}</Paragraph>
+        </Modal>
+      )}
     </>
   )
 }

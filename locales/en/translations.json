@@ -114,6 +114,7 @@
     "forms": "Forms",
     "reviews": "Reviews",
     "google_reviews": "Google reviews",
+    "tripadvisor_reviews": "Tripadvisor reviews",
     "reports": "Reports",
     "organization": "Organization",
     "users": "Users",
@@ -264,6 +265,9 @@
     "no_results": "No results",
     "select_google_id": "Select google id: "
   },
+  "TripadvisorReviews": {
+    "label_tripadvisor_reviews": "Choose Hotel Reviews"
+  },
   "Charts": {
     "value": "Value",
     "answer": "Answer",
@@ -282,7 +286,7 @@
     "today": "Today",
     "last_day": "Last day",
     "last_3_days": "Last 3 days",
-    "last_week": "Last week",
+    "last_7_days": "Last 7 days",
     "last_3_weeks": "Last 3 weeks",
     "last_month": "Last month",
     "custom": "Custom",

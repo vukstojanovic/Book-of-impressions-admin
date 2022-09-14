@@ -4,7 +4,7 @@
 .notCollapsed {
   margin: 64px 0 0 200px;
 }
-.transition {
+.layoutStyle {
   transition-duration: 0.3s;
 }
 .layoutContent {

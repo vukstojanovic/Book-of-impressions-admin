@@ -9,6 +9,7 @@ import {
   CommentOutlined,
   SettingOutlined,
   GoogleOutlined,
+  /* EnvironmentOutlined, */
 } from '@ant-design/icons'
 import { useLocation, useNavigate } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
@@ -84,6 +85,12 @@ export const SideMenu = ({ collapsed }) => {
             label: t('google_reviews'),
             onClick: () => navigate('/google-reviews'),
           },
+          /* { */
+          /*   key: 'tripadvisor-reviews', */
+          /*   icon: <EnvironmentOutlined style={{ fontSize: '18px' }} />, */
+          /*   label: t('tripadvisor_reviews'), */
+          /*   onClick: () => navigate('/tripadvisor-reviews'), */
+          /* }, */
           {
             key: 'reports',
             icon: <FileTextOutlined style={{ fontSize: '18px' }} />,
