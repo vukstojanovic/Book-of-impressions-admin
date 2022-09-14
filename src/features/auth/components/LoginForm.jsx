@@ -16,7 +16,8 @@ export const LoginForm = () => {
 
   const { t } = useTranslation('Login')
 
-  const { login, refetchUser } = useAuth()
+  const { login, refetchUser, isLoggingIn } = useAuth()
+
   const onFinish = async ({ email, password }) => {
     try {
       const userData = {
@@ -91,7 +92,7 @@ export const LoginForm = () => {
           </Form.Item>
 
           <Form.Item>
-            <Button type="primary" htmlType="submit" block size="large">
+            <Button type="primary" htmlType="submit" block size="large" loading={isLoggingIn}>
               {t('log_in')}
             </Button>
           </Form.Item>

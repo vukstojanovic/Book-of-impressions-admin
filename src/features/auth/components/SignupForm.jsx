@@ -15,10 +15,12 @@ export const SignupForm = () => {
   const [form] = Form.useForm()
   const navigate = useNavigate()
   const [isModalOpened, setModalOpened] = useState(false)
+  const [registerIsLoading, setRegisterIsLoading] = useState(false)
 
   const { t } = useTranslation('Signup')
 
   const handleSubmit = async ({ firstName, lastName, email, password, companyName }) => {
+    setRegisterIsLoading(true)
     try {
       const userData = {
         name: `${firstName.trim()} ${lastName.trim()}`,
@@ -29,7 +31,7 @@ export const SignupForm = () => {
       const { response } = await registerUser(userData)
 
       if (response === 'OK') {
-        message.success('You are successfully registered. Please login in!')
+        message.success(t('successfully_registered'))
         navigate('/sign-in')
       }
     } catch (error) {
@@ -40,6 +42,7 @@ export const SignupForm = () => {
         message.error(t('error'), 3)
       }
     }
+    setRegisterIsLoading(false)
   }
 
   return (
@@ -157,12 +160,12 @@ export const SignupForm = () => {
           </Form.Item>
 
           <Form.Item>
-            <Button block size="large" type="primary" htmlType="submit">
+            <Button block size="large" type="primary" loading={registerIsLoading} htmlType="submit">
               {t('sign_up')}
             </Button>
           </Form.Item>
           <Paragraph>
-            {t('agree')}{' '}
+            {t('agree')}
             <Text
               type="danger"
               underline
