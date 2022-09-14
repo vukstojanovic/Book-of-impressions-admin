@@ -165,7 +165,7 @@ export const SignupForm = () => {
             </Button>
           </Form.Item>
           <Paragraph>
-            {t('agree')}
+            {t('agree')}{' '}
             <Text
               type="danger"
               underline
