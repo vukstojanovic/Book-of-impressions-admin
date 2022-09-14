@@ -301,7 +301,7 @@ export function Settings() {
               name="avatar"
               listType="picture-card"
               className="avatar-uploader"
-              showUploadList={(true, { showPreviewIcon: false, removeIcon: false })}
+              showUploadList={(true, { showPreviewIcon: false, showRemoveIcon: false })}
               defaultFileList={
                 company.logo === 'undefined' || !company.logo
                   ? []
