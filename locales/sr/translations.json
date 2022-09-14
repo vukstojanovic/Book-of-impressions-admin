@@ -27,7 +27,9 @@
     "company_name_warning": "Molimo unesite ime vaše firme!",
     "error": "Email adresa već postoji",
     "errorServer": "Nešto je krenulo naopako!",
-    "no_spaces_at_beggining_or_end": "Bez praznih mesta na početku i na kraju"
+    "no_spaces_at_beggining_or_end": "Bez praznih mesta na početku i na kraju",
+    "no_special_characters": "Možete uneti samo slova",
+    "longer_than_2_characters": "Mora imati vise od jednog slova"
   },
   "Login": {
     "login_welcome": "Dobrodošli na Boi!",
