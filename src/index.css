@@ -36,10 +36,6 @@ body {
   overflow-x: hidden;
 }
 
-.ant-table-row {
-  background: white;
-}
-
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace;
 }
@@ -75,6 +71,22 @@ code {
 
 .print-date-text {
   display: none;
+}
+.ant-spin-nested-loading,
+.ant-spin-container {
+  position: unset;
+}
+
+.ant-table-pagination {
+  position: absolute;
+  right: 40px;
+}
+.ant-table-wrapper {
+  padding-bottom: 60px;
+}
+
+.ant-table-row {
+  background: white;
 }
 
 @media print {
