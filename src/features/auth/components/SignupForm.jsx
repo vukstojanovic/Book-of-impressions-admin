@@ -69,9 +69,17 @@ export const SignupForm = () => {
                     required: true,
                     message: t('first_name_warning'),
                   },
+                  {
+                    pattern: new RegExp(/^[a-zšđžčć-\s]*$/gi),
+                    message: t('no_special_characters'),
+                  },
+                  {
+                    min: 2,
+                    message: t('longer_than_2_characters'),
+                  },
                 ]}
               >
-                <Input size="large" />
+                <Input size="large" maxLength={70} />
               </Form.Item>
             </Col>
             <Col xs={{ span: 24 }} sm={{ span: 24 }} md={{ span: 12 }}>
@@ -83,9 +91,17 @@ export const SignupForm = () => {
                     required: true,
                     message: t('last_name_warning'),
                   },
+                  {
+                    pattern: new RegExp(/^[a-zšđžčć-\s]*$/gi),
+                    message: t('no_special_characters'),
+                  },
+                  {
+                    min: 2,
+                    message: t('longer_than_2_characters'),
+                  },
                 ]}
               >
-                <Input size="large" />
+                <Input size="large" maxLength={70} />
               </Form.Item>
             </Col>
           </Row>
