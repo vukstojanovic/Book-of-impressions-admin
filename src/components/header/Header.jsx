@@ -3,6 +3,8 @@ import { Row, Col, Layout, Space, Select, Image } from 'antd'
 import { MenuUnfoldOutlined, MenuFoldOutlined, BellOutlined } from '@ant-design/icons'
 import { useTranslation } from 'react-i18next'
 
+import style from './Header.module.css'
+
 import { AccountMenu } from '@/components/accountMenu'
 import { Logo } from '@/components/Logo'
 import storage from '@/utils/storage'
@@ -19,7 +21,7 @@ export const HeaderComponent = ({ collapsed, setCollapsed }) => {
   }
 
   return (
-    <Header style={{ position: 'fixed', zIndex: 3, width: '100%' }}>
+    <Header id={style.header}>
       <Row justify="space-between">
         <Col>
           <Space>

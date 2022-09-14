@@ -72,6 +72,22 @@ code {
 .print-date-text {
   display: none;
 }
+.ant-spin-nested-loading,
+.ant-spin-container {
+  position: unset;
+}
+
+.ant-table-pagination {
+  position: absolute;
+  right: 40px;
+}
+.ant-table-wrapper {
+  padding-bottom: 60px;
+}
+
+.ant-table-row {
+  background: white;
+}
 
 @media print {
   .print-date-text {
