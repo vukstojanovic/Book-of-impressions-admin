@@ -73,37 +73,38 @@ export const Tags = ({ t, onChange, placeholderText, value }) => {
   return (
     <>
       <Col className={style.tagContent}>
-        {tags?.map((tag, index) => {
-          if (editInputIndex === index) {
-            return (
-              <Input
-                ref={editInputRef}
-                key={tag}
-                value={editInputValue}
-                onChange={handleEditInputChange}
-                onPressEnter={handleEditInputConfirm}
-              />
-            )
-          }
+        {tags &&
+          tags?.map((tag, index) => {
+            if (editInputIndex === index) {
+              return (
+                <Input
+                  ref={editInputRef}
+                  key={tag}
+                  value={editInputValue}
+                  onChange={handleEditInputChange}
+                  onPressEnter={handleEditInputConfirm}
+                />
+              )
+            }
 
-          const tagElem = (
-            <Tag id={style.tagStyle} key={tag} closable={true} onClose={() => handleClose(tag)}>
-              <span
-                style={{ fontSize: '1rem' }}
-                onDoubleClick={(e) => {
-                  if (index !== 0) {
-                    setEditInputIndex(index)
-                    setEditInputValue(tag)
-                    e.preventDefault()
-                  }
-                }}
-              >
-                {tag}
-              </span>
-            </Tag>
-          )
-          return tagElem
-        })}
+            const tagElem = (
+              <Tag id={style.tagStyle} key={tag} closable={true} onClose={() => handleClose(tag)}>
+                <span
+                  style={{ fontSize: '1rem' }}
+                  onDoubleClick={(e) => {
+                    if (index !== 0) {
+                      setEditInputIndex(index)
+                      setEditInputValue(tag)
+                      e.preventDefault()
+                    }
+                  }}
+                >
+                  {tag}
+                </span>
+              </Tag>
+            )
+            return tagElem
+          })}
         <Input
           id={style.inputAddTag}
           ref={inputRef}
