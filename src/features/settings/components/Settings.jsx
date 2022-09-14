@@ -75,7 +75,7 @@ export function Settings() {
     mutationArray.push(companyInfoMutate({ formData }))
 
     if (
-      JSON.stringify(company.meta.tripadvisor_urls) !== JSON.stringify(tripadvisor_urls) ||
+      /* JSON.stringify(company.meta.tripadvisor_urls) !== JSON.stringify(tripadvisor_urls) || */
       JSON.stringify(company.meta.google_place_ids) !== JSON.stringify(google_place_ids)
     ) {
       mutationArray.push(companyMetaMutate({ google_place_ids, tripadvisor_urls }))
@@ -155,7 +155,7 @@ export function Settings() {
         'company-email': company.email || '',
         'en-desc': company.description.filter((lang) => lang.key === 'en')[0]?.text || '',
         'sr-desc': company.description.filter((lang) => lang.key === 'sr')[0]?.text || '',
-        tripadvisor_urls: company.meta.tripadvisor_urls || '',
+        /* tripadvisor_urls: company.meta.tripadvisor_urls || '', */
         google_place_ids: company.meta.google_place_ids || '',
       })
     }
@@ -302,9 +302,9 @@ export function Settings() {
           <Form.Item initialValue={company.meta.google_place_ids} name="google_place_ids">
             <Tags t={t} form={form} placeholderText={t('add_google_place_id')} />
           </Form.Item>
-          <Form.Item name="tripadvisor_urls">
-            <Tags t={t} form={form} placeholderText={t('add_tripadvisor_url')} />
-          </Form.Item>
+          {/* <Form.Item name="tripadvisor_urls"> */}
+          {/*   <Tags t={t} form={form} placeholderText={t('add_tripadvisor_url')} /> */}
+          {/* </Form.Item> */}
           {role !== 'Manager' ? null : (
             <Form.Item style={{ textAlign: 'right' }}>
               <Button type="primary" htmlType="submit" disabled={buttonDisabled ? true : false}>
