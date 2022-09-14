@@ -174,7 +174,8 @@
     "error_while_sending_data": "Greška prilikom slanja promena",
     "password_min_8": "Lozinka ima najmanje 8 karaktera",
     "no_spaces": "Prazna mesta nisu dozvoljena",
-    "no_spaces_at_beggining_or_end": "Bez praznih mesta na početku i na kraju"
+    "no_spaces_at_beggining_or_end": "Bez praznih mesta na početku i na kraju",
+    "no_special_characters": "Možete uneti samo slova"
   },
   "settings": {
     "company_name": "Ime kompanije",

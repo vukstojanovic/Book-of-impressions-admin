@@ -174,7 +174,8 @@
     "error_while_sending_data": "Error while sending data",
     "password_min_8": "Password is minimum 8 characters",
     "no_spaces": "No white spaces allowed",
-    "no_spaces_at_beggining_or_end": "No spaces at beggining or the end allowed"
+    "no_spaces_at_beggining_or_end": "No spaces at beggining or the end allowed",
+    "no_special_characters": "No special characters"
   },
   "settings": {
     "company_name": "Company name",

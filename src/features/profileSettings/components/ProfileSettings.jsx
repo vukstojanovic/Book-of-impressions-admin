@@ -145,9 +145,13 @@ export function ProfileSettings() {
                         ? Promise.resolve()
                         : Promise.reject(new Error(t('no_spaces_at_beggining_or_end'))),
                   },
+                  {
+                    pattern: new RegExp(/^[a-zA-Z\s]*$/),
+                    message: t('no_special_characters'),
+                  },
                 ]}
               >
-                <Input placeholder={t('name')} />
+                <Input placeholder={t('name')} maxLength={70} />
               </Form.Item>
             </Col>
           </Row>
