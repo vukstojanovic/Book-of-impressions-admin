@@ -36,6 +36,10 @@ body {
   overflow-x: hidden;
 }
 
+.ant-table-row {
+  background: white;
+}
+
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace;
 }
