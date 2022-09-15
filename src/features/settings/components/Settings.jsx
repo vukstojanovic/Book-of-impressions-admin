@@ -51,7 +51,7 @@ export function Settings() {
     'sr-desc': srDescription,
     logo,
     google_place_ids,
-    tripadvisor_urls,
+    // tripadvisor_urls,
   }) => {
     const formData = new FormData()
     const desc = [
@@ -79,7 +79,7 @@ export function Settings() {
       /* JSON.stringify(company.meta.tripadvisor_urls) !== JSON.stringify(tripadvisor_urls) || */
       JSON.stringify(company.meta.google_place_ids) !== JSON.stringify(google_place_ids)
     ) {
-      mutationArray.push(companyMetaMutate({ google_place_ids, tripadvisor_urls }))
+      mutationArray.push(companyMetaMutate({ google_place_ids, tripadvisor_urls: [] }))
     }
     Promise.all(mutationArray)
       .then(() => message.success(t('submit_success'), 3))
@@ -116,7 +116,6 @@ export function Settings() {
       'en-desc': enDesc,
       'sr-desc': srDesc,
       google_place_ids,
-      tripadvisor_urls,
     }
   ) => {
     if (enDesc && !srDesc) {
@@ -138,10 +137,10 @@ export function Settings() {
     if (
       email === company.email &&
       name === company.name &&
-      enDesc === company.description.filter((lang) => lang.key === 'en')[0]?.text &&
-      srDesc === company.description.filter((lang) => lang.key === 'sr')[0]?.text &&
-      JSON.stringify(company.meta?.tripadvisor_urls?.sort()) ===
-        JSON.stringify(tripadvisor_urls?.sort()) &&
+      enDesc.trim() === company.description.filter((lang) => lang.key === 'en')[0]?.text &&
+      srDesc.trim() === company.description.filter((lang) => lang.key === 'sr')[0]?.text &&
+      // JSON.stringify(company.meta?.tripadvisor_urls?.sort()) ===
+      //   JSON.stringify(tripadvisor_urls?.sort()) &&
       JSON.stringify(company.meta?.google_place_ids?.sort()) ===
         JSON.stringify(google_place_ids?.sort())
     ) {
@@ -254,6 +253,8 @@ export function Settings() {
                       name="english-desc"
                       autoSize={{ minRows: 3, maxRows: 10 }}
                       style={{ marginTop: '6px' }}
+                      maxLength={120}
+                      showCount
                     />
                   </Form.Item>
                   <p className={descriptionErrorEn ? style.errorParagrah : style.hidden}>
@@ -277,6 +278,8 @@ export function Settings() {
                       name="serbian-dec"
                       autoSize={{ minRows: 3, maxRows: 10 }}
                       style={{ marginTop: '6px' }}
+                      maxLength={120}
+                      showCount
                     />
                   </Form.Item>
                   <p className={descriptionErrorSr ? style.errorParagrah : style.hidden}>
