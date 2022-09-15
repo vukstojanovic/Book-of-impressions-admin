@@ -70,7 +70,7 @@ export const InviteUser = () => {
                 },
               ]}
             >
-              <Input allowClear maxLength={100} />
+              <Input allowClear maxLength={50} />
             </Form.Item>
           </Col>
         </Row>
