@@ -2,9 +2,9 @@ export const descriptionValidationProps = (t) => {
   return [
     {
       validator: (_, value) =>
-        value.trim().length >= 20
+        value.trim().length >= 15
           ? Promise.resolve()
-          : Promise.reject(new Error(`${t('min_characters')} 20`)),
+          : Promise.reject(new Error(`${t('min_characters')} 15`)),
     },
     {
       validator: (_, value) =>
@@ -17,13 +17,14 @@ export const descriptionValidationProps = (t) => {
     },
     {
       validator: (_, value) =>
-        value[value.length - 1] === '.' || value[value.length - 1] === '?'
+        value.trim()[value.trim().length - 1] === '.' ||
+        value.trim()[value.trim().length - 1] === '?'
           ? Promise.resolve()
           : Promise.reject(new Error(t('ends_with'))),
     },
     {
       validator: (_, value) =>
-        value[0] === value[0]?.toUpperCase()
+        value.trim()[0] === value.trim()[0]?.toUpperCase()
           ? Promise.resolve()
           : Promise.reject(new Error(t('starts_with'))),
     },
