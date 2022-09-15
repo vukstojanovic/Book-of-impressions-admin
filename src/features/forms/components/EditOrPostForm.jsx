@@ -53,7 +53,7 @@ export const EditOrPostForm = ({ type }) => {
     ['form-type']: formType,
     questions,
   }) => {
-    const formattedQuestions = questions.map((question) => {
+    const formattedQuestionsPost = questions.map((question) => {
       return {
         texts: [
           {
@@ -68,7 +68,24 @@ export const EditOrPostForm = ({ type }) => {
       }
     })
 
-    const formData = {
+    const formattedQuestionsEdit = questions.map((question, i) => {
+      const { ['question-en']: enDesc, ['question-sr']: srDesc } = question
+      return {
+        id: data?.questions[i]?.id,
+        texts: [
+          {
+            key: 'sr',
+            text: srDesc,
+          },
+          {
+            key: 'en',
+            text: enDesc,
+          },
+        ],
+      }
+    })
+
+    const formDataPost = {
       title,
       type: formType,
       description: [
@@ -81,12 +98,28 @@ export const EditOrPostForm = ({ type }) => {
           text: srDescription,
         },
       ],
-      questions: formattedQuestions,
+      questions: formattedQuestionsPost,
     }
 
-    if (type === 'edit') return editFormData({ data: formData, id })
+    const formDataEdit = {
+      title,
+      type: formType,
+      description: [
+        {
+          key: 'en',
+          text: enDescription,
+        },
+        {
+          key: 'sr',
+          text: srDescription,
+        },
+      ],
+      questions: formattedQuestionsEdit,
+    }
 
-    if (type === 'post') return postFormData(formData)
+    if (type === 'edit') return editFormData({ data: formDataEdit, id })
+
+    if (type === 'post') return postFormData(formDataPost)
   }
 
   const onTypeChange = async (value) => {
