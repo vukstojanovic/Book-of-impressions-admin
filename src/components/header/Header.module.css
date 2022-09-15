@@ -1,0 +1,11 @@
+#header {
+  position: fixed;
+  z-index: 3;
+  width: 100%;
+}
+
+@media screen and (max-width: 600px) {
+  #header {
+    padding: 0 6px;
+  }
+}
