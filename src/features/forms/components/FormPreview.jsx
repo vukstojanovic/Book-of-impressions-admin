@@ -32,6 +32,7 @@ export const FormPreview = () => {
   const { data: formData, isLoading: formIsLoading } = useGetForm({
     id,
   })
+  console.log(formData)
   const { data: formReviewData, isLoading: reviewIsLoading } = useGetFormReviews(id, searchQuery)
   const [qrValue, setQrValue] = useState('asd')
 
