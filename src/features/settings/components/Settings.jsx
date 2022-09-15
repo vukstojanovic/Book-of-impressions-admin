@@ -279,6 +279,7 @@ export function Settings() {
                       autoSize={{ minRows: 3, maxRows: 10 }}
                       style={{ marginTop: '6px' }}
                       maxLength={120}
+                      showCount
                     />
                   </Form.Item>
                   <p className={descriptionErrorSr ? style.errorParagrah : style.hidden}>
