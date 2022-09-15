@@ -53,7 +53,7 @@ export const EditOrPostForm = ({ type }) => {
     ['form-type']: formType,
     questions,
   }) => {
-    const formattedQuestions = questions.map((question) => {
+    const formattedQuestionsPost = questions.map((question) => {
       return {
         texts: [
           {
@@ -63,6 +63,23 @@ export const EditOrPostForm = ({ type }) => {
           {
             key: 'sr',
             text: question['question-sr'],
+          },
+        ],
+      }
+    })
+
+    const formattedQuestionsEdit = questions.map((question) => {
+      const { ['question-en']: enDesc, ['question-sr']: srDesc } = question
+      return {
+        id: data?.questions[0]?.id,
+        texts: [
+          {
+            key: 'sr',
+            text: srDesc,
+          },
+          {
+            key: 'en',
+            text: enDesc,
           },
         ],
       }
@@ -81,8 +98,24 @@ export const EditOrPostForm = ({ type }) => {
           text: srDescription,
         },
       ],
-      questions: formattedQuestions,
+      questions: formType === 'edit' ? formattedQuestionsEdit : formattedQuestionsPost,
     }
+
+    // const formDataEdit = {
+    //   title,
+    //   type: formType,
+    //   description: [
+    //     {
+    //       key: 'en',
+    //       text: enDescription,
+    //     },
+    //     {
+    //       key: 'sr',
+    //       text: srDescription,
+    //     },
+    //   ],
+    //   questions: formattedQuestionsEdit,
+    // }
 
     if (type === 'edit') return editFormData({ data: formData, id })
 
