@@ -35,7 +35,6 @@ const Dashboard = () => {
   const anonymousReviewPercentage = (data?.without_name / data?.totalND) * 100 || 0
   const reviewPercentage = (data?.total / data?.totalND) * 100 || 0
 
-  console.log(data)
   if (isLoading) {
     return (
       <Row align="middle" justify="center" style={{ minHeight: '30vh' }}>
